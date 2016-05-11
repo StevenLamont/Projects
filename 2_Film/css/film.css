@@ -1,0 +1,66 @@
+@charset "utf-8";
+
+#filmApp .my-placeholder { color: #aaa; }
+#filmApp .menupriceopt {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-left: 15px;
+} 
+#filmApp legend {
+    float: left;
+    margin: 0;
+    padding: 9px 0 !important;
+    display: inline !important;
+    border-right: 1px #ccc solid;
+}
+#filmApp .input-group-addon {
+   /* min-width: 125px;*/
+			padding-top:3px !important;
+			padding-bottom:3px !important;
+}
+#filmApp  .radio-inline {    
+    padding-left: 0px;    
+   /* padding-right: 25px;
+			margin-right: 20px;
+			*/
+				margin-left:0px;
+				padding-top: 0px; 
+				
+}
+#filmApp  label.radio-inline {    
+    padding-left: 0px;    
+   /* padding-right: 25px;*/
+			margin-right: 20px;
+			
+				margin-left:0px;
+				padding-top: 0px; 
+				
+}
+#filmApp .certStepsPanelHeading {
+    boder-color: #bdebf7;
+    background: #e6eff8;
+    background: -webkit-linear-gradient(#e6eff8, white);
+    background: -o-linear-gradient(#e6eff8, white);
+    background: -moz-linear-gradient(#e6eff8, white);
+    background: linear-gradient(#e6eff8, white);
+}
+#filmApp  .panel, .panel-heading {
+    border-color: #d3e8f8!important;
+}
+ 
+#filmApp   .form-group  	{   margin-right: 0px !important;    margin-left: 0px !important;    }
+#filmApp  .right-inner-addon {     position: relative; }
+#filmApp  .row {margin-right: 0px !important;    margin-left: 0px !important;  }
+#filmApp .has-feedback label~.form-control-feedback {    top: 22px; right: 25px; }
+#filmApp  .form-horizontal  .control-label {text-align: left !important; }
+#filmApp  .input-group {     padding: 0px;  }
+#filmApp     .control-label-left {text-align: left !important; }
+ @media only screen and (min-width : 1200px) {
+#filmApp  .hidden-lg { visibility:hidden;  display: inline !important; }
+}
+ 
+#filmApp	 select {
+     
+    margin:0 0 0 0; 
+    
+}
