@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="static_files/assets/validator/|**/node_modules/*|static_files/assets/multiselect/|static_files/WebApps/film/js/|static_files/assets/datepicker/|wcmAsset/gsasearch/js/|**/bower_components/*|static_files/assets/js/|static_files/WebApps/Health/DineSafe/js/|DineSafe - DineSafe - Rob _ City of Toronto_files/|js/markerclustererplus-master/src/|DineSafe - Toronto Public Health_files/|**/*.min.js|js/markerclustererplus-master/examples/|js/|static_files/assets/|tablesorter/js/|static_files/assets/bootstrap-formhelpers/|2_BodySafe.js/|DineSafeAll_files/|static_files/assets/pdfmake/|1_DineSafeJS/|static_files/assets/pagination/|GoogleAppScript/|static_files/assets/bootstrap-formhelpers/js/" kind="src" path=""/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="1_DineSafeJS"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="2_BodySafe.js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="DineSafe - DineSafe - Rob _ City of Toronto_files"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="DineSafe - Toronto Public Health_files"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="DineSafeAll_files"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="GoogleAppScript"/>
+	<classpathentry excluding="markerclustererplus-master/examples/|**/bower_components/*|**/node_modules/*|markerclustererplus-master/src/|**/*.min.js" kind="src" path="js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="js/markerclustererplus-master/examples"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="js/markerclustererplus-master/src"/>
+	<classpathentry excluding="validator/|datepicker/|js/|**/bower_components/*|pagination/|**/node_modules/*|bootstrap-formhelpers/js/|bootstrap-formhelpers/|multiselect/|**/*.min.js|pdfmake/" kind="src" path="static_files/assets"/>
+	<classpathentry excluding="js/|**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/bootstrap-formhelpers"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/bootstrap-formhelpers/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/datepicker"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/multiselect"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/pagination"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/pdfmake"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/validator"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/WebApps/film/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/WebApps/Health/DineSafe/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="tablesorter/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="wcmAsset/gsasearch/js"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
