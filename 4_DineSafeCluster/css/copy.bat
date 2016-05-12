@@ -1,0 +1,1 @@
+xcopy *.css D:\_Projects\static_files\WebApps\Health\DineSafe\css\

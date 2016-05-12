@@ -1,0 +1,46 @@
+#maincontent table .serviceTbl {
+	margin: 0px;
+	width: 100%;
+}
+#maincontent table .serviceTbl td {
+	padding: 0px;
+	width: 35%;
+}
+#maincontent table .serviceTbl td  img{
+	margin-bottom: 2px;
+}
+
+#maincontent table .serviceTbl td:first-child {
+	padding: 0px;
+	width: 65%;
+}
+.accHdr {
+	margin-left: 40%;
+	
+}
+.InfoServiceDiv {
+	/*border-top: 1px solid;*/
+	margin-top: 5px;
+}
+
+.infoAccess {
+	font-style: italic;
+}
+
+.infoIcon {
+	margin-right: 10px;
+}
+.insDate {
+	margin-left: 15px;
+	float: right;
+}
+
+.srvRow {
+	display: block;
+}
+.lstIcon {
+	margin-right: 10px;
+}
+.noData {
+	font-weight: bold;
+}

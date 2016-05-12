@@ -1,0 +1,104 @@
+
+#map_legend {
+    background-color: #c9dbed;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    color: #000000;
+    margin-bottom: 1em;
+    overflow: hidden;
+    padding: 7px 1em;
+}
+#map_legend ul {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+
+#map_legend ul li {
+    float: left;
+    margin-left: 2em;
+    overflow: hidden;
+}
+
+#list_of_beaches, #list_of_beaches ol {
+    list-style: outside none none;
+    margin-left: 0;
+    overflow: hidden;
+    padding-left: 0;
+}
+#maincontent #list_of_beaches {
+     list-style-type: none;
+}
+#list_of_beaches ol {
+       
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+.bbicon {
+    margin-left: 0px;
+    float: left;
+}
+.beachStatus {
+    margin-left: 10px;
+}
+.noBBBeachStatus {
+    margin-left: 28px;
+}
+#beachHistoryLink{
+    margin-top: 10px;
+}
+
+.infoDiv {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    line-height: 1.35;
+    overflow: hidden;
+}
+.infoHdr {
+	font-weight: bold;
+	
+}
+
+
+/* detail css items */
+#statusImage {
+    width: 65px;
+}
+#maincontent #beachName {
+    font-weight: bold;
+    font-size: 1.4em;
+}
+.colhdr {
+    font-weight: bold;
+}
+#blueFlag {
+    width: 65px;
+    margin-top: 5px;
+}
+.centeredImg {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.beachHistory {
+     background-color: #c9dbed;
+     padding: 10px;
+}
+.nodata {
+	font-weight: bold;	
+}
+
+.listHdrRow {
+	font-weight: bold;	
+	background-color: #f5f5f5;
+	font-size: 1.1em;
+}
+
+#historyRow .row{
+	border: 1px solid #ccc;
+	
+}
+#alert {
+	margin-top: 10px;
+}
+

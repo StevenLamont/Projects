@@ -1,0 +1,93 @@
+
+#cmpSubmission + i,#comSubmission + i  {
+    top: 0px;
+    padding-right:  50px;
+}
+
+#comCntMsg, #cmpCntMsg {
+    padding-right:  25px;
+}
+#commentForm .has-feedback label ~ .form-control-feedback, #complaintForm .has-feedback label ~ .form-control-feedback {
+    right: 25px;
+    top: 20px;
+}
+
+
+/* info window items */
+
+.insIcon {
+	margin-right: 20px;
+	
+}
+
+.infoCol1 {
+    display: inline-block;
+    float: left;
+    margin-right: 10px;
+}
+.infoCol2 {
+    width: auto;
+    display: inline-block;
+}
+
+
+
+#maincontent .resetMap {
+	padding-left: 7px;
+}
+
+/* inspection modal*/
+
+#inspectionDetails a.cluetip {
+    border-bottom: 1px dashed #000;
+    cursor: help;
+    text-decoration: none;
+}
+
+#maincontent .FPRI1  {
+	background: rgb(125, 189, 125);
+	color: black;
+	text-align: center;
+}
+#maincontent  .FPRI2  {
+	background: rgb(255, 224, 141);
+	color: black;
+	text-align: center;
+}
+#maincontent  .FPRI3  {
+	background: rgb(255, 104, 80);
+	color: black;
+	text-align: center;
+}
+
+#maincontent  .munInfCat  {
+	background: grey;
+	color: black;
+	text-align: center;
+}
+
+#maincontent  .infractionCat {
+	font-weight: bold;
+}
+
+#maincontent .inSeverity1 {
+	 border-bottom: 1px dashed #000;
+    cursor: help;
+    text-decoration: none;	
+}
+#maincontent .inSeverity2 {
+	 border-bottom: 1px dashed #000;
+    cursor: help;
+    text-decoration: none;	
+}
+#maincontent .inSeverity3 {
+	 border-bottom: 1px dashed #000;
+    cursor: help;
+    text-decoration: none;	
+}
+#maincontent .munInf {
+	 border-bottom: 1px dashed #000;
+    cursor: help;
+    text-decoration: none;	
+}
+/* end if inspection modal */
