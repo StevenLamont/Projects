@@ -38,7 +38,7 @@ Unlike DienSafe/BodySafe.. the current swimsagfe gets the details when the user 
  //http://app.toronto.ca/opendata/tphir/ir_detail.json?addr_id=1459&program_area_cd=POOL&callback=jQuery1102034163563068867353_1460734896348
 var DETAIL_URL = "http://app.toronto.ca/opendata/tphir/ir_detail.json?callback=?&program_area_cd=POOL&addr_id=";
 var DATA_URL = 'http://app.toronto.ca/tphsearch/search.json?pa=POOL&callback=?&type=OUTDOOR_POOL%2CINDOOR_POOL%2COUTDOOR_SPA%2CINDOOR_SPA&access=PUBLIC%2CSCHOOL%2CRESTRICTED';
-var FACILITY_TYPES_URL = "http://www.toronto.ca/health/swimsafe/scripts/type.json?callback=?";
+//var FACILITY_TYPES_URL = "http://www.toronto.ca/health/swimsafe/scripts/type.json?callback=?";
 var LOOKUP_DATA_URL = "http://was8-inter-dev.toronto.ca/opendata/ir/irps_lookup.json?v=1.0&callback=?";
 
 var gblFacilityJSON;
@@ -500,7 +500,7 @@ function filterData() {
 }
 
 //TODO: I haven't finished this.. lets reorg the data and save it in an object.
-//Thge structure will be the same as that in the KML except.. history will be missing.
+//The structure will be the same as that in the KML except.. history will be missing.
 // won't use memory if history i called...  we then need to use API 
 function generateListing() {
     
