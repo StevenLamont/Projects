@@ -1,0 +1,271 @@
+ <div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div>
+            <input id="map-input" class="controls" type="text" placeholder="Search Google Map">
+            <input id="resetMap" class="resetMap" type="button" value="Reset Map" />
+            <div style="height: 468px; width: 100%;" >
+                <div id="map-wrapper">
+                    <div id="map-canvas" style="height: 468px; width: 100%;"></div>
+                </div>
+
+                <div id="legend" class="customControl mapLegend">
+                    <div class="customButton">
+                    <p class="leading"><strong>Legend:</strong></p>
+                    <ul>
+                    <li><img alt="pass" src="/static_files/WebApps/images/marker_dot_pass.png" height="17" width="17" /> Pass</li>
+                    <li><img alt="Conditional Pass" src="/static_files/WebApps/images/marker_dot_conditional.png" height="17" width="17" /> Conditional Pass</li>
+                    <li><img alt="Closed" src="/static_files/WebApps/images/marker_dot_closed.png" height="17" width="17" /> Closed</li>
+                    <li><img alt="Multiple Estabishments" src="/static_files/WebApps/images/marker_dot_multi.png" height="17" width="17" /> Multiple Establishments</li>
+                    </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+ </div>
+ 
+ <div class='row searchRow'>
+    <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="form-group has-feedback" >
+            <input class="form-control hasclear searchString" id="estSearch" type="text" placeholder="Establishment Name">
+            <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+        </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-3">
+        <div class="form-group has-feedback" >
+            <input class="form-control hasclear searchString" id="addrSearch" type="text" placeholder="Establishment Address">
+            <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+        </div>
+        
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-6">
+        <div class="form-group  " >
+            <button id="searchBtn" class="btn btn-default" type="button">   
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+            <!-- need a sr-only lable for button I think.. maybe not since htere is a butron -->
+            </button>
+           <button id="advSearchBtn" class="btn btn-default" type="button" data-toggle="modal" data-target="#modalSearch">   
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Adv. Search
+            </button>
+            <button id="resetBtn" class="btn btn-default " type="button">   
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reset
+            </button>
+            
+        </div>
+
+    </div>      
+ 
+</div>
+<div class='row searchRow'>
+<div id="numPagination" class="col-xs-12 col-sm-12 allPagination" style="display:none;">
+
+        <nav class="navStyle pull-left" id="numberPageSelection"></nav> 
+        <div id="PageSummary">
+
+        <div id="PageStatus"style="float:right;vertical-align: middle;"><span id="RowStart">1</span> to <span id="RowEnd">10</span> of <span id="TotalRows">100</span> establishments | Show 
+        <div style="display: inline-block;">
+            <select id="pageSize" class="pull-right" name="pageSize">
+                <option selected="selected" value="10" >10</option>
+                <option value="25" >25</option>
+                <option value="100" >100</option>
+            </select>
+        </div>
+        <div id='perPage'>per page</div>
+        </div>
+        </div>
+ </div>  
+
+<div id="alphaPaging" class="col-xs-12 col-sm-12">
+    <!--
+    <div class="panel-heading">
+        <h2 id="srchResults" role="heading" aria-level="2" class="panel-title">Search Result</h2>
+    </div>      
+    -->
+    <ul id="alphaPagination" class="nav nav-tabs">
+        <li role="presentation"><a href="#">0-9<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">A<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">B<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">C<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">D<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">E<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">F<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">G<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">H<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">I<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">J<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">K<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">L<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">M<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">N<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">O<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">P<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">Q<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">R<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">S<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">T<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">U<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">V<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">W<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">X<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">Y<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li role="presentation"><a href="#">Z<span> <span class="sr-only">(</span><span class="found">0</span><span class="sr-only"> Establishment(s) Found)</span></span></a></li>
+        <li ><span id="srchResults">Search Result</span> </li>
+    </ul>   
+</div>
+</div>
+
+    <div class="clearfix"></div>
+    
+
+<div class="modal fade" id="mapLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" ><h3>loading map...</h3></div>
+            <div class="modal-body">
+                <div class="progress progress-striped active" style="margin-bottom:0;">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="listLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">
+    <div class="modal-dialog modal-s">
+        <div class="modal-content">
+            <div class="modal-header" ><h3>loading listing...</h3></div>
+            <div class="modal-body">
+                <div class="progress progress-striped active" style="margin-bottom:0;">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="inspectionDetails" tabindex="-1" role="dialog" aria-labelledby="InspectionDetails" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="container-fluid">
+                <div class="modal-header">
+                    <div class="row"><div class="col-md-12">    
+                    <button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">×</span> <span class="sr-only">Close</span></button>
+                    </div></div>                
+                    <div class="row">  
+					<div class="modalStatusImg">  
+                            <img id="imgStatus" alt="status" src="">
+                        </div>
+                        <div class="col-md-10">                 
+                            <h2 style="display:inline" id="estName"></h2>  <p id="estAddress"></p>
+                        </div>
+                        
+
+                    </div>
+                        <!--
+                        <div class="col-md-4">
+                            <p>
+                            <a id="submitComplaintId" href="#">Submit a complaint</a> about this establishment
+                            </p>
+                        </div>
+                        -->
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="inspections"></div>
+            </div>
+            <div class="modal-footer lrButtons">
+                    <button aria-label="Close" class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+            </div>
+
+        </div>
+    </div>  
+</div> 
+
+<div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="AdvancedSearch" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">×</span> <span class="sr-only">Close</span></button>
+                <h2 class="modal-title">Advanced Search Options</h2>
+            </div>
+            <div id="advSearchDiv" class="modal-body">
+                <form id="advSearchForm" class="selectAdvSearch">
+                        
+                        
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="input-group">
+                            <span class="srchLabel1 input-group-addon">Service Type</span>
+                            <select id="serviceTypeFilter" class="form-control filterSelect" name="statusFilter" multiple="multiple"></select>
+                            <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span> 
+                        </div>
+                    </div>
+                    </div>
+
+    
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Status</span>
+                                <select id="statusFilter" class="form-control filterSelect" name="statusFilter" multiple="multiple">
+                                </select>
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+ 
+                            </div>
+                        </div>
+                    
+                    </div>
+                    
+
+                    <h3>Historical Data</h3>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="input-daterange input-group" id="datepicker">
+                            <span class="srchLabel1 input-group-addon">Inspection Dates</span>
+                                <div>
+                                <p class="input-group input-daterange"><span id="dpd1s" onclick="$( '#dateFrom' ).focus();" class="input-group-addon small"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span><input id="dateFrom" class="input-sm form-control datepicker" type="text" placeholder="From: mm/dd/yyyy" name="start" /></p>
+                                <p class="input-group input-daterange"><span id="dpd2s" onclick="$( '#dateTo' ).focus();" class="input-group-addon small"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span><input id="dateTo" class="input-sm form-control datepicker" type="text" placeholder="To: mm/dd/yyyy" name="end" /></p>
+                                </div>
+                            </div>
+                        <p>Inspection details are only available for the past 2 years.</p>
+                        </div>
+                    </div>
+                    
+                </form>
+
+                    
+                    
+
+            </div>
+            <div class="modal-footer lrButtons">
+                <button id="advSearchApplyBtn" aria-label="AdvancedSearch" class="btn btn-default" type="button">Apply</button>
+                <button id="resetAdvSearchBtn" aria-label="ResetAdvancedSearch" class="btn btn-default" type="button">Reset</button>
+                <button aria-label="Close" class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                <div class="progress hide" id="pdfprogress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                        <span class="sr-only"> </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+
+
+<div class="table-responsive">
+    <p id="list-loader" style="display: none;">
+        List Loading...
+    <br>
+        <img alt="loading" src="/static_files/assets/images/preload.gif">
+    </p>
+<table id="safetable" class="table table-stripped tablesorter tablesorter-blue">    
+    <thead> 
+        <tr>
+            <!--th class="col-md-1"><span class="hidden-xs">Status<span></th-->
+            <th class="col-md-5">Name</th>
+            <th class="col-md-4">Address</th>
+            <th  class="col-md-3">Services</th>
+        </tr>
+    </thead>    
+    <tbody></tbody>
+</table>
+</div>

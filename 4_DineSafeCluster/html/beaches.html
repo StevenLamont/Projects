@@ -1,0 +1,43 @@
+<h2> Swimming conditions as of: <span id='reportDate'></span></h2>
+<p class="leading">The public should not swim during and after storms, floods, or heavy rainfall. Cloudy water can be an indicator of high levels of bacteria that may pose a risk to human health.</p>
+<p class="leading">Conditions are based upon E. coli counts in beach water samples taken over the past 24 hours.</p>
+<div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12">
+        <input id="map-input" class="controls" type="text" placeholder="Search Box" style="height:32px;margin-top: 10px">
+
+        <div style="height: 600px; width: 100%;" >
+        <div id="map-wrapper">
+        <div id="map-canvas" style="height: 600px; width: 100%;"></div>
+        <p id="map-loader" style="display: none;">
+                Loading...
+                <br>
+                <img alt="loading" src="/static_files/assets/images/preload.gif">
+            </p>
+        </div>           
+        </div>
+
+    </div>
+</div>
+<div class="row">
+	<div class="boxed_content col-md-12">
+
+		
+		
+		<div id="map_legend">
+			<p class="leading">Legend:</p>
+				
+			<ul>
+				<li><img width="21" height="18" src="http://app.toronto.ca/tpha/images/blueflag_small.png"> <a href="http://www.toronto.ca/health/swimsafe/beaches_blueflag.htm">Blue Flag Beach</a></li>
+				<li><img width="18" height="18" src="http://maps.google.com/mapfiles/ms/icons/green.png"> <a href="http://www.toronto.ca/health/swimsafe/beaches_about.htm">Safe to swim</a></li>
+				<li><img width="18" height="18" src="http://maps.google.com/mapfiles/ms/icons/red.png"> <a href="http://www.toronto.ca/health/swimsafe/beaches_about.htm">Unsafe to swim</a></li>
+				<li><img width="18" height="18" src="http://app.toronto.ca//tpha/images/beaches_nodata_small.gif"> <a href="http://www.toronto.ca/health/swimsafe/beaches_about.htm">Data not available</a></li>
+			</ul>
+		</div>
+		<ol id="list_of_beaches"></ol>
+		
+	</div>
+</div>	
+
+
+<p id='beachHistoryLink'><a href='javascript:var ref =window.location.href + "&history=true"; window.location.href = ref;'>View past swimming condition for all beaches</a></p>
+

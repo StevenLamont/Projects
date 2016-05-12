@@ -1,0 +1,294 @@
+ <div class="row">
+    <div class="col-xs-12 col-sm-12">
+        <div>
+            <input id="map-input" class="controls" type="text" placeholder="Search Box" style="height:32px;margin-top: 10px">
+            <input id="resetMap" class="resetMap" type="button" value="Reset Map" />
+            <div style="height: 468px; width: 100%;" >
+            <div id="map-wrapper">
+            <div id="map-canvas" style="height: 468px; width: 100%;"></div>
+            <p id="map-loader" style="display: none;">
+                Loading...
+                <br>
+                <img alt="loading" src="/static_files/assets/images/preload.gif">
+            </p>
+            </div>
+
+            <div id="legend" class="customControl mapLegend">
+                <div class="customButton">
+                <p class="leading"><strong>Legend:</strong></p>
+                <ul>
+                <li><img alt="pass" src="/static_files/WebApps/Health/DineSafe/images/map/marker_pass.png" height="17" width="17" /> Pass</li>
+                <li><img alt="Conditional Pass" src="/static_files/WebApps/Health/DineSafe/images/map/marker_conditional.png" height="17" width="17" /> Conditional Pass</li>
+                <li><img alt="Closed" src="/static_files/WebApps/Health/DineSafe/images/map/marker_close.png" height="17" width="17" /> Closed</li>
+                <li><img alt="Multiple Estabishments" src="/static_files/WebApps/Health/DineSafe/images/map/marker_multi.png" height="17" width="17" /> Multiple Facilities</li>
+                </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+ </div>
+<div class="modal fade" id="inspectionDetails" tabindex="-1" role="dialog" aria-labelledby="InspectionDetails" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="container-fluid">
+                <div class="modal-header"><button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">×</span> <span class="sr-only">Close</span></button>
+                    <h2 class="modal-title">Inspection Details</h2>
+        
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h2 id="estName" class="leading">Inspection Results</h2>
+                            <p id="estAddress">address to be replace</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p style="font-weight:bold" id="estType">estType</p>
+                            <a id="numInspTT" href="#" class="cluetip" data-toggle="tooltip">Minimum number of inspections: <span id='minInspection'></span></a>
+                            <p>
+                            <a id="submitComplaintId" href="#">Submit a complaint</a> about this establishment
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body">
+                <h2  class="modal-title">Inspection Results</h2>
+                <p>This establishment was inspected by Toronto Public Health in accordance with the Ontario Food Premises Regulation.</p>
+                <div id="inspections"></div>
+                </div>
+                <div class="modal-footer lrButtons">
+                    <button aria-label="Close" class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>  
+    </div> 
+</div>
+
+
+<div class="col-xs-12 col-sm-12">
+    <div id="numPagination" class="allPagination">
+        <nav class="navStyle pull-left" id="numberPageSelection"></nav> 
+        <div id="PageSummary">
+        <div id="PageStatus"style="float:right;vertical-align: middle;">
+            <span id="RowStart">1</span> to <span id="RowEnd">10</span> of <span id="TotalRows">100</span> records | Show 
+            <span style="display: inline-block;">
+                <select id="pageSize"  name="pageSize">
+                    <option selected="selected" value="10" >10</option>
+                    <option value="25" >25</option>
+                    <option value="100" >100</option>
+                </select>
+            </span>
+            <span>per page</span>
+        </div>
+        </div>
+    </div>  
+</div>
+
+<div class="clearfix"></div>
+    
+
+
+        <div class="col-xs-12 col-sm-12 col-md-3">
+            <div class="has-feedback" >
+                <input class="form-control hasclear searchString" id="estSearch" type="text" placeholder="Facility Name">
+                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+            </div>
+		</div>
+        <div class="col-xs-12 col-sm-12 col-md-3">
+            <div class="has-feedback" >
+                <input class="form-control hasclear searchString" id="addrSearch" type="text" placeholder="Facility Address">
+                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+            </div>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-6">
+             <div class="input-group  input-group-btn" >
+                    <button id="searchBtn" class="btn btn-default" type="button">   
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+                    <!-- need a sr-only lable for button I think.. maybe not since htere is a butron -->
+                    </button>
+            </div>
+
+            <div id="advSearchBtnGroup" class="input-group input-group-btn">
+                <button id="advSearchBtn" class="btn btn-default" type="button" data-toggle="modal" data-target="#modalSearch">   
+                <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Adv. Search
+                </button>
+            </div>
+
+            <div id="advSearchResetGroup" class="input-group input-group-btn collapse">
+                <button id="resetBtn" class="btn btn-default " type="button">   
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reset
+                </button>
+            </div>   
+		</div>      
+
+<div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="AdvancedSearch" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">×</span> <span class="sr-only">Close</span></button>
+                <h2 class="modal-title">Advanced Search Options</h2>
+            </div>
+            <div id="advSearchDiv" class="modal-body">
+                <form id="advSearchForm" class="selectAdvSearch">
+                        
+                    <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-8">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Facility Type</span>
+                                <select id="facTypeFilter" class="form-control filterSelect" name="statusFilter" multiple="multiple">
+								<!--
+                                    <option value="OUTDOOR_POOL" selected="selected">OutDoor Pool</option>
+                                    <option value="INDOOR_POOL" selected="selected">Indoor Pool</option>
+                                    <option value="OUTDOOR_SPA" selected="selected">Outdoor Spa</option>
+                                    <option value="INDOOR_SPA" selected="selected">Indoor Spa</option>
+								-->
+                                </select>
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+ 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-8">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Access</span>
+                                <select id="accFilter" class="form-control filterSelect" name="statusFilter" multiple="multiple">
+									<!--
+                                    <option value="PUBLIC" selected="selected">Public</option>
+                                    <option value="SCHOOL" selected="selected">School</option>
+                                    <option value="RESTRICTED" selected="selected">Restricted</option>
+									-->
+                                </select>
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+ 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-8">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Status</span>
+                                <select id="statusFilter" class="form-control filterSelect" name="statusFilter" multiple="multiple">
+									<!--
+                                    <option value="SATISFACTORY" selected="selected">Pass</option>
+                                    <option value="REINSPECTION" selected="selected">Conditional Pass</option>
+                                    <option value="CLOSED" selected="selected">Closed</option>
+									-->
+                                </select>
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+ 
+                            </div>
+                        </div>
+                        
+                        <div class="checkbox col-xs-12 col-sm-12 col-md-4">
+                            <label><input id="incHistory" type="checkbox" value="">Include History</label>
+                        </div>                  
+                        
+                    </div> 
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="input-group">
+                                <!-- api only supports one ward -->
+                                <span class="srchLabel1 input-group-addon">Ward</span>
+                                <select id="wardFilter" class="form-control " name="wardFilter"  multiple="multiple">
+								<!--
+                                <option selected="selected" value="0">All</option>
+                                <option value="1">1 - Etobicoke North</option>
+                                <option value="2">2 - Etobicoke North</option>
+                                <option value="3">3 - Etobicoke Centre</option>
+                                <option value="4">4 - Etobicoke Centre</option>
+                                <option value="5">5 - Etobicoke-Lakeshore</option>
+                                <option value="6">6 - Etobicoke-Lakeshore</option>
+                                <option value="7">7 - York West</option>
+                                <option value="8">8 - York West</option>
+                                <option value="9">9 - York Centre</option>
+                                <option value="10">10 - York Centre</option>
+                                <option value="11">11 - York South-Weston</option>
+                                <option value="12">12 - York South-Weston</option>
+                                <option value="13">13 - Parkdale-High Park</option>
+                                <option value="14">14 - Parkdale-High Park</option>
+                                <option value="15">15 - Eglinton-Lawrence</option>
+                                <option value="16">16 - Eglinton-Lawrence</option>
+                                <option value="17">17 - Davenport</option>
+                                <option value="18">18 - Davenport</option>
+                                <option value="19">19 - Trinity-Spadina</option>
+                                <option value="20">20 - Trinity-Spadina</option>
+                                <option value="21">21 - St. Paul's</option>
+                                <option value="22">22 - St. Paul's</option>
+                                <option value="23">23 - Willowdale</option>
+                                <option value="24">24 - Willowdale</option>
+                                <option value="25">25 - Don Valley West</option>
+                                <option value="26">26 - Don Valley West</option>
+                                <option value="27">27 - Toronto Centre-Rosedale</option>
+                                <option value="28">28 - Toronto Centre-Rosedale</option>
+                                <option value="29">29 - Toronto-Danforth</option>
+                                <option value="30">30 - Toronto-Danforth</option>
+                                <option value="31">31 - Beaches-East York</option>
+                                <option value="32">32 - Beaches-East York</option>
+                                <option value="33">33 - Don Valley East</option>
+                                <option value="34">34 - Don Valley East</option>
+                                <option value="35">35 - Scarborough Southwest</option>
+                                <option value="36">36 - Scarborough Southwest</option>
+                                <option value="37">37 - Scarborough Centre</option>
+                                <option value="38">38 - Scarborough Centre</option>
+                                <option value="39">39 - Scarborough-Agincourt</option>
+                                <option value="40">40 - Scarborough Agincourt</option>
+                                <option value="41">41 - Scarborough-Rouge River</option>
+                                <option value="42">42 - Scarborough-Rouge River</option>
+                                <option value="43">43 - Scarborough East</option>
+                                <option value="44">44 - Scarborough East</option>
+								-->
+                                </select>                                   
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>
+                    
+                    </div>
+                    
+
+                    <h3>Historical Data</h3>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="input-daterange input-group" id="datepicker">
+                            <span class="srchLabel1 input-group-addon">Inspection Dates</span>
+                                <div>
+                                <p class="input-group input-daterange"><span id="dpd1s" onclick="$( '#dateFrom' ).focus();" class="input-group-addon small"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span><input id="dateFrom" class="input-sm form-control datepicker" type="text" placeholder="From: mm/dd/yyyy" name="start" /></p>
+                                <p class="input-group input-daterange"><span id="dpd2s" onclick="$( '#dateTo' ).focus();" class="input-group-addon small"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span><input id="dateTo" class="input-sm form-control datepicker" type="text" placeholder="To: mm/dd/yyyy" name="end" /></p>
+                                </div>
+                            </div>
+                        <p>Inspection details are only available for the past 2 years.</p>
+                        </div>
+                    </div>
+                    
+                </form>
+
+                    
+                    
+                <div class="pleaseWait hide">
+                    <p>Please wait while your PDF is generated.  Depending on your computer speed this could take up to 60 seconds.</p>
+                </div>
+            </div>
+            <div class="modal-footer lrButtons">
+                <button id="advSearchApplyBtn" aria-label="AdvancedSearch" class="btn btn-default" type="button">Apply</button>
+                <button id="resetAdvSearchBtn" aria-label="ResetAdvancedSearch" class="btn btn-default" type="button">Reset</button>
+                <button aria-label="Close" class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                <div class="progress hide" id="pdfprogress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                        <span class="sr-only"> </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+
+<div class="table-responsive">
+<table id="listingTable" class="table table-stripped tablesorter tablesorter-blue">    
+    <thead> 
+        <tr>
+            <th class="col-md-4">Name</th>
+            <th class="col-md-3">Address</th>
+            <th class="col-md-5">Facility <span class='accHdr'>Access</span></th>
+		</tr>
+    </thead>    
+    <tbody></tbody>
+</table>
+</div>

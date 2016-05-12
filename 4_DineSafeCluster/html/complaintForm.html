@@ -1,0 +1,62 @@
+
+        
+<div class="modal fade" id="modalComplaint" tabindex="-1" role="dialog" aria-labelledby="Complaints" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">×</span> <span class="sr-only">Close</span></button>
+                <h2 class="modal-title">Food Premises Complaint Form</h2>
+				All complaints related to a Toronto food establishment can be made using this form.
+            </div>
+
+			<form id="complaintForm" name="complaintForm" data-fv-autofocus="true" >
+             <div class="panel panel-default">
+           		<div class="panel-heading"><h3><span class="glyphicon glyphicon-th-large green"> </span> Food Establishment Information</h3></div>              
+                <div class="panel-body"> 
+                    <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                            <div><label class="control-label" for="cmpEstName">Establishment Name: </label>				
+                            <input class="form-control" type="text" id="cmpEstName" name="cmpEstName" title="Establishment Name" placeholder="Establishment Name">
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                            <div><label class="control-label" for="cmpEstAddr">Establishment Address </label>
+                            <input class="form-control" type="text" id="cmpEstAddr" name="cmpEstAddr" title="Address" placeholder="Address">
+                            </div>
+                        </div>				
+				
+                        <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                            <div><label class="control-label" for="cmpSubmission">Your Comments</label>				
+								<textarea class="form-control" type="text" id="cmpSubmission" name="cmpSubmission" title="Complaint Submission" rows="4"></textarea> 									
+							</div>
+						</div>
+                        <p><span class="pull-right" id="cmpCntMsg">1200 Characters Left</span></p>
+                        
+                    <div class="col-xs-12 col-sm-12 col-md-12 form-group">
+                        <div><label class="control-label" for="cmpSubmitterName">Name : </label>             
+                            <input class="form-control" type="text" id="cmpSubmitterName" name="cmpSubmitterName" title="Submitter's Name" placeholder="Optional">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 form-group">
+                        <div><label class="control-label" for="cmpEmail">Email: </label>               
+                            <input class="form-control" type="text" id="cmpEmail" name="cmpEmail" title="Email Address" placeholder="Optional">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6 form-group">
+                        <div><label class="control-label" for="cmpPhoneNumber">Phone Number: </label>
+                            <input class="form-control" type="text" id="cmpPhoneNumber" name="cmpPhoneNumber" title="Phone Number" placeholder="Optional">
+                        </div>
+                    </div>
+    
+                </div>	
+				<input id="cmpWCMForms_Name" class="form-control" name="WCMForms_Name"> 
+				<div class="modal-footer lrButtons">
+					<button id="cmpSubmitBtn" aria-label="Submit" class="btn btn-default" type="button">Submit</button>
+					<button id="cmpClearBtn" aria-label="ResetForm" class="btn btn-default" type="button">Reset</button>
+					<button aria-label="Close" class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>	
+
+

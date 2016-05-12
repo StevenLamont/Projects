@@ -1,0 +1,1 @@
+xcopy *.html D:\_Projects\static_files\WebApps\Health\DineSafe\html\

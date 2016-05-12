@@ -1,0 +1,40 @@
+<div class="row">
+
+	<div class='col-md-12'> 
+		<div class='row'>
+			<div class='col-xs-6 col-sm-6 col-md-5'><div id='beachName'></div><div id='beachAddress'></div></div>
+			<div class='col-xs-3 col-sm-3 col-md-2'><img id="statusImage" alt="" src="" ></div>
+			<div class='col-xs-3 col-sm-3 col-md-2'><img id='blueFlag' alt="Blue Flag" src="/static_files/WebApps/Health/SwimSafe/images/beaches_blueflag_l.png"></div>		
+		</div>
+		<div class='row'><div class='col-md-12' id='beachAddress'></div></div>
+		<table class="table table-bordered"><tbody>
+			<tr><td class='colhdr'>Sampled on:</td><td id='sampleDate'></td></tr>
+			<tr><td class='colhdr'>Posted on:</td><td id='postedDate'></td></tr>
+			<tr><td class='colhdr'>E. coli count:</td><td id='ecolicount'></td></tr>
+			<tr><td class='colhdr'>Advisory:</td><td id='advisory'></td></tr>
+		</tbody></table>
+		<p>Conditions are based upon E. coli counts in beach water samples taken over the past twenty-four hours.</p>
+	</div>
+
+</div>
+
+<div id='alert' class="alert alert-warning" role="alert">Reporting is closed until June 2016</div>
+<div class="row">
+<img id='beachMapImage' class='centeredImg' alt="Park Mage Image" src="" >
+</div>
+<div id='yearContainer' class="row beachHistory"><div class='col-md-10'> 
+<span>Swimming conditions history:  
+
+<select id="yearFilter" class="form-control dataFilter " name="yearFilter" >
+					<option value="0000" selected="selected">Select Year</option>
+                    <option value="2016">2016</option>
+                    <option value="2015">2015</option>
+                    <option value="2014">2014</option>
+                    <option value="2013">2013</option>
+                    <option value="2012">2012</option>
+                </select>
+</div>
+</div>
+
+<div id="historyRow"></div>
+
