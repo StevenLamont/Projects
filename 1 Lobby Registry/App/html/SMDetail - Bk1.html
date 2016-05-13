@@ -1,0 +1,393 @@
+<section>
+<h1>Subject Matter Number</h1>
+</section>
+
+
+
+<section >
+
+<h2 class="SMConsultant">Consultant lobbyist subject matter registration</h2>
+<h2 class="SMIn-house">In-house lobbyist subject matter registration</h2>
+<table class="detailPageTable">
+    <tr class="labelRow">
+        <td style="width:25%">Subject Matter Registration Number</td>
+        <td style="width:25%">Subject Matter Registration Status</td>
+        <td style="width:25%">Initial subject matter registration approval date</td>
+        <td style="width:25%">Most recent subject matter registration approval date(eff Date?)</td>
+    </tr>
+    <tr>
+        <td style="width:25%" id="SMNumber">RegNo</td>
+        <td style="width:25%" id="Status" >RegNo</td>
+        <td style="width:25%" id="InitialApprovalDate">EffDate</td>
+        <td style="width:25%" id="EffectiveDate">EffDate</td>
+    </tr>
+ </table>
+
+<!--
+<div class="row">
+    <div class="col-md-6">Subject Matter Registration Number</div>
+    <div id="SMNumber" class="col-md-6">Subject Matter No</div>
+    <div class="col-md-6">Subject Matter Registration Status</div>
+    <div id="Status" class="col-md-6">Status</div>
+    <div class="col-md-6">Initial subject matter registration approval date</div>
+    <div id="InitialApprovalDate" class="col-md-6">InitialApprovalDate</div>
+    <div class="col-md-6">Most recent subject matter registration approval date(eff Date?)</div>
+    <div id="EffectiveDate" class="col-md-6">EffectiveDate</div>
+
+</div>
+-->
+<h2 class="SMIn-house">Senior Officer</h2>
+<h2 class="SMConsultant">Consultant Lobbyist</h2>
+<table class="detailPageTable">
+    <tr class="labelRow">
+        <td>Lobbyist Registration Number</td>
+        <td>Lobbyist Registration Status</td>
+        <td>Most recent lobbyist registration approval date(eff Date)</td>
+    </tr>
+    <tr>
+        <td id="R_RegistrationNUmberWithSoNum">RegNo</td>
+        <td id="R_Status">RegNo</td>
+        <td id="R_EffectiveDate">EffDate</td>
+    </tr>
+    <tr class="labelRow SMIn-house">
+        <td colspan="3">Senior Officer's Name</td>
+    </tr>
+    <tr class="labelRow SMConsultant">
+        <td colspan="3">Consultants's Name</td>
+    </tr>
+    <tr>
+        <td id="R_LobbyistName">LobbyistName</td>
+    </tr>
+    <tr class="labelRow">
+        <td colspan="3">Position Title</td>
+    </tr>
+    <tr>
+        <td id="R_PositionTitle">Position Title</td>
+    </tr>
+ </table>
+
+<!--
+<div class="row">
+    <div class="col-md-6">Lobbyist Registration Number</div>
+    <div id="R_RegistrationNUmberWithSoNum" class="col-md-6">RegistrationNUmberWithSoNum</div>
+    <div class="col-md-6">Lobbyist Registration Status</div>
+    <div id="R_Status" class="col-md-6">Status</div>
+    <div class="col-md-6">Most recent lobbyist registration approval date(eff Date) </div>
+    <div id="R_EffectiveDate" class="col-md-6">Effective Date</div>
+
+    <div class="col-md-6">Lobbyist's Name</div>
+    <div id="R_LobbyistName" class="col-md-6">Effective Date</div>
+    <div class="col-md-6">Position Title</div>
+    <div id="R_PositionTitle" class="col-md-6">Effective Date</div>
+-->
+    <div class="SMConsultant">
+        <div class="col-md-6">Previous senior public office positon held with the City of Toronto in the past 12 months?</div>
+        <div id="R_PreviousPublicOfficeHolder" class="col-md-6">PreviousPublicOfficeHolder</div>
+        <div class="col-md-6">Business address</div>
+        <div class="R_BusinessAddress" class="col-md-6">BusinessAddress</div>
+
+        <div class="col-md-6">City, Province</div>
+        <div class="R_CityProvince" class="col-md-6">BusinessAddress</div>
+
+        <div class="col-md-6">Country, Postal</div>
+        <div class="R_CountryPostal" class="col-md-6">CountryPostal</div>
+
+        <div class="col-md-6">Telephone</div>
+        <div class="R_Phone" class="col-md-6">Phone</div>
+    </div>
+
+    </div>
+
+    
+<h2 class="SMConsultant SMIn-house"> Business / Organization</h2>
+<table class="detailPageTable">
+    <tr class="labelRow">
+        <td>Business/ organization name</td>
+        <td>Other trade names used</td>
+        <td>Business/ organization type</td>
+    </tr>
+    <tr>
+        <td id="F_Name">Business/ organization name</td>
+        <td id="F_TradeName">Other trade names used</td>
+        <td id="F_BusinessType">Business/ organization type</td>
+    </tr>
+    <tr class="labelRow">
+        <td>Business Address</td>
+        <td>City, Province</td>
+        <td>Country, Postal</td>
+    </tr>
+    <tr>
+        <td class="R_BusinessAddress">BusinessAddress</td>
+        <td class="R_CityProvince">CityProv</td>
+        <td class="R_CountryPostal">CountryPostal</td>
+    </tr>
+    <tr class="labelRow">
+        <td colspan="3">Description of business activities</td>
+    </tr>
+    <tr>
+        <td colspan="3" id="F_Description">Description</td>
+    </tr>
+    <tr class="labelRow">
+        <td colspan="3">Fiscal year of the business/organization</td>
+    </tr>
+    <tr>
+        <td>Start</td>
+        <td>End</td>
+    </tr>
+    <tr>
+        <td id="F_FiscalStart">Start</td>
+        <td id="F_FiscalEnd">End</td>
+    </tr>
+</table>
+<!--
+<div class="FirmSectionSMIn-house row">
+   <div class="col-md-6">Business/ organization name</div>
+    <div id="F_Name" class="col-md-6">Name</div>
+
+    <div class="col-md-6">Other trade names used</div>
+    <div id="F_TradeName" class="col-md-6">TradeName</div>
+
+    <div class="col-md-6">Business/ organization type</div>
+    <div id="F_BusinessType" class="col-md-6">Business Type</div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">Business address</div>
+    <div class="R_BusinessAddress" class="col-md-6">BusinessAddress</div>
+
+    <div class="col-md-6">City, Province</div>
+    <div class="R_CityProvince" class="col-md-6">BusinessAddress</div>
+
+    <div class="col-md-6">Country, Postal</div>
+    <div class="R_CountryPostal" class="col-md-6">CountryPostal</div>
+</div>
+
+<div class="FirmSection SMIn-house row">
+   <div class="col-md-6">Description of business activities</div>
+    <div id="F_Description" class="col-md-6">Name</div>
+
+    <div class="col-md-6">  Fiscal year of the business/organization</div>
+    <div id="F_FiscalStart" class="col-md-6">Start</div>
+
+    <div class="col-md-6">Business/ organization type</div>
+    <div id="F_FiscalEnd" class="col-md-6">End</div>
+</div>
+
+-->
+
+
+<h2>Subject matter: <span id="SubjectMatter"></span></h2>   
+<table class="detailPageTable">
+    <tr class="labelRow">
+        <td colspan="3">Decision(s) or issue(s) to be lobbied</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="3" id="Particulars">Particulars</td>
+    </tr>
+    <tr class="labelRow">
+        <td colspan="3">Time period for lobbying on this subject matter</td>
+
+    </tr>
+    <tr>
+        <td>Proposed Start Date</td>
+        <td>Proposed End Date</td>
+        <td> </td>
+    </tr>
+    <tr>
+        <td id="ProposedStartDate" >Proposed Start Date</td>
+        <td id="ProposedEndDate" >Proposed Start Date</td>
+        <td> </td>
+    </tr>
+</table>
+<!--
+<h3>Time period for lobbying on this subject matter</h3>
+<div class="row">
+    <div class="col-md-6">Proposed Start Date</div>
+    <div id="ProposedStartDate" class="col-md-6">Proposed Start Date</div>
+    <div class="col-md-6">Proposed End Date</div>
+    <div id="ProposedEndDate" class="col-md-6">Proposed End Date</div>
+    
+</div>
+-->
+<!--
+<div class="row">
+    <div class="col-md-6">  Decision(s) or issue(s) to be lobbied</div>
+    <div id="Particulars" class="col-md-6">Particulars</div>
+    
+    
+</div>
+-->
+<div id="SubjectMatterSection" class="SMIn-house">
+    <h2 >In-house lobbyists lobbying on this subject matter</h2>
+    <table class="detailPageTable">
+	<!--
+    <thead>
+    <tr class="labelRow">
+    <th>In-house lobbyist's name</th>
+    <th>lobbyist registration number</th>
+    <th>Position title</th>
+    <th>Business address</th>
+    <th>City, Province</th>
+    <th>Country, Postal Code</th>
+    <th>Phone</th>
+    <th>Has this in-house lobbyist held a senior public office position with the City of Toronto in the past 12 months?</th>
+    </tr>
+    </thead>
+	-->
+    <tbody>
+    </tbody>
+    </table>
+</div>  
+
+
+
+<div id="ClientSection">
+    <h2 class="Client">Client</h2>
+    <div class="row">
+        <div class="col-md-6">Name</div>
+        <div id="C_Name" class="col-md-6">Name</div>
+        <div class="col-md-6">Trade Name</div>
+        <div id="C_TradeName" class="col-md-6">Trade Name</div>
+    
+    </div>
+    <div class="row">
+        <div class="col-md-6">Business address</div>
+        <div id="C_BusinessAddress" class="col-md-6">Address</div>
+
+        <div class="col-md-6">City, Province</div>
+        <div id="C_CityProvince" class="col-md-6">CityProvince</div>
+
+        <div class="col-md-6">Country, Postal</div>
+        <div id="C_CountryPostal" class="col-md-6">CountryPostal</div>
+    </div>
+</div>  
+<div id="OtherBeneficiariesSection">
+    <h2 class="Client">Other Beneficiaries</h2>
+    <div class="row">
+        <div class="col-md-6">Name</div>
+        <div id="C_Name" class="col-md-6">Name</div>
+        <div class="col-md-6">Trade Name</div>
+        <div id="C_TradeName" class="col-md-6">Trade Name</div>
+    
+    </div>
+    <div class="row">
+        <div class="col-md-6">Business address</div>
+        <div id="C_BusinessAddress" class="col-md-6">Address</div>
+
+        <div class="col-md-6">City, Province</div>
+        <div id="C_CityProvince" class="col-md-6">CityProvince</div>
+
+        <div class="col-md-6">Country, Postal</div>
+        <div id="C_CountryPostal" class="col-md-6">CountryPostal</div>
+    </div>
+</div>  
+
+<div id="PrivateFundingSection">
+    <h2 class="Client">Private Contributions (non-government)</h2>
+    <div class="row">
+        <div class="col-md-6">Name</div>
+        <div id="C_Name" class="col-md-6">Name</div>
+        <div class="col-md-6">Trade Name</div>
+        <div id="C_TradeName" class="col-md-6">Trade Name</div>
+    
+    </div>
+    <div class="row">
+        <div class="col-md-6">Business address</div>
+        <div id="C_BusinessAddress" class="col-md-6">Address</div>
+
+        <div class="col-md-6">City, Province</div>
+        <div id="C_CityProvince" class="col-md-6">CityProvince</div>
+
+        <div class="col-md-6">Country, Postal</div>
+        <div id="C_CountryPostal" class="col-md-6">CountryPostal</div>
+    </div>
+</div>  
+
+<div id="GovernmentFundingSection">
+    <h2 class="Client">Government Funding</h2>
+    <div class="row">
+        <div class="col-md-6">Name</div>
+        <div id="C_Name" class="col-md-6">Name</div>
+        <div class="col-md-6">Trade Name</div>
+        <div id="C_TradeName" class="col-md-6">Trade Name</div>
+    
+    </div>
+    <div class="row">
+        <div class="col-md-6">Business address</div>
+        <div id="C_BusinessAddress" class="col-md-6">Address</div>
+
+        <div class="col-md-6">City, Province</div>
+        <div id="C_CityProvince" class="col-md-6">CityProvince</div>
+
+        <div class="col-md-6">Country, Postal</div>
+        <div id="C_CountryPostal" class="col-md-6">CountryPostal</div>
+    </div>
+</div>  
+
+<div id="CommunicationsSection">
+    <h2>Public Office Holders and Communication Methods</h2>
+    <table class="detailPageTable">
+	<!--
+    <thead>
+    <tr>
+    <th>Public Office Holder Type</th>
+    <th>Name or Position Title</th>
+    <th>Ward, Office, Division or Agency</th>
+    <th>Communication Date</th>
+    <th>Meetings Arranged</th>
+    <th>Communication Methods Used</th>
+    </tr>
+    </thead>
+	-->
+    <tbody>
+    </tbody>
+    </table>
+</div>  
+
+<div id="MeetingsSection">
+    <h2>Comittee Methods</h2>
+    <div class="row">
+        <div class="col-md-6">Name</div>
+        <div id="C_Name" class="col-md-6">Name</div>
+        <div class="col-md-6">Trade Name</div>
+        <div id="C_TradeName" class="col-md-6">Trade Name</div>
+    
+    </div>
+    <div class="row">
+        <div class="col-md-6">Business address</div>
+        <div id="C_BusinessAddress" class="col-md-6">Address</div>
+
+        <div class="col-md-6">City, Province</div>
+        <div id="C_CityProvince" class="col-md-6">CityProvince</div>
+
+        <div class="col-md-6">Country, Postal</div>
+        <div id="C_CountryPostal" class="col-md-6">CountryPostal</div>
+    </div>
+</div>  
+<div id="GrassRootsSection">
+    <h2>Grass-Roots Communication Method</h2>
+    <div class="row">
+        <div class="col-md-6">Name</div>
+        <div id="C_Name" class="col-md-6">Name</div>
+        <div class="col-md-6">Trade Name</div>
+        <div id="C_TradeName" class="col-md-6">Trade Name</div>
+    
+    </div>
+    <div class="row">
+        <div class="col-md-6">Business address</div>
+        <div id="C_BusinessAddress" class="col-md-6">Address</div>
+
+        <div class="col-md-6">City, Province</div>
+        <div id="C_CityProvince" class="col-md-6">CityProvince</div>
+
+        <div class="col-md-6">Country, Postal</div>
+        <div id="C_CountryPostal" class="col-md-6">CountryPostal</div>
+    </div>
+</div>  
+
+
+
+</section>
+

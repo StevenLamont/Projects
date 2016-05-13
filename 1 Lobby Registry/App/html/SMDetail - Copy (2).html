@@ -1,0 +1,321 @@
+
+<section >
+<h1>Subject Matter Details</h1>
+<div class="panel-group" id="regAccordion">
+    <div class="panel panel-info">
+        <header class="panel-heading" data-toggle="collapse" data-parent="#regAccordion" data-target="#RegSection">
+            <h2 class="panel-title accordion-toggle">
+				<span class="SMConsultant">Consultant Lobbyist Subject Matter Registration: </span>
+				<span class="SMIn-house">In-house Lobbyist Subject Matter Registration: </span>
+				<span class="SMVoluntary">Voluntary Lobbyist Subject Matter Registration: </span>
+				<span class="accoridion-supdetail SMNumber">
+			</h2>
+        </header>  
+        <div id="RegSection" class="panel-collapse collapse in table-responsive">        
+		
+            <table class="detailPageTable panel-body table">
+				<tr class="labelRow">
+					<td style="width:25%">Registration Number</td>
+					<td style="width:25%">Status</td>
+					<td style="width:25%">Initial Approval Date</td>
+					<td style="width:25%">Most Recent Approval Date</td>
+				</tr>
+				<tr>
+					<td style="width:25%" class="SMNumber">RegNo</td>
+					<td style="width:25%" class="Status" >Status</td>
+					<td style="width:25%" class="InitialApprovalDate">InitApproval</td>
+					<td style="width:25%" class="EffectiveDate">Recent</td>
+				</tr>
+			</table>         
+			
+        </div>
+    </div>
+</div>
+
+ 
+ <div class="panel-group" id="lobAccordion">
+    <div class="panel panel-info">
+        <header class="panel-heading" data-toggle="collapse" data-parent="#lobAccordion" data-target="#LobSection">
+            <h2 class="panel-title accordion-toggle">
+                <span class="SMIn-house">Senior Officer: </span>
+                <span class="SMConsultant">Consultant Lobbyist: </span>
+                <span class="SMVoluntary">Voluntary Lobbyist: </span>  
+				<span class="accoridion-supdetail R_LobbyistName">				
+            </h2>
+            
+        </header>  
+        <div id="LobSection" class="panel-collapse collapse in table-responsive">        
+            <table class="detailPageTable panel-body table">
+                <tr class="labelRow">
+                    <td>Lobbyist Registration Number</td>
+                    <td>Status</td>
+                    <td>Most Recent Approval date(eff Date??)</td>
+                </tr>
+                <tr>
+                <td id="R_RegistrationNUmberWithSoNum">RegNo</td>
+                <td id="R_Status">RegNo</td>
+                <td id="R_EffectiveDate">EffDate</td>
+                </tr>
+                <tr class="labelRow SMIn-house">
+                    <td colspan="3">Senior Officer's Name</td>
+                </tr>
+                <tr class="labelRow SMConsultant SMVoluntary">
+                    <td colspan="3">Lobbyist's Name</td>
+                </tr>
+                <tr>
+                    <td class="R_LobbyistName">LobbyistName</td>
+                </tr>
+                <tr class="labelRow SMIn-house">
+                    <td colspan="3">Position Title</td>
+                </tr>
+
+                <tr class="labelRow SMConsultant SMVoluntary">
+                    <td colspan="1">Position Title</td>
+                    <td colspan="2">Previous senior public office positon held with the City of Toronto in the past 12 months?</td>
+                </tr>
+                <tr>
+                    <td id="R_PositionTitle">Position Title</td>
+                    <td class="SMConsultant SMVoluntary" id="R_PreviousPublicOfficeHolder">PrevPublicOffice</td>
+                </tr>
+
+                <tr class="labelRow SMConsultant SMVoluntary">
+                    <td>Business Address</td>
+                    <td>Phone</td>
+                </tr>
+                <tr class="SMConsultant SMVoluntary">
+                    <td class="R_Address">Address</td>
+                    <td class="R_Phone">Phone</td>
+                </tr>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+
+<div class="panel-group" id="boAccordion">
+    <div class="panel panel-info">
+        <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#boAccordion" data-target="#BOSection">
+            <h2 class="panel-title accordion-toggle">Business / Organization:  <span class="accoridion-supdetail F_Name"></h2>
+        </header>  
+        <div id="BOSection" class="panel-collapse collapse table-responsive">        
+            <table class="detailPageTable panel-body table">
+                <tr class="labelRow">
+                    <td>Business/Organization name</td>
+                    <td>Other Trade Names</td>
+                    <td>Business/Organization Type</td>
+                </tr>
+                <tr>
+                    <td class="F_Name">Business/Organization name</td>
+                    <td class="F_TradeName">Other trade names </td>
+                    <td class="F_BusinessType">Business/Organization type</td>
+                </tr>
+                <tr class="labelRow">
+                    <td colspan='3'>Address</td>
+                </tr>
+                <tr>
+                    <td colspan='3' class="R_Address">Address</td>
+                </tr>
+    <!--
+    <tr class="labelRow">
+        <td>Business Address</td>
+        <td>City, Province</td>
+        <td>Country, Postal</td>
+    </tr>
+    <tr>
+        <td class="R_BusinessAddress">BusinessAddress</td>
+        <td class="R_CityProvince">CityProv</td>
+        <td class="R_CountryPostal">CountryPostal</td>
+    </tr>
+    -->
+                <tr class="labelRow SMIn-house">
+                    <td colspan="3">Description of business activities</td>
+                </tr>
+                <tr class="SMIn-house">
+                    <td colspan="3" class="F_Description">Description</td>
+                </tr>
+                <tr class="labelRow SMIn-house">
+                    <td colspan="3">Fiscal year of the business/organization</td>
+                </tr>
+    <!--
+    <tr   class="SMIn-house">
+        <td>Start</td>
+        <td>End</td>
+    </tr>
+    <tr>
+        <td id="F_FiscalStart">Start</td>
+        <td id="F_FiscalEnd">End</td>
+    </tr>
+    -->
+                <tr><td  colspan="3"><span class="F_FiscalStart"></span> <span class="F_FiscalEnd"></span></td></tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="panel-group" id="smAccordion">
+    <div class="panel panel-info">
+        <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#smAccordion" data-target="#SubjectMatterSection">
+            <h2 class="panel-title accordion-toggle">Subject matter: <span class="accoridion-supdetail SubjectMatter"></span></h2>
+        </header>  
+        <div id="SubjectMatterSection" class="panel-collapse collapse table-responsive">        
+
+            <table class="detailPageTable panel-body table">
+                <tr class="labelRow">
+                    <td>Decision(s) or issue(s) to be lobbied</td>
+                </tr>
+                <tr>
+                    <td class="Particulars">Particulars</td>
+                </tr>
+                <tr class="labelRow">
+                    <td>Propsed time period for lobbying on this subject matter</td>
+                </tr>
+                <tr><td><span class="ProposedStartDate">Start</span><span class="ProposedEndDate">End</span></td></tr>
+            </table>            
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="panel-group" id="smlAccordion">
+    <div class="panel panel-info">
+        <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#smlAccordion" data-target="#SMLSection">
+            <h2 class="panel-title accordion-toggle">In-house lobbyists lobbying on this subject matter</h2>
+        </header>  
+        <div id="SMLSection" class="panel-collapse collapse table-responsive">        
+            <table class="detailPageTable table">
+            <tbody class="panel-body">
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+ 
+
+<div class="panel-group" id="clientAccordion">
+    <div class="panel panel-info">
+        <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#clientAccordion" data-target="#ClientSection">
+            <h2 class="panel-title accordion-toggle">Client: <span class="accoridion-supdetail C_Name">Client</span></h2>
+        </header>  
+        <div id="ClientSection" class="panel-collapse collapse table-responsive">        
+            <table class="detailPageTable panel-body table">
+                <tr class="labelRow">
+                    <td>Name</td>
+                    <td>Other Trade Names</td>
+                    <td>Address</td>
+                </tr>
+                <tr>
+                    <td class="C_Name">Client</td>
+                    <td class="C_TradeName">TradeName</td>
+                    <td id="C_Address">Address</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="panel-group" id="othbAccordion">
+    <div class="panel panel-info">
+        <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#othbAccordion" data-target="#OtherBeneficiariesSection">
+            <h2 class="panel-title accordion-toggle">Other Beneficiaries</h2>
+        </header>  
+        <div id="OtherBeneficiariesSection" class="panel-collapse collapse">        
+            <table class="detailPageTable table">
+            <tbody class="panel-body">
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+    
+<div class="panel-group" id="pfAccordion">
+    <div class="panel panel-info">
+        <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#pfAccordion" data-target="#PrivateFundingSection">
+            <h2 class="panel-title accordion-toggle">Private Contributions (non-government)</h2>
+        </header>  
+        <div id="PrivateFundingSection" class="panel-collapse collapse table-responsive">        
+            <table class="detailPageTable table">
+            <tbody class="panel-body">
+            </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="panel-group" id="gfAccordion">
+    <div class="panel panel-info">
+    <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#gfAccordion" data-target="#GovernmentFundingSection">
+        <h2 class="panel-title accordion-toggle">Government Funding</h2>
+    </header> 
+    <div id="GovernmentFundingSection" class="panel-collapse collapse table-responsive">
+        <table class="detailPageTable table" >
+        <tbody class="panel-body">
+        </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+
+<div class="panel-group" id="pohAccordion">
+    <div class="panel panel-info">
+    <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#pohAccordion" data-target="#CommunicationsSection">
+        <h2 class="panel-title accordion-toggle">Public Office Holders and Communication Methods</h2>
+    </header> 
+    <div id="CommunicationsSection" class="panel-collapse collapse table-responsive">
+        <table class="detailPageTable table" >
+        <tbody class="panel-body">
+        </tbody>
+        </table>
+    </div>
+    </div>
+</div>
+
+<div class="panel-group" id="grAccordion">
+    <div class="panel panel-info">
+        <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#grAccordion" data-target="#GrassRootsSection">
+            <h2 class="panel-title accordion-toggle">Grass-Roots Communication Method</h2>
+        </header> 
+        <div id="GrassRootsSection" class="panel-collapse collapse table-responsive">
+            <table class="detailPageTable table">
+                <thead>
+                    <tr class='labelRow'>
+                        <td>Groups asked to participate in your campaign</td>
+                        <td>Public office holders the groups are asked to contact</td>
+                        <td>Campaign Period</td>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody class="panel-body">
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="panel-group" id="meetAccordion">
+    <div class="panel panel-info">
+        <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#meetAccordion" data-target="#MeetingsSection">
+            <h2 class="panel-title accordion-toggle">Communication by Committees of the Organization</h2>
+        </header> 
+        <div id="MeetingsSection" class="panel-collapse collapse table-responsive">
+            <table class="detailPageTable table">
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</section>
+<section>
+<div class="media hidden-print">
+<hr>
+<span >Back to: </span>
+<a id="BackTo" href="#">Lobby Registry Search</a>
+</div>
+</section>
+
+
+

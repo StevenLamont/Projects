@@ -1,0 +1,444 @@
+<section>
+<h1>Search the Lobbyist Registry</h1>
+<p>This portion of the City of Toronto Website is being used for the purpose of disclosure of information contained in the City's Lobbyist Registry System (the "System") under Chapter 140, Lobbying, of the City of Toronto Municipal Code. This site is being made available to allow members of the public to readily obtain information regarding the activities of lobbyists involved in lobbying the City of Toronto.</p>
+</section>
+
+
+
+<section >
+
+    <div class="row lrButtons" id="lrServiceBar" data-container="body" data-html="true" data-toggle="tooltip" data-placement="top">    
+        <div class="col-xs-12 col-md-9">
+            
+            <div id="search" class="input-group has-feedback">
+            
+                <div>
+                    <input class="form-control" id="advSearchString" type="text" disabled="true" style="display:none;overflow: scroll-y;height:34px;" placeholder="Keyword Search"></input>
+                </div>
+                <div>
+                    <input class="form-control" id="searchString" type="text" placeholder="Keyword Search">
+                </div>
+                
+                <div class="input-group  input-group-btn" >
+                    <button id="searchBtn" class="btn btn-default" type="button">   
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+                    <!-- need a sr-only lable for button I think.. maybe not since htere is a butron -->
+                    </button>
+                </div>
+                <div id="advSearchBtnGroup" class="input-group input-group-btn">
+                    <button id="advSearchBtn" class="btn btn-default" type="button" data-toggle="modal" data-target="#modalSearch">   
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Advanced Search
+                    </button>
+                </div>
+                <div id="advSearchResetGroup" class="input-group input-group-btn collapse">
+                    <button id="resetBtn" class="btn btn-default " type="button">   
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span> Reset Search
+                    </button>
+                </div>				
+            </div>
+
+            
+        </div>
+        <div class="col-xs-12 col-md-3 indexreport">
+            <button class="btn btn-default pdfreport" onclick="generatePDF();"><span><img src="http://www1.toronto.ca/static_files/assets/images/icons/pdficon.png"></span> Create PDF Report</button>
+        </div>        
+    </div>
+</section>
+<section id="lr_nav">
+<div id="tabNavigation">
+    <nav class="hidden-xs hidden-sm visible-md visible-lg navbar-default" role="navigation">
+    <!--div class="container-fluid"-->
+        <!--div class="navbar-header"-->
+            <ul id="lr_categorytabs" class="nav nav-tabs">
+                <li class="active"><a title="Subject Matter Registrations"  class="lrCats" href="#SMRpt" id="SMRpt" data-toggle="tab">Subject Matter Registrations</a></li>
+                <li><a class="lrCats" title="Lobbyist Name" href="#LobbyRpt" id="LobbyRpt" data-toggle="tab">Lobbyist Name</a></li>
+                <!--li><a class="lrCats" href="#POHOffRpt" id="POHOffRpt" data-toggle="tab">POH Communication</a></li-->
+                <li><a class="lrCats" title="Public Office Holder Name"  href="#POHNameRpt" id="POHNameRpt" data-toggle="tab">POH Name</a></li>
+                <li><a class="lrCats" title="Public Office Holder Communications" href="#POHCommRpt" id="POHCommRpt" data-toggle="tab">POH Communication</a></li>
+                <li><a class="lrCats" title="Beneficiaries" href="#Benpt" id="BenRpt" data-toggle="tab">Beneficiaries</a></li>
+                <li><a class="lrCats" title="Clients/Businesses/Organizations" href="#BusOrgClientRpt" id="BusOrgClientRpt" data-toggle="tab">Client/Bus/Org</a></li>
+                <li><a class="lrCats" title="Financial Contributors" href="#FinRpt" id="FinRpt" data-toggle="tab">Financial Contributors</a></li>
+            </ul>
+        <!--/div-->
+    <!--/div-->
+    </nav>
+</div>
+</section>
+ <!--
+<p style="text-align: center;">
+<button id="nr-submit" class="btnbs btn-primary" onclick="reloadPage();">Submit</button>
+<button class="btnbs btn-default" onclick="resetFilters();">Reset</button>
+</p>
+-->
+    
+ 
+
+<!--style="table-layout: fixed;"-->
+
+
+    <div id="alphaPagination" class="allPagination">
+    
+        <nav class="navStyle"> 
+            <ul class="pagination">
+            <li>
+            <a href="#" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+            </a>
+            </li>
+            <li id="alpha-1"><a class="alphaIdx" href="#">#</a></li>
+            <li id="alpha-A"><a class="alphaIdx" href="#">A</a></li>
+            <li id="alpha-B"><a class="alphaIdx" href="#">B</a></li>
+            <li id="alpha-C"><a class="alphaIdx" href="#">C</a></li>
+            <li id="alpha-D"><a class="alphaIdx" href="#">D</a></li>
+            <li id="alpha-E"><a class="alphaIdx" href="#">E</a></li>
+            <li id="alpha-F"><a class="alphaIdx" href="#">F</a></li>
+            <li id="alpha-G"><a class="alphaIdx" href="#">G</a></li>
+            <li id="alpha-H"><a class="alphaIdx" href="#">H</a></li>
+            <li id="alpha-I"><a class="alphaIdx" href="#">I</a></li>
+            <li id="alpha-J"><a class="alphaIdx" href="#">J</a></li>
+            <li id="alpha-K"><a class="alphaIdx" href="#">K</a></li>
+            <li id="alpha-L"><a class="alphaIdx" href="#">L</a></li>
+            <li id="alpha-M"><a class="alphaIdx" href="#">M</a></li>
+            <li id="alpha-N"><a class="alphaIdx" href="#">N</a></li>
+            <li id="alpha-O"><a class="alphaIdx" href="#">O</a></li>
+            <li id="alpha-P"><a class="alphaIdx" href="#">P</a></li>
+            <li id="alpha-Q"><a class="alphaIdx" href="#">Q</a></li>
+            <li id="alpha-R"><a class="alphaIdx" href="#">R</a></li>
+            <li id="alpha-S"><a class="alphaIdx" href="#">S</a></li>
+            <li id="alpha-T"><a class="alphaIdx" href="#">T</a></li>
+            <li id="alpha-U"><a class="alphaIdx" href="#">U</a></li>
+            <li id="alpha-V"><a class="alphaIdx" href="#">V</a></li>
+            <li id="alpha-W"><a class="alphaIdx" href="#">W</a></li>
+            <li id="alpha-X"><a class="alphaIdx" href="#">X</a></li>
+            <li id="alpha-Y"><a class="alphaIdx" href="#">Y</a></li>
+            <li id="alpha-Z"><a class="alphaIdx" href="#">Z</a></li>            
+           <li>
+            <a href="#" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+            </a>
+            </li>
+        </ul>
+    </nav>
+
+  
+    </div>
+<div class="clearfix"></div>
+    <div id="numPagination" class="allPagination">
+
+        <nav class="navStyle pull-left" id="numberPageSelection"></nav>
+		 <select class="form-control pull-left" id="pageSize" name="pageSize">
+         <option selected="selected" value="10" >10</option>
+         <option value="25" >25</option>
+         <option value="100" >100</option>
+         </select>
+		<span id="PageStatus"style="float:right;vertical-align: middle;">Page <span id="PageNo">1</span> of <span id="NoPages">100</span> (<span id="TotalRows">100</span> records)</span>
+</div>
+<div class="clearfix"></div>
+<div class="table-responsive">        
+<table id="lobbytable"  class="table table-striped table-bordered tablesorter">
+    <thead>
+    <!-- these headers afe no longer used.. they are added via code
+    <tr id="SubjectMatterListingHdr">
+        <th class="col-md-2" id="SMLLobbyist">
+            <label  class="colHdr control-label">Lobbyist</label>
+        </th>
+        <th class="col-md-1" id="SMLLobbyistType">
+            <label  class="colHdr control-label">Lobbyist Type</label>
+        </th>
+        <th class="col-md-2" id="SMLPOHOfficeName">
+            <label class="colHdr control-label">POH Office</label>
+        </th>       
+        <th class="col-md-1" id="SMLPOHName">
+            <label class="colHdr control-label">POH Name</label>
+        </th>       
+        <th class="col-md-1" id="SMLPOHPosType">
+            <label class="colHdr control-label">POH Pos/Type</label>
+        </th>       
+        <th class="col-md-3" id="SMLGovAgency">
+            <label for="GovAgencySearch" class="colHdr control-label">Gov. Agency</label>
+        </th>       
+        <th class="col-md-2" id="SMLFunding">
+            <label class="colHdr control-label">Financial Contributors</label>
+        </th>       
+        <th class="col-md-3" id="SMLBeneficiary">
+            <label  class="colHdr control-label">Beneficiary</label>
+        </th>
+
+        <th class="col-md-2" id="SMLLobbyistNames">
+            <label  class="colHdr control-label">Lobbyist Name(s)</label>
+        </th>
+        <th class="col-md-2" id="SMLBusOrg">
+            <label  class="colHdr control-label">Business/Org</label>
+            
+        </th>    
+        <th class="col-md-1" id="SMLClient">
+            <label  class="colHdr control-label">Client</label>
+          </th>
+        <th class="col-md-2">
+            <label  class="colHdr control-label">Subject Matter</label>
+         </th>
+        
+        <th class="col-md-1">
+            <label  class="colHdr control-label">Status</label>
+        </th>
+        <th class="col-md-1" id="SMLInitFileDate">
+            <label  class="colHdr control-label">Initial Filing Date</label>
+		</th>
+	    <th class="col-md-1" id="SMLLobRegNo">
+            <label class="colHdr control-label">Lobbyist<br />Reg No.</label>
+
+        </th>
+	    <th class="col-md-1">
+            <label class="colHdr control-label">Subject<br />Matter No.</label>
+
+        </th>
+ 
+ </tr>
+ -->
+  
+</thead>
+<tbody>
+
+</tbody>
+</table>
+<p id="loader" style="display: none;">
+            Loading...
+        <br>
+            <img alt="loading" src="/static_files/assets/images/preload.gif">
+        </p>
+<div id="pdfWait" class="pleaseWait hide">
+    <p>Please wait while your PDF is generated.  Depending on your computer speed this could take up to 60 seconds.</p>
+</div>		
+</div>
+
+<div class="modal fade" id="modalData" tabindex="-1" role="dialog" aria-labelledby="AdvancedSearch" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        <div id="smdata" >
+        </div>
+
+         <div class="modal-footer">
+                <button aria-label="Close" class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
+
+         </div>
+        </div>
+    </div>
+</div>
+        
+<div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="AdvancedSearch" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header"><button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">×</span> <span class="sr-only">Close</span></button>
+                <h2 class="modal-title">Advanced Search Options</h2>
+            </div>
+            <div id="advSearchDiv" class="modal-body">
+                <form id="advSearchForm" class="selectAdvSearch">
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Subject Matter No.</span>
+                                <input class="form-control columnSearch  hasclear" id="regNoSearch" type="text" placeholder="Subject Matter No.">
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Lobbyist Reg No.</span>
+                                <input class="form-control columnSearch  hasclear" id="lobbyistRegNoSearch" type="text" placeholder="Lobbyist Reg No">
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>
+                    </div>                        
+                        
+                        
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Lobbyist Name</span>
+                                <input class="form-control columnSearch hasclear" id="lobbyistNameSearch" type="text" placeholder="Lobbyist Name">
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+ 
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+						
+                           <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Lobbyist Type</span>
+                                <select id="lobbyistTypeFilter" class="form-control columnSelect" name="lobbyistTypeFilter" multiple="multiple">
+                                    <option value="In-house" selected="selected">In-house</option>
+                                    <option value="Voluntary" selected="selected">Voluntary</option>
+                                    <option value="Consultant" selected="selected">Consultant</option>
+                                </select>
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+ 
+                            </div>
+                        </div>
+
+ 						
+					</div>                  
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Business/Org. Name</span>
+                                <input class="form-control columnSearch hasclear" id="busOrgNameSearch" type="text" placeholder="Business/Organization Name">
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+ 
+                            </div>
+                        </div>
+					    <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Subject Matter Status</span>
+                                <select id="statusFilter" class="form-control columnSelect" name="statusFilter" multiple="multiple">
+                                    <option value="Active" selected="selected">Active</option>
+                                    <option value="Closed" selected="selected">Closed</option>
+                                </select>                                   
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>
+                    
+                    </div>                  
+                    <div class="row">
+						<!-- NOT REALLY THERE 
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Subject Matter Type</span>
+                                <select id="typeFilter" class="form-control columnSelect" name="typeFilter" multiple="multiple">
+                                    <option value="Consultant" selected="selected">Consultant</option>
+                                    <option value="In-house" selected="selected">In-house</option>
+                                    <option value="Voluntary" selected="selected">Voluntary</option>
+                                </select>
+                            </div>
+                        </div>
+						-->
+
+                        <div class="col-xs-12 col-sm-12 col-md-12">
+                            <div class="input-group">                   
+                                <span class="srchLabel1 input-group-addon">Subject Matter</span>
+                                <input class="form-control typeahead hastaclear columnSearch" id="subjectMatterFilter" type="text" placeholder="Subject Matter">
+                                <span class="clearerta glyphicon glyphicon-remove form-control-feedback"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Client</span>
+                                <input class="form-control columnSearch hasclear" id="clientSearch" type="text" placeholder="Client">
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Beneficiary</span>
+                                <input class="form-control columnSearch hasclear" id="beneficiarySearch" type="text" placeholder="Beneficiary">
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>
+                    </div>      
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Government Agency</span>
+                                <input class="form-control columnSearch hasclear" id="govAgencySearch" type="text" placeholder="Government Agency">
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="srchLabel1 input-group-addon">Financial Contributor</span>
+                                <input class="form-control columnSearch hasclear" id="financialContributorSearch" type="text" placeholder="Financial Contributor">
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>                      
+
+                    </div>
+					<fieldset class="poh">
+					<legend class="poh">Public Office Holder</legend>
+                     <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Type</span>
+                                <select id="pohTypeFilter" class="form-control columnSelect" name="pohTypeFilter" multiple="multiple">
+                                    <option value="Member of Council" selected="selected">Member of Council</option>
+                                    <option value="Staff of Member of Council" selected="selected">Staff of Member of Council</option>
+                                    <option value="Member of Local Board" selected="selected">Member of Local Board</option>
+                                    <option value="Staff of Member of Local Board" selected="selected">Staff of Member of Local Board</option>
+                                    <option value="Employee of Local Board" selected="selected">Employee of Local Board</option>
+                                    <option value="Member of Advisory Board" selected="selected">Member of Advisory Board</option>
+                                    <option value="Employee of the City" selected="selected">Employee of the City</option>
+                                </select>
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>                   
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Position</span>
+                                <input class="form-control columnSearch hasclear" id="pohPositionSearch" type="text" placeholder="Public Office Holder Position">
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>                   
+                     </div>
+                     <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Ward,Office,Division or Agency</span>
+                                <input class="form-control columnSearch hasclear" id="pohOfficeSearch" type="text" placeholder="Public Office Holder Office">
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>                   
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-addon">Name</span>
+                                <input class="form-control columnSearch hasclear" id="pohNameSearch" type="text" placeholder="Public Office Holder Name">
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>                   
+                     </div>
+					 </fieldset>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+							<div class="input-daterange input-group" id="datepicker">
+							<span class="input-group-addon">Date Range</span>
+								<div>
+								<p class="input-group input-daterange"><span id="dpd1s" onclick="$( '#dateFrom' ).focus();" class="input-group-addon small"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span><input id="dateFrom" class="input-sm form-control datepicker" type="text" placeholder="From: mm/dd/yyyy" name="start" /></p>
+								<p class="input-group input-daterange"><span id="dpd2s" onclick="$( '#dateTo' ).focus();" class="input-group-addon small"><span class="glyphicon glyphicon-calendar" aria-hidden="true"></span></span><input id="dateTo" class="input-sm form-control datepicker" type="text" placeholder="To: mm/dd/yyyy" name="end" /></p>
+								</div>
+							</div>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group addBorder">
+                                <span id="committeeLbl" class="input-group-addon">Committee Communication Only</span>
+                                <input class="form-control columnCheckBox hasclear" id="committeeInd" type="checkbox" >
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>                      
+                        <div class="col-xs-12 col-sm-6 col-md-6">
+                            <div class="input-group addBorder">
+                                <span id="grassRootsLbl" class="input-group-addon">Grass-roots Communication Only</span>
+                                <input class="form-control columnCheckBox hasclear" id="grassRootsInd" type="checkbox" >
+                                <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                    
+                    
+
+            </div>
+            <div class="modal-footer lrButtons">
+                <button id="advSearchApplyBtn" aria-label="AdvancedSearch" class="btn btn-default" type="button">Apply</button>
+                <button id="resetAdvSearchBtn" aria-label="ResetAdvancedSearch" class="btn btn-default" type="button">Reset</button>
+                <button aria-label="Close" class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                <div class="progress hide" id="pdfprogress">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                        <span class="sr-only"> </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>    
+    
+</section>
+

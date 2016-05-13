@@ -1,0 +1,1 @@
+xcopy *.html "D:\_Projects\City of Toronto\Sandbox\Steve\LobbyRegistry2\html\"

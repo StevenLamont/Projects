@@ -1,0 +1,277 @@
+.searchHighlight {
+    background-color: yellow;
+}
+
+fieldset.poh {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+legend.poh {
+        font-size: 1.0em !important;
+        font-weight: bold !important;
+        text-align: left !important;
+        width:auto;
+        padding:0 10px;
+        border-bottom:none;
+		margin-bottom: 0px;
+}
+
+.srchLabel1 {
+	min-width: 160px;
+}
+#grassRootsLbl{
+	min-width: 250px;
+	border-right: 1px solid #ccc;
+}
+#committeeLbl{
+	min-width: 250px;
+	border-right: 1px solid #ccc;
+}
+.poh .input-group-addon {
+	min-width: 75px;  
+	text-align: left;
+}
+
+.snrLobbyistHighlight {
+    font-weight: bold;
+}
+#searchString {
+   /* width: 500px;*/
+}
+.tooltip-inner {
+            max-width: none;
+        }
+		
+#searchclear {
+    position: absolute;
+    right: 5px;
+    top: 0;
+    bottom: 0;
+    height: 14px;
+    margin: auto;
+    font-size: 14px;
+    cursor: pointer;
+    color: #ccc;
+}
+
+#advSearchBtnGroup {
+	padding-left: 15px;
+	margin-left: 10px;
+	width: 1%;
+	position: relative;
+}
+#advSearchOptions {
+    border-bottom-left-radius: 4px;
+    border-top-left-radius: 4px;
+	}
+
+/*
+#searchBtn {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+*/
+
+.modal-dialog {
+    margin: 30px auto;
+    width: 60%;
+}
+
+.input-group {
+    margin-bottom: 9px;
+}
+
+#lr_nav .navbar a {
+    color: #444;
+}
+#lr_index nav li a {
+    border-bottom: 2px solid #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+#lr_index nav a {
+    text-decoration: none;
+}
+
+#advSearchDiv {
+	margin-left: 10px;
+	margin-right: 10px;
+    padding-bottom: 0px;
+}
+
+
+#dpd1s {
+    min-width: 0px;
+    text-align: left;
+} 
+#advSearchDiv .input-group-addon {
+	/*min-width: 175px;  /*messes up the datepicker*/
+	text-align: left;
+}
+
+.datepicker{z-index:9000 !important;} /* must be higher than modal's 7001*/
+
+.input-daterange > div {
+    border: 1px solid #ccc;
+    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.input-daterange p {
+    margin: 5px 15px !important;
+}
+
+
+.form-control-label {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+	border-right: 0 none;
+    background-color: #eee;
+    color: #555;
+    font-size: 14px;
+    font-weight: normal;
+    padding: 6px 12px;
+    text-align: left;
+	display: table-cell;
+    height: 34px;
+    line-height: 1.42857;	  
+	margin-bottom: 0px;
+	width: 200px;
+}
+}
+.disabled{
+    pointer-events:none;
+    opacity:0.4;
+}
+
+.form-control {
+	padding-left: 5px;
+}
+
+.has-feedback {
+  position: relative;
+}
+.has-feedback .form-control {
+ /* padding-right: 42.5px;*/
+}
+.form-control-feedback {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  /*pointer-events: none; this remove click events.. so bad*/
+}
+
+.colHdr {
+	height: 42px;
+	margin-bottom: 0px;
+	display: block;
+}
+
+.clearer {
+	/*background-color: #3276b1;*/
+	right: 5px; /*-15px;*/
+}
+.clearerta {
+	/*background-color: #327*/b1;
+	right: 5px; /*20px;*/
+}
+
+#subjectMatterFilter {
+	min-width: 100%;
+	min-width: 572px;
+}
+
+/* the following are typeahead css */
+.typeahead, .tt-query, .tt-hint {
+    /*border: 2px solid #ccc;
+    border-radius: 8px;
+	*/
+    font-size: 14px;
+    height: 34px;
+    line-height: 34px;
+    outline: medium none;
+    padding: 8px 12px;
+    width: 196px;
+}
+.typeahead {
+    background-color: #fff;
+}
+.typeahead:focus {
+    border: 2px solid #0097cf;
+}
+.tt-query {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+}
+.tt-hint {
+    color: #999;
+}
+.tt-menu {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    margin: 12px 0;
+    padding: 8px 0;
+    width: 422px;
+}
+.tt-suggestion {
+    font-size: 14px;
+    line-height: 24px;
+    padding: 3px 20px;
+	background-color: #3276b1;	
+}
+.tt-suggestion:hover {
+    background-color: #0097cf;
+    color: #fff;
+    cursor: pointer;
+}
+.tt-suggestion.tt-cursor {
+    background-color: #0097cf;
+    color: #fff;
+}
+.tt-suggestion p {
+    margin: 0;
+}
+
+
+.multiselect-container input[type=radio] {
+    display: none;
+}
+
+.indexreport {text-align: right;}
+.indexreport img {width: 20px;}
+.lrButtons button {background-color: #eee; color: #4c4c4c; border: 1px solid #bbb; height:35px;}
+.btn-default { background-color:#fff;  color: #000; border-color:#CCC;}
+.listBy {background-color:#000; color: #fff; font-weight:bold; font-size:1.1em; }
+.titleFilter {background-color: #3276b1; }
+.navStyle { margin-top:-27px; margin-bottom:-27px; float: right; }
+
+.allPagination {background-color:#333; }
+.pagination > li > a, .pagination > li > span {
+    position: relative;
+    float: left;
+    padding: 3px 8px;
+    margin-left: -1px;
+    line-height: 1.42857;
+    text-decoration: none;
+    background-color: #eee;
+    border: 1px solid #eee;
+}
+
+
+#maincontent table th {
+    border-bottom: 2px solid #000;
+    color: #fff;
+	background-color: #3276b1;
+	padding: 5px 10px;
+}

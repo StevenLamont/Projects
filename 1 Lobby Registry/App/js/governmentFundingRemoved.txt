@@ -1,0 +1,169 @@
+function getPageGovFundingSMData(pagingType) {
+
+    totalJSONRows = 0;
+    var showItem = true;
+
+    var SMData = [];
+    var hfOpts = getHighLightFilterOptions();
+
+    $.each(GovFundingArray, function(i, item) {
+        showParent = true;
+        //rowId = "loobyregistryrow" + rowCnt;
+        if (showParent) showParent = filterSearch(item, hfOpts);
+        if (showParent) showParent = columnFilter(hfOpts.GovAgencySearch,item.GovName);
+        
+        //add ben search.. if (showParent) showParent = columnFilter(strLobbyistNameSearch,item.LastName);
+        var hasSubItems = false;
+        if (showParent) { /*SML: we need predetermine if we need to show item */
+
+            $.each(item.SMs, function(i, SM) {
+
+                var lobbyistNames = mergeLobbyistNames(SM);
+                var client = getSMClient(SM);
+                var subItemPass = true;
+                if (subItemPass) subItemPass = filterSearch(SM, hfOpts);
+                if (subItemPass) subItemPass = columnFilter(hfOpts.RegNoSearch,SM.SMNumber);
+                if (subItemPass) subItemPass = columnFilter(hfOpts.LobbyistNameSearch,lobbyistNames);
+                //if (subItemPass) subItemPass = filterLobbyistType(hfOpts.LobbyistTypes, SM);
+                if (subItemPass) subItemPass = selectFilter(hfOpts.LobbyistTypes,SM.Type);
+                if (subItemPass) subItemPass = selectFilter(hfOpts.SMStatuses,SM.Status);
+                if (subItemPass) subItemPass = columnFilter(hfOpts.SMSearch,SM.SubjectMatter);
+                if (subItemPass) subItemPass = columnFilter(hfOpts.ClientSearch,client);
+                if (subItemPass) subItemPass = filterBeneficary(hfOpts.BeneficiarySearch,SM);
+                if (subItemPass) subItemPass = filterGovAgency(hfOpts.GovAgencySearch,SM);
+                if (subItemPass) subItemPass = filterFunding(hfOpts.FinancialContributorSearch,SM);                     
+                if (subItemPass && hfOpts.CommitteeChk && !SM.Meetings) subItemPass = false;
+                if (subItemPass && hfOpts.GrassRootsChk && !SM.Grassroots) subItemPass = false;
+                if (subItemPass) subItemPass = dateRangeFilter(hfOpts.DateFrom, hfOpts.DateTo, SM.InitialApprovalDate);
+
+                if (subItemPass) {
+                    hasSubItems = true;
+                    return false;
+                }
+            });
+        }
+        if (pagingType ==='A') {
+            if (item.GovName.charAt(0).match(/[a-z]/i) && item.GovName.charAt(0) !== currentAlpha) showParent = false;
+            if (!item.GovName.charAt(0).match(/[a-z]/i) && "#" !== currentAlpha) showParent = false;
+        }
+
+        if (showParent && hasSubItems) {
+            totalJSONRows++;
+            if (pagingType === 'A' || (pagingType === 'N' && totalJSONRows >= hfOpts.startIdx && totalJSONRows < hfOpts.endIdx)) {
+                SMData.push(item);
+            }
+        }
+
+     });
+     
+
+
+    return SMData;
+
+}
+
+/* Can I do this generically..look for columns that are shown.. problems is the "key" fields to show..*/
+function generateGovFundingListing(SMData) {
+   var showItem = true;
+    var strRows = "";
+    var showReset = false;
+    var rowCnt = 0;
+    var rowId = 0;
+    var hfOpts = getHighLightFilterOptions();
+    var rptCols = rptColumns.GovRpt.Cols;
+    var filteredData = filtersApplied();
+    $.each(SMData, function(i, item) {
+        showItem = true;
+        //if (!filteredData) {
+        //    if (item.GovName.charAt(0).match(/[a-z]/i) && item.GovName.charAt(0) !== currentAlpha) showItem = false;
+        //    if (!item.GovName.charAt(0).match(/[a-z]/i) && "#" !== currentAlpha) showItem = false;
+        //}
+        if (!showItem) {
+            return true;   //to skip row
+        }
+
+        rowCnt++;
+        rowId = "loobyregistryrow" + rowCnt;
+
+        $.each(item.SMs, function(j, SM) {
+
+            var lobbyistNames = mergeLobbyistNames(SM);
+            var client = getSMClient(SM);
+
+            showItem = true;
+
+            if (showItem) showItem = filterSearch(SM, hfOpts);
+
+            if (showItem) showItem = columnFilter(hfOpts.RegNoSearch,SM.SMNumber);
+            if (showItem) showItem = columnFilter(hfOpts.LobbyistNameSearch,lobbyistNames);
+            //if (showItem) showItem = filterLobbyistType(hfOpts.LobbyistTypes, SM);
+            if (showItem) showItem = selectFilter(hfOpts.LobbyistTypes,SM.Type);
+            if (showItem) showItem = selectFilter(hfOpts.SMStatuses,SM.Status);
+            if (showItem) showItem = columnFilter(hfOpts.SMSearch,SM.SubjectMatter);
+            if (showItem) showItem = columnFilter(hfOpts.ClientSearch,client);
+            if (showItem) showItem = filterBeneficary(hfOpts.BeneficiarySearch,SM);
+            if (showItem) showItem = filterGovAgency(hfOpts.GovAgencySearch,SM);
+            if (showItem) showItem = filterFunding(hfOpts.FinancialContributorSearch,SM);     
+            if (showItem) showItem = filterCommunication(hfOpts.POHNameSearch,SM, "POH_Name");       
+			if (showItem) showItem = filterCommunication(hfOpts.POHPositionSearch,SM, "POH_Position");  
+
+            if (showItem && hfOpts.CommitteeChk && !SM.Meetings) showItem = false;
+            if (showItem && hfOpts.GrassRootsChk && !SM.Grassroots) showItem = false;
+            if (showItem) showItem = dateRangeFilter(hfOpts.DateFrom, hfOpts.DateTo, SM.InitialApprovalDate);
+
+            if (showItem) {             //rowCnt++;
+
+                //lobbyistName = item.LastName + ", " + item.FirstName;
+                strRows += '<tr class="' + rowId + '">';  // style="display:none;">'; // + "' onmouseover='highlightMarker(this);'>";
+                
+                for (var i = 0; i < rptCols.length; i++) {
+                    if (rptCols[i].column === "SMLLobbyist") {
+                        strRows += '<td>'+ highlightSearch(item.LastName + ", " + item.FirstName,hfOpts) + '</td>';
+                    }
+                    if (rptCols[i].column === "SMLLobbyistNames") {
+                        strRows += '<td>' +  highlightSearch(lobbyistNames,hfOpts) + "</td>";
+                     }
+                     
+                    if (rptCols[i].column === "SMLBeneficiary") {
+                        strRows += '<td>'+ highlightSearch(item.BeneficiaryName, hfOpts) + '</td>';
+                     }                   
+                    if (rptCols[i].column === "SMLGovAgency") {
+                        strRows += '<td>'+ highlightSearch(item.GovName, hfOpts) + '</td>';
+                     }                   
+                    if (rptCols[i].column === "SMLLobbyistType") {
+                        strRows += '<td>' + item.Type + '</td>';
+                    }
+                    if (rptCols[i].column === "SMLClient") {
+                        strRows += '<td>' + highlightSearch(client, hfOpts) + "</td>";
+                    }
+                    if (rptCols[i].column === "SMLBusOrg") {
+                        strRows += '<td>' + highlightSearch(busOrg, hfOpts) + "</td>";
+                     }
+                    if (rptCols[i].column === "SMLFunding") {
+                        strRows += '<td>'+ highlightSearch(item.FundingName, hfOpts) + '</td>';
+                     }
+                    if (rptCols[i].column === "SMLSubjectMatter") {
+                        strRows += '<td>' + highlightSearch(SM.SubjectMatter.replace(';','; '), hfOpts) + "</td>";
+                     }
+                    if (rptCols[i].column === "SMLStatus") {
+                        strRows += '<td>' + highlightSearch(SM.Status, hfOpts) + "</td>";
+                     }
+                    if (rptCols[i].column === "SMLInitFileDate") {
+                        strRows += '<td>' + highlightSearch(SM.InitialApprovalDate, hfOpts) + "</td>";
+                     }
+                    if (rptCols[i].column === "SMLSubjectMatterNo") {
+                         strRows += '<td><button onclick="showSM(\'' + SM.SMNumber + '\')" >' +  highlightSearch(SM.SMNumber,hfOpts) + '</button></td>';
+                     }
+                    if (rptCols[i].column === "SMLLobRegNo") {
+                         strRows += "<td>" + highlightSearch(item.LobbyistNumber, hfOpts) + "</td>";
+                     }
+                }
+
+                
+                 strRows +="</tr>";
+            }
+        });
+    });
+    updatePageTable(strRows);
+
+}

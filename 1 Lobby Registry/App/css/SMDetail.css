@@ -1,0 +1,83 @@
+.panel-group .panel-heading+.panel-collapse .panel-body {
+    border-top: 0px solid #ddd;}
+.panel-group .panel {
+     margin-bottom: 10px; 
+}
+@media (max-width: 992px)  {
+		.table-responsive {overflow-x: scroll !important; clear: both;}	
+}
+
+#maincontent table tr td:nth-of-type(n+2), 
+#maincontent table tr th:nth-of-type(n+2), 
+#maincontent form table tr td:nth-of-type(n+2), 
+#maincontent form table tr th:nth-of-type(n+2) {
+    border-left: 0px solid #ddd;
+}
+
+#maincontent table tr:nth-of-type(2n+2) {
+   /*background: #f1f1f1 none repeat scroll 0 0;*/
+   background: transparent none repeat scroll 0 0;
+}
+
+#maincontent table tr {
+    border-bottom: 0px solid #ddd;
+}
+
+#maincontent table th, #maincontent table td, #maincontent form table th, #maincontent form table td {
+    line-height: 1.5em;
+    padding: 0px 15px 0px 15px;
+    text-align: left;
+    vertical-align: top;
+	width: 33%;
+	border-top: 0px solid #ddd;
+}
+
+.detailPageTable {
+	border: 0px;
+	width: 100%
+}
+.detailPageTable .labelRow td {
+	border: 0px none transparent;
+	padding-top: 10px;
+}
+
+.detailPageTable .labelRow{
+	font-size: 1.1em;
+	font-weight: bold;
+	
+}
+
+#maincontent .detailPageTable .labelRow td{
+	padding-top: 10px;
+	vertical-align: bottom;
+}
+
+#maincontent table .CommListIndent {
+	padding-left: 25px;
+}
+ .panel-heading {
+    cursor: pointer;
+}
+
+.accoridion-supdetail {
+	font-weight: bold;
+}
+/* CSS Method for adding Font Awesome Chevron Icons */
+ .accordion-toggle:after {
+    /* symbol for "opening" panels */
+    font-family:'FontAwesome';
+    content:"\f146";
+    float: right;
+    color: inherit;
+}
+.panel-heading.collapsed .accordion-toggle:after {
+    /* symbol for "collapsed" panels */
+    content:"\f0fe";
+}
+
+.searchHighlight {
+    background-color: yellow;
+}
+.highlight {
+    background-color: yellow;
+}
