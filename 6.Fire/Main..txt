@@ -1,0 +1,3 @@
+<div id="appCode"></div>
+<div id="appDisplay"></div>
+<script type="text/javascript" src="/static_files/WebApps/fireEmailForm/js/emailForm.js"></script>

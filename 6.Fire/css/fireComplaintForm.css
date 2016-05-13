@@ -1,0 +1,49 @@
+/*.form-control {display: inline-block !important;} 
+ #fireComplaintForm .panel-body { padding-left: 40px; padding-right: 40px; }*/
+#fireComplaintForm .btn-add { margin-left: 15px; margin-right: 15px !important;} 
+#fireComplaintForm   .form-group    {   margin-right: 0px !important;    margin-left: 0px !important;    }
+#fireComplaintForm  .right-inner-addon {     position: relative; }
+#fireComplaintForm  .row {margin-right: 0px !important;    margin-left: 0px !important;  }
+#fireComplaintForm .has-feedback label~.form-control-feedback {    top: 22px; right: 25px; }
+#fireComplaintForm  .form-horizontal  .control-label {text-align: left !important; }
+#fireComplaintForm  .input-group {     padding: 0px;  }
+#fireComplaintForm     .control-label-left {text-align: left !important; }
+ @media only screen and (min-width : 1200px) {
+#fireComplaintForm  .hidden-lg { visibility:hidden;  display: inline !important; }
+}
+#fireComplaintApp  .alert-info { color:black !important; }
+
+#notice {margin: 15px;}
+#fireComplaintForm #buttonBar {
+	margin-right: 15px; !important
+}
+.moreWitness legend{ 
+    font-size: 1.077em;
+    font-weight: bold;
+    line-height: 1em;
+    margin-left: 15px;
+    border-style: none;
+    margin-bottom: 0px;
+    }
+	
+#fireComplaintForm #TimeFrameOptions span {
+	display: inline-block;
+}	
+#fireComplaintForm #TimeFrameOptions span:nth-of-type(2) {
+	margin-left: 20px;
+}
+#fireComplaintForm #TimeFrameOptions span:nth-of-type(3) {
+	margin-left: 20px;
+}
+
+#fireComplaintForm #TimeOfDayOptions span {
+	display: inline-block;
+}	
+#fireComplaintForm #TimeOfDayOptions span:nth-of-type(2) {
+	margin-left: 20px;
+}
+#fireComplaintForm #TimeOfDayOptions span:nth-of-type(3) {
+	margin-left: 20px;
+}
+
+
