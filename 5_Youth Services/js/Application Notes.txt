@@ -1,0 +1,41 @@
+pdfmake: This version has the code below implemented. It has not been fully tested except within this app.
+
+As mentioned before, if you simply place a URL in a pdf, most PDF renderers (adobe etc.)  seems to be able to detect the link and allow the user to click on it.
+If you "open" pdfmake output to a browser, Chrome, IE seems to recognize the link, but Firefox will not.
+
+Therefor:  {text: "www.example.org"} generally works if that is what you want to display in the pdf.
+
+
+To create a proper link within the pdf, you need to use the following syntax.
+
+dd.content.push({text: "link" , link: 'www.google.com', decoration:"underline"});   -- see sample output (notice extra link at bottom)
+However, there is a bug in pdfMake that doesn't fully implement the syntax.
+
+https://github.com/bpampuch/pdfmake/pull/361
+
+Adding the following code to PDFMake.js fixes the problem:
+
+athavanraja commented on Nov 24, 2015 
+made the following change in pdfmake.js to make it work.
+var data = this.textTools.buildInlines(node.text, styleStack); 
+// new code after the above line . (line no. 15795)
+// added by raja
+if(node.link)
+{
+for(var di = 0, dl = data.items.length; di < dl; di++) {
+data.items[di].link = node.link ;
+}
+}
+// end of addition
+Regards
+Raja
+
+
+
+
+pdfMakeHTMLConverter:
+
+211 data contains some HTML which I need to put in the pdf.
+https://github.com/bpampuch/pdfmake/issues/205
+
+I took the solution here and massaged it a little for this application.

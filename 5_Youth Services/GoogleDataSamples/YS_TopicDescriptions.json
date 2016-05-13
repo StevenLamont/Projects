@@ -1,0 +1,427 @@
+jsonCallBack([{"topic":"YAP001","desc":"Aboriginal Youth","numResults":14},{"topic":"YAP009","desc":"Upgrading and Literacy","numResults":74},{"topic":"YAP010","desc":"GED Equivalence","numResults":7},{"topic":"YAP011","desc":"Academic Upgrading Program","numResults":47},{"topic":"YAP013","desc":"Academic and Career Entrance","numResults":6},{"topic":"YAP014","desc":"Schools","numResults":23},{"topic":"YAP015","desc":"School Boards","numResults":7},{"topic":"YAP016","desc":"Colleges and universities","numResults":8},{"topic":"YAP017","desc":"Educational Support","numResults":76},{"topic":"YAP018","desc":"Bridging programs","numResults":2},{"topic":"YAP019","desc":"Student Financial Support","numResults":20},{"topic":"YAP020","desc":"ID","numResults":38},{"topic":"YAP021","desc":"Birth Certificate","numResults":2},{"topic":"YAP022","desc":"Drivers Licence","numResults":1},{"topic":"YAP023","desc":"Health Card","numResults":21},{"topic":"YAP024","desc":"Passport","numResults":10},{"topic":"YAP025","desc":"Social Insurance Number","numResults":10},{"topic":"YAP028","desc":"Social assistance","numResults":23},{"topic":"YAP029","desc":"Ontario Works","numResults":16},{"topic":"YAP030","desc":"Ontario Disability Support Program","numResults":6},{"topic":"YAP031","desc":"Federal benefits","numResults":11},{"topic":"YAP032","desc":"Tax credits","numResults":1},{"topic":"YAP033","desc":"Help to obtain social assistance","numResults":40},{"topic":"YAP034","desc":"Youth Legal","numResults":57},{"topic":"YAP035","desc":"Legal general information","numResults":7},{"topic":"YAP036","desc":"Reintegration","numResults":15},{"topic":"YAP037","desc":"Diversion","numResults":18},{"topic":"YAP038","desc":"Mental health and justice services","numResults":16},{"topic":"YAP039","desc":"Legal aid","numResults":47},{"topic":"YAP040","desc":"Legal clinics","numResults":34},{"topic":"YAP041","desc":"Family Law Information Centres","numResults":3},{"topic":"YAP042","desc":"Duty counsel","numResults":10},{"topic":"YAP043","desc":"Other community advocacy/support","numResults":12},{"topic":"YAP044","desc":"Tax clinics","numResults":92},{"topic":"YAP045","desc":"Identification clinics","numResults":24},{"topic":"YAP046","desc":"Life skills","numResults":128},{"topic":"YAP047","desc":"Financial management workshops","numResults":17},{"topic":"YAP049","desc":"Youth LGBTQ","numResults":9},{"topic":"YAP050","desc":"Youth Newcomer","numResults":56},{"topic":"YAP052","desc":"Cultural community centres","numResults":65},{"topic":"YAP053","desc":"Crisis lines","numResults":14},{"topic":"YAP054","desc":"Housing Help Centres","numResults":0},{"topic":"YAP055","desc":"Landlord and Tenant Board","numResults":5},{"topic":"YAP056","desc":"Access to shelters","numResults":5},{"topic":"YAP057","desc":"Eviction Prevention and Housing Help","numResults":33},{"topic":"YAP058","desc":"Youth Mental Health Crisis lines","numResults":19},{"topic":"YAP059","desc":"Youth Mental Health General Info","numResults":23},{"topic":"YAP060","desc":"Youth Mental Health First symptoms","numResults":9},{"topic":"YAP062","desc":"Youth Mental Health Family support","numResults":20},{"topic":"YAP063","desc":"Youth Addictions 12-step","numResults":7},{"topic":"YAP064","desc":"Youth Addictions Counselling","numResults":10},{"topic":"YAP065","desc":"Youth Addictions Residential Treatment","numResults":20},{"topic":"YAP066","desc":"Youth Concurrent Disorders","numResults":26},{"topic":"YAP067","desc":"Youth Addictions Referrals","numResults":7},{"topic":"YAP069","desc":"Youth Addictions","numResults":42},{"topic":"YAP070","desc":"Housing Access","numResults":2},{"topic":"YAP072","desc":"Refugee Housing","numResults":7},{"topic":"YAP073","desc":"Furniture Bank","numResults":8},{"topic":"YAP074","desc":"Youth health crisis and general information","numResults":7},{"topic":"YAP075","desc":"Hospitals and emergency rooms","numResults":36},{"topic":"YAP076","desc":"Youth dental programs","numResults":32},{"topic":"YAP077","desc":"Youth health services","numResults":94},{"topic":"YAP078","desc":"Youth sexual health support services","numResults":35},{"topic":"YAP079","desc":"Sexual assault care","numResults":3},{"topic":"YAP080","desc":"Sexual health general information","numResults":3},{"topic":"YAP081","desc":"Youth sexual health","numResults":40},{"topic":"YAP082","desc":"Youth well-being","numResults":12},{"topic":"YAP083","desc":"Children's Aid Societies","numResults":10},{"topic":"YAP084","desc":"Fetal Alcohol Spectrum Syndrome","numResults":4},{"topic":"YAP085","desc":"Youth parenting programs","numResults":47},{"topic":"YAP086","desc":"Sex trade involvement","numResults":11},{"topic":"YAP087","desc":"Disability support and services for youth","numResults":173},{"topic":"YAP088","desc":"Youth drop in","numResults":47},{"topic":"YAP091","desc":"Employment Ontario services","numResults":64},{"topic":"YAP092","desc":"Youth entrepreneurship","numResults":10},{"topic":"YAP093","desc":"Occupational health and safety","numResults":10},{"topic":"YAP094","desc":"Apprenticeships and pre-apprenticeships","numResults":18},{"topic":"YAP095","desc":"Internships","numResults":8},{"topic":"YAP096","desc":"Other youth employment services","numResults":91},{"topic":"YAP097","desc":"Youth employment","numResults":192},{"topic":"YAP071","desc":"Housing providers for youth","numResults":17},{"topic":"YAP061","desc":"Youth Mental Health Case management","numResults":78},{"topic":"YAP068","desc":"Youth Mental Health","numResults":111},{"topic":"YAP089","desc":"Recreation centres","numResults":6},{"topic":"YAP090","desc":"Youth recreation","numResults":154}]);
+
+[{
+	"topic": "YAP001",
+	"desc": "Aboriginal Youth",
+	"numResults": 14
+},
+{
+	"topic": "YAP009",
+	"desc": "Upgrading and Literacy",
+	"numResults": 74
+},
+{
+	"topic": "YAP010",
+	"desc": "GED Equivalence",
+	"numResults": 7
+},
+{
+	"topic": "YAP011",
+	"desc": "Academic Upgrading Program",
+	"numResults": 47
+},
+{
+	"topic": "YAP013",
+	"desc": "Academic and Career Entrance",
+	"numResults": 6
+},
+{
+	"topic": "YAP014",
+	"desc": "Schools",
+	"numResults": 23
+},
+{
+	"topic": "YAP015",
+	"desc": "School Boards",
+	"numResults": 7
+},
+{
+	"topic": "YAP016",
+	"desc": "Colleges and universities",
+	"numResults": 8
+},
+{
+	"topic": "YAP017",
+	"desc": "Educational Support",
+	"numResults": 76
+},
+{
+	"topic": "YAP018",
+	"desc": "Bridging programs",
+	"numResults": 2
+},
+{
+	"topic": "YAP019",
+	"desc": "Student Financial Support",
+	"numResults": 20
+},
+{
+	"topic": "YAP020",
+	"desc": "ID",
+	"numResults": 38
+},
+{
+	"topic": "YAP021",
+	"desc": "Birth Certificate",
+	"numResults": 2
+},
+{
+	"topic": "YAP022",
+	"desc": "Drivers Licence",
+	"numResults": 1
+},
+{
+	"topic": "YAP023",
+	"desc": "Health Card",
+	"numResults": 21
+},
+{
+	"topic": "YAP024",
+	"desc": "Passport",
+	"numResults": 10
+},
+{
+	"topic": "YAP025",
+	"desc": "Social Insurance Number",
+	"numResults": 10
+},
+{
+	"topic": "YAP028",
+	"desc": "Social assistance",
+	"numResults": 23
+},
+{
+	"topic": "YAP029",
+	"desc": "Ontario Works",
+	"numResults": 16
+},
+{
+	"topic": "YAP030",
+	"desc": "Ontario Disability Support Program",
+	"numResults": 6
+},
+{
+	"topic": "YAP031",
+	"desc": "Federal benefits",
+	"numResults": 11
+},
+{
+	"topic": "YAP032",
+	"desc": "Tax credits",
+	"numResults": 1
+},
+{
+	"topic": "YAP033",
+	"desc": "Help to obtain social assistance",
+	"numResults": 40
+},
+{
+	"topic": "YAP034",
+	"desc": "Youth Legal",
+	"numResults": 57
+},
+{
+	"topic": "YAP035",
+	"desc": "Legal general information",
+	"numResults": 7
+},
+{
+	"topic": "YAP036",
+	"desc": "Reintegration",
+	"numResults": 15
+},
+{
+	"topic": "YAP037",
+	"desc": "Diversion",
+	"numResults": 18
+},
+{
+	"topic": "YAP038",
+	"desc": "Mental health and justice services",
+	"numResults": 16
+},
+{
+	"topic": "YAP039",
+	"desc": "Legal aid",
+	"numResults": 47
+},
+{
+	"topic": "YAP040",
+	"desc": "Legal clinics",
+	"numResults": 34
+},
+{
+	"topic": "YAP041",
+	"desc": "Family Law Information Centres",
+	"numResults": 3
+},
+{
+	"topic": "YAP042",
+	"desc": "Duty counsel",
+	"numResults": 10
+},
+{
+	"topic": "YAP043",
+	"desc": "Other community advocacy/support",
+	"numResults": 12
+},
+{
+	"topic": "YAP044",
+	"desc": "Tax clinics",
+	"numResults": 92
+},
+{
+	"topic": "YAP045",
+	"desc": "Identification clinics",
+	"numResults": 24
+},
+{
+	"topic": "YAP046",
+	"desc": "Life skills",
+	"numResults": 128
+},
+{
+	"topic": "YAP047",
+	"desc": "Financial management workshops",
+	"numResults": 17
+},
+{
+	"topic": "YAP049",
+	"desc": "Youth LGBTQ",
+	"numResults": 9
+},
+{
+	"topic": "YAP050",
+	"desc": "Youth Newcomer",
+	"numResults": 56
+},
+{
+	"topic": "YAP052",
+	"desc": "Cultural community centres",
+	"numResults": 65
+},
+{
+	"topic": "YAP053",
+	"desc": "Crisis lines",
+	"numResults": 14
+},
+{
+	"topic": "YAP054",
+	"desc": "Housing Help Centres",
+	"numResults": 0
+},
+{
+	"topic": "YAP055",
+	"desc": "Landlord and Tenant Board",
+	"numResults": 5
+},
+{
+	"topic": "YAP056",
+	"desc": "Access to shelters",
+	"numResults": 5
+},
+{
+	"topic": "YAP057",
+	"desc": "Eviction Prevention and Housing Help",
+	"numResults": 33
+},
+{
+	"topic": "YAP058",
+	"desc": "Youth Mental Health Crisis lines",
+	"numResults": 19
+},
+{
+	"topic": "YAP059",
+	"desc": "Youth Mental Health General Info",
+	"numResults": 23
+},
+{
+	"topic": "YAP060",
+	"desc": "Youth Mental Health First symptoms",
+	"numResults": 9
+},
+{
+	"topic": "YAP062",
+	"desc": "Youth Mental Health Family support",
+	"numResults": 20
+},
+{
+	"topic": "YAP063",
+	"desc": "Youth Addictions 12-step",
+	"numResults": 7
+},
+{
+	"topic": "YAP064",
+	"desc": "Youth Addictions Counselling",
+	"numResults": 10
+},
+{
+	"topic": "YAP065",
+	"desc": "Youth Addictions Residential Treatment",
+	"numResults": 20
+},
+{
+	"topic": "YAP066",
+	"desc": "Youth Concurrent Disorders",
+	"numResults": 26
+},
+{
+	"topic": "YAP067",
+	"desc": "Youth Addictions Referrals",
+	"numResults": 7
+},
+{
+	"topic": "YAP069",
+	"desc": "Youth Addictions",
+	"numResults": 42
+},
+{
+	"topic": "YAP070",
+	"desc": "Housing Access",
+	"numResults": 2
+},
+{
+	"topic": "YAP072",
+	"desc": "Refugee Housing",
+	"numResults": 7
+},
+{
+	"topic": "YAP073",
+	"desc": "Furniture Bank",
+	"numResults": 8
+},
+{
+	"topic": "YAP074",
+	"desc": "Youth health crisis and general information",
+	"numResults": 7
+},
+{
+	"topic": "YAP075",
+	"desc": "Hospitals and emergency rooms",
+	"numResults": 36
+},
+{
+	"topic": "YAP076",
+	"desc": "Youth dental programs",
+	"numResults": 32
+},
+{
+	"topic": "YAP077",
+	"desc": "Youth health services",
+	"numResults": 94
+},
+{
+	"topic": "YAP078",
+	"desc": "Youth sexual health support services",
+	"numResults": 35
+},
+{
+	"topic": "YAP079",
+	"desc": "Sexual assault care",
+	"numResults": 3
+},
+{
+	"topic": "YAP080",
+	"desc": "Sexual health general information",
+	"numResults": 3
+},
+{
+	"topic": "YAP081",
+	"desc": "Youth sexual health",
+	"numResults": 40
+},
+{
+	"topic": "YAP082",
+	"desc": "Youth well-being",
+	"numResults": 12
+},
+{
+	"topic": "YAP083",
+	"desc": "Children's Aid Societies",
+	"numResults": 10
+},
+{
+	"topic": "YAP084",
+	"desc": "Fetal Alcohol Spectrum Syndrome",
+	"numResults": 4
+},
+{
+	"topic": "YAP085",
+	"desc": "Youth parenting programs",
+	"numResults": 47
+},
+{
+	"topic": "YAP086",
+	"desc": "Sex trade involvement",
+	"numResults": 11
+},
+{
+	"topic": "YAP087",
+	"desc": "Disability support and services for youth",
+	"numResults": 173
+},
+{
+	"topic": "YAP088",
+	"desc": "Youth drop in",
+	"numResults": 47
+},
+{
+	"topic": "YAP091",
+	"desc": "Employment Ontario services",
+	"numResults": 64
+},
+{
+	"topic": "YAP092",
+	"desc": "Youth entrepreneurship",
+	"numResults": 10
+},
+{
+	"topic": "YAP093",
+	"desc": "Occupational health and safety",
+	"numResults": 10
+},
+{
+	"topic": "YAP094",
+	"desc": "Apprenticeships and pre-apprenticeships",
+	"numResults": 18
+},
+{
+	"topic": "YAP095",
+	"desc": "Internships",
+	"numResults": 8
+},
+{
+	"topic": "YAP096",
+	"desc": "Other youth employment services",
+	"numResults": 91
+},
+{
+	"topic": "YAP097",
+	"desc": "Youth employment",
+	"numResults": 192
+},
+{
+	"topic": "YAP071",
+	"desc": "Housing providers for youth",
+	"numResults": 17
+},
+{
+	"topic": "YAP061",
+	"desc": "Youth Mental Health Case management",
+	"numResults": 78
+},
+{
+	"topic": "YAP068",
+	"desc": "Youth Mental Health",
+	"numResults": 111
+},
+{
+	"topic": "YAP089",
+	"desc": "Recreation centres",
+	"numResults": 6
+},
+{
+	"topic": "YAP090",
+	"desc": "Youth recreation",
+	"numResults": 154
+}]

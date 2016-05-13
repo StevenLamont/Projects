@@ -1,0 +1,21 @@
+pdfmake.js:384: WARNING - Suspicious code. The result of the 'getprop' operator is not being used.
+	    array.byteLength
+	    ^
+
+pdfmake.js:14733: WARNING - Suspicious code. The result of the 'not' operator is not being used.
+	    !(__WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	    ^
+
+pdfmake.js:14738: WARNING - unreachable code
+	  else if (freeExports && freeModule) {
+	       ^
+
+pdfmake.js:67303: WARNING - unreachable code
+	      return;
+	      ^
+
+pdfmake.js:68135: WARNING - Suspicious code. The result of the 'not' operator is not being used.
+	  !(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function() {
+	  ^
+
+0 error(s), 5 warning(s)
