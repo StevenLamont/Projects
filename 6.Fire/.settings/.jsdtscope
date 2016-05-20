@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="js"/>
+	<classpathentry excluding="js/|validator/|datepicker/|**/bower_components/*|**/node_modules/*|timepicker/|bootstrap-formhelpers/js/|bootstrap-formhelpers/|multiselect/|**/*.min.js|pdfmake/" kind="src" path="static_files/assets"/>
+	<classpathentry excluding="js/|**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/bootstrap-formhelpers"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/bootstrap-formhelpers/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/datepicker"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/multiselect"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/pdfmake"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/timepicker"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/validator"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/WebApps/film/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="wcmAsset/gsasearch/js"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>
