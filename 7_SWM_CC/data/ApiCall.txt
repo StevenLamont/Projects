@@ -1,0 +1,44 @@
+{
+	"result": {
+		"bestResult": [{
+			"geoId": 883788,
+			"key_Desc": "288 Windermere Ave",
+			"detail": "former Toronto, Ward: Parkdale-High Park (13)",
+			"matchType": "Exact",
+			"score": 100,
+			"lfn_id1": 960,
+			"featureClass": "Address",
+			"longitude": -79.4793855793,
+			"latitude": 43.6468770359,
+			"gtype": "Point",
+			"lfn_id2": 0
+		}],
+		"restOfResults": [{
+			"geoId": 960,
+			"key_Desc": "Windermere Ave",
+			"detail": "Address range: Odd side 9-909, Even side 6-908, Total 570 addresses. Total length: 4.05kms, 43 segment(s).",
+			"matchType": "Similar",
+			"score": 75,
+			"lfn_id1": 960,
+			"featureClass": "StreetName",
+			"longitude": -79.4687201771,
+			"latitude": 43.6358329145,
+			"gtype": "Line",
+			"lfn_id2": 0
+		},
+		{
+			"geoId": 4698,
+			"key_Desc": "Windermere Pl",
+			"detail": "No addresses. Total length: .08kms, 1 segment(s).",
+			"matchType": "Similar",
+			"score": 72,
+			"lfn_id1": 4698,
+			"featureClass": "StreetName",
+			"longitude": -79.4714615576,
+			"latitude": 43.6380609889,
+			"gtype": "Line",
+			"lfn_id2": 0
+		}],
+		"likelyResults": []
+	}
+}

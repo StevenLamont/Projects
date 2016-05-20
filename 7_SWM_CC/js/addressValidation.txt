@@ -1,0 +1,13 @@
+window.addressValidation = (function () {
+    function addressValidation (els) {
+         
+    }
+     
+    var addressValidation = {
+        get: function (selector) {
+         
+        }   
+    };
+     
+    return addressValidation;
+}());
