@@ -1,0 +1,165 @@
+#maincontent #rcSearch {float: right; width:24% !important;}
+#maincontent #roadclosuresearch button {width: 48%;}
+#maincontent #roadclosuresearch button span {font-size: .8em; margin-right:3px; display: inline-block; padding:0px;}
+#maincontent #roadclosuresearch input {width:100%; float: left; width: 75%;}
+.media.articleDetail {display: none;}
+.input-group-addon {min-width:125px;}
+.input-group-addon.small {max-width:35px;}
+#maincontent .menupriceopt {margin-top: 0px;margin-bottom:0px; margin-left:15px;}
+#maincontent #liciouslisttable {margin-top:5px; margin-bottom: 800px;}
+#maincontent .menupriceopt + .menupriceopt {margin-left: 10px;}
+#maincontent .btn-primary {background-color: #FDB812; border: 1px solid black; color: black; }
+#maincontent .btn-primary:hover {text-decoration: underline;}
+#maincontent #liciousrowtemplate {display:none;}
+#maincontent .tablesorter-header-inner {margin-left: 10px;}
+#maincontent .spandelimiter {margin-left: -5px;}
+#maincontent #liciouslisttable td {border-bottom: 1px solid #aaa !important; padding-bottom: 10px; padding-top: 10px;}
+#maincontent .infoBox {width: 200px; background: none;}
+#maincontent #mapinfoboxdata {border-radius: 10px; background-color: white;}
+#maincontent #map-canvas, #liciousmap {border: 1px solid #ddd; border-radius: 10px; margin-top: 20px; height: 400px; padding:5px !important; }
+#maincontent .licious input {margin-bottom:5px; width:100%;}
+#maincontent .licious td {word-break: break-word; padding-top:5px; padding-bottom:0;}
+#maincontent .restImg {width:185px;}
+#maincontent .licious .icons {margin-top:10px; margin-bottom: 10px;}
+#maincontent .licious .icon {padding-right: 8px; padding-top: 4px;}
+#maincontent .licious .restImg { margin-bottom: 5px;}
+#maincontent .licious .input-group {margin-top: 4px;margin-bottom: 4px;}
+#maincontent .licious a {}
+#maincontent .licious th.tablesorter-header {font-size: 1em !important;padding:10px !important;}
+#maincontent .licious .tablesorter-header-inner {padding-top: 3px;}
+#maincontent .licious .tablesorter-blue .header, .tablesorter-blue .tablesorter-header {background-position: center left !important;}
+#maincontent .gm-style {font-size: 1em;}
+#map-canvas img {max-width:none;}
+#maincontent .disclaimer {margin-top: 30px; margin-bottom: 0px; }
+#maincontent p.lic_lunchmenu, #maincontent p.lic_dinnermenu {text-align: center;margin-bottom: 30px !important; }
+#maincontent .lic_lunch hr, #maincontent .lic_dinner hr {border: 0px; border-bottom: 4px dotted #de0084; width: 33%; margin-left: auto; margin-right: auto; margin-bottom: 1px; margin-top: 0px;}
+#maincontent hr {margin-top:20px!important; }
+#maincontent .menu_heading {text-align: center; font-weight: bold; border-bottom: 3px groove #de0084; margin-top:10px; margin-bottom:10px;}
+#maincontent .lic_dinnerprice, #maincontent .lic_lunchprice{margin:0px; font-size: 20px; color:#de0084; font-weight:500;}
+#maincontent .licious h3 {font-size:24px; font-weight: normal; margin:0; padding:0; margin-bottom: 0px;}
+#maincontent .licious h4 {font-size:18px; font-weight: normal; margin-bottom:0; padding:0;}
+#maincontent .restaurantname {margin-bottom: 5px;} 
+#maincontent .phone {margin-bottom:5px;}
+#maincontent .liciousdetail {margin-top: 15px;}
+#maincontent .liciousdetail .indent {padding-left: 15px;}
+#maincontent .liciousdetail h1 {font-size: 2.5em; padding-left: 0px; margin:0; }
+#maincontent .liciousdetail h2 {font-size: 1.4em;}
+#maincontent .liciousdetail h3 {font-size: 1.2em; margin-top:5px;}
+#maincontent .liciousdetail h1, #maincontent .liciousdetail h2, #maincontent .liciousdetail h3 {padding-bottom:0px;margin-bottom:10px;}
+#maincontent .liciousdetail p {margin:0; padding:0;}
+#maincontent .liciousdetail .gccmap {margin-top:10px; border:1px solid #aaa; background-color: #ddd; text-align: center; height: 350px; width:100%;}
+#maincontent .liciousdetail .detail-right {width:100%;}
+#maincontent .liciousdetail .icon {margin-right: 10px;}
+#maincontent .liciousdetail .icons {margin-bottom:6px;}
+#maincontent .liciousdetail .credit {text-align: left; font-size: .8em; padding-bottom:15px;}
+#maincontent .liciousdetail .ttcplanner {margin-top: 15px; width: 100%; color:#fff;}
+#maincontent .liciousdetail .sitelinks span + span:before {content: "  |   ";}
+#maincontent .articleDetail .infoBox { width: 135px; }
+#maincontent .articleDetail .map.sumText {max-height: 150px;}
+#maincontent #searchTextField {display:none;}
+#maincontent select {margin:0;}
+#maincontent .input-group {margin-top: 3px;} 
+#maincontent h3.lic_eventname {margin-bottom: 5px;}
+#maincontent p.lic_neighbourhood {margin-bottom: 2px;}
+#maincontent p.lic_profile {margin-top: 10px; margin-bottom:10px;}
+#maincontent .alert-info {background-color: #f1f1f1; color: #4c4c4c; border-color: #e6e6e6; margin-bottom: 0px;}
+#maincontent .resetMap {font-size: 12px;}
+#liciouslisttable tr:nth-child(odd) td {background-color: #F8F8F8 !important;}
+#liciouslisttable tr:nth-child(even) td {background-color: white !important;}
+#maincontent #mapinfobox {z-index: 9999999999 !important;}
+#maincontent div.lic_lunch,#maincontent div.lic_dinner {margin-top:10px; padding-left:25px; padding-right:25px; text-align: center; }
+#maincontent #advancedSearch { margin:0px; padding: 0px; border-top:0; }
+#maincontent .advancedSearch {padding: 0px; border-bottom:0;cursor: pointer;   color: #333;   text-decoration: none; font-size:14px;}
+#maincontent .lic_price p {margin:0px;}
+#maincontent .mapclose a {height: 20px;}
+.mapoption {margin-bottom:10px; }
+.mapoption.active div {background-color: #de0084; color: white; height: 45px; padding-top: 12px; }
+.mapoption div {text-align: center; padding-top: 12px; border-radius: 5px; border: 1px solid #ccc !important; height: 45px; }
+#maincontent .red {
+	font-weight:bold; color:#C00;
+}
+#maincontent ul.a {
+    list-style-image: url('/static_files/WebApps/images/fork.png');
+	vertical-align: middle; 
+	
+}
+#maincontent .noBold { font-weight:500!important; }
+/*#maincontent .btnbs {  line-height: 2.6!important;}*/
+#maincontent .btn-custom {
+    background-color: hsl(44, 100%, 50%) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffde84", endColorstr="#ffbb00");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#ffde84), to(#ffbb00));
+  background-image: -moz-linear-gradient(top, #ffde84, #ffbb00);
+  background-image: -ms-linear-gradient(top, #ffde84, #ffbb00);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffde84), color-stop(100%, #ffbb00));
+  background-image: -webkit-linear-gradient(top, #ffde84, #ffbb00);
+  background-image: -o-linear-gradient(top, #ffde84, #ffbb00);
+  background-image: linear-gradient(#ffde84, #ffbb00);
+  border-color: #ffbb00 #ffbb00 hsl(44, 100%, 43.5%);
+  color: #333 !important;
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.42);
+  -webkit-font-smoothing: antialiased;
+  height:36px!important;
+}
+.btn-custom2 {
+   background-color: hsl(0, 0%, 37%) !important;
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#969696", endColorstr="#5e5e5e");
+  background-image: -khtml-gradient(linear, left top, left bottom, from(#969696), to(#5e5e5e));
+  background-image: -moz-linear-gradient(top, #969696, #5e5e5e);
+  background-image: -ms-linear-gradient(top, #969696, #5e5e5e);
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #969696), color-stop(100%, #5e5e5e));
+  background-image: -webkit-linear-gradient(top, #969696, #5e5e5e);
+  background-image: -o-linear-gradient(top, #969696, #5e5e5e);
+  background-image: linear-gradient(#969696, #5e5e5e);
+  border-color: #5e5e5e #5e5e5e hsl(0, 0%, 31.5%);
+  color: #fff !important;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.36);
+  -webkit-font-smoothing: antialiased;
+}
+@media (min-width: 769px) {
+       #maincontent .advancedSearch>span {display:none;}
+       #maincontent #advancedSearch {display:block !important;}
+}
+
+#mo2>div, #mo3>div {background-repeat: no-repeat;background-position: 5% 50%;}
+#mo2>div {background-image: url(/static_files/WebApps/images/markergreen.png); }
+#mo3>div {background-image: url(/static_files/WebApps/images/markerblue.png); }
+#liciouslisttable th {background-color: white; color: #de0084; border-bottom-color: #000 !important; }
+#liciouslisttable th>div {color: #de0084; font-size: 1.3em;font-weight: normal;}
+#liciouslisttable .tablesorter-filter-row td {padding:0px !important; margin:0px; border-left: 1px solid #ccc; border-right: 1px solid #ccc;}
+#liciouslisttable .tablesorter-filter-row td input {margin:0px; border: 0px; padding: 8px; font-size: 1.2em;}
+#liciouslisttable .tablesorter-header {background-size: 14px 23px;}
+.liciousdetail .reservationinfo {margin-top:10px; margin-bottom:5px;}
+#liciousmap div {word-wrap:normal !important;}
+#maincontent #liciouslisttable th.tablesorter-header {background-image: url("/static_files/WebApps/images/sort_dbl.png");}
+#maincontent #liciouslisttable th.tablesorter-header.tablesorter-headerAsc {background-image: url("/static_files/WebApps/images/sort_asc.png");}
+#maincontent #liciouslisttable th.tablesorter-header.tablesorter-headerDesc {background-image: url("/static_files/WebApps/images/sort_desc.png");}
+#maincontent select {display: block;}
+#maincontent .advancedSearch {margin-left: 15px; }
+article {margin-bottom: 0px !important; }
+
+ #advancedSearch label.form-control, #advancedSearch label.control-label  { font-weight: normal !important; font-size:normal !important; } 
+#maincontent #advancedSearch  input[type="checkbox"]:focus{outline: #9ecaed solid 2px !important;}  
+#maincontent #advancedSearch  input[type="radio"]:focus{outline: #9ecaed solid 2px !important;}  
+#advancedSearch legend { float: left;  margin:0; padding: 9px 0 !important; display:inline !important; border-right: 1px #ccc solid;}
+legend + span.form-control {display:block !important;} 
+#tabToggle .btn-primary {background-color: #428bca;color: white;}
+#tabToggle .btn-default{background-color: #eee;}
+.pageToggleBtn {	width: 125px;}
+#detailModal .modal-dialog { width: 73%; margin-top: 10px; margin-bottom: 0}
+#detailModal .modal-body { padding-top: 0;}
+#detailModal .modal-header { padding-top: 0; padding-bottom: 0}
+#detailModal .modal-footer { padding-bottom: 0; padding-top: 0; margin-top: 0; border: 0}
+#detailModal .modal-content {padding: 20px;}
+
+#detailModal .modal-header{	border-bottom: 0px;}
+#detailModal .contextTitle {	margin-top: 0px;}
+#detailModal #headerText {	width: 80%;	display: inline;}
+@media (max-width: 1200px) {
+ #detailModal .modal-dialog {    width: 100%;}
+}
+@media print {
+	#detailModal .modal-dialog {    width: 100%;	}
+}
