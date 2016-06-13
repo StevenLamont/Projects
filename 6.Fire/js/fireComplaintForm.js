@@ -261,8 +261,8 @@ function initForm() {
                 validators: {
                     stringLength: {
                     min: 1,
-                    max: 1000,
-                    message: 'Incident description field must be less than 1000 characters long'
+                    max: 2000,
+                    message: 'Incident description field must be less than 2000 characters long'
                     },
                     notEmpty: {
                         message: 'Incident description field is required.'
@@ -273,8 +273,8 @@ function initForm() {
                 validators: {
                     stringLength: {
                         min: 1,
-                        max: 1000,
-                        message: 'Desired Outcome field must be less than 1000 characters long'
+                        max: 500,
+                        message: 'Desired Outcome field must be less than 500 characters long'
                     }
                 }
             },
@@ -343,10 +343,10 @@ function initForm() {
     $("#WCMForms_Name").hide(); 
     
     $("#DesiredOutcome").on('keyup', function() {
-        $('#do_left').text(1000 - this.value.length);  
+        $('#do_left').text(500 - this.value.length);  
     });
     $("#Description").on('keyup', function() {
-        $('#desc_left').text(1000 - this.value.length);  
+        $('#desc_left').text(2000 - this.value.length);  
     });
 }
 
@@ -403,7 +403,7 @@ function dominoSubmit() {
     strBody += "<td><strong>Date incident occurred</strong></td>";
     strBody += "<td><strong>Time incident occurred</strong></td>";
     strBody += "<td><strong>Location/Address of incident if applicable</strong></td>";
-    strBody += "<td><strong>Name of TFS employee(s) involved</strong></td>";
+    strBody += "<td><strong>Name of TFS employee, Unit/Truck/License Plate Number involved</strong></td>";
     strBody += "<td><strong>Description of complaint</strong> </td>";
     // var cnt = 0;
     $(".moreWitness").each(function( index ) {

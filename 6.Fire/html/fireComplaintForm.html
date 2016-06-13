@@ -1,77 +1,79 @@
 <section id="fireComplaintApp">
   <h1>Toronto Fire Services Online Complaints Form</h1>
   <div class="row">
-    <div class="col-xs-12 col-md-9">
-      <p>
-        Complete this form if you wish to submit a complaint to Toronto Fire Services (TFS). Complaints are checked Monday to Friday during regular business hours. Once your complaint is received, you will be contacted within 48 business hours and you will be provided with a Complaint Tracking Number.
-      </p>
-      <br/>
-      <div class="alert alert-info text-black">
-        <strong>Note:</strong> The TFS Complaint Process is not an emergency service; in the event of an emergency, please call 9-1-1.
-      </div>
-    </div>
-    <div class="col-xs-12 col-md-3 clearfix">
-      <img src="/static_files/WebApps/Forms/Fire/img/TorontoFireService.jpg" alt="Fraud and Waste Hotline 416-397-7867" title="Toronto Fire Service Logo">
-      <br/>
-    </div>
+	<div class="col-xs-12 col-md-9">
+	  <p>
+		Complete this form if you wish to submit a complaint to Toronto Fire Services (TFS). Complaints are checked Monday to Friday during regular business hours. Once your complaint is received, you will be contacted within 2 business days and you will be provided with a Complaint Tracking Number.
+	  </p>
+	  <br/>
+	  <div class="alert alert-info text-black">
+		<strong>Note:</strong> The TFS Complaint Process is not an emergency service; in the event of an emergency, please call 9-1-1.
+	  </div>
+	</div>
+	<div class="col-xs-12 col-md-3 clearfix">
+	  <img src="/static_files/WebApps/Forms/Fire/img/TorontoFireService.jpg" alt="Fraud and Waste Hotline 416-397-7867" title="Toronto Fire Service Logo">
+	  <br/>
+	</div>
   </div>
   <div class="row">
-    <div class="col-xs-12">
-      <form id="fireComplaintForm" name="fireComplaintForm" class="form-horizontal" data-fv-autofocus="true">
-        <input type="hidden" name="formId" value="fireComplaintForm">
-        <input type="hidden" name="formData" id="formData">
-        <input type="hidden" name="formSubject" id="formSubject" value="">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h2 class="panel-title">Your Contact Information</h2>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <p> Note: Anonymous complaints are difficult to assess or investigate and will not be dealt with through the complaint handling process.</p>
+	<div class="col-xs-12">
+	  <form id="fireComplaintForm" name="fireComplaintForm" class="form-horizontal" data-fv-autofocus="true">
+		<input type="hidden" name="formId" value="fireComplaintForm">
+		<input type="hidden" name="formData" id="formData">
+		<input type="hidden" name="formSubject" id="formSubject" value="">
+		  <div class="panel panel-default">
+			<div class="panel-heading">
+			  <h2 class="panel-title">Your Contact Information</h2>
+			</div>
+			<div class="panel-body">
+			  <div class="row">
+				<p> Note: Anonymous complaints are difficult to assess or investigate and will not be dealt with through the complaint handling process.</p>
 
-                <div class="form-group col-md-2">
-                  <label class="control-label" for="FirstName">First Name:</label>
-                  <div class="right-inner-addon">
-                    <input id="FirstName" class="form-control" type="text" name="FirstName" value="">
-                  </div>
-                </div>
-                <div class="form-group col-md-2">
-                  <label class="control-label" for="LastName">Last Name:</label>
-                  <div class="right-inner-addon">
-                    <input id="LastName" class="form-control" type="text" name="LastName" value="">
-                  </div>
-                </div>
-                <div class="form-group col-md-3">
-                  <label class="control-label" for="Phone">Phone: </label>
-                  <div class="right-inner-addon">
-                    <input id="Phone" class="form-control" type="text" placeholder="999-999-9999" name="Phone" value="" maxlength="14">
-                  </div>
-                </div>
-                <div class="form-group col-md-4">
-                  <label class="control-label" for="Email">Email: </label>
-                  <div class="right-inner-addon">
-                    <input id="Email" class="form-control" type="text" name="Email" value="" placeholder="jsmith@example.org">
-                  </div>
-                </div>
-            </div>
-          </div>
-        </div>
-          <div class="panel panel-default">
-            <div class="panel-heading clearfix">
-              <h2 class="panel-title">Complaint Information</h2>
-            </div>
-            <div class="panel-body">
-              <div class="row">
-                <div class="form-group col-md-4">
-                  <label class="control-label" for="IncidentDateGrp">Date incident occurred:</label>
-                  <div class="input-group date" id="IncidentDateGrp">
-                    <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                    <input type="text" class="form-control tframe" name="IncidentDate" id="IncidentDate" placeholder="mm/dd/yyyy" data-date-end-date="0d">
-                  </div>
-                </div>
-                <div class="form-group col-md-8">
+				<div class="form-group col-md-6">
+				  <label class="control-label" for="FirstName">First Name:</label>
+				  <div class="right-inner-addon">
+					<input id="FirstName" class="form-control" type="text" name="FirstName" value="">
+				  </div>
+				</div>
+				<div class="form-group col-md-6">
+				  <label class="control-label" for="LastName">Last Name:</label>
+				  <div class="right-inner-addon">
+					<input id="LastName" class="form-control" type="text" name="LastName" value="">
+				  </div>
+				</div>
+			</div>
+			<div class="row">			
+				<div class="form-group col-md-6">
+				  <label class="control-label" for="Phone">Phone: </label>
+				  <div class="right-inner-addon">
+					<input id="Phone" class="form-control" type="text" placeholder="999-999-9999" name="Phone" value="" maxlength="14">
+				  </div>
+				</div>
+				<div class="form-group col-md-6">
+				  <label class="control-label" for="Email">Email: </label>
+				  <div class="right-inner-addon">
+					<input id="Email" class="form-control" type="text" name="Email" value="" placeholder="jsmith@example.org">
+				  </div>
+				</div>
+			</div>
+		  </div>
+		</div>
+		  <div class="panel panel-default">
+			<div class="panel-heading clearfix">
+			  <h2 class="panel-title">Complaint Information</h2>
+			</div>
+			<div class="panel-body">
+			  <div class="row">
+				<div class="form-group col-md-4">
+				  <label class="control-label" for="IncidentDateGrp">Date incident occurred:</label>
+				  <div class="input-group date" id="IncidentDateGrp">
+					<span class="input-group-addon">
+					<span class="glyphicon glyphicon-calendar"></span>
+					</span>
+					<input type="text" class="form-control tframe" name="IncidentDate" id="IncidentDate" placeholder="mm/dd/yyyy" data-date-end-date="0d">
+				  </div>
+				</div>
+				<div class="form-group col-md-8">
 					<label class="control-label" >or Time Frame:</label>
 					<div id="TimeFrameOptions">
 						<span class="checkbox">
@@ -84,10 +86,10 @@
 							<label><input ID="timeFrame3" class="tframe" type="checkbox" value=""> Within one month </label>
 						</span>
 					</div>
-                </div>
+				</div>
 			</div>
 			<div class="row">			
-                <div class="form-group col-md-12">
+				<div class="form-group col-md-12">
 					<label class="control-label" >Time of Day:</label>
 					<div id="TimeOfDayOptions">
 						<span class="checkbox">
@@ -100,86 +102,86 @@
 						<label><input ID="timeOfDay3" class="tod" type="checkbox" value=""> Evening </label>
 					</span>
 					</div>
-                </div>
+				</div>
 			</div>
 			<div class="row">			
-                <div class="form-group col-md-12">
-                  <label class="control-label" for="Address">Location/Address of incident if applicable:</label>
-                  <div class="right-inner-addon">
-                    <input id="Address" class="form-control" type="text" name="Address" value="">
-                  </div>
-                </div>
+				<div class="form-group col-md-12">
+				  <label class="control-label" for="Address">Location/Address of incident if applicable:</label>
+				  <div class="right-inner-addon">
+					<input id="Address" class="form-control" type="text" name="Address" value="">
+				  </div>
+				</div>
 			</div>		
 			<div class="row">
-                <div class="form-group col-md-12">
-                  <label class="control-label" for="TFSemployeeName">Name of TFS employee(s) involved:</label>
-                  <div class="right-inner-addon">
-                    <input id="TFSemployeeName" class="form-control" type="text" name="TFSemployeeName" value="">
-                  </div>
-                </div>
+				<div class="form-group col-md-12">
+				  <label class="control-label" for="TFSemployeeName">Name of TFS employee, Unit/Truck/License Plate Number involved:</label>
+				  <div class="right-inner-addon">
+					<input id="TFSemployeeName" class="form-control" type="text" name="TFSemployeeName" value="">
+				  </div>
+				</div>
 			</div>		
 			<div class="row">
-                <div class="form-group col-md-12 clearfix">
-                  <label class="control-label control-label-left" for="Description">Description of complaint (What happened, where did the incident occur, when did the incident happen, who was involved, etc.). Please provide as much detail as possible.
-                  </label>
-                  <div class="right-inner-addon">
-                    <textarea class="form-control" name="Description" id="Description" rows="8" required></textarea>
-                  </div>
-				  <p>The description is limited to 1000 characters. <span style="color:#990000; float:right; font-weight:bold;">Characters left: <span id="desc_left">1000</span></span></p> 
-                </div>
-              </div>
+				<div class="form-group col-md-12 clearfix">
+				  <label class="control-label control-label-left" for="Description">Description of complaint (What happened, where did the incident occur, when did the incident happen, who was involved, etc.). Please provide as much detail as possible.
+				  </label>
+				  <div class="right-inner-addon">
+					<textarea class="form-control" name="Description" id="Description" rows="8" required></textarea>
+				  </div>
+				  <p>The description is limited to 2000 characters. <span style="color:#990000; float:right; font-weight:bold;">Characters left: <span id="desc_left">2000</span></span></p> 
+				</div>
+			  </div>
 			</div>			  
-              <div id="addRow">
-                <fieldset class="moreWitness">
-                  <legend class="h4">Is anyone else aware of what took place? Please include any witnesses: </legend>
-                  <div class="form-group col-md-6">
-                    <label class="control-label" for="WitnessName1">Name:</label>
-                    <div class="right-inner-addon">
-                      <input id="WitnessName1" class="form-control" type="text" name="WitnessName1" value="">
-                    </div>
-                  </div>
-                  <div class="form-group col-md-3">
-                    <label class="control-label" for="WitnessPhone1">Phone number:</label>
-                    <div class="right-inner-addon">
-                      <input id="WitnessPhone1" class="form-control" type="text" placeholder="999-999-9999" name="WitnessPhone1" value=""  maxlength="14">
-                    </div>
-                  </div>
-                  <div class="form-group col-md-3">
-                    <label class="control-label" for="WitnessEmail1">Email:</label>
-                    <div class="right-inner-addon">
-                      <input id="WitnessEmail1" class="form-control" type="text" placeholder="jsmith@example.org" name="WitnessEmail1" value="">
-                    </div>
-                  </div>
-                </fieldset>
-              </div>
-              <div id="max" class="text-danger clearfix"></div>
-              <div class="form-group">
-                <input type="button" id="add-row" class="btn btn-primary btn-add" title="" onclick="addRows()" value="Add Row">
-              </div>
-              <div class="form-group col-md-12">
-                <label class="control-label" for="DesiredOutcome">Please describe your desired outcome:</label>
-                <div class="right-inner-addon">
-                  <textarea class="form-control" name="DesiredOutcome" id="DesiredOutcome" rows="8"></textarea>
-                </div>
-				<p>The desired outcome is limited to 1000 characters. <span style="color:#990000; float:right; font-weight:bold;">Characters left: <span id="do_left">1000</span></span></p> 
-              </div>
-              <div class="clearfix"></div>
-              <div id="notice" class="well well-sm clearfix">
-                <p><strong>Notice of Collection: </strong>Toronto Fire Services collects personal information on this form under authority of the City of Toronto Act, S.O. 2006, Chapter 11, Schedule A, s. 136(c) and the City of Toronto Municipal Code, Chapter 169, Article I, ss. 169-1, 169-2, and 169-4. The information you provide will be used to investigate the complaint and may be used for contact purposes. Questions about this collection can be directed to the Division Chief - Policy, Project and Public Information, Fire Services, 4330 Dufferin Street, 3rd Floor, Toronto, Ontario M3H 5R9 or by telephone at 416-338-9550. </p>
-                <p>
-                  While investigating your complaint, in accordance with the Municipal Freedom of Information and Protection of Privacy Act (MFIPPA),the City of Toronto will only disclose your personal information to staff who require the information to perform the investigation and will not be shared with the person who is the subject of your complaint (if applicable). Your personal information will not be shared with anyone else unless you provide written consent for such sharing or where the City is compelled by law to do so.
-                </p>
-              </div>
-              <!-- Button -->
-              <div id="buttonBar" class="pull-right">
-                <button type="reset" id="ResetButton" class="btn btn-default" name="ResetButton value="Reset" onclick="window.location.reload();">Clear Form</button>
-                <button id="ComplaintButton" class="btn btn-primary" onclick="validateForm();" name="ComplaintButton" type="button">Submit Complaint</button>
-              </div>
-          </div>
-        <div id="results"></div>
+			  <div id="addRow">
+				<fieldset class="moreWitness">
+				  <legend class="h4">Is anyone else aware of what took place? Please include any witnesses: </legend>
+				  <div class="form-group col-md-6">
+					<label class="control-label" for="WitnessName1">Name:</label>
+					<div class="right-inner-addon">
+					  <input id="WitnessName1" class="form-control" type="text" name="WitnessName1" value="">
+					</div>
+				  </div>
+				  <div class="form-group col-md-3">
+					<label class="control-label" for="WitnessPhone1">Phone number:</label>
+					<div class="right-inner-addon">
+					  <input id="WitnessPhone1" class="form-control" type="text" placeholder="999-999-9999" name="WitnessPhone1" value=""  maxlength="14">
+					</div>
+				  </div>
+				  <div class="form-group col-md-3">
+					<label class="control-label" for="WitnessEmail1">Email:</label>
+					<div class="right-inner-addon">
+					  <input id="WitnessEmail1" class="form-control" type="text" placeholder="jsmith@example.org" name="WitnessEmail1" value="">
+					</div>
+				  </div>
+				</fieldset>
+			  </div>
+			  <div id="max" class="text-danger clearfix"></div>
+			  <div class="form-group">
+				<input type="button" id="add-row" class="btn btn-primary btn-add" title="" onclick="addRows()" value="Add Row">
+			  </div>
+			  <div class="form-group col-md-12">
+				<label class="control-label" for="DesiredOutcome">Please describe your desired outcome:</label>
+				<div class="right-inner-addon">
+				  <textarea class="form-control" name="DesiredOutcome" id="DesiredOutcome" rows="8"></textarea>
+				</div>
+				<p>The desired outcome is limited to 500 characters. <span style="color:#990000; float:right; font-weight:bold;">Characters left: <span id="do_left">500</span></span></p> 
+			  </div>
+			  <div class="clearfix"></div>
+			  <div id="notice" class="well well-sm clearfix">
+				<p><strong>Notice of Collection: </strong>Toronto Fire Services collects personal information on this form under authority of the City of Toronto Act, S.O. 2006, Chapter 11, Schedule A, s. 136(c) and the City of Toronto Municipal Code, Chapter 169, Article I, ss. 169-1, 169-2, and 169-4. The information you provide will be used to investigate the complaint and may be used for contact purposes. Questions about this collection can be directed to the Division Chief - Policy, Project and Public Information, Fire Services, 4330 Dufferin Street, 3rd Floor, Toronto, Ontario M3H 5R9 or by telephone at 416-338-9550. </p>
+				<p>
+				  While investigating your complaint, in accordance with the Municipal Freedom of Information and Protection of Privacy Act (MFIPPA),the City of Toronto will only disclose your personal information to staff who require the information to perform the investigation and will not be shared with the person who is the subject of your complaint (if applicable). Your personal information will not be shared with anyone else unless you provide written consent for such sharing or where the City is compelled by law to do so.
+				</p>
+			  </div>
+			  <!-- Button -->
+			  <div id="buttonBar" class="pull-right">
+				<button type="reset" id="ResetButton" class="btn btn-default" name="ResetButton value="Reset" onclick="window.location.reload();">Clear Form</button>
+				<button id="ComplaintButton" class="btn btn-primary" onclick="validateForm();" name="ComplaintButton" type="button">Submit Complaint</button>
+			  </div>
+		  </div>
+		<div id="results"></div>
 		</div>
-		<input id="WCMForms_Name" class="form-control" name="WCMForms_Name">    
-      </form>
-    </div>
+		<input id="WCMForms_Name" class="form-control" name="WCMForms_Name">	
+	  </form>
+	</div>
   </div>  
   </section>
