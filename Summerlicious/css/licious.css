@@ -160,6 +160,21 @@ legend + span.form-control {display:block !important;}
 @media (max-width: 1200px) {
  #detailModal .modal-dialog {    width: 100%;}
 }
+@media (max-width: 385px) {
+	fieldset .input-group-addon {
+		min-width: 85px;
+	}
+	fieldset .form-control {
+		padding-right: 0;
+	}
+	#maincontent .menupriceopt { margin-left: 5px;}
+}
+
 @media print {
-	#detailModal .modal-dialog {    width: 100%;	}
+	.modal {position: relative;}
+	.modal-open {overflow: visible !important;}
+	#detailModal .modal-dialog {width: 95%; height: auto !important; overflow-y: visible;}
+	#detailModal button, #detailModal .lic_imagelink, .contextTitle, .sitefooter {display:none !important;}
+	#detailModal .modal-content {overflow-y: visible !important;}
+	
 }

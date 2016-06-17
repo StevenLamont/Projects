@@ -6,7 +6,7 @@
    
 var gblMainMapInfoBox;
 var gblDetailMapInfoBox;
-var myLatLng,map;
+var myLatLng,gblMainMap,gblDetailMap;
 /* two maps, two sets of array Markers */
 var gblMainMapMarkers = [];
 var gblDetailMapMarkers = [];
@@ -40,13 +40,13 @@ function printModal(modalId) {
 
     win.document.write('<html><head><title>' + document.title + '</title>');
     for (var i = 0, max = ss.length; i < max; i++) {
-		if (ss[i].href !== null) {
-			win.document.write('<link rel="stylesheet" type="text/css" href="' + ss[i].href + '">');
-		// else  if( ss[i].addRule ){
-		//	win.document.addRule(selector, rule);
-		//} else if( ss[i].insertRule ){
+        if (ss[i].href !== null) {
+            win.document.write('<link rel="stylesheet" type="text/css" href="' + ss[i].href + '">');
+        // else  if( ss[i].addRule ){
+        //  win.document.addRule(selector, rule);
+        //} else if( ss[i].insertRule ){
         //win.document.insertRule(selector + ' { ' + rule + ' }', ss[i].cssRules.length);
-		}
+        }
     }
     win.document.write('</head><body>');
     win.document.write('<div id="maincontent"  class="container">');
@@ -166,16 +166,17 @@ function setupEvents() {
     
     /* we need for the modal to be open before we draw the map */
     $('#detailModal').on('shown.bs.modal', function () {
+		$("#liciousContent").addClass("hidden-print");
         drawDetailMap();
-        addthis.toolbox('.addthis_toolbox');
-        addthis.counter('.addthis_counter'); // this re-drawns the counter-- which is the "share" button
+        if (typeof addthis !== "undefined") {
+            addthis.toolbox('.addthis_toolbox');
+            addthis.counter('.addthis_counter'); // this re-drawns the counter-- which is the "share" button
+            }
     });
 
     $("#detailModal").on('hidden.bs.modal', function () {
+		$("#liciousContent").removeClass("hidden-print");
         closeDetailWindow();
-        //TODO: print stuff
-        //$("#liciousContent").show();
-            
         return false;
     });
     
@@ -184,43 +185,6 @@ function setupEvents() {
     
     $("#detailPrint").on("click", function(event) {
         printModal("detailModal");
-       // printElement(document.getElementById("detailModal"));
-        //window.print();
-
-        /*
-        var modalId = $(event.target).closest('.modal').attr('id');
-        $('body').css('visibility', 'hidden');
-        $('html').css('max-height',$("#" + modalId).height());
-        $("#" + modalId).css('visibility', 'visible');
-        $('#' + modalId).removeClass('modal');
-        $("#" + modalId).print();
-        $('body').css('visibility', 'visible');
-        $('#' + modalId).addClass('modal');
-        */
-
- 
-
-
-            //Works with Chome, Firefox, IE, Safari
-        //Get the HTML of div
-        /*
-        var title = document.title;
-        var divElements = document.getElementById('printme').innerHTML;
-        var printWindow = window.open("", "_blank", "");
-        //open the window
-        printWindow.document.open();
-        //write the html to the new window, link to css file
-        printWindow.document.write('<html><head><title>' + title + '</title><link rel="stylesheet" type="text/css" href="/Css/site-print.css"></head><body>');
-        printWindow.document.write(divElements);
-        printWindow.document.write('</body></html>');
-        printWindow.document.close();
-        printWindow.focus();
-        //The Timeout is ONLY to make Safari work, but it still works with FF, IE & Chrome.
-        setTimeout(function() {
-            printWindow.print();
-            printWindow.close();
-        }, 100);
-        */
     
    
     });
@@ -229,11 +193,18 @@ function setupEvents() {
         resetFilters();
     });
     
-    /* AddThis doesn't work well when it is on the page twice, this makes sure we use the current URL in social media */
-     addthis.addEventListener('addthis.menu.open', function(event){
-        event.data.share.title = gblLiciousConfig.season;
-        event.data.share.url = window.location.href
+    $("#maincontent").on("click", ".mapclose", function() {
+        mapClose();
+		return false;
     });
+    
+    /* AddThis doesn't work well when it is on the page twice, this makes sure we use the current URL in social media */
+    if (typeof addthis !== "undefined") {
+        addthis.addEventListener('addthis.menu.open', function(event){
+            event.data.share.title = gblLiciousConfig.season;
+            event.data.share.url = window.location.href
+        });
+    }
 }
 
 /* -- Map Functions */
@@ -246,7 +217,7 @@ function createInfoBox(m, infoBox, markers ) {
     var addText = document.createElement('div');
     addText.id = "mapinfoboxdata";
     addText.className = "map addText";
-    addText.innerHTML = "<div class='mapclose'><a href='javascript:mapClose();'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></div>";
+    addText.innerHTML = "<div class='mapclose'><a href='#'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></div>";
     addText.innerHTML += "<div class='titleText'><style='font-weight:bold;'>" + m.name + "</div>";
     addText.innerHTML += "<div class='map sumText'>"+ m.addsummary + "</br>" + m.phone + "<br /><br />";
     if (m.type=="restaurant") {
@@ -285,11 +256,11 @@ function createInfoBox(m, infoBox, markers ) {
     m.setZIndex(288000001);
 }
 
-function resetMap(markers) {
+function resetMap(map, markers) {
     mapClose();
     var strKey = gblURLParms.key;
 
-    if (strKey!==null)
+    if (typeof gblURLParms.key !== 'undefined')
     {
         map.setZoom(14);
     } else {
@@ -331,20 +302,20 @@ function licMapInit() {
     zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL,position: google.maps.ControlPosition.RIGHT_BOTTOM},
     streetViewControl: true,streetViewControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM}};
 
-    map = new google.maps.Map(document.getElementById('liciousmap'),mapOptions);
+    gblMainMap = new google.maps.Map(document.getElementById('liciousmap'),mapOptions);
 
     var marker;
     gblMainMapInfoBox = document.createElement('div');
     gblMainMapInfoBox.id = "mapinfobox";
     gblMainMapInfoBox.className = "infoBox";
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(gblMainMapInfoBox);
+    gblMainMap.controls[google.maps.ControlPosition.TOP_LEFT].push(gblMainMapInfoBox);
 
     var buttonUI = document.createElement('button');
     buttonUI.id = "resetMap";
     buttonUI.className = "resetMap";
     buttonUI.innerHTML = "Reset Map";
-    buttonUI.onclick = function () { resetMap(gblMainMapMarkers);};
-    map.controls[google.maps.ControlPosition.RIGHT_TOP].push(buttonUI);
+    buttonUI.onclick = function () { resetMap(gblMainMap,gblMainMapMarkers);};
+    gblMainMap.controls[google.maps.ControlPosition.RIGHT_TOP].push(buttonUI);
 
     var index;
     if (!$("#mapOption3").is(":checked")) {
@@ -356,7 +327,7 @@ function licMapInit() {
                 type: "restaurant",
                 icon: mapMarkers.restaurant,
                 position: myLatLng,
-                map: map,
+                map: gblMainMap,
                 name: item.lic_restName,
                 summary: item.lic_profile,
                 addsummary : item.lic_address,
@@ -479,6 +450,7 @@ function drawListing() {
         strRows += '</div>';
         strRows +="</td></tr>";
     });
+    strRows += "<tr id='rowNoData' class='filtered'><td><div>No restaurants found</div></td></tr>";
     strRows = '<thead><tr><th id="filterText" class="filter-match" data-placeholder="Search ' + gblLiciousConfig.season + ' Restaurant Names or Your Favourite Menu Items">' + gblLiciousConfig.season + ' Prix Fixe Restaurant List</th></tr></thead><tbody>' + strRows + '</tbody>';
     
     $("#liciouslisttable").html(strRows);
@@ -505,6 +477,7 @@ function drawListing() {
 
 function initTableSorter(tableID) {
     var $table = $("#" + tableID).tablesorter({
+		sortList: [[0,0]],
         theme: 'blue',
         widthFixed : false,
         widgets: ["filter"],
@@ -520,6 +493,16 @@ function initTableSorter(tableID) {
           }
       });
     $.tablesorter.filter.bindSearch( $table, $('.search') );
+    $table.bind("filterEnd",function(e,t) {
+        if ($("#liciouslisttable tbody tr.filtered").length  ===  $("#liciouslisttable tbody tr").length) {
+            $("#liciouslisttable tbody").find("#rowNoData").removeClass("filtered");
+            $("#liciouslisttable tbody").find("#rowNoData").css("display","table-row");
+        } else {
+            $("#liciouslisttable tbody").find("#rowNoData").addClass("filtered");
+            $("#liciouslisttable tbody").find("#rowNoData").css("display","none");
+        }
+    });
+
 }
 
 function updateFilter() {
@@ -584,6 +567,7 @@ function updateFilter() {
     cols[0] = strFilter;
     $("#liciouslisttable").trigger('search', [cols]);
 
+
     if (qsCS!=="" || qsNBH!=="" || qsLPA!=="FALSE" || qsLPB!=="FALSE" || qsLPC!=="FALSE" || qsDPA!=="FALSE" || qsDPB!=="FALSE" || qsDPC!=="FALSE" || qsACC!=="" || qsVEG!=="" || qsVEGAN!=="" || qsLOC!=="") {
         $("#mapOption1, #mapOption2, #mapOption3")[1].checked = true;
         $("#mapOption1, #mapOption2,#mapOption3").button("refresh");
@@ -634,6 +618,8 @@ function resetFilters() {
     $("#filterVegan").prop('checked', false);
     $("#filterLocal").prop('checked', false);
     updateFilter();
+	var sorting = [[0,0]]; 
+    $("#liciouslisttable").trigger("sorton",[sorting]); 
 }
 
 
@@ -766,22 +752,22 @@ function drawDetailMap() {
     
     //SET UP DETAIL MAP
     myLatLng = new google.maps.LatLng(43.721459,-79.373903);
-    var mapOptions = {zoom: 16,center: myLatLng,mapTypeId: google.maps.MapTypeId.ROADMAP,mapTypeControl: true,
+    var mapOptions = {zoom: 14,center: myLatLng,mapTypeId: google.maps.MapTypeId.ROADMAP,mapTypeControl: true,
     mapTypeControlOptions: {style: google.maps.MapTypeControlStyle.DROPDOWN_MENU,position: google.maps.ControlPosition.TOP_RIGHT},
     panControl:false,zoomControl: true,zoomControlOptions: {style: google.maps.ZoomControlStyle.SMALL,position: google.maps.ControlPosition.RIGHT_BOTTOM},
     streetViewControl: true,streetViewControlOptions: {position: google.maps.ControlPosition.RIGHT_BOTTOM}};
-    map = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
+    gblDetailMap = new google.maps.Map(document.getElementById('map-canvas'),mapOptions);
     var marker;
     var buttonUI = document.createElement('button');
     buttonUI.id = "resetMap";
     buttonUI.className = "resetMap hidden-print";
     buttonUI.innerHTML = "Reset Map";
-    buttonUI.onclick = function () { resetMap(gblDetailMapMarkers);};
-    map.controls[google.maps.ControlPosition.RIGHT_TOP].push(buttonUI);
+    buttonUI.onclick = function () { resetMap(gblDetailMap, gblDetailMapMarkers);};
+    gblDetailMap.controls[google.maps.ControlPosition.RIGHT_TOP].push(buttonUI);
     gblDetailMapInfoBox = document.createElement('div');
     gblDetailMapInfoBox.id = "mapinfobox";
     gblDetailMapInfoBox.className = "infoBox";
-    map.controls[google.maps.ControlPosition.TOP_LEFT].push(gblDetailMapInfoBox);
+    gblDetailMap.controls[google.maps.ControlPosition.TOP_LEFT].push(gblDetailMapInfoBox);
     //**********************
     $.each(gblFilteredRestData.restaurants, function(i, item) {
         myLatLng = new google.maps.LatLng(item.lic_lat,item.lic_lng);
@@ -790,7 +776,7 @@ function drawDetailMap() {
             type: "restaurant",
             icon: mapMarkers.restaurant,
             position: myLatLng,
-            map: map,
+            map: gblDetailMap,
             name: item.lic_restName,
             summary: item.lic_profile.join('<br>'),
             addsummary : item.lic_address,
@@ -803,7 +789,7 @@ function drawDetailMap() {
         });
         marker.setZIndex(277000000);
         if (item.lic_documentID == gblCurrentUNID) {
-            map.setCenter(myLatLng);
+            gblDetailMap.setCenter(myLatLng);
             marker.setZIndex(299000001);
             marker.setIcon(mapMarkers.restaurant_selected);
         }
