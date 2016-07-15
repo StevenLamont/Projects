@@ -12,12 +12,16 @@ var gblMainMapMarkers = [];
 var gblDetailMapMarkers = [];
 //var jsonRestData, jsonEventData, jsonReservationData;
 //var detailGUID="c2f64dc89f674510VgnVCM10000020ff0f89RCRD";
-var DATA_URL = "http://www1.toronto.ca/static_files/WebApps/Summerlicious/restaurant.json?callback=?";
+var DATA_URL = "http://app.toronto.ca/cc_sr_v1_app/data/SummerRestaurantListJSON/0?callback=?";
+//var DATA_URL = http://www1.toronto.ca/static_files/WebApps/Summerlicious/restaurant.json?callback=?";
+var RESERVATIONS_URL = "http://app.toronto.ca/cc_sr_v1_app/data/LiciousDailyReservationUpdates/0?callback=?";
+var gblReservationData = [];                       
 var gblCurrentTab = "";
 var gblRestData;
 var gblFilteredRestData = [];
 var gblCurrentUNID;
 var gblURLParms = {};
+var gblCurScroll = 0;
 
 var mapMarkers = { 
     restaurant : '/static_files/WebApps/images/markergreen.png',
@@ -33,6 +37,7 @@ var icons = {
 };
 
 /* Utility functions */
+
 
 function printModal(modalId) {
     var win=window.open();
@@ -123,6 +128,7 @@ function switchToTab(tab) {
         $("#tabMap").parent().addClass('active');
         $("#liciouslisttable").hide();
         $("#tabList").parent().removeClass('active');
+        addQueryStringParm("view","tabMap");
         //Actually redraw map in case selection was changed
         licMapInit();
         //var z =  map.getZoom(); //force a redraw
@@ -132,6 +138,7 @@ function switchToTab(tab) {
         $("#tabMap").parent().removeClass('active');
         $("#liciouslisttable").show();
         $("#tabList").parent().addClass('active');
+        addQueryStringParm("view","tabList");
 
     }
 }
@@ -161,12 +168,14 @@ function setupEvents() {
     });
     
     $("#maincontent").on("click",".showdetail", function() {
+        gblCurScroll = $(window).scrollTop();
         drawDetail($(this).data("unid"));
     });
     
     /* we need for the modal to be open before we draw the map */
     $('#detailModal').on('shown.bs.modal', function () {
-		$("#liciousContent").addClass("hidden-print");
+        $(window).scrollTop(gblCurScroll);
+        $("#liciousContent").addClass("hidden-print");
         drawDetailMap();
         if (typeof addthis !== "undefined") {
             addthis.toolbox('.addthis_toolbox');
@@ -175,7 +184,7 @@ function setupEvents() {
     });
 
     $("#detailModal").on('hidden.bs.modal', function () {
-		$("#liciousContent").removeClass("hidden-print");
+        $("#liciousContent").removeClass("hidden-print");
         closeDetailWindow();
         return false;
     });
@@ -195,14 +204,14 @@ function setupEvents() {
     
     $("#maincontent").on("click", ".mapclose", function() {
         mapClose();
-		return false;
+        return false;
     });
     
     /* AddThis doesn't work well when it is on the page twice, this makes sure we use the current URL in social media */
     if (typeof addthis !== "undefined") {
         addthis.addEventListener('addthis.menu.open', function(event){
             event.data.share.title = gblLiciousConfig.season;
-            event.data.share.url = window.location.href
+            event.data.share.url = window.location.href;
         });
     }
 }
@@ -450,7 +459,7 @@ function drawListing() {
         strRows += '</div>';
         strRows +="</td></tr>";
     });
-    strRows += "<tr id='rowNoData' class='filtered'><td><div>No restaurants found</div></td></tr>";
+    //strRows += "<tr id='rowNoData' class='filtered' style='display: none;'><td><div>No restaurants found</div></td></tr>";
     strRows = '<thead><tr><th id="filterText" class="filter-match" data-placeholder="Search ' + gblLiciousConfig.season + ' Restaurant Names or Your Favourite Menu Items">' + gblLiciousConfig.season + ' Prix Fixe Restaurant List</th></tr></thead><tbody>' + strRows + '</tbody>';
     
     $("#liciouslisttable").html(strRows);
@@ -477,7 +486,7 @@ function drawListing() {
 
 function initTableSorter(tableID) {
     var $table = $("#" + tableID).tablesorter({
-		sortList: [[0,0]],
+        sortList: [[0,0]],
         theme: 'blue',
         widthFixed : false,
         widgets: ["filter"],
@@ -493,16 +502,22 @@ function initTableSorter(tableID) {
           }
       });
     $.tablesorter.filter.bindSearch( $table, $('.search') );
-    $table.bind("filterEnd",function(e,t) {
-        if ($("#liciouslisttable tbody tr.filtered").length  ===  $("#liciouslisttable tbody tr").length) {
-            $("#liciouslisttable tbody").find("#rowNoData").removeClass("filtered");
-            $("#liciouslisttable tbody").find("#rowNoData").css("display","table-row");
-        } else {
-            $("#liciouslisttable tbody").find("#rowNoData").addClass("filtered");
-            $("#liciouslisttable tbody").find("#rowNoData").css("display","none");
-        }
-    });
+//      '<tr class="noData remove-me" role="alert" aria-live="assertive">',
+//        '<td colspan="' + c.columns + '">No Data Found</td>',
+//      '</tr>'
 
+
+    /* OUR version of table sorted is old, and doesn't have config.filteredRows */
+    $('table').on('filterEnd filterReset', function(event, data) {
+        var c = this.config;
+        c.$table.find('.noData').remove(); //In case it already exists
+        //fr = c.filteredRows;
+        //if (fr === 0) {
+        if ($("#liciouslisttable tbody tr.filtered").length  ===  $("#liciouslisttable tbody tr").length ) { 
+            c.$table.append(["<tr id='rowNoData' class='noData remove-me'><td><div>No restaurants found</div></td></tr>"].join(''));
+            // "remove-me" class added to rows that are not to be included in the cache when updating        
+        } 
+    }); 
 }
 
 function updateFilter() {
@@ -548,6 +563,7 @@ function updateFilter() {
     var urlParmsLength = Object.keys(gblURLParms).length;
     if ($.type(gblURLParms.appInstanceName) !== 'undefined') { urlParmsLength--;}
     if ($.type(gblURLParms.vgnextoid) !== 'undefined') { urlParmsLength--;}
+    if ($.type(gblURLParms.view) !== 'undefined') { urlParmsLength--;}
     if (urlParmsLength === 0) {$("#resetFilters").css("visibility", "hidden");} else {$("#resetFilters").css("visibility", "visible");}
     var blnPrice = false;
 
@@ -580,7 +596,7 @@ function updateFilter() {
     gblFilteredRestData.restaurants = [];
     var skipItem = false;
     for (var i = 0; i < gblRestData.restaurants.length; i++) {
-        var item = gblRestData.restaurants[i]
+        var item = gblRestData.restaurants[i];
         skipItem = false;
         if (qsVEG!=="" && item.lic_veggie!==qsVEG) { skipItem = true;}
         if (qsVEGAN!=="" && item.lic_vegan!=qsVEGAN){ skipItem = true;}
@@ -618,31 +634,45 @@ function resetFilters() {
     $("#filterVegan").prop('checked', false);
     $("#filterLocal").prop('checked', false);
     updateFilter();
-	var sorting = [[0,0]]; 
+    var sorting = [[0,0]]; 
     $("#liciouslisttable").trigger("sorton",[sorting]); 
 }
 
-
-function jsonReservationsCallBack(data) {
+//Note: documentId is a domino id and not a restuarantId, so match via address
+//There can be multiple records per restaurant, se need to report them all
+function addInCurrentReservations(address, restName) {
 
     var strHTML = "";   
-    $.each(data.reservations, function(i, item) {
-        strHTML += "<br>";
-        strHTML += "<p><strong>Today's Reservation Availability:</strong></p>";
-        strHTML += (item.lic_lunchoption!=="")? "<div>" : "";
-        strHTML += (item.lic_lunchoption==="")? '' : '<span><strong>Lunch</strong>: ' + item.lic_lunchoption + ' today</span>';
-        strHTML += (item.lic_lunchoption!=="")? "</div>" : "";
+    var cnt = 0;
+    var resLine ="";
+    $.each(gblReservationData, function(i, item) {
+        
+        if (item.lic_address === address && item.lic_restname === restName) {
+            strHTML += "<br>";
+            if (cnt === 0) {
+                strHTML += "<p><strong>Today's Reservation Availability:</strong></p>";
+                resLine = item.lic_reserveline;
+            }
+            strHTML += (item.lic_lunchoption!=="")? "<div>" : "";
+            strHTML += (item.lic_lunchoption==="")? '' : '<span><strong>Lunch</strong>: ' + item.lic_lunchoption + ' today</span>';
+            strHTML += (item.lic_lunchoption!=="")? "</div>" : "";
 
-        strHTML += (item.lic_dinneroption!=="")? "<div>" : "";
-        strHTML += (item.lic_dinneroption==="")? '' : '<span><strong>Dinner</strong>: ' + item.lic_dinneroption + ' today</span>';
-        strHTML += (item.lic_dinneroption!=="")? "</div>" : "";
+            strHTML += (item.lic_dinneroption!=="")? "<div>" : "";
+            strHTML += (item.lic_dinneroption==="")? '' : '<span><strong>Dinner</strong>: ' + item.lic_dinneroption + ' today</span>';
+            strHTML += (item.lic_dinneroption!=="")? "</div>" : "";
+            strHTML += '<div><small><em>Date posted by restaurant: ' + item.lic_datetime + '</em></small></div>';
 
-        strHTML += '<p><span>Call ' + item.lic_reserveline + " to book your table.</span>";
-        strHTML += '<div><small><em>Date posted by restaurant: ' + item.lic_datetime + '</em></small></div>';
+            cnt++;
+        }
         
     });
-                    
-    $("#reservationLink").html(strHTML);
+    if (cnt > 0) {
+        strHTML += '<p><span>Call ' + resLine + " to book your table.</span>";
+    }
+
+                
+    return  strHTML;    
+    //$("#reservationLink").html(strHTML);
 }
 
 function drawDetail(strID) {
@@ -682,6 +712,7 @@ function drawDetail(strID) {
                     
                                                             
                     strHTML += '<div id="reservationLink"></div>';
+                    strHTML += addInCurrentReservations(item.lic_address, item.lic_restName);
                                         
                     strHTML += '<div class="sitelinks">';
                     strHTML += (item.lic_lunchlink==="" && item.lic_dinnerlink==="") ? "": '<br><p><strong>Reserve online</strong> for seatings between July 8 and 24, 2016:</p><img src="/static_files/WebApps/images/fork.png"> &nbsp;';
@@ -832,9 +863,7 @@ function closeDetailWindow() {
 
 }
 
-function initApp() {
-
-    setupEvents();
+function getRestaurants() {
     $.ajax({
         type: 'GET',
         url: DATA_URL ,
@@ -848,15 +877,39 @@ function initApp() {
             if ($.type(gblURLParms.key) !== 'undefined') {
                 drawDetail(gblURLParms.key);
             }
-            if (gblLiciousConfig.StartTab !== 'tabMap') {
-                switchToTab("tabList");
+            var startTab = gblLiciousConfig.StartTab;
+            if ($.type(gblURLParms.view) !== 'undefined') {
+                startTab = gblURLParms.view;
             }
+            switchToTab(startTab);
+            //removeQueryStringParm("listview");
+            //removeQueryStringParm("mapview");
         }
     });
-    //$.ajax({type: 'GET',url: strURL,dataType: 'jsonp'});  
-        
-    //strURL = "http://wxqa.toronto.ca/inter/se/restaurants.nsf/SummerCulinaryListJSON.xsp";
-   // $.ajax({type: 'GET',url: strURL,dataType: 'jsonp'});
+}
+
+/* want descending */
+function sortReservations(a, b) {
+    return new Date(b.lic_datetime).getTime() - new Date(a.lic_datetime).getTime();
+}
+function initApp() {
+
+    //We could get reservations 1 by 1 since it is in the aggragator, but it is expected to be small so read all.
+    $.ajax({
+        type: 'GET',
+        url: RESERVATIONS_URL ,
+        dataType: 'jsonp',
+        jsonpCallback: 'jsonReservationsCallBack',
+        contentType: "application/json",
+        success: function (data) {
+            gblReservationData = data.reservations.sort(sortReservations);
+            getRestaurants();
+        }
+    }); 
+    
+    setupEvents();
+
+
 
 
 }
@@ -889,7 +942,7 @@ function loadMainPage() {
         strCode += '<link rel="stylesheet" href="/static_files/WebApps/Summerlicious/css/licious.css">';        
         strCode += '<script type="text/javascript" src="/tablesorter/js/jquery.tablesorter.js"></script>';
         strCode += '<script type="text/javascript" src="/tablesorter/js/jquery.tablesorter.widgets.js"></script>';
-        strCode += '<script type="text/javascript" src="/placeholders/placeholders.min.js"></script>';        
+        strCode += '<script type="text/javascript" src="/static_files/assets/placeholders/placeholders.jquery.min.js"></script>';        
         htmlLoad = '/static_files/WebApps/Summerlicious/html/RestaurantList.html';
     }
     $("#appCode").html(strCode);

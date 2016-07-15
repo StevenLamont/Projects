@@ -174,7 +174,7 @@ legend + span.form-control {display:block !important;}
 	.modal {position: relative;}
 	.modal-open {overflow: visible !important;}
 	#detailModal .modal-dialog {width: 95%; height: auto !important; overflow-y: visible;}
-	#detailModal button, #detailModal .lic_imagelink, .contextTitle, .sitefooter {display:none !important;}
+	#detailModal button, #detailModal .lic_imagelink, .contextTitle, .sitefooter, #advancedSearch, .advancedSearch, button {display:none !important;}
 	#detailModal .modal-content {overflow-y: visible !important;}
 	
 }
