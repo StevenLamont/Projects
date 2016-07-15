@@ -1,33 +1,37 @@
 
 <section >
-<h1 id="headerText">Subject Matter Details</h1>
+<h1 style="display:inline-block" id="headerText">Subject Matter Details</h1>
+<span id='expColAll' class="pull-right" style="margin-top: 30px;">	
+ <a href="javascript:void(0)" class="btn btn-link openall"> Expand All</a> <a href="javascript:void(0)" class="btn btn-link closeall"> Collapse All</a>
+</span>
+<div class="clearfix"></div>
 <div class="panel-group" id="smRegAccordion">
     <div class="panel panel-info">
         <header class="panel-heading" data-toggle="collapse" data-parent="#smRegAccordion" data-target="#SMRegSection">
             <h2 class="panel-title accordion-toggle">
-				<span class="SMConsultant">Consultant Lobbyist Subject Matter Registration: </span>
-				<span class="SMIn-house">In-house Lobbyist Subject Matter Registration: </span>
-				<span class="SMVoluntary">Voluntary Lobbyist Subject Matter Registration: </span>
-				<span class="accoridion-supdetail SMNumber">
-			</h2>
+                <span class="SMConsultant">Consultant Lobbyist Subject Matter Registration: </span>
+                <span class="SMIn-house">In-house Lobbyist Subject Matter Registration: </span>
+                <span class="SMVoluntary">Voluntary Lobbyist Subject Matter Registration: </span>
+                <span class="accoridion-supdetail subjectMatterNumber">
+            </h2>
         </header>  
         <div id="SMRegSection" class="panel-collapse collapse in table-responsive">        
-		
+        
             <table class="detailPageTable panel-body table">
-				<tr class="labelRow">
-					<td style="width:25%">Registration Number</td>
-					<td style="width:25%">Status</td>
-					<td style="width:25%">Initial Approval Date</td>
-					<td style="width:25%">Recent Approval Date</td>
-				</tr>
-				<tr>
-					<td style="width:25%" class="SMNumber">RegNo</td>
-					<td style="width:25%" class="Status" >Status</td>
-					<td style="width:25%" class="InitialApprovalDate">InitApproval</td>
-					<td style="width:25%" class="EffectiveDate">Recent</td>
-				</tr>
-			</table>         
-			
+                <tr class="labelRow">
+                    <td style="width:25%">Registration Number</td>
+                    <td style="width:25%">Status</td>
+                    <td style="width:25%">Initial Approval Date</td>
+                    <td style="width:25%">Recent Approval Date</td>
+                </tr>
+                <tr>
+                    <td style="width:25%" class="subjectMatterNumber">RegNo</td>
+                    <td style="width:25%" class="subjectMatterStatus" >Status</td>
+                    <td style="width:25%" class="subjectMatterInitialApprovalDate">InitApproval</td>
+                    <td style="width:25%" class="subjectMatterRecentApprovalDate">Recent</td>
+                </tr>
+            </table>         
+            
         </div>
     </div>
 </div>
@@ -40,7 +44,7 @@
                 <span class="SMIn-house">Senior Officer: </span>
                 <span class="SMConsultant">Consultant Lobbyist: </span>
                 <span class="SMVoluntary">Voluntary Lobbyist: </span>  
-				<span class="accoridion-supdetail R_LobbyistName">				
+                <span class="accoridion-supdetail lobbyistName">                
             </h2>
             
         </header>  
@@ -53,26 +57,26 @@
                     <td>Status</td>
                 </tr>
                 <tr>
-				 <td class="R_LobbyistName">LobbyistName</td>
-                <td id="R_RegistrationNUmberWithSoNum">RegNo</td>
-                <td id="R_Status">Status</td>
+                 <td class="lobbyistName">LobbyistName</td>
+                <td class="lobbyistRegistrationNumber">RegNo</td>
+                <td class="lobbyistRegistrationStatus">Status</td>
                 </tr>
-				
+                
                 <tr class="labelRow SMIn-house">
                     <td colspan="1">Lobbyist Class/Type</td>
                     <td colspan="1">Position Title</td>
-                    <td>Recent Approval date(eff Date??)</td>
+                    <td>Recent Approval date</td>
                 </tr>
 
                 <tr class="labelRow SMConsultant SMVoluntary">
                     <td colspan="1">Lobbyist Class/Type</td>
                     <td colspan="1">Position Title</td>
-                    <td>Recent Approval date(eff Date??)</td>
+                    <td>Recent Approval date</td>
                 </tr>
                 <tr>
-                    <td id="R_Type">Lobbyist Type</td>
-                    <td id="R_PositionTitle">Position Title</td>
-					<td id="R_EffectiveDate">EffDate</td>
+                    <td class="lobbyistType">Lobbyist Type</td>
+                    <td class="lobbyistPositionTitle">Position Title</td>
+                    <td class="lobbyistRegistrationMostRecentApprovalDate">EffDate</td>
                 </tr>
 
                 <tr class="labelRow SMConsultant SMVoluntary">
@@ -81,9 +85,9 @@
                     <td colspan="1">Senior public office positon held with the City of Toronto in the past 12 months?</td>
                 </tr>
                 <tr class="SMConsultant SMVoluntary">
-                    <td class="R_Address">Address</td>
-                    <td class="R_Phone">Phone</td>
-                    <td class="SMConsultant SMVoluntary" id="R_PreviousPublicOfficeHolder">PrevPublicOffice</td>
+                    <td class="lobbyistAddress">Address</td>
+                    <td class="lobbyistPhone">Phone</td>
+                    <td class="SMConsultant SMVoluntary lobbyistPrevPubOfficeHolder">PrevPublicOffice</td>
                 </tr>
             </table>
 
@@ -95,7 +99,7 @@
 <div class="panel-group" id="boAccordion">
     <div class="panel panel-info">
         <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#boAccordion" data-target="#BOSection">
-            <h2 class="panel-title accordion-toggle">Business / Organization:  <span class="accoridion-supdetail F_Name"></h2>
+            <h2 class="panel-title accordion-toggle">Business / Organization:  <span class="accoridion-supdetail businessOrganizationName"></h2>
         </header>  
         <div id="BOSection" class="panel-collapse collapse table-responsive">        
             <table class="detailPageTable panel-body table">
@@ -105,48 +109,27 @@
                     <td>Business/Organization Type</td>
                 </tr>
                 <tr>
-                    <td class="F_Name">Business/Organization name</td>
-                    <td class="F_TradeName">Other trade names </td>
-                    <td class="F_BusinessType">Business/Organization type</td>
+                    <td class="businessOrganizationName">Business/Organization name</td>
+                    <td class="businessOtherTradeName">Other trade names </td>
+                    <td class="businessType">Business/Organization type</td>
                 </tr>
                 <tr class="labelRow">
                     <td colspan='3'>Address</td>
                 </tr>
                 <tr>
-                    <td colspan='3' class="R_Address">Address</td>
+                    <td colspan='3' class="businessAddress">Address</td>
                 </tr>
-    <!--
-    <tr class="labelRow">
-        <td>Business Address</td>
-        <td>City, Province</td>
-        <td>Country, Postal</td>
-    </tr>
-    <tr>
-        <td class="R_BusinessAddress">BusinessAddress</td>
-        <td class="R_CityProvince">CityProv</td>
-        <td class="R_CountryPostal">CountryPostal</td>
-    </tr>
-    -->
                 <tr class="labelRow SMIn-house">
                     <td colspan="3">Description of business activities</td>
                 </tr>
                 <tr class="SMIn-house">
-                    <td colspan="3" class="F_Description">Description</td>
+                    <td colspan="3" class="businessDescription">Description</td>
                 </tr>
                 <tr class="labelRow SMIn-house">
                     <td colspan="3">Fiscal year of the business/organization</td>
                 </tr>
-    <!--
-    <tr   class="SMIn-house">
-        <td>Start</td>
-        <td>End</td>
-    </tr>
-    <tr>
-        <td id="F_FiscalStart">Start</td>
-        <td id="F_FiscalEnd">End</td>
-    </tr>
-    -->
-                <tr><td  colspan="3"><span class="F_FiscalStart"></span> <span class="F_FiscalEnd"></span></td></tr>
+                <tr>
+                    <td  colspan="3"><span class="businessFiscalStartDate"></span><span class="businessFiscalEndDate"></span></td></tr>
             </table>
         </div>
     </div>
@@ -155,7 +138,7 @@
 <div class="panel-group" id="smAccordion">
     <div class="panel panel-info">
         <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#smAccordion" data-target="#SubjectMatterSection">
-            <h2 class="panel-title accordion-toggle">Subject matter: <span class="accoridion-supdetail SubjectMatter"></span></h2>
+            <h2 class="panel-title accordion-toggle">Subject matter: <span class="accoridion-supdetail subjectMatter"></span></h2>
         </header>  
         <div id="SubjectMatterSection" class="panel-collapse collapse table-responsive">        
 
@@ -164,12 +147,12 @@
                     <td>Decision(s) or issue(s) to be lobbied</td>
                 </tr>
                 <tr>
-                    <td class="Particulars">Particulars</td>
+                    <td class="subjectMatterDecisionIssue">Particulars</td>
                 </tr>
                 <tr class="labelRow">
                     <td>Propsed time period for lobbying on this subject matter</td>
                 </tr>
-                <tr><td><span class="ProposedStartDate">Start</span><span class="ProposedEndDate">End</span></td></tr>
+                <tr><td><span class="subjectMatterStartDate">Start</span><span class="subjectMatterEndDate">End</span></td></tr>
             </table>            
 
         </div>
@@ -197,7 +180,7 @@
 <div class="panel-group" id="clientAccordion">
     <div class="panel panel-info">
         <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#clientAccordion" data-target="#ClientSection">
-            <h2 class="panel-title accordion-toggle">Client: <span class="accoridion-supdetail C_Name">Client</span></h2>
+            <h2 class="panel-title accordion-toggle">Client: <span class="accoridion-supdetail clientName">Client</span></h2>
         </header>  
         <div id="ClientSection" class="panel-collapse collapse table-responsive">        
             <table class="detailPageTable panel-body table">
@@ -207,9 +190,9 @@
                     <td>Address</td>
                 </tr>
                 <tr>
-                    <td class="C_Name">Client</td>
-                    <td class="C_TradeName">TradeName</td>
-                    <td id="C_Address">Address</td>
+                    <td class="clientName">Client</td>
+                    <td class="clientOtherTradeName">TradeName</td>
+                    <td class="clientAddress">Address</td>
                 </tr>
             </table>
         </div>
@@ -222,7 +205,7 @@
             <h2 class="panel-title accordion-toggle">Other Beneficiaries</h2>
         </header>  
         <div id="OtherBeneficiariesSection" class="panel-collapse collapse">        
-            <table class="detailPageTable table">
+            <table class="detailPageTable table table-striped">
             <tbody class="panel-body">
             </tbody>
             </table>
@@ -266,7 +249,7 @@
         <h2 class="panel-title accordion-toggle">Public Office Holders and Communication Methods</h2>
     </header> 
     <div id="CommunicationsSection" class="panel-collapse collapse table-responsive">
-        <table class="detailPageTable table" >
+        <table class="detailPageTable table table-striped" >
         <tbody class="panel-body">
         </tbody>
         </table>
@@ -294,11 +277,22 @@
         </div>
     </div>
 </div>
-
+<div class="panel-group" id="committeeAccordion">
+    <div class="panel panel-info">
+        <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#committeeAccordion" data-target="#CommitteeSection">
+            <h2 id="committeeHeader" class="panel-title accordion-toggle">Committees of the Organization</h2>
+        </header> 
+        <div id="CommitteeSection" class="panel-collapse collapse table-responsive">
+            <table class="detailPageTable table">
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
 <div class="panel-group" id="meetAccordion">
     <div class="panel panel-info">
         <header class="panel-heading collapsed" data-toggle="collapse" data-parent="#meetAccordion" data-target="#MeetingsSection">
-            <h2 id="committeeHeader" class="panel-title accordion-toggle">Communication by Committees of the Organization</h2>
+            <h2 id="meetHeader" class="panel-title accordion-toggle">Communication by Committees of the Organization</h2>
         </header> 
         <div id="MeetingsSection" class="panel-collapse collapse table-responsive">
             <table class="detailPageTable table">

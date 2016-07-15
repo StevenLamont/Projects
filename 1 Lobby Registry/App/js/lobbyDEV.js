@@ -19,9 +19,9 @@ an A-Z listing only to find that there is no records found. Ideally that Z optio
 var LS_KEY_STATE = "LobbyistDisclosure";
 var LS_KEY_APP_ENV = "LobbyistEnvironment";
 var listGUID;
-var gblAllowEnvSwitch = false;
-var APP_ENV = "http://was-inter-qa.toronto.ca";
-//var APP_ENV = "http://was8-inter-dev.toronto.ca";
+var gblAllowEnvSwitch = true;
+//var APP_ENV = "http://was-inter-qa.toronto.ca";
+var APP_ENV = "http://was8-inter-dev.toronto.ca";
 
 var SM_DETAIL_DATA_URL = "/LobbyistRegistryRestWeb/disclosure/subjectMatterDetails?callback=?&subjectMatterId=<SMID>";
 var LR_DETAIL_DATA_URL = "/LobbyistRegistryRestWeb/disclosure/lobbyistDetails?callback=?&lobbyistRegistrationId=<LRID>";
