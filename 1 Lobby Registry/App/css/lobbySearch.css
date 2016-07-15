@@ -1,10 +1,40 @@
-/* Rob - Temp Changes for Demo */
+
 #maincontent #tabNavigation {margin-top:15px;}
 #maincontent #tabNavigation a {padding: 10px 7px;}
 #maincontent #tabNavigation li {min-width: 155px;}
-#maincontent #lobbytable {margin-top:0px;}
-#maincontent .pagination li a {padding:2px 7px; border: 1px solid #c2c2c2;}
-#maincontent .pagination {margin:6px 5px 6px 0px !important;}
+
+#navbtn { margin-top: 0px; padding: 6px;}
+#navbtn .icon-bar {background-color: black;}
+#maincontent .navbar-collapse { padding-right: 0px; padding-left: 0px; }
+#maincontent ul.nav>li.active>a {
+    background-color: #428bca;
+    color: white;
+    border-top-radius: 5px;
+}
+#maincontent ul.nav>li>a {
+    text-align: center;
+    padding: 5px;
+    text-decoration: none;
+    background-color: #eee;
+    word-wrap: break-word;
+}
+
+/*
+#lobbytable-responsive .table {
+	  width: auto;
+	   table-layout:auto
+}
+
+#lobbytable-responsive {
+    border: 1px solid #ddd;
+    margin-bottom: 15px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    width: 100%;
+}
+*/
+/*#maincontent .pagination li a {padding:2px 7px; border: 1px solid #c2c2c2;}*/
+/*#maincontent .pagination {margin:6px 5px 6px 0px !important;}*/
 #maincontent .allPagination .btn-group button {margin:7px 0px 0px 0px;}
 #alphaPagination {border: 0px; float:left;}
 #maincontent .allPagination {background-color:white !important; border-color: white;  }
@@ -30,36 +60,52 @@ legend.poh {
         width:auto;
         padding:0 10px;
         border-bottom:none;
-		
+        
 }
 
-.srchLabel1 {
-	min-width: 160px;
+.srchLabel1,.dateRangeLbl {
+    min-width: 160px;
+	white-space: normal;
 }
 
 #committeeLbl, #grassRootsLbl {
-	min-width: 250px;
-	border-right: 1px solid #ccc;
-	border-top: 0px;
-	border-bottom: 0px;
-	border-left: 0px;
-	height:34px;
+    min-width: 250px;
+    border-right: 1px solid #ccc;
+    border-top: 0px;
+    border-bottom: 0px;
+    border-left: 0px;
+    height:34px;
 }
 .poh .input-group-addon {
-	min-width: 75px;  
-	text-align: left;
+    min-width: 140px;  
+    text-align: left;
+	white-space: normal;
+}
+
+#grassRootsCommOnlyInd,#committeeCommOnlyInd {
+	height: 14px;
+	margin-top: 10px;
+}
+
+#pohOfficeNameSearch {
+	height: 42px;
 }
 
 .snrLobbyistHighlight {
     font-weight: bold;
 }
+
+/*
 #searchString {
-   /* width: 500px;*/
+	width: 60%;
+	display: inline-block;
 }
+*/
+
 .tooltip-inner {
             max-width: none;
         }
-		
+        
 #searchclear {
     position: absolute;
     right: 5px;
@@ -73,25 +119,54 @@ legend.poh {
 }
 
 #advSearchBtnGroup {
-	padding-left: 15px;
-	margin-left: 10px;
-	width: 1%;
-	position: relative;
+    padding-left: 15px;
+    margin-left: 10px;
+    width: 1%;
+    position: relative;
 }
 #advSearchResetGroup {
-	padding-left: 15px;
-	margin-left: 10px;
-	width: 1%;
-	position: relative;
+   /* padding-left: 15px;*/
+   /* margin-left: 10px; */
+    width: 1%;
+    position: relative;
 }
 #advSearchBtn, #resetBtn {
     border-bottom-left-radius: 4px;
     border-top-left-radius: 4px;
+    }
+
+.searcharea {
+	display:inline-block; 
+	width: 50%
+}
+
+
+
+@media (max-width: 1200px) {
+	.searcharea {
+	display:inline-block; 
+	width: 60%
 	}
+	#advSearchBtnGroup {
+	    padding-left: 0;
+		margin-left: 0;
+	}
+}
+
+@media (max-width: 600px) {
+	.searcharea {
+	display:inline-block; 
+	width: 100%
+	}
+	#advSearchBtnGroup {
+	    padding-left: 0;
+		margin-left: 0;
+	}
+}
 
 #pageStatus {
-	line-height: 30px;
-	float: right;
+    line-height: 30px;
+    float: right;
 }
 
 .modal-dialog {
@@ -116,8 +191,8 @@ legend.poh {
 }
 
 #advSearchDiv {
-	margin-left: 10px;
-	margin-right: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
     padding-bottom: 0px;
 }
 
@@ -127,8 +202,8 @@ legend.poh {
     text-align: left;
 } 
 #advSearchDiv .input-group-addon {
-	/*min-width: 175px;  /*messes up the datepicker*/
-	text-align: left;
+    /*min-width: 175px;  /*messes up the datepicker*/
+    text-align: left;
 }
 
 .datepicker{z-index:9000 !important;} /* must be higher than modal's 7001*/
@@ -147,18 +222,18 @@ legend.poh {
 .form-control-label {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
-	border-right: 0 none;
+    border-right: 0 none;
     background-color: #eee;
     color: #555;
     font-size: 14px;
     font-weight: normal;
     padding: 6px 12px;
     text-align: left;
-	display: table-cell;
+    display: table-cell;
     height: 34px;
-    line-height: 1.42857;	  
-	margin-bottom: 0px;
-	width: 200px;
+    line-height: 1.42857;     
+    margin-bottom: 0px;
+    width: 200px;
 }
 }
 .disabled{
@@ -167,7 +242,7 @@ legend.poh {
 }
 
 /*.form-control {
-	padding-left: 5px;
+    padding-left: 5px;
 }
 */
 .has-feedback {
@@ -190,23 +265,23 @@ legend.poh {
 }
 
 .colHdr {
-	height: 42px;
-	margin-bottom: 0px;
-	display: block;
+    height: 42px;
+    margin-bottom: 0px;
+    display: block;
 }
 
 .clearer {
-	/*background-color: #3276b1;*/
-	right: 5px; /*-15px;*/
+    /*background-color: #3276b1;*/
+    right: 5px; /*-15px;*/
 }
 .clearerta {
-	/*background-color: #327*/b1;
-	right: 5px; /*20px;*/
+    /*background-color: #327*/b1;
+    right: 5px; /*20px;*/
 }
 
 /*
-#subjectMatterFilter {	
-	width: 727px;
+#subjectMatterFilter {  
+    width: 727px;
 }
 */
 
@@ -214,7 +289,7 @@ legend.poh {
 .typeahead, .tt-query, .tt-hint {
     /*border: 2px solid #ccc;
     border-radius: 8px;
-	*/
+    */
     font-size: 14px;
     height: 34px;
     line-height: 34px;
@@ -247,7 +322,7 @@ legend.poh {
     font-size: 14px;
     line-height: 24px;
     padding: 3px 20px;
-	background-color: #fff;	
+    background-color: #fff; 
 }
 .tt-suggestion:hover {
     background-color: #0097cf;
@@ -273,35 +348,71 @@ legend.poh {
 .btn-default { background-color:#fff;  color: #000; border-color:#CCC;}
 .listBy {background-color:#000; color: #fff; font-weight:bold; font-size:1.1em; }
 .titleFilter {background-color: #3276b1; }
-.navStyle { margin-top:-27px; margin-bottom:-27px; float: right; }
+
+.searchRow {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#numPagination ul.pagination {
+    padding: 0;
+}
+#alphaPagination.nav-tabs > li.active > a > span, #alphaPagination.nav-tabs > li.active > a:hover > span, #alphaPagination.nav-tabs > li.active > a:focus > span, #alphaPagination.nav-tabs > li.available > a > span, #alphaPagination.nav-tabs > li.available > a:hover > span, #alphaPagination.nav-tabs > li.available > a:focus > span {
+    background-color: #fef6d3;
+    border: 1px solid #c2c2c2;
+    border-radius: 3px;
+    color: #000;
+    display: block;
+    font-size: 10px;
+    line-height: 10px;
+    padding: 0 1px;
+    position: absolute;
+    right: -2px;
+    top: -3px;
+}
+
+#alphaPaging ul.pagination {
+    margin: 0;
+    padding: 0px 0;
+}
+
+#alphaPaging .nav-tabs > li > a {
+    border: 1px solid transparent;
+    border-radius: 0;
+    line-height: 1.42857;
+    margin-right: 0;
+}
 
 .allPagination {background-color:#333; margin-top:7px; margin-bottom: 6px;}
-.pagination > li > a, .pagination > li > span {
-    position: relative;
-    float: left;
-    padding: 3px 8px;
-    margin-left: -1px;
-    line-height: 1.42857;
-    text-decoration: none;
-    background-color: #eee;
-    border: 1px solid #eee;
+
+#maincontent #lobbytable {
+    margin-top:0px;
+    table-layout: fixed;
+    word-wrap: break-word;
 }
 
 #maincontent table th {
     border-top: 2px solid #346488;
-	padding: 11px 0px 0px 16px;
-	background: #f1f8ff; /* For browsers that do not support gradients */
+    /*padding: 11px 0px 0px 16px;*/
+    background: #f1f8ff; /* For browsers that do not support gradients */
     background: -webkit-linear-gradient(#f1f8ff, white); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient(#f1f8ff, white); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient(#f1f8ff, white); /* For Firefox 3.6 to 15 */
     background: linear-gradient(#f1f8ff, white); /* Standard syntax (must be last) */
 }
 
+#maincontent table th, #maincontent table td, #maincontent form table th, #maincontent form table td {
+    line-height: 1.5em;
+    padding: 10px 10px;
+    text-align: left;
+    vertical-align: top;
+}
+
 #maincontent #committeeInd, #grassRootsInd {
-	width: 15px;
-	height: 15px;
-	margin-left: 15px;
-	margin-top: 10px;
+    width: 15px;
+    height: 15px;
+    margin-left: 15px;
+    margin-top: 10px;
 }
 
 #maincontent .addBorder {border:1px solid #ccc;}
@@ -311,8 +422,8 @@ legend.poh {
 /*#maincontent table th {
     border-bottom: 2px solid #000;
     color: #fff;
-	background-color: #3276b1;
-	padding: 5px 10px;
+    background-color: #3276b1;
+    padding: 5px 10px;
 }
 .input-group-addon {min-width:140px;
 .btn {  text-align: left !important; padding-left:15px; }
@@ -320,24 +431,87 @@ legend.poh {
 
 #map-loader
 {
-	background-color: #fff;
-	border: 3px solid #666;
-	color: #000;
-	font-weight: bold;
-	text-align: center;
-	padding: 10px;
-	position: absolute;
-	left: 353px;
-	top: 150px;
-	width: 100px;
+    background-color: #fff;
+    border: 3px solid #666;
+    color: #000;
+    font-weight: bold;
+    text-align: center;
+    padding: 10px;
+    position: absolute;
+    left: 353px;
+    top: 150px;
+    width: 100px;
+    
+    /* Border Radius */
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    
+    /* Box Shadow */
+    -webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.35);
+    -moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.35);
+    box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.35);
+}
+
+/* must be higher than standard mnodal if using validating a modal value */
+.bootbox {
+    z-index: 999999;
+}
+
+@media (max-width: 1200px) {
+	.modal-dialog { width: 90%;}
+
+	.table-responsive {
+    width: 100%;
+    margin-bottom: 15px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    border: 1px solid #ddd;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+    -webkit-overflow-scrolling: touch;
+}
+
+
+
+@media (max-width: 768px) {
+	.modal-dialog { width: 100%;}
+  
+	.woda { 
+		width: 100%;
+		display: block;   
+	}
+	.srchLabel1,#committeeLbl,#grassRootsLbl,.dateRangeLbl {
+		min-width: 100%;
+		display: block;
+		border-bottom-right-radius: 0px!important;
+		border-bottom-left-radius: 0px!important;
+		border-top-right-radius: 4px!important;
+		border-top-left-radius: 4px!important;
+	}
+	.poh .input-group-addon {
+		min-width: 100%;  
+		display: block;
+		text-align: left;
+		border-bottom-right-radius: 0px!important;
+		border-bottom-left-radius: 0px!important;
+		border-top-right-radius: 4px!important;
+		border-top-left-radius: 4px!important;		
+	}	
+	.srchig {
+		display: inherit;
+	}
+	fieldset.poh {
+		border: 1px groove #ddd !important;
+		padding: 0 0 1.4em 1.4em !important;
+		margin: 0 0 1.5em 0 !important;
+		-webkit-box-shadow:  0px 0px 0px 0px #000;
+        box-shadow:  0px 0px 0px 0px #000;
+	}	
+	#maincontent #tabNavigation .navbar-default li {
+		background-color: #eee;
+		width: 100%;
+	}
 	
-	/* Border Radius */
-	-webkit-border-radius: 2px;
-	-moz-border-radius: 2px;
-	border-radius: 2px;
-	
-	/* Box Shadow */
-	-webkit-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.35);
-	-moz-box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.35);
-	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.35);
+}
+
 }

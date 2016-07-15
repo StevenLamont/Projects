@@ -28,7 +28,7 @@
     padding: 0px 15px 0px 15px;
     text-align: left;
     vertical-align: top;
-	width: 33%;
+/*	width: 33%;*/
 	border-top: 0px solid #ddd;
 }
 
@@ -62,8 +62,9 @@
 .accoridion-supdetail {
 	font-weight: bold;
 }
+
 /* CSS Method for adding Font Awesome Chevron Icons */
- .accordion-toggle:after {
+ .panel-heading .accordion-toggle:after {
     /* symbol for "opening" panels */
     font-family:'FontAwesome';
     content:"\f146";
@@ -75,9 +76,25 @@
     content:"\f0fe";
 }
 
+.openall:before {
+    color: color: #428bca;;
+    content: "\f0fe";
+    font-family: "FontAwesome";
+}
+.openall,.closeall { text-decoration: none!important; color: #428bca!important;background: inherit!important;}
+a.btn .openall, a.btn-selected .openall { color: #428bca!important; ;} /* overrides VGN editor.css*/
+.closeall:before {
+    color: color: #428bca;;
+    content: "\f146";
+    font-family: "FontAwesome";
+}
 .searchHighlight {
     background-color: yellow;
 }
 .highlight {
     background-color: yellow;
+}
+@media print {
+	.panel-heading .accordion-toggle:after  { display: none;}
+	#expColAll { display: none;}
 }
