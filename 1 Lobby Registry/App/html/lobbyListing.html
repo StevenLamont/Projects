@@ -41,8 +41,8 @@
         </div>
         <div class="col-xs-12 col-sm-12 col-md-4 indexreport">
 		<div class="pull-left">
-			<button id="navbtn" type="button" class="navbar-default navbar-toggle " data-toggle="collapse" data-target="#ldsNavBar">
-				<span class="sr-only">Toggle tabs</span>
+			<button title="Toogle report selection tab" id="navbtn" type="button" class="navbar-default navbar-toggle " data-toggle="collapse" data-target="#ldsNavBar">
+				<span class="sr-only">Toogle selection of reporting tab</span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>                        
@@ -79,7 +79,7 @@
 </section>
 
 
-<div class='row searchRow'>
+<div id="paging" class='row searchRow'>
     <div id="numPagination" class="col-xs-12 col-sm-12 col-md-12" style="display:none;">
 
         <nav class="navStyle pull-left" id="numberPageSelection"></nav> 
@@ -102,39 +102,39 @@
         <!--nav class="navStyle"--> 
             <ul id="alphaPagination" class="nav pagination">
             <li>
-            <a href="#" aria-label="Previous">
+            <a class="alphaIdx"  data-value='<' href="#" aria-label="Previous">
                 <span aria-hidden="true">&laquo;</span>
             </a>
             </li>
-            <li id="alpha-0"><a class="alphaIdx" href="#">#</a></li>
-            <li id="alpha-A"><a class="alphaIdx" href="#">A</a></li>
-            <li id="alpha-B"><a class="alphaIdx" href="#">B</a></li>
-            <li id="alpha-C"><a class="alphaIdx" href="#">C</a></li>
-            <li id="alpha-D"><a class="alphaIdx" href="#">D</a></li>
-            <li id="alpha-E"><a class="alphaIdx" href="#">E</a></li>
-            <li id="alpha-F"><a class="alphaIdx" href="#">F</a></li>
-            <li id="alpha-G"><a class="alphaIdx" href="#">G</a></li>
-            <li id="alpha-H"><a class="alphaIdx" href="#">H</a></li>
-            <li id="alpha-I"><a class="alphaIdx" href="#">I</a></li>
-            <li id="alpha-J"><a class="alphaIdx" href="#">J</a></li>
-            <li id="alpha-K"><a class="alphaIdx" href="#">K</a></li>
-            <li id="alpha-L"><a class="alphaIdx" href="#">L</a></li>
-            <li id="alpha-M"><a class="alphaIdx" href="#">M</a></li>
-            <li id="alpha-N"><a class="alphaIdx" href="#">N</a></li>
-            <li id="alpha-O"><a class="alphaIdx" href="#">O</a></li>
-            <li id="alpha-P"><a class="alphaIdx" href="#">P</a></li>
-            <li id="alpha-Q"><a class="alphaIdx" href="#">Q</a></li>
-            <li id="alpha-R"><a class="alphaIdx" href="#">R</a></li>
-            <li id="alpha-S"><a class="alphaIdx" href="#">S</a></li>
-            <li id="alpha-T"><a class="alphaIdx" href="#">T</a></li>
-            <li id="alpha-U"><a class="alphaIdx" href="#">U</a></li>
-            <li id="alpha-V"><a class="alphaIdx" href="#">V</a></li>
-            <li id="alpha-W"><a class="alphaIdx" href="#">W</a></li>
-            <li id="alpha-X"><a class="alphaIdx" href="#">X</a></li>
-            <li id="alpha-Y"><a class="alphaIdx" href="#">Y</a></li>
-            <li id="alpha-Z"><a class="alphaIdx" href="#">Z</a></li>            
+            <li id="alpha-0"><a class="alphaIdx" data-value='0' href="#">#</a></li>
+            <li id="alpha-A"><a class="alphaIdx" data-value='A' href="#">A</a></li>
+            <li id="alpha-B"><a class="alphaIdx" data-value='B' href="#">B</a></li>
+            <li id="alpha-C"><a class="alphaIdx" data-value='C' href="#">C</a></li>
+            <li id="alpha-D"><a class="alphaIdx" data-value='D' href="#">D</a></li>
+            <li id="alpha-E"><a class="alphaIdx" data-value='E' href="#">E</a></li>
+            <li id="alpha-F"><a class="alphaIdx" data-value='F' href="#">F</a></li>
+            <li id="alpha-G"><a class="alphaIdx" data-value='G' href="#">G</a></li>
+            <li id="alpha-H"><a class="alphaIdx" data-value='H' href="#">H</a></li>
+            <li id="alpha-I"><a class="alphaIdx" data-value='I' href="#">I</a></li>
+            <li id="alpha-J"><a class="alphaIdx" data-value='J' href="#">J</a></li>
+            <li id="alpha-K"><a class="alphaIdx" data-value='K' href="#">K</a></li>
+            <li id="alpha-L"><a class="alphaIdx" data-value='L' href="#">L</a></li>
+            <li id="alpha-M"><a class="alphaIdx" data-value='M' href="#">M</a></li>
+            <li id="alpha-N"><a class="alphaIdx" data-value='N' href="#">N</a></li>
+            <li id="alpha-O"><a class="alphaIdx" data-value='O' href="#">O</a></li>
+            <li id="alpha-P"><a class="alphaIdx" data-value='P' href="#">P</a></li>
+            <li id="alpha-Q"><a class="alphaIdx" data-value='Q' href="#">Q</a></li>
+            <li id="alpha-R"><a class="alphaIdx" data-value='R' href="#">R</a></li>
+            <li id="alpha-S"><a class="alphaIdx" data-value='S' href="#">S</a></li>
+            <li id="alpha-T"><a class="alphaIdx" data-value='T' href="#">T</a></li>
+            <li id="alpha-U"><a class="alphaIdx" data-value='U' href="#">U</a></li>
+            <li id="alpha-V"><a class="alphaIdx" data-value='V' href="#">V</a></li>
+            <li id="alpha-W"><a class="alphaIdx" data-value='W' href="#">W</a></li>
+            <li id="alpha-X"><a class="alphaIdx" data-value='X' href="#">X</a></li>
+            <li id="alpha-Y"><a class="alphaIdx" data-value='Y' href="#">Y</a></li>
+            <li id="alpha-Z"><a class="alphaIdx" data-value='Z' href="#">Z</a></li>            
            <li>
-            <a href="#" aria-label="Next">
+            <a class="alphaIdx"  data-value='>' href="#" aria-label="Next">
                 <span aria-hidden="true">&raquo;</span>
             </a>
             </li>
@@ -144,13 +144,14 @@
   
     </div>
 
- </div>  
+ </div> <!-- end search --> 
 
 <div class="table-responsive">        
     <table id="lobbytable"  class="table table-striped table-bordered">
     <thead></thead>
     <tbody></tbody>
     </table>
+	<div><button id="gotoTop" type="button" class="btn btn-link pull-right">top of listing</button></div>
     <div class="modal fade" id="listLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">
         <div class="modal-dialog modal-s">
             <div class="modal-content">
@@ -365,14 +366,14 @@
                         </div>
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <div class="input-group addBorder srchig">
-                                <span id="committeeLbl" class="input-group-addon">Committee Communication Only</span>
+                                <span id="committeeLbl" class="input-group-addon srchLabel1">Committee Communication Only</span>
                                 <input class="form-control columnCheckBox hasclear" id="committeeCommOnlyInd" type="checkbox" >
                                 <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
                             </div>
                         </div>                      
                         <div class="col-xs-12 col-sm-6 col-md-6">
                             <div class="input-group addBorder srchig">
-                                <span id="grassRootsLbl" class="input-group-addon">Grass-roots Communication Only</span>
+                                <span id="grassRootsLbl" class="input-group-addon srchLabel1">Grass-roots Communication Only</span>
                                 <input class="form-control columnCheckBox hasclear" id="grassRootsCommOnlyInd" type="checkbox" >
                                 <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span>
                             </div>

@@ -64,7 +64,7 @@ legend.poh {
 }
 
 .srchLabel1,.dateRangeLbl {
-    min-width: 160px;
+    min-width: 180px;
 	white-space: normal;
 }
 
@@ -88,7 +88,7 @@ legend.poh {
 }
 
 #pohOfficeNameSearch {
-	height: 42px;
+	height: 60px;
 }
 
 .snrLobbyistHighlight {
@@ -487,6 +487,13 @@ legend.poh {
 		border-bottom-left-radius: 0px!important;
 		border-top-right-radius: 4px!important;
 		border-top-left-radius: 4px!important;
+	}
+	#pohOfficeNameSearch {
+		height: inherit;
+	}
+	.clearerta,.clearer {
+		margin-top: 40px;
+		right: 15px;
 	}
 	.poh .input-group-addon {
 		min-width: 100%;  

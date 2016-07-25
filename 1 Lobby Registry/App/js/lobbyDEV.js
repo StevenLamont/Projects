@@ -89,7 +89,7 @@ var rptColumns = {
                         {column: 'SMLStatus', cls: '', style: 'width: 70px', label: 'Status', title: 'Subject Matter Registration  Status'},
                         {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 90px;white-space: normal;', label: 'Subject Matter No.', title: 'Subject Matter Registration No.'}
                         ]
-                },				
+                },              
     'LobbyRpt': {Idx: 'A', DataSource : "/LobbyistRegistryRestWeb/disclosure/startWith/<PGALPHA>/2?callback=?&pageNum=<PGNUM>&maxResults=<MAXRES>",
                 Cols : [
                         {column: 'SMLLobbyist', cls: '', style: 'width: 150px;white-space: normal;', label: 'Lobbyist Name', title: 'Lobbyist Name'},
@@ -269,8 +269,22 @@ function restorePreviousState() {
     }
 }
 
+
 function setAlphaIdx(char) {
-    gblCurrentAlpha = (char === "#") ? "0" : char;
+    if (char  === '>') {
+        if (gblCurrentAlpha !== 'Z') {
+            char = gblCurrentAlpha == "0" ? 'A' : String.fromCharCode(gblCurrentAlpha.charCodeAt()+1);
+        } else {
+            char = gblCurrentAlpha;
+        }
+    } else if (char === '<') {
+        if ( gblCurrentAlpha != "0" ) {
+            char = String.fromCharCode(gblCurrentAlpha.charCodeAt()-1)
+        } else {
+            char = gblCurrentAlpha;
+        }
+    }
+    gblCurrentAlpha = (char === "@") ? "0" : char;
     $(".alphaIdx").parent().removeClass("active");
     $("#alpha-" + gblCurrentAlpha).addClass("active");
 }
@@ -344,6 +358,22 @@ function getHighLightFilterOptions() {
 
     return hfOpts;
 }
+
+ var entityMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': '&quot;',
+    "'": '&#39;',
+    "/": '&#x2F;'
+  };
+
+  function escapeHtml(string) {
+    return String(string).replace(/[&<>"'\/]/g, function (s) {
+      return entityMap[s];
+    });
+  }
+  
 function highlightSearch(string, hfOpts){
     if (hfOpts.searchRegex.length === 0) return string;
     var match = null;
@@ -584,73 +614,73 @@ function listDetailRow(SM, rowNum, hfOpts) {
     for (var i = 0; i < rptCols.length; i++) {
         switch(rptCols[i].column) {
             case 'SMLLobbyist':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.lobbyistName,hfOpts) + '</td>';
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.lobbyistName),hfOpts) + '</td>';
                 break;
             case 'SMLLobbyistNames':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' +  highlightSearch(boldSeniorOfficer(SM.lobbyistList),hfOpts) + "</td>";
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' +  highlightSearch(boldSeniorOfficer(escapeHtml(SM.lobbyistList)),hfOpts) + "</td>";
                 break;
             case 'SMLPOHName':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.pohName ,hfOpts) + '</td>';
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.pohName) ,hfOpts) + '</td>';
                 break;
             case 'SMLPOHNameTitle':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.pohNameOrTitle ,hfOpts) + '</td>';
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.pohNameOrTitle) ,hfOpts) + '</td>';
                 break;
             case 'SMLPOHPosition':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' +highlightSearch(SM.posPosition ,hfOpts) + '</td>';
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' +highlightSearch(escapeHtml(SM.posPosition) ,hfOpts) + '</td>';
                 break;
             case 'SMLPOHType':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' +highlightSearch(SM.pohType ,hfOpts) + '</td>';
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' +highlightSearch(escapeHtml(SM.pohType) ,hfOpts) + '</td>';
                 break;
             case 'SMLFinContributor':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' +highlightSearch(SM.financialContributor, hfOpts) + '</td>';
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' +highlightSearch(escapeHtml(SM.financialContributor), hfOpts) + '</td>';
                 break;
             case 'SMLFinContributors':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.financialContributors.join(", "), hfOpts) + '</td>';
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.financialContributors.join(", ")), hfOpts) + '</td>';
                 break;
             case 'SMLLobbyistType':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + SM.lobbyistType + '</td>';
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + escapeHtml(SM.lobbyistType) + '</td>';
                 break;
             case 'SMLBeneficiary':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.beneficiaryName, hfOpts) + '</td>';
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.beneficiaryName), hfOpts) + '</td>';
                 break;
             case 'SMLBeneficiaries':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.beneficiaries.join(", "), hfOpts) + '</td>';
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.beneficiaries.join(", ")), hfOpts) + '</td>';
                 break;
             case 'SMLBusOrg':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.businessOrganization, hfOpts) + "</td>";
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.businessOrganization), hfOpts) + "</td>";
                 break;
             case 'SMLClient':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.client, hfOpts) + "</td>";
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.client), hfOpts) + "</td>";
                 break;
             case 'SMLSubjectMatter':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.subjectMatter.replace(';','; '), hfOpts) + "</td>";
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.subjectMatter).replace(';','; '), hfOpts) + "</td>";
                 break;
             case 'SMLStatus':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.status, hfOpts) + "</td>";
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.status), hfOpts) + "</td>";
                 break;
             case 'SMLInitFileDate':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.InitialApprovalDate, hfOpts) + "</td>";
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.InitialApprovalDate), hfOpts) + "</td>";
                 break;
             case 'SMLCommMethod':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.communicationMethod, hfOpts) + "</td>";
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.communicationMethod), hfOpts) + "</td>";
                 break;
             case 'SMLCommDate':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.communicationDate, hfOpts) + "</td>";
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.communicationDate), hfOpts) + "</td>";
                 break;
             case 'SMLRequestMeeting':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.requestMeeting, hfOpts) + "</td>";
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.requestMeeting), hfOpts) + "</td>";
                 break;
             case 'SMLResultOfMeetingRequest':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.resultOfMeetingRequest, hfOpts) + "</td>";
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.resultOfMeetingRequest), hfOpts) + "</td>";
                 break;
             case 'SMLDateOfRequest':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(SM.dateOfRequest, hfOpts) + "</td>";
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.dateOfRequest), hfOpts) + "</td>";
                 break;
             case 'SMLSubjectMatterNo':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + '<button class="showSM" title="click to see details"  data-smno="' + SM.subjectMatterNumber + '" data-smid="' + SM.subjectMatterId + '">' +  highlightSearch(SM.subjectMatterNumber,hfOpts) + '</button></td>';
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + '<button class="showSM" title="click to see details"  data-smno="' + escapeHtml(SM.subjectMatterNumber) + '" data-smid="' + SM.subjectMatterId + '">' +  highlightSearch(SM.subjectMatterNumber,hfOpts) + '</button></td>';
                 break;
             case 'SMLLobRegNo':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + '<button class="showLR" title="click to see details" data-lrno="' + SM.lobbyistRegistrationNumber + '" data-lrid="' + SM.lobbyistRegistrationId + '">' +  highlightSearch(SM.lobbyistRegistrationNumber,hfOpts) + '</button></td>';
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + '<button class="showLR" title="click to see details" data-lrno="' + escapeHtml(SM.lobbyistRegistrationNumber) + '" data-lrid="' + SM.lobbyistRegistrationId + '">' +  highlightSearch(SM.lobbyistRegistrationNumber,hfOpts) + '</button></td>';
                 break;
         }
     }
@@ -823,7 +853,8 @@ function setUpEvents() {
             autoclose: true,
             format: 'yyyy-mm-dd',  /* what is the city standard*/
             date: new Date(),
-            todayHighlight: true
+            todayHighlight: true,
+			endDate:"0d"
     });
     $(".hasclear").keyup(function () {
         var t = $(this);
@@ -856,6 +887,10 @@ function setUpEvents() {
         $(this).hide();
        // showListing();
     });
+	
+	$("#gotoTop").click(function () {
+		window.scrollTo(0, $("#paging").offset().top);
+	});
 
     $('#numberPageSelection').bootpag({
         total: gblRowsPerPage,
@@ -880,7 +915,7 @@ function setUpEvents() {
     });
 
     $(".alphaIdx").click(function (e) {
-        setAlphaIdx(e.target.innerHTML);
+        setAlphaIdx($(this).data('value'));
         showListing();
         return false;
     });
@@ -1373,14 +1408,14 @@ function generateExcel() {
 function mergeAddress (addr1, addr2, cityProv, countryPostal) {
     var addr = {};
 
-    addr.Line = addr1;
-    addr.Line += (addr2 ? "<br>" + addr2 : "");
-    addr.CityProv = cityProv;
-    addr.PostCty = countryPostal;
+    addr.Line =  escapeHtml(addr1);
+    addr.Line += ( escapeHtml(addr2) ? "<br>" +  escapeHtml(addr2) : "");
+    addr.CityProv =  escapeHtml(cityProv);
+    addr.PostCty =  escapeHtml(countryPostal);
     //baddr.Phone = addr.Phone;
-    addr.Addr = addr.Line;
-    addr.Addr += (addr.CityProv ? "<br>" + addr.CityProv : "");
-    addr.Addr += (addr.PostCty ? "<br>" + addr.PostCty : "");
+    addr.Addr =  escapeHtml(addr.Line);
+    addr.Addr += ( escapeHtml(addr.CityProv) ? "<br>" +  escapeHtml(addr.CityProv) : "");
+    addr.Addr += (  escapeHtml(addr.PostCty) ? "<br>" +  escapeHtml(addr.PostCty) : "");
 
     return addr;
 
@@ -1438,15 +1473,15 @@ function detailSingleItems(item) {
         ];
     
     for (var idx = 0; idx < props.length; idx++) {
-        $("."+props[idx]).html(item[props[idx]]);
+        $("."+props[idx]).text(item[props[idx]]);
     }
     
     if (item.subjectMatterEndDate) {
-        $(".subjectMatterEndDate").html(" to " + item.subjectMatterEndDate);
+        $(".subjectMatterEndDate").text(" to " + item.subjectMatterEndDate);
     }
     
     if (item.businessFiscalEndDate) {
-        $(".businessFiscalEndDate").html(" to " + item.businessFiscalEndDate);
+        $(".businessFiscalEndDate").text(" to " + item.businessFiscalEndDate);
     }   
 
     if (typeof item.subjectMatterNumber !== 'undefined') {
@@ -1498,9 +1533,9 @@ function detailLobbyists(item) {
             strRows += "<td>Lobbyist Registration Number</td>";
             strRows += "<td>    Position title</td>";
             strRows += "</tr>";
-            strRows += "<tr><td>" + l.inhouseLobbyistName  + "</td>";
-            strRows += "<td>" + l.inhouseLobbyistRegistrationNumber + "</td>";
-            strRows += "<td>" + l.inhouseLobbyistPositionTitle + "</td>";
+            strRows += "<tr><td>" + escapeHtml(l.inhouseLobbyistName)  + "</td>";
+            strRows += "<td>" +  escapeHtml(l.inhouseLobbyistRegistrationNumber) + "</td>";
+            strRows += "<td>" +  escapeHtml(l.inhouseLobbyistPositionTitle) + "</td>";
             strRows += "</tr>";
             strRows += "<tr class='labelRow'><td>Business Address</td>";
             strRows += "<td>Phone</td>";
@@ -1508,14 +1543,14 @@ function detailLobbyists(item) {
             //strRows += "<td>Country, Postal Code</td>"
             strRows += "</tr>";
 
-            strRows += "<tr><td>" + laddr.Addr + "</td>";
-            strRows += "<td>" + l.inhouseLobbyistTelephone + "</td>";
+            strRows += "<tr><td>" +  laddr.Addr + "</td>";
+            strRows += "<td>" +  escapeHtml(l.inhouseLobbyistTelephone) + "</td>";
             strRows += "</tr>";
             strRows += "<tr class='labelRow'>";
             strRows += "<td colspan='3' >Has this in-house lobbyist held a senior public office position with the City of Toronto in the past 12 months?</td>";
             strRows += "</tr>";
             //strRows += "<td>" + l.Phone + "</td>"
-            strRows += "<td colspan='2'>" + l.inhouseLobbyistPrevPubOfficeHolder + "</td>";
+            strRows += "<td colspan='2'>" +  escapeHtml(l.inhouseLobbyistPrevPubOfficeHolder) + "</td>";
             strRows += "</tr>";
             cnt++;
         });
@@ -1536,9 +1571,9 @@ function detailOtherBeneficiariaries(item) {
             strRows += "<td>Other Trade Names</td>";
             strRows += "<td>Address</td>";
             strRows += "</tr>";
-            strRows += "<tr><td>" + ben.beneficiaryName  + "</td>";
-            strRows += "<td>" + ben.beneficiaryOtherTradeName + "</td>";
-            strRows += "<td>" + baddr.Addr + "</td>";
+            strRows += "<tr><td>" +  escapeHtml(ben.beneficiaryName)  + "</td>";
+            strRows += "<td>" +  escapeHtml(ben.beneficiaryOtherTradeName) + "</td>";
+            strRows += "<td>" +  baddr.Addr + "</td>";
             strRows += "</tr>";
             cnt++;
         });
@@ -1554,9 +1589,9 @@ function detailFinancialContributors(item) {
         var pfs = item.financialContributionList;
         
         for ( var i = 0; i < pfs.length; i++) {
-            strRows += "<tr><td>" + (i +1) + ". " + pfs[i].financialContributor + "</td>";
+            strRows += "<tr><td>" + (i +1) + ". " +  escapeHtml(pfs[i].financialContributor) + "</td>";
             if (pfs[i].contactName !== "") {
-                strRows += "<td><b>Contact:</b> " + pfs[i].contactName + "</td>";
+                strRows += "<td><b>Contact:</b> " +  escapeHtml(pfs[i].contactName) + "</td>";
             }
             strRows += "</tr>";
         }
@@ -1571,7 +1606,7 @@ function detailGovFunding(item){
     var strRows ="";
     if (typeof item.gmtFundingList !== 'undefined' && item.gmtFundingList.length > 0) {    
         $.each(item.gmtFundingList, function ( idx, gf) {
-            strRows += "<tr><td>" + (idx + 1) + ". " + gf.governmentName + ", " + gf.departmentProgramName + "</td></tr>";
+            strRows += "<tr><td>" + (idx + 1) + ". " +  escapeHtml(gf.governmentName) + ", " +  escapeHtml(gf.departmentProgramName) + "</td></tr>";
         });
         $("#GovernmentFundingSection").find("tbody").html(strRows);
         $("#gfAccordion").show();
@@ -1585,9 +1620,9 @@ function detailGrassRoots(item) {
     if (typeof item.grassRootsCommunicationList !== 'undefined' && item.grassRootsCommunicationList.length > 0) {
         $.each(item.grassRootsCommunicationList, function (idx, gr) {
             strRows += "<tr><td>&nbsp;</td></tr>";
-            strRows += "<tr><td>" + gr.grassRootCommunity + "</td>";
-            strRows += "<td>" + gr.grassRootTarget +  "</td>";
-            strRows += "<td>" + gr.grassRootStartDate + " to " + gr.grassRootEndDate + "</td>";
+            strRows += "<tr><td>" +  escapeHtml(gr.grassRootCommunity) + "</td>";
+            strRows += "<td>" +  escapeHtml(gr.grassRootTarget) +  "</td>";
+            strRows += "<td>" +  escapeHtml(gr.grassRootStartDate) + " to " +  escapeHtml(gr.grassRootEndDate) + "</td>";
             strRows += "</tr>";
 
         });
@@ -1605,14 +1640,14 @@ function detailCommunications(item) {
         $.each(item.inhouseLobbyistCommunicationMethodList, function (idx, lcm) {
             detailCommunicationsFound = true;
             strRows += "<tr><td>&nbsp;</td></tr>";
-            strRows += "<tr><td colspan='10'><b>" + lcm.inHouseLobbyistNameAndRegistrationNumber + "</b></td>";
+            strRows += "<tr><td colspan='10'><b>" +  escapeHtml(lcm.inHouseLobbyistNameAndRegistrationNumber) + "</b></td>";
             strRows += "</tr>";
             $.each(lcm.pohCommunicationMethodList, function (idx, pohcomm) {
-                    strRows += "<tr><td class='col-md-2'>" + pohcomm.pohType + "</td>";
-                    strRows += "<td class='col-md-3'>" + pohcomm.pohNameOrTitle + "</td>";
-                    strRows += "<td class='col-md-3'>" + pohcomm.pohOfficeName + "</td>";
-                    strRows += "<td class='col-md-2'>" + pohcomm.communicationDate + "</td>";
-                    strRows += "<td class='col-md-2'>" + pohcomm.communicationMethod + "</td>";
+                    strRows += "<tr><td class='col-md-2'>" +  escapeHtml(pohcomm.pohType) + "</td>";
+                    strRows += "<td class='col-md-3'>" +  escapeHtml(pohcomm.pohNameOrTitle) + "</td>";
+                    strRows += "<td class='col-md-3'>" +  escapeHtml(pohcomm.pohOfficeName) + "</td>";
+                    strRows += "<td class='col-md-2'>" +  escapeHtml(pohcomm.communicationDate) + "</td>";
+                    strRows += "<td class='col-md-2'>" +  escapeHtml(pohcomm.communicationMethod) + "</td>";
                     strRows += "</tr>";
             });
         });
@@ -1623,11 +1658,11 @@ function detailCommunications(item) {
     if (typeof item.pohCommunicationMethodList !== 'undefined' && item.pohCommunicationMethodList.length > 0) {
         $.each(item.pohCommunicationMethodList, function (idx, pohcomm) {
             detailCommunicationsFound = true;
-            strRows += "<tr><td class='col-md-2'>" + pohcomm.pohType + "</td>";
-            strRows += "<td class='col-md-3'>" + pohcomm.pohNameOrTitle + "</td>";
-            strRows += "<td class='col-md-3'>" + pohcomm.pohOfficeName + "</td>";
-            strRows += "<td class='col-md-2'>" + pohcomm.communicationDate + "</td>";
-            strRows += "<td class='col-md-2'>" + pohcomm.communicationMethod + "</td>";
+            strRows += "<tr><td class='col-md-2'>" +  escapeHtml(pohcomm.pohType) + "</td>";
+            strRows += "<td class='col-md-3'>" +  escapeHtml(pohcomm.pohNameOrTitle) + "</td>";
+            strRows += "<td class='col-md-3'>" +  escapeHtml(pohcomm.pohOfficeName) + "</td>";
+            strRows += "<td class='col-md-2'>" +  escapeHtml(pohcomm.communicationDate) + "</td>";
+            strRows += "<td class='col-md-2'>" +  escapeHtml(pohcomm.communicationMethod) + "</td>";
             strRows += "</tr>";
         });
         $("#CommunicationsSection").find("tbody").html(strRows); //.trigger('update');
@@ -1649,8 +1684,8 @@ function detailCommitteeMeetings(item) {
         $.each(item.meetingList, function( idx, meet) {
 
             strRows += "<tr><td>&nbsp;</td></tr>";
-            strRows += "<tr class='labelRow'><td>" + meet.committeeName + "</td></tr>";
-            strRows += "<tr><td>Meeting Date " + meet.meetingDate + "</td></tr>";
+            strRows += "<tr class='labelRow'><td>" +  escapeHtml(meet.committeeName) + "</td></tr>";
+            strRows += "<tr><td>Meeting Date " +  escapeHtml(meet.meetingDate) + "</td></tr>";
             strRows += "<tr><td>&nbsp;</td></tr>";
 
             if (typeof meet.attendeeCommitteeMemberList !== 'undefined' && meet.attendeeCommitteeMemberList) {
@@ -1661,7 +1696,7 @@ function detailCommitteeMeetings(item) {
                         strRows += "<tr class='labelRow'><td>Commitee Members in Attendance</td></tr>";
                         oneFound = true;
                     }
-                    strRows += "<tr><td class='CommListIndent'>" + commMembers[j] + "</td></tr>";
+                    strRows += "<tr><td class='CommListIndent'>" +  escapeHtml(commMembers[j]) + "</td></tr>";
                 }
             }
 
@@ -1675,7 +1710,7 @@ function detailCommitteeMeetings(item) {
                         strRows += "<tr class='labelRow'><td>In-house Lobbyists in Attendance</td></tr>";
                         oneFound = true;
                     }
-                    strRows += "<tr><td class='CommListIndent'>" + lobbyists[j] +")</td></tr>";
+                    strRows += "<tr><td class='CommListIndent'>" +  escapeHtml(lobbyists[j]) +")</td></tr>";
                 }
             }
             
@@ -1688,9 +1723,9 @@ function detailCommitteeMeetings(item) {
                 strRows += "</tr>";
                 var pohs = meet.attendeePOHList;
                     for (j = 0; j < pohs.length; j++) {
-                        strRows += "<tr><td>" + pohs[j].pohType + "</td>";
-                        strRows += "<td>" + pohs[j].pohNameOrTitle + "</td>";
-                        strRows += "<td>" + pohs[j].pohOfficeName + "</td>";
+                        strRows += "<tr><td>" +  escapeHtml(pohs[j].pohType) + "</td>";
+                        strRows += "<td>" +  escapeHtml(pohs[j].pohNameOrTitle) + "</td>";
+                        strRows += "<td>" +  escapeHtml(pohs[j].pohOfficeName) + "</td>";
                         strRows += "</tr>";
                     }
                 }
@@ -1710,7 +1745,7 @@ function detailCommitees(data) {
         for (var i = 0; i < data.committeeList.length; i++) {
             var commitee = data.committeeList[i];
             //strRows += "<tr><td>&nbsp;</td></tr>";
-            strRows += "<tr class='labelRow'><td>" + commitee.committeeName + "</td></tr>";
+            strRows += "<tr class='labelRow'><td>" +  escapeHtml(commitee.committeeName) + "</td></tr>";
             //strRows += "<tr><td>&nbsp;</td></tr>";
 
             if (typeof commitee.committeeMemberList !== "undefined") {
@@ -1719,7 +1754,7 @@ function detailCommitees(data) {
                     if (j === 0) {
                         strRows += "<tr class='labelRow'><td class='CommListIndent'>Commitee Members</td></tr>";
                     }
-                    strRows += "<tr><td class='CommListIndent'>" + member + "</td></tr>";
+                    strRows += "<tr><td class='CommListIndent'>" +  escapeHtml(member) + "</td></tr>";
                 }
             }
         }
@@ -1751,7 +1786,7 @@ function loadListing() {
         $("#appCode").html(strCode);
         $("#appDisplay").load('html/lobbyListing.html', function() {initApp();});
     } else {
-        strCode += '<link rel="stylesheet" href="datepicker/datepicker.css">';
+        strCode += '<link rel="stylesheet" href="/datepicker/datepicker.css">';
         strCode += '<link rel="stylesheet" href="/static_files/assets/multiselect/bootstrap-multiselect.css">';
         strCode += '<link rel="stylesheet" href="/tablesorter/css/theme.blue.css">';
         strCode += '<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">';
@@ -1795,7 +1830,7 @@ function loadDetail(jsonData, SMId, LRId, searchStr) {
         $("#appCode").html(strCode);
         $("#appDisplay").load('html/SMDetail.html', function() {fillDetails(jsonData, SMId, LRId, searchStr);});
    } else {
-        strCode += '<link rel="stylesheet" href="datepicker/datepicker.css">';
+        strCode += '<link rel="stylesheet" href="/datepicker/datepicker.css">';
         strCode += '<link rel="stylesheet" href="/static_files/assets/multiselect/bootstrap-multiselect.css">';
         strCode += '<link rel="stylesheet" href="/tablesorter/css/theme.blue.css">';
         strCode += '<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">';
