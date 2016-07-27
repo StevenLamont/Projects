@@ -1,0 +1,176 @@
+/* general */
+#appDisplay button {
+    color: #346488;
+    border: 1px solid #346488;
+    font-weight: normal;
+    background:#fff url("//ssl.gstatic.com/charts/static/table-title-bg.gif") repeat-x left bottom;
+    background:-moz-linear-gradient(top,rgba(255,255,255,1) 0%,rgba(249,250,253,1) 30%,rgba(238,242,247,1) 60%,rgba(228,233,244,1) 100%);
+    background:-webkit-gradient(linear,left top,left bottom,color-stop(0%,rgba(255,255,255,1)),color-stop(30%,rgba(249,250,253,1)),color-stop(60%,rgba(238,242,247,1)),color-stop(100%,rgba(228,233,244,1)));
+    background:-webkit-linear-gradient(top,rgba(255,255,255,1) 0%,rgba(249,250,253,1) 30%,rgba(238,242,247,1) 60%,rgba(228,233,244,1) 100%);
+    background:-o-linear-gradient(top,rgba(255,255,255,1) 0%,rgba(249,250,253,1) 30%,rgba(238,242,247,1) 60%,rgba(228,233,244,1) 100%);
+    background:-ms-linear-gradient(top,rgba(255,255,255,1) 0%,rgba(249,250,253,1) 30%,rgba(238,242,247,1) 60%,rgba(228,233,244,1) 100%);
+    background:linear-gradient(to bottom,rgba(255,255,255,1) 0%,rgba(249,250,253,1) 30%,rgba(238,242,247,1) 60%,rgba(228,233,244,1) 100%);
+    filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff',endColorstr='#e4e9f4',GradientType=0)
+}
+#appDisplay button:hover, #appDisplay button:focus, #appDisplay #excelexport:focus, #appDisplay a:focus {color: darkred !important; border: 1px solid darkred !important;}
+
+#appDisplay button:hover span, #appDisplay button:focus span {color: darkred;}
+#appDisplay h2 {color: #444; margin-bottom: 3px; margin-top:0px; font-size: 1.3em; }
+#appDisplay h3 {color: #777; margin-bottom: 10px; margin-top:0px; font-weight: normal; font-size: 1.1em; }
+#printout {float:right; font-size:1.25em; color: #3276b1; margin:10px 15px 0px 0px;}
+#wuTitle {width: 400px;}
+#viewStatement {text-align: right;}
+#viewStatement {margin-top: 28px;margin-bottom: 0px;}
+#datecontext h2, .accountsummary h2 {margin: 0px 0px 10px 0px !important; padding: 0px;}
+#appDisplay div.input-group .form-control, #wuAccountNo {background-color: rgba(255,255,224, .7);}
+#loadingmsg, .loadingmsg {font-weight: bold; font-size: 2.5em; text-align: center; color: #444;}
+.pagebanner {display:none; margin-bottom:0px !important;border-bottom-left-radius:5px;border-bottom-right-radius:5px;}
+article header {color: white; background-color: #444444 !important; border:1px solid #ddd; padding:0px; margin-bottom:10px; border-radius:5px;}
+article header h1 {padding: 5px 0px 5px 15px;font-size: 1.5em !important;line-height: 2em;margin:0px; margin-bottom: 0px !important;}
+
+/* terms of use screen*/
+#termsandconditions .buttons, #termsandconditionsdisagree .buttons {text-align: center;}
+#termsandconditions p, #termsandconditionsdisagree p {padding: 5px 0px 5px 0px;}
+#termsandconditions h2, #termsandconditionsdisagree h2 {margin:0px;}
+
+
+/* verification screen */
+#wateruseVerificationForm {max-width: 600px; border: 1px solid #aaa; margin-top: 10px;}
+#verification .form-horizontal .form-group {margin:0px 0px 10px 0px;}
+#verification #utilityApp .form-group>div {position: relative;}
+
+/*Account Details*/
+.input-group-addon {text-align:left;}
+#daterangeinput {width: 75%;}
+.dateselect .btn {width: 20%; padding: 9px; margin: auto;  float:right;}
+#appDisplay .control-label {min-width: 160px;}
+#datecontext .input-group, .usagesummary .input-group, .accountsummary .input-group {margin-bottom:5px;}
+#appDisplay .accountsummary h2 {/* margin-bottom: 30px; */}
+.accountsummary .input-group button {padding: 10px; min-width:60px; margin-left:15px;}
+#datecontext select.form-control, .usagesummary select.form-control, .accountsummary select.form-control {margin-top:0px;}
+.usagesummary p {text-align:right; font-weight: normal;}
+.usagesummary {color: black; background-color: #FFEDCC; border:1px solid orange; border-radius: 5px;}
+
+.usagesummary {background:linear-gradient(to bottom, AliceBlue 0%, rgba(255,255,255,1) 50px);}
+#datecontext, .accountsummary, #waterchartdisplay, #watertabledisplay {background:linear-gradient(to bottom, AliceBlue 0%, rgba(255,255,255,1) 70px);}
+#datecontext, .usagesummary, .accountsummary, #waterchartdisplay, #watertabledisplay {border: 1px solid rgba(52, 100, 136, .25);}
+
+
+.usagesummary span.glyphicon {color: #346488; float:right; font-size:1.5em;}
+.accountsummary {border-radius:5px; padding-bottom: 35px; text-align: center;}
+.accountsummary dl, .accountsummary h2 {text-align: left;}
+
+/*DATE PICKER*/
+.bootstrap-datetimepicker-widget ul li {list-style: none;}
+.bootstrap-datetimepicker-widget  ul {padding:0px !important; }
+.bootstrap-datetimepicker-widget table {width:100%; margin:0px !important; padding:0px !important;}
+.bootstrap-datetimepicker-widget table td {margin:0px !important; padding:0px !important; text-align: center !important; vertical-align: middle !important;}
+.bootstrap-datetimepicker-widget table tr {margin:0px !important; padding:0px !important; text-align: center;}
+.bootstrap-datetimepicker-widget table th {margin:0px !important; padding:3px !important; text-align: center !important;}
+.bootstrap-datetimepicker-widget table td span.disabled,
+.bootstrap-datetimepicker-widget table td span.disabled:hover {font-weight: normal; color: #990000 !important; text-decoration: line-through;}
+.bootstrap-datetimepicker-widget table td span,
+.bootstrap-datetimepicker-widget table td span:hover {color: black; font-weight: bold;}
+
+/* GRAPH */
+.cubicmeterdesc {font-style: italic; color: #888;}
+#waterchartdisplay.loading h2, #waterchartdisplay.loading h3, #waterchartdisplay.loading button { opacity: 0;}
+#waterchartdisplay, #watertabledisplay {background-color: white; width: 100%; max-width: 100%; border-radius:5px; padding: 15px;}
+#watertabledisplay {margin-top: 15px;}
+#waterchartdisplay .prev, #waterchartdisplay .next  {margin-top:200px;}
+#prevPeriod, #nextPeriod {padding: 10px; font-size: 1.3em;}
+#waterchartdisplay>a {float:right; font-size: 1.5em; margin-right: 0px;}
+#waterchart svg>g>text {display:none;}
+#waterchartdisplay .row {text-align:center;}
+#waterchartdisplay .row section:nth-child(1) {text-align:left;}
+#waterchartdisplay .row section:nth-child(2) {text-align:center;}
+#waterchartdisplay .row section:nth-child(3) {text-align:right;}
+#waterchartdisplay .btn-group  {float: right; margin-left: 10px;}
+#waterchartdisplay .btn-group .glyphicon {font-size: 1.25em;}
+#waterchartdisplay .btn-group button {width: 100%; background-color: #3276b1; color: #346488; border: 1px solid #346488; text-align: left}
+#waterchartdisplay .btn-group a {text-decoration: none;}
+#watertabledisplay #excelexport, #waterchartdisplay #printout, #waterchartdisplay #chartzoomin, #waterchartdisplay #chartzoomout {float:right; margin-left: 10px; font-size: 1.25em; padding: 8px;}
+#watertabledisplay #excelexport img {width: 30px;}
+#watertabledisplay #excelexport {padding: 4px;}
+#waterchartdisplay .multiselect-container.dropdown-menu {margin-left: -100px; width: 245px;}
+.google-visualization-table-table {width:100% !important;}
+@media print {
+    .google-visualization-table-table {width:100% !important;}
+    button, .usagesummary p  {display: none !important;}
+    .usagesummary {background-color: white; border-color: #aaa;}
+    .glyphicon-print {display: none;}
+    .input-group {margin-bottom:0px !important; padding:0px !important; }
+    .input-group-addon, .form-control, .wfield, dd {transition: none; border-top:0px solid white !important; border:0px solid white !important; box-shadow: none !important;}
+    #waterusedisplay article header, .usagesummary, #datecontext, .accountsummary, #waterchartdisplay, #watertabledisplay {background-color: white; border: 0px;}
+    .accountsummary h2, h3 {border-bottom:2px solid black;margin-bottom:5px; }
+    .glyphicon {display: none;}
+}
+@media (max-width: 769px) { 
+    #viewStatement {text-align: center;}
+    #daterangebtn, #daterangeinput {width: 100%;}
+    .accountinfo button, #wuAccountNo {width: 100% !important; display: block;}
+    dd, #daterangeinput {height: auto !important; word-break: break-all;}
+  
+}
+#wuModal .modal-dialog {width: 80% !important;}
+/* POPOVER */
+#appDisplay .popover {z-index: 99999999999; padding: 3px; background-color: White; min-width: 150px;}
+#appDisplay .popover .popover-content {display:none; }
+#appDisplay h3.popover-title {margin-bottom:0px; background-color: White; padding: 10px; border: 0px;}
+#appDisplay .popover.left .arrow:after {border-left-color: White;}
+
+
+.utilityInfo h3 {background-color: #eee; padding: 5px; border-bottom: 2px solid black;}
+.utilityInfo .uilabel {font-weight: bold;}
+.utilityInfo .grandtotal {background-color: #ffeeee;padding: 4px 0px 4px 0px;}
+.utilityInfo .commentline {margin-top: 10px; text-align: center; font-style: italic;}
+.utilityInfo .grandtotal .uifield {font-weight: bold; }
+.utilityInfo h2 {border-bottom: 1px solid #000;}
+.utilityInfo h2 span:before{
+    content:"";
+    width:14px;
+    height:19px;
+    display:inline-block;
+	margin-right:12px;
+	background: url("/static_files/WebApps/images/square_blue.png") no-repeat;
+	float: left;
+	background-position: right center;
+    text-align: center;
+}
+.utilityInfo h2 span.redSquare:before{
+    content:"";
+    width:14px;
+    height:19px;
+    display:inline-block;
+	margin-right:12px;
+	background: url("/static_files/WebApps/images/square_red.png") no-repeat;
+	float: left;
+	background-position: right center;
+    text-align: center;
+}
+.utilityInfo .blackLine { background-color:#000000; width:100%; height: 4px; margin-bottom:10px;}
+.utilityInfo .textRed { color:#990000; text-align:right; margin-bottom:6px; margin-top:5px; }
+.utilityInfo .red { background-color:#990000; color:#ffffff; padding-top:6px;  padding-bottom:6px }
+.utilityInfo .textBold {font-weight:500; clear: left; margin:8px 0px;}
+.utilityInfo .space {clear: right; margin:8px 0px;}
+.utilityInfo .clearRight {clear: right;}
+.utilityInfo .grayBG {background-color: #f5f5f5; padding:0px!important;}
+
+.utilityInfo .floatLeft { float:left; margin-bottom:20px;}
+.utilityInfo .floatRight { float:right; margin-bottom:20px;}
+body .utilityInfo { line-height: 1.1;}
+.instructions {text-align: center;}
+.instructions p {margin-top: 10px; margin-bottom: 10px;}
+#utilityApp .form-horizontal .control-label { text-align: left !important;}
+#utilityApp .form-group {margin:0px;}
+#utilityApp form {background-color: #F5F5F5; padding: 10px 20px 10px 20px; border-radius: 10px;}
+#utilityApp .form-group>div {position: relative;}
+#utilityApp .btn-group {width: 100%; }
+#utilityApp .form-control-feedback {top: 0px;}
+#utilityApp label {font-size: 1em;}
+#utilityApp fieldset section {margin-top: 10px;}
+.rightAlign {text-align: right;}
+#makepayment .btnbs {width: 100%; text-decoration: none; color white !important;}
+.wcmlinks {display: table; width: 100%;}
+.wcmlinks a.faq {display: table-cell; text-align:left;}
+.wcmlinks a.tips {display: table-cell;text-align:right;}

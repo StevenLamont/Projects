@@ -1,0 +1,125 @@
+<html>
+<head>
+<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="/static_files/assets/js/jquery.xdomainrequest.min.js"></script>
+<script>
+function testA() {
+	$.support.cors = true;
+	var strURL = "https://secure.toronto.ca/cc_api/svcaccount_v1/UtilityAccount/validate";
+	var strData = 'validateRequest={"accountType": "UtilityAccount","accountNumber": "000101312-000053695-06","QAList": [{"question":"SERVICE_NUMBER","answer": "000101312"},{"question": "LAST_NAME","answer": "FREEDHOFF"}, {"question": "POSTAL_CODE","answer": "M5N2S1"}, {"question": "LAST_PAYMENT_METHOD","answer": "5"}]}';
+	var strIEData = '{"accountType": "UtilityAccount","accountNumber": "000101312-000053695-06","QAList": [{"question":"SERVICE_NUMBER","answer": "000101312"},{"question": "LAST_NAME","answer": "FREEDHOFF"}, {"question": "POSTAL_CODE","answer": "M5N2S1"}, {"question": "LAST_PAYMENT_METHOD","answer": "5"}]}';
+	var browser = navigator.userAgent;
+	var IEversion = 99;
+	if (browser.indexOf("MSIE") > 1) {IEversion = parseInt(browser.substr(browser.indexOf("MSIE")+5, 5));}
+	if (IEversion < 10) {
+		xdr = new XDomainRequest();
+		if (xdr) {
+			xdr.onerror = function() {
+				$( '#outputdisplay' ).html( "<h1>ERROR</h1>" );
+				$( '#outputdisplay' ).append( "<b>POST TO URL</b><br/>" + strURL + "</br/></br/></br/>");
+				$( '#outputdisplay' ).append( "<b>POST DATA</b><br/> " + strData + "</br/></br/></br/>");
+			};
+			xdr.ontimeout = function() {
+				$( '#outputdisplay' ).html( "<h1>TIMEOUT</h1>" );
+				$( '#outputdisplay' ).append( "<b>POST TO URL</b><br/>" + strURL + "</br/></br/></br/>");
+				$( '#outputdisplay' ).append( "<b>POST DATA</b><br/> " + strData + "</br/></br/></br/>");
+			};
+			xdr.onload = function() {
+				$( '#outputdisplay' ).html( "<h1>SUCCESS</h1>" );
+				$( '#outputdisplay' ).append( "<b>POST TO URL</b><br/>" + strURL + "</br/></br/></br/>");
+				$( '#outputdisplay' ).append( "<b>POST DATA</b><br/> " + strData + "</br/></br/></br/>");
+			};
+			xdr.timeout = 10000;
+			xdr.open('POST',strURL + '?validateRequest=' + encodeURIComponent(strIEData));
+			xdr.send();
+		} else {
+			$( '#outputdisplay' ).html( "<h1>ERROR</h1>" );
+			$( '#outputdisplay' ).append( "<b>POST TO URL</b><br/>" + strURL + "</br/></br/></br/>");
+			$( '#outputdisplay' ).append( "<b>POST DATA</b><br/> " + strData + "</br/></br/></br/>");
+		}
+	} else {
+		$.ajax({
+			type:'POST', 
+			url: strURL, 
+			crossDomain: true,
+			dataType: 'json',
+			data: strData,
+			success: function (data) {
+				$( '#outputdisplay' ).html( "<h1>SUCCESS</h1>" );
+				$( '#outputdisplay' ).append( "<b>POST TO URL</b><br/>" + strURL + "</br/></br/></br/>");
+				$( '#outputdisplay' ).append( "<b>POST DATA</b><br/> " + strData + "</br/></br/></br/>");
+				
+				
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				$( '#outputdisplay' ).html( "<h1>ERROR</h1>" );
+				$( '#outputdisplay' ).append( "<b>POST TO URL</b><br/>" + strURL + "</br/></br/></br/>");
+				$( '#outputdisplay' ).append( "<b>POST DATA</b><br/> " + strData + "</br/></br/></br/>");
+			}
+		})
+	}
+}
+function testB() {
+	$.support.cors = true;
+	var strURL = "https://was-inter-qa.toronto.ca/cc_api/svcaccount_v1/WaterAccount/validate";
+	var strData = 'json={"API_OP":"VALIDATE","ACCOUNT_NUMBER":"000101312-000053695-06","LAST_NAME":"FREEDHOFF","POSTAL_CODE":"M5N 2S1","LAST_PAYMENT_METHOD":"5"}';
+	var strIEData = '{"API_OP":"VALIDATE","ACCOUNT_NUMBER":"000101312-000053695-06","LAST_NAME":"FREEDHOFF","POSTAL_CODE":"M5N 2S1","LAST_PAYMENT_METHOD":"5"}';
+	var browser = navigator.userAgent;
+	var IEversion = 99;
+	if (browser.indexOf("MSIE") > 1) {IEversion = parseInt(browser.substr(browser.indexOf("MSIE")+5, 5));}
+	if (IEversion < 10) {
+		xdr = new XDomainRequest();
+		if (xdr) {
+			xdr.onerror = function() {
+				$( '#outputdisplay' ).html( "<h1>ERROR</h1>" );
+				$( '#outputdisplay' ).append( "<b>POST TO URL</b><br/>" + strURL + "</br/></br/></br/>");
+				$( '#outputdisplay' ).append( "<b>POST DATA</b><br/> " + strData + "</br/></br/></br/>");
+			};
+			xdr.ontimeout = function() {
+				$( '#outputdisplay' ).html( "<h1>TIMEOUT</h1>" );
+				$( '#outputdisplay' ).append( "<b>POST TO URL</b><br/>" + strURL + "</br/></br/></br/>");
+				$( '#outputdisplay' ).append( "<b>POST DATA</b><br/> " + strData + "</br/></br/></br/>");
+			};
+			xdr.onload = function() {
+				$( '#outputdisplay' ).html( "<h1>SUCCESS</h1>" );
+				$( '#outputdisplay' ).append( "<b>POST TO URL</b><br/>" + strURL + "</br/></br/></br/>");
+				$( '#outputdisplay' ).append( "<b>POST DATA</b><br/> " + strData + "</br/></br/></br/>");
+			};
+			xdr.timeout = 10000;
+			xdr.open('POST',strURL + '?json=' + encodeURIComponent(strIEData));
+			xdr.send();
+		} else {
+			$( '#outputdisplay' ).html( "<h1>ERROR</h1>" );
+			$( '#outputdisplay' ).append( "<b>POST TO URL</b><br/>" + strURL + "</br/></br/></br/>");
+			$( '#outputdisplay' ).append( "<b>POST DATA</b><br/> " + strData + "</br/></br/></br/>");
+		}
+	} else {	
+		$.ajax({
+			type:'POST', 
+			url: strURL, 
+			crossDomain: true,
+			dataType: 'json',
+			data: strData,
+			success: function (data) {
+				$( '#outputdisplay' ).html( "<h1>SUCCESS</h1>" );
+				$( '#outputdisplay' ).append( "<b>POST TO URL</b><br/>" + strURL + "</br/></br/></br/>");
+				$( '#outputdisplay' ).append( "<b>POST DATA</b><br/> " + strData + "</br/></br/></br/>");
+				
+				
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				$( '#outputdisplay' ).html( "<h1>ERROR</h1>" );
+				$( '#outputdisplay' ).append( "<b>POST TO URL</b><br/>" + strURL + "</br/></br/></br/>");
+				$( '#outputdisplay' ).append( "<b>POST DATA</b><br/> " + strData + "</br/></br/></br/>");
+			}
+		})
+	}
+}
+</script>
+</head>
+<body>
+<button onclick="testA()">Call the Utility Validate</button><br/>
+<button onclick="testB()">Call the Water Validate</button><br/>
+<div id="outputdisplay"></div>
+</body>
+</html>

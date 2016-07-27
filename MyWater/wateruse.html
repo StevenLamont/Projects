@@ -1,0 +1,262 @@
+<section id="termsandconditions">
+	<article>
+		<header>
+			<h1>MyWaterToronto</h1>
+			<img class="pagebanner hidden-print" src="/static_files/WebApps/Water Use/images/Water-Banner.png" alt="Toronto Water Use Application Banner - A lawn sprinkler spraying water"/>
+		</header>
+		<h2>Terms of Use Agreement</h2>
+		<div class="row">
+			<article class="media col-xs-12">
+				<p>By using this application, you acknowledge that this application and the information contained in it has been provided by the City as a service to the public on an "as is", "as available", basis. </p>
+				<p>The information contained in this application is for general informational purposes only to assist you with managing your water use and no reliance should be placed on it and you acknowledge this by using this application. The amounts set out in respect to water billing in your Utility Bill are calculated from readings obtained from your water meter and may be subject to adjustments in accordance with the City's Water Supply By-Law (Chapter 851), Water and Sewage Services and Utility Bill By-Law (Chapter 849) and Fees and Charges By-Law (Chapter 441) of the City Municipal Code.</p>
+				<p>The City uses reasonable efforts to ensure the accuracy, correctness and reliability of the content of this application and the information contained in it, however, the City does not guarantee, or make any representations or warranties, express or implied, in respect to (without limitation): the information contained in this application being free of errors or deficiencies of any kind; the accuracy, correctness, reliability, currency or completeness of any information contained in this application; or the suitability for a particular purpose of any information contained in this application and specifically excludes and disclaims same.</p>
+				<p>The City accepts no responsibility for any errors, omissions or subsequent changes and no legal liability whatsoever arising from or connected to, the accuracy, correctness, reliability, currency or completeness of any information contained in this application. Users agree to accept and assume any and all risks and consequences flowing from or related to the use of this application or any information contained therein. </p>
+				<p>The user agrees, by using the information in this application, that neither the City nor any of its officials, officers, directors, employees, agents or contractors (collectively, the “City”) shall be liable for any loss or damages of any kind (including, without limitation, lost profits, direct, indirect, compensatory, consequential, exemplary, special, incidental, or punitive damages) arising out of the use, application of, any decision made or action taken in reliance upon or inability to use this application or any content or information contained in this application, caused in whole or part by the City’s negligence or otherwise.</p>
+				<p>By using this application, you agree that you will not (i) interfere with or disrupt the application or computer networks connected thereto; or (ii) delete or revise any materials or information accessible through the application.</p>
+				<div class="buttons">
+					<button aria-label="Agree to Terms and Conditions" id="agreeButton" onclick="app.termsAgree();" class="btn btn-default" type="button">Agree</button>
+					<button aria-label="Disagree to Terms and Conditions" id="disagreeButton"  onclick="app.termsDisagree();" class="btn btn-default" type="button">Disagree</button>
+				</div>
+				<p>The City appreciates receiving notice of any errors.</p>
+			</article>
+		</div>
+	</article>
+</section>
+
+
+
+
+<section id="termsandconditionsdisagree">
+	<article>
+		<header>
+			<h1>MyWaterToronto</h1>
+			<img class="pagebanner hidden-print" src="/static_files/WebApps/Water Use/images/Water-Banner.png" alt="Toronto Water Use Application Banner - A lawn sprinkler spraying water"/>
+		</header>
+	
+		<h2>Unable to Proceed</h2>
+		<div class="row">
+			<article class="media col-xs-12">
+				<p>The Water Use application can only be used if the terms and conditions are agreed to. If you do not agree with the terms and conditions but want to find out more information regarding your water use you can contact us at:</p>
+				<ul>
+					<li>Phone within Toronto city limits: 311</li>
+					<li>Phone outside city limits: 416-392-CITY (2489)</li>
+					<li>TTY customers: 416-338-0TTY (0889)</li>
+					<li>Email: <a href="mailto:311@toronto.ca ">311@toronto.ca </a></li>
+				</ul>
+				<div class="buttons">
+					<button aria-label="Return to Terms and Conditions" onclick="app.showSection(app.selectors.terms);" class="btn btn-default" type="button">Terms and Conditions</button>
+					<button aria-label="Return to City of Toronto Home Page" onclick="javascript:document.location='http://toronto.ca'" class="btn btn-default" type="button">Return to City of Toronto Home Page</button>
+				</div>
+			</article>
+		</div>
+	</article>
+</section>
+
+
+
+<section id="verification">
+	<article>
+		<header>
+			<h1>MyWaterToronto</h1>
+			<img class="pagebanner hidden-print" src="/static_files/WebApps/Water Use/images/Water-Banner.png" alt="Toronto Water Use Application Banner - A lawn sprinkler spraying water"/>
+		</header>
+		<h2>Account Verification</h2>
+		<div id="APIError" class="hide"></div>
+		<div class="row">
+			<div class="col-xs-12" id="utilityApp">
+				<p>Please provide the following 4 pieces of information in order to view your water use.</p>
+				<form id="wateruseVerificationForm" class="form-horizontal hidden-print" action="#">
+					<fieldset>
+						<div class="form-group">
+							<label class="control-label" for="accountnum">Account Number as it appears on the bill:</label>
+							<div><input id="accountnum" class="form-control" type="text" placeholder="#########-#########-0#" name="accountnum" value=""/></div>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="lastname">Last name or business name as it appears on the bill:</label>
+							<div><input id="lastname" class="form-control" type="text" placeholder="Last Name or Business Name" name="lastname" value=""/></div>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="postalcode">Postal code of the utility service location:</label>
+							<div><input id="postalcode" class="form-control" type="text" placeholder="A#A #A#" name="postalcode" value=""/></div>
+						</div>
+						<div class="form-group">
+							<label class="control-label" for="paymentmethod">Method of the most recent payment:</label>
+							<div>
+								<select id="paymentmethod" class="form-control" name="paymentmethod">
+								<option value="" selected>Select the last payment method</option>
+								<option value="0">N/A</option>
+								<option value="1">Pre-Authorized</option>
+								<option value="2">Mail-In Cheque</option>
+								<option value="3">In-Person</option>
+								<option value="4">Bank Teller</option>
+								<option value="5">ATM</option>
+								<option value="6">Telephone Banking</option>
+								<option value="7">Internet Banking</option>
+								<option value="2">Payment Drop Box</option>
+								</select>
+							</div>
+						</div>
+						<!-- Button -->
+						<div class="form-group"><label class="control-label" for="singlebutton"></label>
+							<div>
+								<button aria-label="Submit" id="singlebutton" class="btn btn-primary" onclick="app.validateForm();" name="singlebutton" type="button">Submit</button>
+							</div>
+						</div>
+					</fieldset>
+				</form>
+			</div>
+		</div>
+	</article>
+	<div class="modal fade" id="wuModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header"><button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">×</span> <span class="sr-only">Close</span></button>
+					<h4 id="wuModalLabel" class="modal-title">Modal Title</h4>
+				</div>
+				<div id="wuModalBody" class="modal-body">Modal Body</div>
+				<div class="modal-footer">
+					<button aria-label="Close" class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<section id='loadingmsg' class="hide">Loading<br/><img src="/static_files/assets/images/loading.gif" alt="Loading animation"/></section>
+</section>
+
+<section id="waterusedisplay">
+	<article>
+		<header>
+			<button aria-label="Print" id="printout" onclick="javascript: window.print();" class="btnbs popoverbs" title="Print a printer friendly version of this web page" data-placement="bottom"><span class="glyphicon glyphicon-print"></span></button>
+			<h1>MyWaterToronto</h1>
+			<img class="pagebanner hidden-print" src="/static_files/WebApps/Water Use/images/Water-Banner.png" alt="Toronto Water Use Application Banner - A lawn sprinkler spraying water"/>
+		</header>
+		<section class="row dateselect">
+			<div class="col-xs-12 col-md-6">
+			
+				<div class="alert hidden-print" id="datecontext">
+					<h2 id="wuTitle" class="col-xs-12"></h2>
+					<div class="input-group" id="dateinterval">
+						<label class="control-label input-group-addon" for="datecontextinput">Interval Type</label>
+						<select id="datecontextinput" class="form-control" onchange='app.setContext()'>
+							<option value="Hourly">Hourly</option>
+							<option selected="selected" value="Daily">Daily</option>
+							<option value="Weekly">Weekly</option>
+							<option value="Monthly">Monthly</option>
+						</select>
+					</div>
+					<div class="input-group" id="daterange">
+						<label id="daterangelabel" class="control-label input-group-addon" for="daterangeinput">For Day</label>
+						<input id="daterangeinput" class="form-control" value="">
+						<button aria-label="Select a Date" id="daterangebtn" class="btn btn-primary popoverbs" data-placement="bottom" title="Select a new day to view your water use for." onclick="$('#daterangeinput').focus();">
+							<span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
+				
+				<div class="summaryinfo">
+					<div class="alert usagesummary">
+						<h2>Water Use Summary<span class="glyphicon glyphicon-star"></span></h2>
+						<h3></h3>
+						<dl class="input-group">
+							<dt class="control-label input-group-addon" id="wuUserTotalLabel">My Total Use</dt>
+							<dd class="wfield form-control" id="wuUserTotal"></dd>
+						</dl>
+						<dl class="input-group">
+							<dt class="control-label input-group-addon" id="wuUserAverageLabel">My Average Use</dt>
+							<dd class="wfield form-control" id="wuUserAverage"></dd>
+						</dl>
+						<dl class="input-group hide">
+							<dt class="control-label input-group-addon" id="wuCityAverageLabel">Average City Use</dt>
+							<dd class="wfield form-control" id="wuCityAverage"></dd>
+						</dl>
+						<p class="wcmlinks">
+							<a class="faq" title="Frequently Asked Questions about the MyWaterToronto application" href="/wps/portal/contentonly?vgnextoid=305a01357a7c2510VgnVCM10000071d60f89RCRD" title="view ways to conserve your water usage">MyWaterToronto FAQs</a>
+							<a class="tips" title="Water Saving Tips" href="/wps/portal/contentonly?vgnextoid=d64807ceb6f8e310VgnVCM10000071d60f89RCRD&vgnextchannel=9970ffa6ee33f310VgnVCM10000071d60f89RCRD" title="view ways to conserve your water usage">Get Tips to Save Water</a>
+						</p>
+					</div>
+				</div>
+				
+			</div>
+			
+			
+			<div class="col-xs-12 col-md-6">
+				<div class="accountinfo">
+					<div class="alert accountsummary">
+						<h2>Account Information</h2>
+						<dl class="input-group">
+							<dt class="control-label input-group-addon">Account Number</dt>
+							<dd class="wfield form-control" id="wuAccountNo"></dd>
+							<button aria-label="Switch Account" onclick="app.accountLookup();" title="Switch to one of your different utility accounts." class="btn btn-sm btn-primary popoverbs"  data-placement="bottom">
+								<span class="glyphicon glyphicon-folder-open"></span>
+							</button>
+						</dl>
+						<dl class="input-group">
+							<dt class="control-label input-group-addon">Address</dt>
+							<dd class="wfield form-control" id="wuAddress"></dd>
+						</dl>
+						<dl class="input-group" id="wuMeterSingle">
+							<dt class="control-label input-group-addon">Meter</dt>
+							<dd class="wfield form-control" id="wuMeter"></dd>
+						</dl>
+						<div class="input-group" id="wuMeterMulti" class="hide">
+							<label class="control-label input-group-addon" for="filterCuisine">Meter</label>
+							<span class="wfield" id="wuMeters"></span>
+						</div>
+						<dl class="input-group">
+							<dt class="control-label input-group-addon">First Reading Date</dt>
+							<dd class="wfield form-control" id="wuFirstRead"></dd>
+						</dl>
+						<dl class="input-group">
+							<dt class="control-label input-group-addon">Last Reading Date</dt>
+							<dd class="wfield form-control" id="wuLastRead"></dd>
+						</dl>
+						<button aria-label="View Utility Account" id="viewStatement" class="btnbs btn-primary popoverbs"  data-placement="top" title="View your Utility Account Information" onclick="app.viewStatement();"><span class="glyphicon glyphicon-file"></span> View your Uility Account Information</button>
+					</div>
+				</div>					
+			</div>
+		</section>
+		
+		<section id="noconsumptionfound" class="hide alert alert-danger">There was no water use found for the selected date period.  Please select another date.</section>
+		
+		<div class="page-break"></div>			
+		<section id="waterchartdisplay">
+			<select id="chartOptions" multiple="multiple" style="display: none;">
+					<option selected="selected" value="temp">Display Outside Temperature</option>
+					<option selected="selected" value="precip">Display Precipitation</option>
+			</select>
+			<button aria-label="Chart Zoom Out" id="chartzoomout" onclick="app.zoomOut();" class="btnbs popoverbs" title="Zoom the chart out to get information for a larger time period" data-placement="top"><span class="glyphicon glyphicon-minus"></span></button>
+			<button aria-label="Chart Zoom In" id="chartzoomin" onclick="app.zoomIn();" class="btnbs popoverbs" title="Zoom the chart to get a breakdown of information for this time period" data-placement="top"><span class="glyphicon glyphicon-plus"></span></button>
+
+			<h2 id="chartTitle"></h2>
+			<h3 id="chartSubtitle"></h3>
+			<section class="row hidden-print">
+				<section class="hidden-xs col-sm-1 prev popoverbs" data-placement="right" ><button id="prevPeriod" class="btnbs btn-primary" onclick="app.previousPeriod()"><span class="glyphicon glyphicon-arrow-left"></span></button></section>
+				<section class="col-xs-12 col-sm-10" id="waterchart"></section>
+				<section class="hidden-xs col-sm-1 next popoverbs" data-placement="left" ><button id="nextPeriod" class="btnbs btn-primary" onclick="app.nextPeriod()"><span class="glyphicon glyphicon-arrow-right"></span></button></section>
+			</section>
+			<p class="cubicmeterdesc">(1 m<sup>3</sup> = 1000 litres)</p>
+			<section id="chartpng" class="visible-print"></section>
+		</section>
+		
+		<div class="page-break"></div>
+		<section id="watertabledisplay">
+			<button aria-label="Excel Export" id="excelexport" onclick="app.downloadCSV();" class="btnbs popoverbs" title="Export this data into an excel spreadsheet" data-placement="top"><img src="/static_files/assets/images/icons/csv.png" alt="Excel Icon"/></button>
+			<h2 id="tableTitle"></h2>
+			<h3 id="tableSubtitle"></h3>
+			<section id="watertable"></section>
+		</section>
+	</article>
+	<div class="modal fade" id="wuModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header"><button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">×</span> <span class="sr-only">Close</span></button>
+					<h4 id="wuModalLabel" class="modal-title">Modal Title</h4>
+				</div>
+				<div id="wuModalBody" class="modal-body">Modal Body</div>
+				<div class="modal-footer">
+					<button aria-label="Close" class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
