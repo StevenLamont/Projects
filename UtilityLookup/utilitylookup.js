@@ -3,6 +3,7 @@ var strAPIHost= "https://secure.toronto.ca/cc_api/svcaccount_v1/UtilityAccount";
 var idForm = "utilityForm"; //THE ID OF THE FORM
 var idUtilityBill = "utilityInfo"; //THE ID OF THE UTILITY BILL DIV ELEMENT
 var idAccountNo = "accountnum"; //THE ID OF THE ACCOUNT NUMBER INPUT CONTROL
+var idClientNo = "clientnum"; //THE ID OF THE ACCOUNT NUMBER INPUT CONTROL
 var idLastName = "lastname"; //THE ID OF THE LAST NAME INPUT CONTROL
 var idPostalCode = "postalcode"; //THE ID OF THE POSTAL CODE INPUT CONTROL
 var idPaymentMethod = "paymentmethod"; //THE ID OF THE PAYMENT METHOD SELECT CONTROL
@@ -18,7 +19,11 @@ function validateForm() {
 	dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','1','WT.conv_type','Utility Account Lookup');
 	$('#' + idForm).data('bootstrapValidator').validate();
 }
-
+//
+//        fields: {accountnum: {message: 'Please enter the full utility account number (#########-#########-0#).  This number can be found on the top right corner of your utility bill.',
+//                validators: {notEmpty: {message: 'The utility account number is required and cannot be left blank'},
+//                    regexp: {regexp: /(^(\d{9})[-](\d{9})[-][0](\d{1})$)|(^(\d{9})(\d{9})[0](\d{1})$)/,                  
+//                    message: 'The utility account number must be in the format #########-#########-0# (with or without dashes)'}}},
 //***************************************************
 //SET THE FORM VALIDATION UPON THE JQUERY READY EVENT
 function initApp() {
@@ -36,10 +41,14 @@ function initApp() {
 		onError: function(e) {
 				$($(".has-error input, .has-error select")[0]).focus();
 		},
-        fields: {accountnum: {message: 'Please enter the full utility account number (#########-#########-0#).  This number can be found on the top right corner of your utility bill.',
-                validators: {notEmpty: {message: 'The utility account number is required and cannot be left blank'},
-                    regexp: {regexp: /(^(\d{9})[-](\d{9})[-][0](\d{1})$)|(^(\d{9})(\d{9})[0](\d{1})$)/,                  
-                    message: 'The utility account number must be in the format #########-#########-0# (with or without dashes)'}}},
+        fields: {accountnum: {message: 'Please enter the account number (#########).  This number can be found on the top right corner of your utility bill.',
+					validators: {notEmpty: {message: 'The account number is required and cannot be left blank'},
+                    regexp: {regexp: /(^(\d{9})$)/,                  
+						message: 'The account number must be in the format ######### (9 digits)'}}},
+				clientnum: {message: 'Please enter the client number (#########-0#).  This number can be found on the top right corner of your utility bill.',
+					validators: {notEmpty: {message: 'The client number is required and cannot be left blank'},
+                    regexp: {regexp: /(^(\d{9})[-| ][0](\d{1})$)|(^(\d{9})[0](\d{1})$)/,                  
+						message: 'The client number must be in the format ######### 0# (with or without the space)'}}},
             lastname: {message: 'Please enter the last name on the utility account.',
               validators: {notEmpty: {message: 'The last name field is required and cannot be left blank'}}},
             paymentmethod: {message: 'Please select your last payment method for the utility account.',
@@ -105,8 +114,9 @@ function processToken(data, b) {
 		dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','1','WT.conv_type','Account Validation Error');
     } else {
 		//PERFORM THE SECOND RESP API CALL
-        var aNum = $("#accountnum").val();
-		if (aNum.length==20) {aNum = aNum.substring(0,9) + "-" + aNum.substring(9,18) + "-" + aNum.substring(18,20);}
+        //var aNum = $("#accountnum").val();
+		//if (aNum.length==20) {aNum = aNum.substring(0,9) + "-" + aNum.substring(9,18) + "-" + aNum.substring(18,20);}
+		var aNum = getFullAcctNumber();
         var strURL = strAPIHost + "/" + aNum + "?callback=jsonpCallback";
 		var date = new Date();
 		date.setTime(date.getTime() + (20 * 60 * 1000));
@@ -116,6 +126,12 @@ function processToken(data, b) {
     }
 }
 
+function getFullAcctNumber() {
+	var aNum = $("#" + idAccountNo).val();
+	var cNum = $("#" + idClientNo).val().replace(' ','-');
+	if (cNum.length==11) {cNum = cNum.substring(0,9) + "-" + cNum.substring(9,11);}
+	return aNum + "-" + cNum;
+}
 function IEProcessToken() {
 	processToken(jQuery.parseJSON(xdr.responseText), "");
 }
@@ -131,17 +147,17 @@ function displayUtility() {
 
 	//GRAB THE ENTERED VARIABLE ON THE CURRENT WEB PAGE
 	var aNum = $("#" + idAccountNo).val();
-	var sNum = aNum.substring(0, 9);
+	//var sNum = aNum.substring(0, 9);
 	var lName = $("#" + idLastName ).val();
 	var pCode = $("#" + idPostalCode).val();
 	var pMethod = $("#" + idPaymentMethod).val();
 	var strData = "";
 
-	if (aNum.length==20) {aNum = aNum.substring(0,9) + "-" + aNum.substring(9,18) + "-" + aNum.substring(18,20);}
+	//if (aNum.length==20) {aNum = aNum.substring(0,9) + "-" + aNum.substring(9,18) + "-" + aNum.substring(18,20);}
 
 	//CREATE THE JSON REQUEST DATA STRING
-	strData += '{"accountType": "UtilityAccount","accountNumber": "' + aNum  + '",';
-	strData += '"QAList": [{"question":"SERVICE_NUMBER","answer": "' + sNum + '"},';
+	strData += '{"accountType": "UtilityAccount","accountNumber": "' + getFullAcctNumber()  + '",';
+	strData += '"QAList": [{"question":"SERVICE_NUMBER","answer": "' + aNum + '"},';
 	strData += '{"question": "LAST_NAME","answer": "' + lName + '"}, ';
 	strData += '{"question": "POSTAL_CODE","answer": "' + pCode + '"}, ';
 	strData += '{"question": "LAST_PAYMENT_METHOD","answer": "' + pMethod + '"}]}';
