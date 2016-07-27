@@ -1,0 +1,87 @@
+<section id="termsandconditions">
+	<h1>Utility Account Lookup</h1>
+	<h2>Terms of Use Agreement</h2>
+	<p>By using this application, you acknowledge that the City provides the application on an "as is", "as available", basis. The City does not make any express or implied warranties, representations or endorsements with respect to the application. In particular, without limiting the generality of the foregoing, you acknowledge that the information provided through the application:</p>
+	<ul>
+		<li>may not reflect the true or current balance of the account;</li>
+		<li>is unsuitable for purposes of transacting property sales or any other legally binding matters;</li>
+	</ul>
+	<p>To obtain information certified to be accurate, <a title="Tax and utility certificates" href="/wps/portal/contentonly?vgnextoid=804a88dc30373410VgnVCM10000071d60f89RCRD&amp;vgnextchannel=63b0ff0e43db1410VgnVCM10000071d60f89RCRD" target="_blank">tax and utility certificates</a> are available from the City.</p>
+	<p>The City is not responsible for, and will not be liable to you or anyone else, for any damages whatsoever, including any indirect, special, incidental or consequential damages, arising out of or in connection with your use of, or inability to use, the application.</p>
+	<p>By using this application, you agree that you will not (i) interfere with or disrupt the application or computer networks connected thereto; or (ii) delete or revise any materials or information accessible through the application.</p>
+	<div style="text-align: center;">
+		<button id="agreeButton" class="btn btn-default" onclick="utilityAgree();" type="button">Agree</button> 
+		<button id="disagreeButton" class="btn btn-default" onclick="utilityDisagree();" type="button">Disagree</button>
+	</div>
+</section>
+
+
+
+
+<section id="utilitylookupapplication">
+	<h1>Utility Account Lookup</h1>
+	<div class="row">
+		<div class="col-xs-12 col-md-4 instructions hidden-print">
+			<p>Please provide the following 4 pieces of information in order to view your utility account details.</p>
+			<img src="/utilitylookup/utility_icon.png" alt="Utility Lookup Logo" title="Utility Lookup Logo" />
+		</div>
+		<div class="col-xs-12 col-md-8" id="utilityApp">
+			<form id="utilityForm" class="form-horizontal hidden-print" action="#">
+				<fieldset><!-- Form Name --> <!-- Text input-->
+					<div class="form-group">
+						<label class="control-label" for="accountnum">Account and Client Number as it appears on the bill:</label>
+						<div><input id="accountnum" class="form-control" type="text" placeholder="#########-#########-0#" name="accountnum" /></div>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="lastname">Last name or business name as it appears on the bill:</label>
+						<div><input id="lastname" class="form-control" type="text" placeholder="Last Name or Business Name" name="lastname" /></div>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="postalcode">Postal code of the utility service location:</label>
+						<div><input id="postalcode" class="form-control" type="text" placeholder="A#A #A#" name="postalcode" /></div>
+					</div>
+					<div class="form-group">
+						<label class="control-label" for="paymentmethod">Method of the most recent payment:</label>
+						<div>
+							<select id="paymentmethod" class="form-control" name="paymentmethod">
+							<option value="">Select the last payment method</option>
+							<option value="0">N/A</option>
+							<option value="1">Pre-Authorized</option>
+							<option value="2">Mail-In Cheque</option>
+							<option value="3">In-Person</option>
+							<option value="4">Bank Teller</option>
+							<option value="5">ATM</option>
+							<option value="6">Telephone Banking</option>
+							<option value="7">Internet Banking</option>
+							<option value="2">Payment Drop Box</option>
+							</select>
+						</div>
+					</div>
+					<!-- Button -->
+					<div class="form-group"><label class="control-label" for="singlebutton"></label>
+						<div><button id="singlebutton" class="btn btn-primary" onclick="validateForm();" name="singlebutton" type="button">View utility account details</button></div>
+					</div>
+				</fieldset>
+			</form>
+		</div>
+	</div>
+	<br /><br />
+	<div class="row">
+		<div class="col-xs-12 col-md-12 clearfix"><a name="topofutilityaccount"></a>
+			<div id="utilityInfo" class="utilityInfo hide"></div>
+		</div>
+	</div>
+	<div class="modal fade" id="serviceModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header"><button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span></button>
+					<h4 id="serviceModalLabel" class="modal-title">Utility Account Lookup</h4>
+				</div>
+				<div id="serviceModalBody" class="modal-body">Utility Account Lookup</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>

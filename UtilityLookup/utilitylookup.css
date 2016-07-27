@@ -1,0 +1,57 @@
+.utilityInfo h3 {background-color: #eee; padding: 5px; border-bottom: 2px solid black;}
+.utilityInfo .uilabel {font-weight: bold;}
+.utilityInfo .grandtotal {background-color: #ffeeee;padding: 4px 0px 4px 0px;}
+.utilityInfo .commentline {margin-top: 10px; text-align: center; font-style: italic;}
+.utilityInfo .grandtotal .uifield {font-weight: bold; }
+.utilityInfo h2 {border-bottom: 1px solid #000;}
+.utilityInfo h2 span:before{
+    content:"";
+    width:14px;
+    height:19px;
+    display:inline-block;
+	margin-right:12px;
+	background: url("/static_files/WebApps/images/square_blue.png") no-repeat;
+	float: left;
+	background-position: right center;
+    text-align: center;
+}
+.utilityInfo h2 span.redSquare:before{
+    content:"";
+    width:14px;
+    height:19px;
+    display:inline-block;
+	margin-right:12px;
+	background: url("/static_files/WebApps/images/square_red.png") no-repeat;
+	float: left;
+	background-position: right center;
+    text-align: center;
+}
+.utilityInfo .blackLine { background-color:#000000; width:100%; height: 4px; margin-bottom:10px;}
+.utilityInfo .textRed { color:#990000; text-align:right; margin-bottom:6px; margin-top:5px; }
+.utilityInfo .red { background-color:#990000; color:#ffffff; padding-top:6px;  padding-bottom:6px }
+.utilityInfo .textBold {font-weight:500; clear: left; margin:8px 0px;}
+.utilityInfo .space {clear: right; margin:8px 0px;}
+.utilityInfo .clearRight {clear: right;}
+.utilityInfo .grayBG {background-color: #f5f5f5; padding:0px!important;}
+
+.utilityInfo .floatLeft { float:left; margin-bottom:20px;}
+.utilityInfo .floatRight { float:right; margin-bottom:20px;}
+body .utilityInfo { line-height: 1.1;}
+.instructions {text-align: center;}
+.instructions p {margin-top: 10px; margin-bottom: 10px;}
+#utilityApp .form-horizontal .control-label { text-align: left !important;}
+#utilityApp .form-group {margin:0px;}
+#utilityApp form {background-color: #F5F5F5; padding: 10px 20px 10px 20px; border-radius: 10px;}
+#utilityApp .form-group>div {position: relative;}
+#utilityApp .btn-group {width: 100%; }
+#utilityApp .form-control-feedback {top: 0px;}
+#utilityApp label {font-size: 1em;}
+#utilityApp fieldset section {margin-top: 10px;}
+#agreeModalBody ul {margin-top:10px; margin-bottom:10px; list-style-type:lower-roman;}
+#termsandconditions p,#termsandconditions ul {padding-bottom: 10px;}
+#termsandconditions button {margin:5px;}
+.rightAlign {text-align: right;}
+#makepayment .btnbs {width: 100%; text-decoration: none; color white !important;}
+#mywatertoronto .btnbs {width: 100%; text-decoration: none; color white !important;}
+#mywatertoronto .btnbs p {margin:2px; font-size: .85em;}
+#mywatertoronto .btnbs p.title {font-size: 1em;}
