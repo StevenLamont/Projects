@@ -27,6 +27,11 @@ function showVerificationScreen(blnFirstTime) {
 function validateForm() {
 	$('#wateruseVerificationForm').data('bootstrapValidator').validate();
 }
+
+//       fields: {accountnum: {message: 'Please enter the full utility account number (#########-#########-0#).  This number can be found on the top right corner of your utility bill.',
+//                validators: {notEmpty: {message: 'The utility account number is required and cannot be left blank'},
+//                    regexp: {regexp: /^(\d{9})[-](\d{9})[-][0](\d{1})$/,
+//                    message: 'The utility account number must be in the format #########-#########-0#'}}},
 function initVerificationScreen(blnFirstTime) {
 		if (!blnFirstTime) {
 				$("#APIError").html("Your session has timed out.  Please re-enter your account details in order to revalidate your credentials.");
@@ -40,10 +45,14 @@ function initVerificationScreen(blnFirstTime) {
             validating: 'glyphicon glyphicon-refresh'
         },
         onSuccess: function(e) {displayWaterUse();},
-        fields: {accountnum: {message: 'Please enter the full utility account number (#########-#########-0#).  This number can be found on the top right corner of your utility bill.',
-                validators: {notEmpty: {message: 'The utility account number is required and cannot be left blank'},
-                    regexp: {regexp: /^(\d{9})[-](\d{9})[-][0](\d{1})$/,
-                    message: 'The utility account number must be in the format #########-#########-0#'}}},
+        fields: {accountnum: {message: 'Please enter the account number (#########).  This number can be found on the top right corner of your utility bill.',
+					validators: {notEmpty: {message: 'The account number is required and cannot be left blank'},
+                    regexp: {regexp: /(^(\d{9})$)/,                  
+						message: 'The account number must be in the format ######### (9 digits)'}}},
+				clientnum: {message: 'Please enter the client number (#########-0#).  This number can be found on the top right corner of your utility bill.',
+					validators: {notEmpty: {message: 'The client number is required and cannot be left blank'},
+                    regexp: {regexp: /(^(\d{9})[-| ][0](\d{1})$)|(^(\d{9})[0](\d{1})$)/,                  
+						message: 'The client number must be in the format ######### 0# (with or without the space)'}}},
             lastname: {message: 'Please enter the last name on the utility account.',
               validators: {notEmpty: {message: 'The last name field is required and cannot be left blank'}}},
             paymentmethod: {message: 'Please select your last payment method for the utility account.',

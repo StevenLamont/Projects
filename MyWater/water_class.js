@@ -80,6 +80,8 @@ App.prototype.termsDisagree = function() {
 
 
 //VALIDATION
+//accountnum: {message: 'Please enter the full utility account number (#########-#########-0#).  This number can be found on the top right corner of your utility bill.',
+//			validators: {notEmpty: {message: 'The utility account number is required and cannot be left blank'},regexp: {regexp: /(^(\d{9})[-](\d{9})[-][0](\d{1})$)|(^(\d{9})(\d{9})[0](\d{1})$)/,message: 'The utility account number must be in the format #########-#########-0#'}}},
 App.prototype.initVerification = function() {
 	removeCookie( this.cookie.api );
 	removeCookie( this.cookie.account );
@@ -100,8 +102,14 @@ App.prototype.initVerification = function() {
 	onError: function(e) {
 				$($(".has-error input, .has-error select")[0]).focus();
 	},
-	fields: {accountnum: {message: 'Please enter the full utility account number (#########-#########-0#).  This number can be found on the top right corner of your utility bill.',
-			validators: {notEmpty: {message: 'The utility account number is required and cannot be left blank'},regexp: {regexp: /(^(\d{9})[-](\d{9})[-][0](\d{1})$)|(^(\d{9})(\d{9})[0](\d{1})$)/,message: 'The utility account number must be in the format #########-#########-0#'}}},
+	fields: {accountnum: {message: 'Please enter the account number (#########).  This number can be found on the top right corner of your utility bill.',
+					validators: {notEmpty: {message: 'The account number is required and cannot be left blank'},
+                    regexp: {regexp: /(^(\d{9})$)/,                  
+						message: 'The account number must be in the format ######### (9 digits)'}}},
+				clientnum: {message: 'Please enter the client number (#########-0#).  This number can be found on the top right corner of your utility bill.',
+					validators: {notEmpty: {message: 'The client number is required and cannot be left blank'},
+                    regexp: {regexp: /(^(\d{9})[-| ][0](\d{1})$)|(^(\d{9})[0](\d{1})$)/,                  
+						message: 'The client number must be in the format ######### 0# (with or without the space)'}}},
 		lastname: {message: 'Please enter the last name on the utility account.',
 		  validators: {notEmpty: {message: 'The last name field is required and cannot be left blank'}}},
 		paymentmethod: {message: 'Please select your last payment method for the utility account.',
@@ -116,9 +124,10 @@ App.prototype.validateForm = function () {
 App.prototype.prevalidate = function() {
 	$( this.selectors.display + " article").addClass("hide");
 	$( "#loadingmsg").removeClass("hide");
-	var aNum = $("#accountnum").val();
-	if (aNum.length==20) {aNum = aNum.substring(0,9) + "-" + aNum.substring(9,18) + "-" + aNum.substring(18,20);}
-	var sNum = aNum.substring(0, 9);
+	//var aNum = $("#accountnum").val();
+	//if (aNum.length==20) {aNum = aNum.substring(0,9) + "-" + aNum.substring(9,18) + "-" + aNum.substring(18,20);}
+	//var sNum = aNum.substring(0, 9);
+	aNum = getFullAcctNumber();
 	var lName = $("#lastname").val();
 	lName = lName.replace(/[^a-z0-9 ]+/gi, "");
 	var pCode = $("#postalcode").val();
@@ -1024,6 +1033,13 @@ function loadAccount(strAccNo, strLastName, strPostal, strMethod) {
 	$( "#lastname" ).val( strLastName );
 	$( "#postalcode" ).val( strPostal );
 	$( "#paymentmethod" ).val( strMethod );
+}
+
+function getFullAcctNumber() {
+	var aNum = $("#accountnum").val();
+	var cNum = $("#clientnum").val().replace(' ','-');
+	if (cNum.length==11) {cNum = cNum.substring(0,9) + "-" + cNum.substring(9,11);}
+	return aNum + "-" + cNum;
 }
 
 //********************************************************************

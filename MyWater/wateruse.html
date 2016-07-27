@@ -64,13 +64,23 @@
 		<div id="APIError" class="hide"></div>
 		<div class="row">
 			<div class="col-xs-12" id="utilityApp">
-				<p>Please provide the following 4 pieces of information in order to view your water use.</p>
+				<p>Please provide the following 5 pieces of information in order to view your water use.</p>
 				<form id="wateruseVerificationForm" class="form-horizontal hidden-print" action="#">
 					<fieldset>
-						<div class="form-group">
-							<label class="control-label" for="accountnum">Account Number as it appears on the bill:</label>
-							<div><input id="accountnum" class="form-control" type="text" placeholder="#########-#########-0#" name="accountnum" value=""/></div>
+					<div class="row">
+						<div class="col-xs-12 col-md-6">
+							<div class="form-group">
+								<label class="control-label" for="accountnum">Account Number:</label>
+								<div><input id="accountnum" class="form-control" type="text" placeholder="#########" name="accountnum" value=""/></div>
+							</div>
 						</div>
+						<div class="col-xs-12 col-md-6">
+							<div class="form-group">
+								<label class="control-label" for="accountnum">Client Number:</label>
+								<div><input id="clientnum" class="form-control" type="text" placeholder="######### 0#" name="clientnum" /></div>
+							</div>		
+						</div>						
+					</div>
 						<div class="form-group">
 							<label class="control-label" for="lastname">Last name or business name as it appears on the bill:</label>
 							<div><input id="lastname" class="form-control" type="text" placeholder="Last Name or Business Name" name="lastname" value=""/></div>
