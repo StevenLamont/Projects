@@ -9,7 +9,7 @@
     border-radius: 0 0 10px 10px;
     border-style: none solid solid;
     border-width: 0 1px 1px;
-    height: 500px;
+    height: 350px;
 }
 /* these are bootstrap 3.3.6 */
 
@@ -69,11 +69,15 @@
 	margin-bottom: 0px;
 }
 
+#calendar img {
+	width: 70px;
+}
+
 #colCal {
 	margin-top: 20px;
 }
 
-#pdficon {
-	width: 20px;
+#pdficon,#icsicon {
+	width: 20px!important;
 }
 

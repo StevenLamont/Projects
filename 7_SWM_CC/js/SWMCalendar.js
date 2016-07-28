@@ -18,7 +18,7 @@ var WEEKS_TO_DISPLAY = 2;
 var gblUserSchedule;
 var gblMap;
 var gblAddrLU;
-var CALENDAR_PDF_SHELL = "http://www1.toronto.ca/city_of_toronto/solid_waste_management_services/shared_content/files/calendars/"; 
+var SWM_SHARE_SHELL = "http://www1.toronto.ca/city_of_toronto/solid_waste_management_services/shared_content/files/calendars/"; 
 var icons = {  bluebin : "/static_files/WebApps/Waste Wizard/files/bluebin.png", 
                greenbin : "/static_files/WebApps/Waste Wizard/files/greenbin.png", 
                garbage : "/static_files/WebApps/Waste Wizard/files/garbagebin.png", 
@@ -149,8 +149,10 @@ function displaySchedule() {
         tblStr = "<p class='listingerr'>No collection schedule was found (" + gblUserSchedule + ")</p>";
         $("#colCal").hide();
     } else {
+		$("#colCal").show();
         tblStr = "<p class='listingerr'>The next curbside collection for " + $("#searchLocation").val() + " is on:</p>" + tblStr;
-        $("#colCalLink").attr("href", CALENDAR_PDF_SHELL + gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".pdf");
+        $("#calPDFLink").attr("href", SWM_SHARE_SHELL + gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".pdf");
+        $("#calICSLink").attr("href", SWM_SHARE_SHELL + gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".ics");
     }
     $("#calendar").show();
     $("#calendarData").html(tblStr);
@@ -162,6 +164,7 @@ function saveSched(data) {
       
 function matchSchedule(data) {
     gblUserSchedule = data.features[0].attributes.AREA_NAME;
+	$('#calendarId').text(gblUserSchedule);
     
     if (gblCollectionSchedule === null) {
         Tabletop.init( { key: GS_COLLECTION_SCHEDULE,
@@ -271,8 +274,8 @@ function initApp() {
 }
 
 function loadPage() {
-    var strCode="";
-   if (document.location.hostname.length === 0) {
+	var strCode="";
+	if (document.location.hostname.length === 0) {
         icons = {  
                 bluebin : "images/bluebin.png", 
                 greenbin : "images/greenbin.png", 
@@ -286,16 +289,16 @@ function loadPage() {
         strCode += '<script type="text/javascript" src="js/tabletop.js"></script>';
         strCode += '<script type="text/javascript" src="static_files/assets/datepicker/moment-with-locales.js"></script>';
         strCode += '<script type="text/javascript" src="js/addressLookup.min.js"></script>';
-        $("#appCode").html(strCode);
-        $("#appDisplay").load('html/SWMCalendar.html', function() {initApp();});
-   } else {  
+        $("#appSWMCalCode").html(strCode);
+        $("#appSWMCalDisplay").load('html/SWMCalendar.html', function() {initApp();});
+	} else {  
         strCode += '<link rel="stylesheet" href="/static_files/WebApps/SWM%20Collection%20Calendar/css/SWMCalendar.css">';
         strCode += '<script type="text/javascript" src="/static_files/assets/bootbox/bootbox.min.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/tabletop/tabletop.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/datepicker/moment-with-locales.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/WebApps/SWM%20Collection%20Calendar/js/addressLookup.min.js"></script>';
-        $("#appCode").html(strCode);
-        $("#appDisplay").load('/static_files/WebApps/SWM%20Collection%20Calendar/html/SWMCalendar.html', function() {initApp();});
+        $("#appSWMCalCode").html(strCode);
+        $("#appSWMCalDisplay").load('/static_files/WebApps/SWM%20Collection%20Calendar/html/SWMCalendar.html', function() {initApp();});
     }
 
 }
