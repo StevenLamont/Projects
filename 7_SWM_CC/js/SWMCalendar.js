@@ -1,30 +1,34 @@
 /* 
+Author: Steve Lamont
 Notes:
 Collection Schedules inconsistency of use:
 In GCC:  Monday 1, Tuesday 2  etc.
 In the spreadSheet: Monday1,Tuesday2
-When referencing PDF: monday_1, tuesday_2.
-
-todo:  wait ...
+When referencing PDF: monday_1, tuesday_2
 
 */
 (function (window, undefined) {
    'use strict';
-var GCC_SWM_CAL_LU_API = "http://gis.toronto.ca/arcgis/rest/services/primary/cot_geospatial21_mtm/MapServer/3/query?where=&text=&objectIds=&time=&geometry=<LNG>%2C<LAT>&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelWithin&relationParam=&outFields=AREA_ID%2CAREA_ATTR_ID%2CPARENT_AREA_ID%2CAREA_SHORT_CODE%2CAREA_NAME%2CAREA_DESC&returnGeometry=false&maxAllowableOffset=&geometryPrecision=&outSR=3857&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&returnTrueCurves=false&resultOffset=&resultRecordCount=&f=pjson";
-var GS_COLLECTION_SCHEDULE = 'https://docs.google.com/spreadsheets/d/1KhilmUiWocTvXGpfIARlc-rcL8rRZJUqNyozcMer_iM/pubhtml';
+var GCC_SERVICE_PROP = "COT_GEOSPATIAL21_MTM";
+var GCC_SWM_CAL_LU_API = "<HOST>/3/query?where=&text=&objectIds=&time=&geometry=<LNG>%2C<LAT>&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelWithin&relationParam=&outFields=AREA_ID%2CAREA_ATTR_ID%2CPARENT_AREA_ID%2CAREA_SHORT_CODE%2CAREA_NAME%2CAREA_DESC&returnGeometry=false&maxAllowableOffset=&geometryPrecision=&outSR=3857&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&returnTrueCurves=false&resultOffset=&resultRecordCount=&f=pjson";
+//var GCC_SWM_CAL_LU_API = "http://gis.toronto.ca/arcgis/rest/services/primary/cot_geospatial21_mtm/MapServer/3/query?where=&text=&objectIds=&time=&geometry=<LNG>%2C<LAT>&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelWithin&relationParam=&outFields=AREA_ID%2CAREA_ATTR_ID%2CPARENT_AREA_ID%2CAREA_SHORT_CODE%2CAREA_NAME%2CAREA_DESC&returnGeometry=false&maxAllowableOffset=&geometryPrecision=&outSR=3857&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&returnTrueCurves=false&resultOffset=&resultRecordCount=&f=pjson";
+//var GS_COLLECTION_SCHEDULE = 'https://docs.google.com/spreadsheets/d/1KhilmUiWocTvXGpfIARlc-rcL8rRZJUqNyozcMer_iM/pubhtml'; // this sml google account data.
+var GS_COLLECTION_SCHEDULE = 'https://docs.google.com/spreadsheets/d/1Om0nwrYzeombeuMf-1pMksyG7oaTdXVpN3vR7-qrjdo/pubhtml';  //this is SWM google account data
+//var SWM_SHARE_SHELL = "http://www1.toronto.ca/city_of_toronto/solid_waste_management_services/shared_content/files/calendars/"; 
+var SWM_SHARE_SHELL = "http://www1.toronto.ca/City%20Of%20Toronto/Solid%20Waste%20Management%20Services/1%20G&R%202.0/2%20Houses/Collection%20Calendar/Calendars/";
 var LS_KEY = "SWM_CC";
-var gblCollectionSchedule = null;
 var WEEKS_TO_DISPLAY = 2;
+
+var gblCollectionSchedule = null;
 var gblUserSchedule;
 var gblMap;
 var gblAddrLU;
-var SWM_SHARE_SHELL = "http://www1.toronto.ca/city_of_toronto/solid_waste_management_services/shared_content/files/calendars/"; 
-var icons = {  bluebin : "/static_files/WebApps/Waste Wizard/files/bluebin.png", 
-               greenbin : "/static_files/WebApps/Waste Wizard/files/greenbin.png", 
-               garbage : "/static_files/WebApps/Waste Wizard/files/garbagebin.png", 
-               yardWaste : "/static_files/WebApps/Waste Wizard/files/yardwaste.png", 
-               ctree : "/static_files/WebApps/Waste Wizard/files/ctree.png", 
-               home: "/static_files/WebApps/Waste Wizard/files/home.png"
+var icons = {  bluebin : "/static_files/WebApps/Waste%20Wizard/files/bluebin.png", 
+               greenbin : "/static_files/WebApps/Waste%20Wizard/files/greenbin.png", 
+               garbage : "/static_files/WebApps/Waste%20Wizard/files/garbagebin.png", 
+               yardWaste : "/static_files/WebApps/Waste%20Wizard/files/yardwaste.png", 
+               ctree : "/static_files/WebApps/Waste%20Wizard/files/ctree.png", 
+               home: "/static_files/WebApps/Waste%20Wizard/files/home.png"
             };
             
 /* ---- Utility functions --------------------------------------------------------------------- */
@@ -36,7 +40,6 @@ function htmlEscape(str) {
         .replace(/</g, '&lt;')
         .replace(/>/g, '&gt;');
 }
-            
 
 function convertQueryStringToObj() {
 
@@ -149,27 +152,32 @@ function displaySchedule() {
         tblStr = "<p class='listingerr'>No collection schedule was found (" + gblUserSchedule + ")</p>";
         $("#colCal").hide();
     } else {
-		$("#colCal").show();
-        tblStr = "<p class='listingerr'>The next curbside collection for " + $("#searchLocation").val() + " is on:</p>" + tblStr;
+        $("#colCal").show();
+        tblStr = "<p class='listinghdr'>The next curbside collection for " + $("#searchLocation").val() + " is on:</p>" + tblStr;
         $("#calPDFLink").attr("href", SWM_SHARE_SHELL + gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".pdf");
-        $("#calICSLink").attr("href", SWM_SHARE_SHELL + gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".ics");
+        $("#pdficon").attr("alt", gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".pdf");
+        $("#calPDFId").text(gblUserSchedule.replace(/\s/g,"_") + ".pdf");
+        //$("#calICSLink").attr("href", SWM_SHARE_SHELL + gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".ics");
+        $("#calICSLink").attr("href", "http://localhost:82/7_SWM_CC/Waste Collection (Friday 1).ics");
+        $("#icsicon").attr("alt", gblUserSchedule.replace(/\s/g,"_") + ".ics");
+        $("#calICSId").text(gblUserSchedule.replace(/\s/g,"_") + ".ics");
     }
     $("#calendar").show();
     $("#calendarData").html(tblStr);
 }
 function saveSched(data) {
-        gblCollectionSchedule = data;
+        gblCollectionSchedule = data.MasterCalendar.elements;
         displaySchedule();
 }
       
 function matchSchedule(data) {
     gblUserSchedule = data.features[0].attributes.AREA_NAME;
-	$('#calendarId').text(gblUserSchedule);
+    $('#calendarId').text(gblUserSchedule);
     
     if (gblCollectionSchedule === null) {
         Tabletop.init( { key: GS_COLLECTION_SCHEDULE,
                          callback: saveSched,
-                         simpleSheet: true } );
+                         simpleSheet: false } );
     } else {
         displaySchedule();
     }
@@ -199,20 +207,23 @@ function initMap(lat, lng, address) {
 }
 function determineWasteCalendar(addrData) {
     initMap(addrData.lat, addrData.lng, addrData.addr);
-    var gccURL = GCC_SWM_CAL_LU_API .replace("<LNG>", addrData.lng).replace("<LAT>",addrData.lat);
-    var request = $.ajax({
-         type: 'GET',
-         url: gccURL,
-         context: this,
-         dataType: 'jsonp',
-         success: function (data) {
-            matchSchedule(data);
-         },
-         error: function(jqXHR, textStatus, errorThrown) {
-            bootbox.alert("Sorry, we can't determine the pickup schedule at this time.");
-            $("#calendar").hide();
-         }
-     });
+    gisServerCheck.getServer(GCC_SERVICE_PROP).then(function(server) {
+        console.log(server);
+        var gccURL = GCC_SWM_CAL_LU_API.replace("<HOST>", server).replace("<LNG>", addrData.lng).replace("<LAT>",addrData.lat);
+        var request = $.ajax({
+            type: 'GET',
+            url: gccURL,
+            context: this,
+            dataType: 'jsonp',
+            success: function (data) {
+                matchSchedule(data);
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                bootbox.alert("Sorry, we can't determine the pickup schedule at this time.");
+                $("#calendar").hide();
+            }  
+        });
+    });
 
 }
 
@@ -259,6 +270,7 @@ function setupEvents() {
 
 
 function initApp() {
+               
     setupEvents();
     var qs = convertQueryStringToObj();
     var addrData = {};
@@ -274,8 +286,9 @@ function initApp() {
 }
 
 function loadPage() {
-	var strCode="";
-	if (document.location.hostname.length === 0) {
+
+    var strCode="";
+    if (document.location.hostname.length === 0) {
         icons = {  
                 bluebin : "images/bluebin.png", 
                 greenbin : "images/greenbin.png", 
@@ -289,14 +302,16 @@ function loadPage() {
         strCode += '<script type="text/javascript" src="js/tabletop.js"></script>';
         strCode += '<script type="text/javascript" src="static_files/assets/datepicker/moment-with-locales.js"></script>';
         strCode += '<script type="text/javascript" src="js/addressLookup.min.js"></script>';
+        strCode += '<script type="text/javascript" src="js/gisServerCheck.min.js"></script>';
         $("#appSWMCalCode").html(strCode);
         $("#appSWMCalDisplay").load('html/SWMCalendar.html', function() {initApp();});
-	} else {  
+    } else {  
         strCode += '<link rel="stylesheet" href="/static_files/WebApps/SWM%20Collection%20Calendar/css/SWMCalendar.css">';
         strCode += '<script type="text/javascript" src="/static_files/assets/bootbox/bootbox.min.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/tabletop/tabletop.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/datepicker/moment-with-locales.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/WebApps/SWM%20Collection%20Calendar/js/addressLookup.min.js"></script>';
+        strCode += '<script type="text/javascript" src="/static_files/WebApps/SWM%20Collection%20Calendar/js/gisServerCheck.min.js"></script>';
         $("#appSWMCalCode").html(strCode);
         $("#appSWMCalDisplay").load('/static_files/WebApps/SWM%20Collection%20Calendar/html/SWMCalendar.html', function() {initApp();});
     }

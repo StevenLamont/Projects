@@ -1,37 +1,33 @@
 <input id="COTAddress" type="hidden" value="">
 <label for='searchLocation' class='control-label'>Search by Location or Place: </label>
 <div class="input-group">
-	<div class="has-feedback">
-		<input id="searchLocation" type="text" class="form-control hasclear"  placeholder="Type in Address or Place Name">
-		<span class="glyphicon glyphicon-remove form-control-feedback clearer"></span> 
-	</div>
-		<span class="input-group-addon">
-			<button id="btnAddrSearch" type="button" class="btn btn-primary"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Lookup Address</button>
-		</span>
+    <div class="has-feedback">
+        <input id="searchLocation" type="text" class="form-control hasclear"  placeholder="Type in Address or Place Name">
+        <span class="glyphicon glyphicon-remove form-control-feedback clearer"></span> 
+    </div>
+        <span class="input-group-addon">
+            <button id="btnAddrSearch" type="button" class="btn btn-primary"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Lookup Address</button>
+        </span>
 </div>
 
-
-<!--
-<div class='form-group form-box'> 
-    <label for='searchLocation' class='control-label'>Search by Location or Place: </label></span>
-    <input type='text' id='searchLocation' class='form-control' placeholder='Type in Address or Place Name'></input>
-    <div class='row'><button class='btn btn-primary pull-right btn-wl' id='btnAddrSearch'>Location Lookup</button></div>
-</div>  
--->
 <div class="row">
-
-
-
     <div id="calendar" class="col-xs-12 col-sm-6 col-sm-push-6 col-md-6 " style="display:none;">
         <div>
             <div id="calendarData"></div>
         </div>
         <div id="colCal">
-            <a target="_blank" id="calPDFLink" href="">Here is your annual "<span id='calendarId'></span>" collection calendar<span><img id="pdficon" src="/static_files/assets/images/icons/pdficon.png"></span></a>
-			 <a target="_blank" id="calICSLink" href=""><span><img id="icsicon" src="/static_files/assets/images/icons/icsicon.png"></span></a>
+            <label class='listinghdr'>Here is your annual collection calendar: </label><br>
+            <a target="_blank" id="calPDFLink" href="">
+                <span><img id="pdficon" alt="" src="/static_files/assets/images/icons/pdficon.png"></span>
+                <span id='calPDFId'></span></a>
+			<!--
+             <a target="_blank" id="calICSLink" href="">
+                <span><img id="icsicon" alt="" src="/static_files/assets/images/icons/icsicon.png"></span>
+                <span id='calICSId'></span></a>
+			-->
         </div>
     </div>
-	<div id="map" class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-6 " style="display:none;">
+    <div id="map" class="col-xs-12 col-sm-6 col-sm-pull-6 col-md-6 " style="display:none;">
         <div id="map-wrapper">
             <div id="map-canvas"></div>
         </div>

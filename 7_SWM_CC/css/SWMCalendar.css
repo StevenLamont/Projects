@@ -9,7 +9,7 @@
     border-radius: 0 0 10px 10px;
     border-style: none solid solid;
     border-width: 0 1px 1px;
-    height: 350px;
+    height: 380px;
 }
 /* these are bootstrap 3.3.6 */
 
@@ -80,4 +80,5 @@
 #pdficon,#icsicon {
 	width: 20px!important;
 }
+
 
