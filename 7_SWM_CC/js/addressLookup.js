@@ -91,6 +91,7 @@ AddressLookup.prototype.promptUser = function(addresses) {
         dialog.attr("id", "addressLookupDiag");
         dialog.css("z-index","99001");
         var btns = dialog.find("button.addrSelect");
+        btns[0].focus();
         btns.css("width","100%");
         btns.css("margin","0 0 5px 0");
         btns.on("click", $.proxy(function (evt) {
@@ -102,6 +103,15 @@ AddressLookup.prototype.promptUser = function(addresses) {
                     $(this.resultsDisplaySelector ).change();
                 }
             }
+        }, avInst)  );
+         btns.on("keydown", $.proxy(function (e) {
+            if (e.which === 40) {
+                $(e.target).next().focus();
+            }
+            if (e.which === 38) {
+                $(e.target).prev().focus();
+            }           
+            //console.log(e.which)
         }, avInst)  );
     });
 };

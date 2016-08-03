@@ -203,18 +203,26 @@ function initMap(lat, lng, address) {
         title: address
     });
 
+    gblMap.addListener('center_changed', function() {
+        //after the center of the map has changed, pan back to the marker.
+		window.setTimeout(function() {
+		gblMap.panTo(marker.getPosition());
+     }, 1000);
+    });
+
     gblMap.setCenter(latlng);
 }
 function determineWasteCalendar(addrData) {
     initMap(addrData.lat, addrData.lng, addrData.addr);
     gisServerCheck.getServer(GCC_SERVICE_PROP).then(function(server) {
-        console.log(server);
+        //console.log(server);
         var gccURL = GCC_SWM_CAL_LU_API.replace("<HOST>", server).replace("<LNG>", addrData.lng).replace("<LAT>",addrData.lat);
         var request = $.ajax({
             type: 'GET',
             url: gccURL,
             context: this,
             dataType: 'jsonp',
+			timeout:  2500,
             success: function (data) {
                 matchSchedule(data);
             },

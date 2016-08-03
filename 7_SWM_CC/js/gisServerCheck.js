@@ -26,6 +26,7 @@ var gisServerCheck = (function () {
             type: 'GET',
             url: exports.GCC_SETTINGS_SERVICE + "?propertyName=" + prop,
             dataType: 'jsonp',
+			timeout: 2500,
             //success: function (data) {
             //    server = data[Object.keys(data)[0]];
             //},
@@ -34,8 +35,13 @@ var gisServerCheck = (function () {
             //}
         })
         .then(function(data) {
-            if (data !== 'undefined') console.log("Service call failed. Check Parameter [" + prop + "]");
-            return data[Object.keys(data)[0]];
+            if (data === 'undefined') 
+			{
+				console.log("Service call failed. Check Parameter [" + prop + "]") 
+				return "";
+			} else {			
+				return data[Object.keys(data)[0]];
+			}
         });
         return request;
 
