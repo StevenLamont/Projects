@@ -255,7 +255,7 @@ function resetAppState(prevState) {
 }
 
 function restorePreviousState() {
-    if  (typeof(Storage) !== "undefined") {
+    if  (typeof(Storage) !== "undefined" ) {
         var prevState = localStorage.getItem(LS_KEY_STATE);
         if (prevState) {
             try{
@@ -1290,7 +1290,8 @@ function generatePDF() {
 
         dd.content.push( tbl );
 
-    pdfMake.createPdf(dd).open();
+    //pdfMake.createPdf(dd).open();
+    pdfMake.createPdf(dd).download("Lobby Registry Data.pdf");
 }
 
 /* fix column data as required. Anything with a comma should be place in double quotes. In fact why not do for all clumns this way. */
@@ -1395,13 +1396,17 @@ function generateExcel() {
         bootbox.alert("You are using an old version of Internet Explorer that does not allow for file export.  Please upgrade to a more up to date browser in order to use this feature.");
     } else {
         var blob = new Blob([csv_out], {type: 'text/csv;charset=utf-8'});
-        var url  = window.URL || window.webkitURL;
-        var link = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
-        link.href = url.createObjectURL(blob);
-        link.download = "LobbyistData.csv";
-        var event = document.createEvent("MouseEvents");
-        event.initEvent("click", true, false);
-        link.dispatchEvent(event);
+		if (navigator.msSaveBlob) {  //ie 10+
+			navigator.msSaveBlob(blob, "Lobby Registry Data.csv")
+		} else {
+			var url  = window.URL || window.webkitURL;
+			var link = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
+			link.href = url.createObjectURL(blob);
+			link.download = "Lobby Registry Data.csv";
+			var event = document.createEvent("MouseEvents");
+			event.initEvent("click", true, false);
+			link.dispatchEvent(event);
+		}
     }
 }
 
