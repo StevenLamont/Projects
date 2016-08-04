@@ -1533,7 +1533,7 @@ function detailLobbyists(item) {
         strRows += "<tr><td>&nbsp;</td></tr>";
         
         $.each(item.inhouseLobbyistList, function (idx, l) {
-            var laddr = mergeAddress(l.inhouseLobbyistAddress, l.inhouseLobbyist2, l.inhouseLobbyistCityProvince, l.inhouseLobbyistCountryPostalCode);
+            var laddr = mergeAddress(l.inhouseLobbyistAddress, l.inhouseLobbyistAddress2, l.inhouseLobbyistCityProvince, l.inhouseLobbyistCountryPostalCode);
             strRows += "<tr class='labelRow'><td>" + cnt + ". In-house Lobbyist's Name</td>";
             strRows += "<td>Lobbyist Registration Number</td>";
             strRows += "<td>    Position title</td>";

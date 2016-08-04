@@ -19,7 +19,7 @@ an A-Z listing only to find that there is no records found. Ideally that Z optio
 var LS_KEY_STATE = "LobbyistDisclosure";
 var LS_KEY_APP_ENV = "LobbyistEnvironment";
 var listGUID;
-var gblAllowEnvSwitch = false;
+var gblAllowEnvSwitch = true;
 //var APP_ENV = "http://was-inter-qa.toronto.ca";
 var APP_ENV = "http://was8-inter-dev.toronto.ca";
 
@@ -1533,7 +1533,7 @@ function detailLobbyists(item) {
         strRows += "<tr><td>&nbsp;</td></tr>";
         
         $.each(item.inhouseLobbyistList, function (idx, l) {
-            var laddr = mergeAddress(l.inhouseLobbyistAddress, l.inhouseLobbyist2, l.inhouseLobbyistCityProvince, l.inhouseLobbyistCountryPostalCode);
+            var laddr = mergeAddress(l.inhouseLobbyistAddress, l.inhouseLobbyistAddress2, l.inhouseLobbyistCityProvince, l.inhouseLobbyistCountryPostalCode);
             strRows += "<tr class='labelRow'><td>" + cnt + ". In-house Lobbyist's Name</td>";
             strRows += "<td>Lobbyist Registration Number</td>";
             strRows += "<td>    Position title</td>";
