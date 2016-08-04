@@ -35,7 +35,7 @@ var AddressLookup = function (opt_options) {
         alert("bootbox must be loaded before using this library");
     }
     this.options = opt_options || {};
-    this.apiADDRURLPrefix = 'http://map.toronto.ca/geoservices/rest/search/rankedsearch?searchString=';
+    this.apiADDRURLPrefix = '//map.toronto.ca/geoservices/rest/search/rankedsearch?searchString=';
     this.searchArea =  this.options.searchArea || 1;
     this.matchType =  this.options.matchType || 1;
     this.retRowLimit =  this.options.retRowLimit || 10;
@@ -71,7 +71,7 @@ AddressLookup.prototype.getAddressObject = function() {
 AddressLookup.prototype.promptUser = function(addresses) {
     var bbparms = {};
     bbparms.message = "<b>No extact address was found. Please select one of the following</b>";
-    bbparms.show = true;
+    bbparms.show = false;
     bbparms.backdrop = true;
     bbparms.closeButton = true;
     bbparms.animate = true;
@@ -114,6 +114,7 @@ AddressLookup.prototype.promptUser = function(addresses) {
             //console.log(e.which)
         }, avInst)  );
     });
+	dialog.modal("show");
 };
 /* should only be one exact result, but check anyway and pick last */
 AddressLookup.prototype.determineAddresses = function(data) {

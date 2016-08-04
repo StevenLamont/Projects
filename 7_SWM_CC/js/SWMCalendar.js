@@ -15,7 +15,7 @@ var GCC_SWM_CAL_LU_API = "<HOST>/3/query?where=&text=&objectIds=&time=&geometry=
 //var GS_COLLECTION_SCHEDULE = 'https://docs.google.com/spreadsheets/d/1KhilmUiWocTvXGpfIARlc-rcL8rRZJUqNyozcMer_iM/pubhtml'; // this sml google account data.
 var GS_COLLECTION_SCHEDULE = 'https://docs.google.com/spreadsheets/d/1Om0nwrYzeombeuMf-1pMksyG7oaTdXVpN3vR7-qrjdo/pubhtml';  //this is SWM google account data
 //var SWM_SHARE_SHELL = "http://www1.toronto.ca/city_of_toronto/solid_waste_management_services/shared_content/files/calendars/"; 
-var SWM_SHARE_SHELL = "http://www1.toronto.ca/City%20Of%20Toronto/Solid%20Waste%20Management%20Services/1%20G&R%202.0/2%20Houses/Collection%20Calendar/Calendars/";
+var SWM_SHARE_SHELL = "//www1.toronto.ca/City%20Of%20Toronto/Solid%20Waste%20Management%20Services/1%20G&R%202.0/2%20Houses/Collection%20Calendar/Calendars/";
 var LS_KEY = "SWM_CC";
 var WEEKS_TO_DISPLAY = 2;
 
@@ -157,8 +157,8 @@ function displaySchedule() {
         $("#calPDFLink").attr("href", SWM_SHARE_SHELL + gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".pdf");
         $("#pdficon").attr("alt", gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".pdf");
         $("#calPDFId").text(gblUserSchedule.replace(/\s/g,"_") + ".pdf");
-        //$("#calICSLink").attr("href", SWM_SHARE_SHELL + gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".ics");
-        $("#calICSLink").attr("href", "http://localhost:82/7_SWM_CC/Waste Collection (Friday 1).ics");
+        $("#calICSLink").attr("href", SWM_SHARE_SHELL + gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".ics");
+        //$("#calICSLink").attr("href", "http://localhost:82/7_SWM_CC/Waste Collection (Friday 1).ics");
         $("#icsicon").attr("alt", gblUserSchedule.replace(/\s/g,"_") + ".ics");
         $("#calICSId").text(gblUserSchedule.replace(/\s/g,"_") + ".ics");
     }
@@ -199,7 +199,7 @@ function initMap(lat, lng, address) {
     var marker = new google.maps.Marker({
         position: latlng,
         map: gblMap,
-        icon: 'http://maps.google.com/mapfiles/kml/pal2/icon13.png',
+        icon: '//maps.google.com/mapfiles/kml/pal2/icon13.png',
         title: address
     });
 
@@ -214,6 +214,7 @@ function initMap(lat, lng, address) {
 }
 function determineWasteCalendar(addrData) {
     initMap(addrData.lat, addrData.lng, addrData.addr);
+    //$.when( gisServerCheck.getServer(GCC_SERVICE_PROP)).then(function(server) {
     gisServerCheck.getServer(GCC_SERVICE_PROP).then(function(server) {
         //console.log(server);
         var gccURL = GCC_SWM_CAL_LU_API.replace("<HOST>", server).replace("<LNG>", addrData.lng).replace("<LAT>",addrData.lat);

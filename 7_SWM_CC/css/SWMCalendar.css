@@ -81,4 +81,5 @@
 	width: 20px!important;
 }
 
-
+#searchLocation::-ms-clear {display: none; width:0; height:0;}
+#searchLocation {display: inline-block;};
