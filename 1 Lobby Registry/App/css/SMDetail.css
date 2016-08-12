@@ -55,6 +55,15 @@
 #maincontent table .CommListIndent {
 	padding-left: 25px;
 }
+
+tr.detailMiniHdr  td {
+	font-size: .8em;
+	font-weight: bold;
+}
+tr.detailMiniMajorHdr  td {
+	font-size: 1em;
+	font-weight: bold;
+}
  .panel-heading {
     cursor: pointer;
 }

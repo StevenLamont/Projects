@@ -19,6 +19,7 @@ an A-Z listing only to find that there is no records found. Ideally that Z optio
 var LS_KEY_STATE = "LobbyistDisclosure";
 var LS_KEY_APP_ENV = "LobbyistEnvironment";
 var listGUID;
+//Make sure to check css.
 var gblAllowEnvSwitch = false;
 var APP_ENV = "http://was-inter-qa.toronto.ca";
 //var APP_ENV = "http://was8-inter-dev.toronto.ca";
@@ -244,7 +245,8 @@ function resetAppState(prevState) {
             if ( flt.hasClass("columnCheckBox")) {
                 flt.prop( "checked", true );
             } else if ( flt.hasClass("columnSelect")) {
-                flt.val(prevState.filters[filter]);
+				var vals = prevState.filters[filter].split(',');
+                flt.val(vals);
                 flt.multiselect("refresh");
             } else {
                 flt.val(prevState.filters[filter]);
@@ -290,13 +292,16 @@ function setAlphaIdx(char) {
 }
 /* ----------------------------------------------------------------------------------------------------------------------------------- */
 
-function boldSeniorOfficer(str) {
+/* this is the on bit of bussiness logic */
+function boldSeniorOfficer(str, type) {
     var l = str.split(",");
     var retStr = "";
     for (var i = 0; i <l.length; i++) {
-        if ( i === 0 ) {
+        if ( i === 0 && type.toLowerCase().indexOf("in-house") > -1)  {
             retStr = "<b>" + l[0] + "</b>";
-        } else {
+        } else if (i === 0) {
+			retStr += l[0];
+		} else {
             retStr += ", " + l[i];
         }
     }
@@ -498,21 +503,26 @@ function filtersApplied() {
         }
     });
 
+    /* this.selectedOptiions doesn't work in IE */
     $(".columnSelect").each(function( index ) {
-        if(this.id !== null && this.selectedOptions && this.selectedOptions.length != this.options.length) {
-            filterText += toTitleCase(this.id).replace('Filter','') + " : ";
-            var filterValues = "";
+        if(this.id !== null) {
+            var selected = $("#"+ this.id + " option:selected");
+            if (selected.length != this.options.length) {
+            
+                filterText += toTitleCase(this.id).replace('Filter','') + " : ";
+                var filterValues = "";
 
-            for (var i = 0; i < this.selectedOptions.length; i++) {
-                filterText += this.selectedOptions[i].label + ", ";
-                filterValues  += this.selectedOptions[i].value + ",";
-                URLParms += "&" + this.selectedOptions[i].value + "=true";
+                for (var i = 0; i < selected.length; i++) {
+                    filterText += selected[i].text + ", ";
+                    filterValues  += selected[i].value + ",";
+                    URLParms += "&" + selected[i].value + "=true";
+                }
+                filterText =filterText.slice(0,-2);
+                filterValues =filterValues.slice(0,-1);
+                gblFilters[this.id] = filterValues;
+                filterText += "<br>";
+                advSearch = true;
             }
-            filterText =filterText.slice(0,-2);
-            filterValues =filterValues.slice(0,-1);
-            gblFilters[this.id] = filterValues;
-            filterText += "<br>";
-            advSearch = true;
         }
     });
 
@@ -539,6 +549,7 @@ function filtersApplied() {
     }
 
     var advSearchStr = $("#advSearchString");
+	filterText = filterText.replace(/Poh /g,"POH "); //This is kludge but we didn't want to title case POH.
     advSearchStr.val(filterText.replace(/<br>/g," ; ").slice(0,-3));
     $("#lrServiceBar").tooltip('hide')
           .attr('data-original-title', filterText)
@@ -617,7 +628,7 @@ function listDetailRow(SM, rowNum, hfOpts) {
                 strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.lobbyistName),hfOpts) + '</td>';
                 break;
             case 'SMLLobbyistNames':
-                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' +  highlightSearch(boldSeniorOfficer(escapeHtml(SM.lobbyistList)),hfOpts) + "</td>";
+                strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' +  highlightSearch(boldSeniorOfficer(escapeHtml(SM.lobbyistList),SM.lobbyistType),hfOpts) + "</td>";
                 break;
             case 'SMLPOHName':
                 strRows += '<td class="' + rptCols[i].cls + '" style="' + rptCols[i].style + '">' + highlightSearch(escapeHtml(SM.pohName) ,hfOpts) + '</td>';
@@ -854,7 +865,7 @@ function setUpEvents() {
             format: 'yyyy-mm-dd',  /* what is the city standard*/
             date: new Date(),
             todayHighlight: true,
-			endDate:"0d"
+            endDate:"0d"
     });
     $(".hasclear").keyup(function () {
         var t = $(this);
@@ -887,10 +898,10 @@ function setUpEvents() {
         $(this).hide();
        // showListing();
     });
-	
-	$("#gotoTop").click(function () {
-		window.scrollTo(0, $("#paging").offset().top);
-	});
+    
+    $("#gotoTop").click(function () {
+        window.scrollTo(0, $("#paging").offset().top);
+    });
 
     $('#numberPageSelection').bootpag({
         total: gblRowsPerPage,
@@ -1396,17 +1407,17 @@ function generateExcel() {
         bootbox.alert("You are using an old version of Internet Explorer that does not allow for file export.  Please upgrade to a more up to date browser in order to use this feature.");
     } else {
         var blob = new Blob([csv_out], {type: 'text/csv;charset=utf-8'});
-		if (navigator.msSaveBlob) {  //ie 10+
-			navigator.msSaveBlob(blob, "Lobby Registry Data.csv")
-		} else {
-			var url  = window.URL || window.webkitURL;
-			var link = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
-			link.href = url.createObjectURL(blob);
-			link.download = "Lobby Registry Data.csv";
-			var event = document.createEvent("MouseEvents");
-			event.initEvent("click", true, false);
-			link.dispatchEvent(event);
-		}
+        if (navigator.msSaveBlob) {  //ie 10+
+            navigator.msSaveBlob(blob, "Lobby Registry Data.csv")
+        } else {
+            var url  = window.URL || window.webkitURL;
+            var link = document.createElementNS("http://www.w3.org/1999/xhtml", "a");
+            link.href = url.createObjectURL(blob);
+            link.download = "Lobby Registry Data.csv";
+            var event = document.createEvent("MouseEvents");
+            event.initEvent("click", true, false);
+            link.dispatchEvent(event);
+        }
     }
 }
 
@@ -1647,12 +1658,18 @@ function detailCommunications(item) {
             strRows += "<tr><td>&nbsp;</td></tr>";
             strRows += "<tr><td colspan='10'><b>" +  escapeHtml(lcm.inHouseLobbyistNameAndRegistrationNumber) + "</b></td>";
             strRows += "</tr>";
+			strRows += "<tr class='detailMiniHdr'><td class='col-md-2'>Public Office Holder Type</td>";
+            strRows += "<td class='col-md-3'>Name or Position Title</td>";
+            strRows += "<td class='col-md-3'>Ward, Office, Division or Agency</td>";
+            strRows += "<td class='col-md-2'>Communication Date</td>";
+            strRows += "<td class='col-md-2'>Communication Methods Used</td>";
+            strRows += "</tr>";
             $.each(lcm.pohCommunicationMethodList, function (idx, pohcomm) {
                     strRows += "<tr><td class='col-md-2'>" +  escapeHtml(pohcomm.pohType) + "</td>";
                     strRows += "<td class='col-md-3'>" +  escapeHtml(pohcomm.pohNameOrTitle) + "</td>";
                     strRows += "<td class='col-md-3'>" +  escapeHtml(pohcomm.pohOfficeName) + "</td>";
                     strRows += "<td class='col-md-2'>" +  escapeHtml(pohcomm.communicationDate) + "</td>";
-                    strRows += "<td class='col-md-2'>" +  escapeHtml(pohcomm.communicationMethod) + "</td>";
+                    strRows += "<td class='col-md-2'>" +  pohcomm.communicationMethod + "</td>";
                     strRows += "</tr>";
             });
         });
@@ -1661,13 +1678,19 @@ function detailCommunications(item) {
 
     /* For volunatry or consultant, the list is not inhouselobbyist related */
     if (typeof item.pohCommunicationMethodList !== 'undefined' && item.pohCommunicationMethodList.length > 0) {
+			strRows += "<tr class='detailMiniMajorHdr'><td class='col-md-2'>Public Office Holder Type</td>";
+            strRows += "<td class='col-md-3'>Name or Position Title</td>";
+            strRows += "<td class='col-md-3'>Ward, Office, Division or Agency</td>";
+            strRows += "<td class='col-md-2'>Communication Date</td>";
+            strRows += "<td class='col-md-2'>Communication Methods Used</td>";
+            strRows += "</tr>";	
         $.each(item.pohCommunicationMethodList, function (idx, pohcomm) {
             detailCommunicationsFound = true;
             strRows += "<tr><td class='col-md-2'>" +  escapeHtml(pohcomm.pohType) + "</td>";
             strRows += "<td class='col-md-3'>" +  escapeHtml(pohcomm.pohNameOrTitle) + "</td>";
             strRows += "<td class='col-md-3'>" +  escapeHtml(pohcomm.pohOfficeName) + "</td>";
             strRows += "<td class='col-md-2'>" +  escapeHtml(pohcomm.communicationDate) + "</td>";
-            strRows += "<td class='col-md-2'>" +  escapeHtml(pohcomm.communicationMethod) + "</td>";
+            strRows += "<td class='col-md-2'>" +  pohcomm.communicationMethod + "</td>";
             strRows += "</tr>";
         });
         $("#CommunicationsSection").find("tbody").html(strRows); //.trigger('update');

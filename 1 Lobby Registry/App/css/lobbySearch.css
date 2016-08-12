@@ -171,7 +171,7 @@ legend.poh {
 
 .modal-dialog {
     margin: 30px auto;
-    width: 60%;
+    width: 70%;
 }
 
 .input-group {
@@ -218,7 +218,7 @@ legend.poh {
     margin: 5px 15px !important;
 }
 
-
+.form-control::-ms-clear {display: none; width:0; height:0;}
 .form-control-label {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
@@ -457,6 +457,8 @@ legend.poh {
 .bootbox {
     z-index: 999999;
 }
+
+
 
 @media (max-width: 1200px) {
 	.modal-dialog { width: 90%;}
