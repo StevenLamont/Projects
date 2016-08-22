@@ -57,11 +57,11 @@
 }
 
 tr.detailMiniHdr  td {
-	font-size: .8em;
+	font-size: .85em;
 	font-weight: bold;
 }
 tr.detailMiniMajorHdr  td {
-	font-size: 1em;
+	font-size: .85em;
 	font-weight: bold;
 }
  .panel-heading {
