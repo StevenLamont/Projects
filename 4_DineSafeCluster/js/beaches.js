@@ -9,42 +9,35 @@
  
  googlr directions??it's harder than you think..
 */
- 
-var detailURL = "http://app.toronto.ca/opendata/tphir/ir_detail.json?callback=?&program_area_cd=POOL&addr_id=";
-var DATA_URL = 'http://app.toronto.ca/tpha/beaches/jsonHistory.html?date=2015-9-6';
-var BEACH_GUID = '276b2887f2514510VgnVCM10000071d60f89RCRD';
-var BEACH_HISTORY = "http://app.toronto.ca/tpha/beach/jsonOneYearHistory.html?beachId=1&year=";
-var BEACH_URL = 'http://app.toronto.ca/tpha/beaches/jsonHistory.html?date=2015-9-6';
-var DAILY_BEACH_HISTORY = "http://app.toronto.ca/tpha/beaches/jsonHistory.html?date=";
+ (function (window, undefined) {
+   'use strict';
+//var DATA_URL = 'http://was8-inter-dev.toronto.ca/opendata/tbwq/beaches.json?v=1.0&callback=?';  //'http://app.toronto.ca/tpha/beaches/jsonHistory.html?date=2015-9-6';
+var DATA_URL = 'http://was8-inter-dev.toronto.ca/opendata/tbwq/beaches.json?callback=?';  //'http://app.toronto.ca/tpha/beaches/jsonHistory.html?date=2015-9-6';
+var BEACH_HISTORY = "http://was8-inter-dev.toronto.ca/opendata/tbwq/beaches.json?v=2.0&callback=?&beachid=<BID>&publishyear=<YEAR>";
+var BEACH_URL = 'http://was8-inter-dev.toronto.ca/opendata/tbwq/beaches.json?callback=?&beachid=<BID>'; 
+var BEACH_YEAR_LOOKUP = "http://was8-inter-dev.toronto.ca/opendata/tbwq/years.json?v=2.0&callback=?&beachid=<BID>";
+var DAILY_BEACH_HISTORY = "http://was8-inter-dev.toronto.ca/opendata/tbwq/beaches.json?v=2.0&callback=?&publishdate=<YYYY-MM-DD>";
+var OFF_SEASON_CHECK = 'http://was8-inter-dev.toronto.ca/opendata/tbwq/season.json?v=2.0&callback=?';
 var gblBeachJSON;
-var TPH_API_DATE_FORMAT = "MM/DD/YYYY";
+var gblBeachId;
+//var TPH_API_DATE_FORMAT = "MM/DD/YYYY";
 var DISPLAY_DATE_FORMAT = "MMMM DD, YYYY";
-/*
-  var CommonInfoWindow = new google.maps.InfoWindow({"minWidth": 500});
-*/
 var CommonInfoWindow = new google.maps.InfoWindow();
-var selectedEstablishmentData = [];
-
 
 var markerImages = {
-    'Unsafe' : { url : 'http://maps.google.com/mapfiles/ms/icons/red.png', labelOrigin: new google.maps.Point(16, 9) },
-    'Safe' : { url : 'http://maps.google.com/mapfiles/ms/icons/green.png',  labelOrigin: new google.maps.Point(16, 9) },
+    'UNSAFE' : { url : 'http://maps.google.com/mapfiles/ms/icons/red.png', labelOrigin: new google.maps.Point(16, 9) },
+    'SAFE' : { url : 'http://maps.google.com/mapfiles/ms/icons/green.png',  labelOrigin: new google.maps.Point(16, 9) },
     'BlueBeach' : { url : 'http://app.toronto.ca/tpha/images/blueflag_small.png' }
 };
 
- var statusImages = { "Unsafe" : {large: "/static_files/WebApps/Health/SwimSafe/images/beaches_statusunsafe_l.gif", medium : "/static_files/WebApps/Health/SwimSafe/images/beaches_unsafe_medium.gif"},
-                      "Safe" : {large: "/static_files/WebApps/Health/SwimSafe/images/beaches_statussafe_l.gif", medium : "/static_files/WebApps/Health/SwimSafe/images/beaches_safe_medium.gif"},
-                      "No data" : {large: "/static_files/WebApps/Health/SwimSafe/images/beaches_statusnodata_l.gif", medium : "/static_files/WebApps/Health/SwimSafe/images/beaches_nodata_medium.gif"}
+ var statusImages = { "UNSAFE" : {large: "/static_files/WebApps/Health/SwimSafe/images/beaches_statusunsafe_l.gif", medium : "/static_files/WebApps/Health/SwimSafe/images/beaches_unsafe_medium.gif"},
+                      "SAFE" : {large: "/static_files/WebApps/Health/SwimSafe/images/beaches_statussafe_l.gif", medium : "/static_files/WebApps/Health/SwimSafe/images/beaches_safe_medium.gif"},
+                      "NO_DATA" : {large: "/static_files/WebApps/Health/SwimSafe/images/beaches_statusnodata_l.gif", medium : "/static_files/WebApps/Health/SwimSafe/images/beaches_nodata_medium.gif"},
+                      "UNTESTED" : {large: "/static_files/WebApps/Health/SwimSafe/images/beaches_statusnodata_l.gif", medium : "/static_files/WebApps/Health/SwimSafe/images/beaches_nodata_medium.gif"}
                     };
-var streetViewIcon ='/static_files/WebApps/Health/DineSafe/images/map/streetView.png';
-var inspectionsIcon ='/static_files/WebApps/Health/DineSafe/images/map/inspections.png';
-
 var gblMap;
 var gblMapMarkers = [];
 var MAP_CENTER = new google.maps.LatLng(43.711134, -79.377145);
-var randKey =  (new Date()).valueOf();
-//https://drive.google.com/file/d/0B-j2Y49nfiw2eDVWRjRBVTVUMkE/view?usp=sharing
-
  
 function dynamicSort(root, property) {
     var sortOrder = 1;
@@ -64,90 +57,77 @@ function dynamicSort(root, property) {
     };
 }
 
-function clearMarkers() {
-    for (var i = 0; i < gblMapMarkers.length; i++) {
-        gblMapMarkers[i].setMap(null);
-    }
-    gblMapMarkers = [];
-}
-
 //TODO: if we get sumamry .. have a hover which display cuirrent info.. 
+// At this point. out retreived data has one report in the data.
 function plotMarkers() {
    
     var bounds = new google.maps.LatLngBounds();
-    var legendStr = "<li class='first='><ol class='col-md-4'>";
+    var legendStr = "<li class='first='><ol class='col-md-6'>";
     var beachcnt = 0;
     for( var i = 0; i < gblBeachJSON.length; i++ ) {
         var beach = gblBeachJSON[i];
         beachcnt++;
-        console.log(beachcnt + " " + beach.BWQR_BEACH_STATUS_NAME);
+        //console.log(beachcnt + " " + beach.reports[0].statusCd);
         legendStr += "<li id='" + beach.id + "'>";
-        if (beach.BWQR_BEACH_BLUE_FLAG_INDICATOR_SMALL) {
+        if (beach.isBlueFlag) {
             legendStr += '<img width="18" height="18" class="bbicon" src="' + markerImages.BlueBeach.url + '" alt="">';
-            legendStr += '</span><img width="18" height="18" class="beachStatus" src="' + markerImages[beach.BWQR_BEACH_STATUS_NAME].url + '" alt="">';
+            legendStr += '</span><img width="18" height="18" class="beachStatus" src="' + markerImages[beach.reports[0].statusCd].url + '" alt="">';
         } else {    
-            legendStr += '</span><img width="18" height="18" class="noBBBeachStatus" src="' + markerImages[beach.BWQR_BEACH_STATUS_NAME].url + '" alt="">';
+            legendStr += '</span><img width="18" height="18" class="noBBBeachStatus" src="' + markerImages[beach.reports[0].statusCd].url + '" alt="">';
         }
         //legendStr +=  '<a href="beach/1.html"><img width="20" height="31" style="border: 0;" id="beach_pin_A" src="/tpha/images/beaches_unsafe_pin.gif" alt=""></a>';
-        legendStr +=  beach.BWQR_BEACH_LETTER + ' <a class="beachLink" href="#">' +  beach.BWQR_BEACH_NAME + '</a>';
+        legendStr +=  beach.areaCd + ' <a class="beachLink" href="#">' +  beach.name + '</a>';
 
         legendStr += '</li>';
-       var latlng = new google.maps.LatLng( +beach.BWQR_BEACH_LATITUDE, +beach.BWQR_BEACH_LONGITUDE );
+       var latlng = new google.maps.LatLng( +beach.lat, +beach.lng );
                     
-        var title = beach.BWQR_BEACH_NAME;
-
         var marker = new google.maps.Marker({
             position: latlng,
             map: gblMap,
             id: beach.id,
-            label: { text : beach.BWQR_BEACH_LETTER,
+            ecoli: beach.reports[0].ecoli,
+            advisory: beach.reports[0].advisory,
+            label: { text : beach.areaCd,
                     fontWeight: '900'
                     },
             icon : {
-                url: markerImages[beach.BWQR_BEACH_STATUS_NAME].url,
-               labelOrigin: new google.maps.Point(20,14),
+                url: markerImages[beach.reports[0].statusCd].url,
+                labelOrigin: new google.maps.Point(20,14),
                 scaledSize: new google.maps.Size(40, 40)
             },           
-            title: beach.BWQR_BEACH_NAME
+            title: beach.name
         });
         bounds.extend(marker.getPosition());
-        marker.addListener('click', function () {
-            gotoDetailPage(this.id);
-        });
         
         marker.addListener('mouseover', function () {
             var content = "<div class='infoDiv'>";
             content += "<div class='row'><div class='col-md-12 infoHdr'>" +  this.title + "</div></div>";
-            content += "<div class='row'><div class='col-md-12'><span class='infoHdr'>Last E. coli count: </span> " +  "xxx" + "</div></div>";
-            content += "<div class='row'><div class='col-md-12'><span class='infoHdr'>Advisory: </span> " +  "xxx" + "</div></div>";
+            content += "<div class='row'><div class='col-md-12'><span class='infoHdr'>Last E. coli count: </span> " + this.ecoli + "</div></div>";
+            content += "<div class='row'><div class='col-md-12'><span class='infoHdr'>Advisory: </span> " +  this.advisory  + "</div></div>";
+			
             CommonInfoWindow.setOptions(
                 {   "position": this.position,
-                    //"maxWidth" : width / 2,
+                    "maxWidth" : "125",
                     "pixelOffset":new google.maps.Size(0, -32),
-                    "content": content});
+                    "content": content
+                });
             CommonInfoWindow.open(gblMap);
         });
         marker.addListener('mouseout', function () {
              CommonInfoWindow.close();
         });
-        
+        marker.addListener('click', function () {
+            gotoDetailPage(this.id);
+        });
 
         gblMapMarkers.push(marker);
-        if (beachcnt % 4 === 0) {
-            legendStr += "</ol></li><li><ol class='col-md-4'>";
+        if (beachcnt % 6 === 0) {
+            legendStr += "</ol></li><li><ol class='col-md-6'>";
         }
         gblMap.fitBounds(bounds);
     }
     legendStr += '</ol></li>';
     $("#list_of_beaches").html(legendStr).trigger('update');
-}
-
-
-function resetMap() {
-    gblMap.setZoom(11);
-    gblMap.setCenter(MAP_CENTER);
-    CommonInfoWindow.close();
-    
 }
 
 function setupMapSearchBox() {
@@ -238,34 +218,14 @@ function setupMap() {
         zoomControl: true
         //tilt: 30
     });
-
+	
     setupMapSearchBox();
     plotMarkers();
     setupEvents();
 }
 
 
-function initApp() {
 
-    $.ajax({
-        type: 'GET',
-        url: DATA_URL,
-        crossDomain: true,
-        //contentType: "application/json",
-        //cache: true,
-        dataType: 'json',
-        success: function (data) {
-                gblBeachJSON = data.sort(dynamicSort("","BWQR_BEACH_LETTER"));
-                setupMap();
-                $("#reportDate").text(moment(gblBeachJSON[0].BWQR_BEACH_DATA_COLLECTION_DATE).format(DISPLAY_DATE_FORMAT));
-            },
-        error: function (xhr, ajaxOptions, thrownError) {
-               console.log(xhr.status);
-               console.log(thrownError);
-            }
-    });
-    
-}
 
 function generateHistoryListing(data) {
     var strRows = "";
@@ -275,15 +235,15 @@ function generateHistoryListing(data) {
         hdrRow += "<div class='col-md-2'>E. coli Level</div>";
         hdrRow += "<div class='col-md-8'>Swimming Conditions</div>";
         hdrRow += "</div>";    
-    $.each(data, function(i, item) {
-        var eCnt = (typeof item.BWQR_BEACH_ECOLI_COUNT === "undefined") ? "--" : item.BWQR_BEACH_ECOLI_COUNT;
+    $.each(data[0].reports, function(i, item) {
+        var eCnt = (typeof item.ecoli === "undefined" || item.ecoli === null || item.statusCd =='UNTESTED') ? "--" : item.ecoli;
         strRows += "<div class='row'>";
-        strRows += "<div class='col-md-2'>" + moment(item.BWQR_BEACH_DATA_COLLECTION_DATE).format(DISPLAY_DATE_FORMAT)  + "</div>";
+        strRows += "<div class='col-md-2'>" + moment(item.sampled).format(DISPLAY_DATE_FORMAT)  + "</div>";
         strRows += "<div class='col-md-2'>" + eCnt + "</div>";
-        if (statusImages[item.BWQR_BEACH_STATUS_NAME]) {
-            strRows += "<div class='col-md-8'><img src='" + statusImages[item.BWQR_BEACH_STATUS_NAME].medium + "' alt='" + item.BWQR_BEACH_STATUS_NAME + "'>&nbsp;&nbsp;" + item.BWQR_BEACH_ADVISORY + "</div>";
+        if (statusImages[item.statusCd]) {
+            strRows += "<div class='col-md-8'><img src='" + statusImages[item.statusCd].medium + "' alt='" + item.statusCd + "'>&nbsp;&nbsp;" + item.advisory + "</div>";
         } else {
-            strRows += "<div class='col-md-8'>" + item.BWQR_BEACH_STATUS_NAME + item.BWQR_BEACH_ADVISORY + "</div>";
+            strRows += "<div class='col-md-8'>" + item.stastusCd + item.advisory + "</div>";
             
         }
         strRows += "</div>";
@@ -301,16 +261,14 @@ function getBeachHistory(year) {
         $("#historyRow").html("");
         return;
     }
-    //alert(year);
     $.ajax({
         type: 'GET',
-        url: BEACH_HISTORY + year,
+        url: BEACH_HISTORY.replace("<YEAR>",year).replace("<BID>",gblBeachId),
         crossDomain: true,
-        //contentType: "application/json",
-        //cache: true,
+        cache: true,
         dataType: 'json',
         success: function (data) {
-            generateHistoryListing(data)
+            generateHistoryListing(data);
             },
         error: function (xhr, ajaxOptions, thrownError) {
                console.log(xhr.status);
@@ -319,63 +277,80 @@ function getBeachHistory(year) {
     });
     
 }
-function populateDetails(beachId, data) {
 
-    var beachData;
-    //TODO: This loop is temporary
-     $.each(data, function(i, item) {
-        if (item.id === beachId) {
-            beachData = item;
-        }
-     });
+function populateYearLookup(years) {
 
-    $("#statusImage").attr("src",statusImages[beachData.BWQR_BEACH_STATUS_NAME].large);
-    $("#beachName").text(beachData.BWQR_BEACH_LETTER + " - " +  beachData.BWQR_BEACH_NAME);
-    $("#beachAddress").text(beachData.BWQR_BEACH_DESCRIPTION);
-    $("#sampleDate").text(moment(beachData.BWQR_BEACH_DATA_COLLECTION_DATE).format(DISPLAY_DATE_FORMAT));
-    $("#postedDate").text(moment(beachData.BWQR_BEACH_PUBLISH_ON).format(DISPLAY_DATE_FORMAT));
-    $("#ecolicount").text(beachData.BWQR_BEACH_ECOLI_COUNT);
-    $("#advisory").text(beachData.BWQR_BEACH_ADVISORY);
-    $("#alert").text(beachData.BWQR_BEACH_ALERT_MESSAGE);
-    if (beachData.BWQR_BEACH_BLUE_FLAG_INDICATOR_SMALL) {
-        $("#blueFlag").show();
-    } else {
-        $("#blueFlag").hide();
-    }
-    $("#beachMapImage").attr("src",beachData.BWQR_BEACH_MAP);
-
+    var yearsDesc = years.sort(function(a, b){return a-b;});
     var yearFilter = $("#yearFilter");
+    $.each(yearsDesc, function(i,item) {
+        yearFilter.append( '<option  value="' + item + '">' + item + '</option>' );
+    });
     yearFilter.multiselect({
         
-         maxHeight: '400',
-         dropUp: true,
+        maxHeight: '400',
+        dropUp: true,
          //buttonContainer: '<div class="btn-group yearfilter" />',
-         onChange: function(option, checked, select) {
-           getBeachHistory(option.val())
+        onChange: function(option, checked, select) {
+            getBeachHistory(option.val());
         }
     });
     //I think the drop up calc in mult-select is not right
     var items = yearFilter.find("option").size();
     yearFilter.next().find("ul").css({
         'max-height': items * 60 + 'px',    //5 * 60
-        'margin-top': "-" + ((items * 60) -30) + 'px'  //30 less
+        'margin-top': "-" + ((items * 60) -195) + 'px'  //30 less
+    }); 
+}
+function populateDetails(data) {
+
+    var beachData = data[0];
+    $("#statusImage").attr("src",statusImages[beachData.reports[0].statusCd].large);
+    $("#beachName").text(beachData.areaCd + " - " +  beachData.name);
+    $("#beachAddress").text(beachData.address);
+    $("#sampleDate").text(moment(beachData.reports[0].sampled).format(DISPLAY_DATE_FORMAT));
+    $("#postedDate").text(moment(beachData.reports[0].published).format(DISPLAY_DATE_FORMAT));
+    $("#ecolicount").text(beachData.reports[0].ecoli);
+    $("#advisory").text(beachData.reports[0].advisory);
+    if (beachData.isBlueFlag) {
+        $("#blueFlag").show();
+    } else {
+        $("#blueFlag").hide();
+    }
+    $("#beachMapImage").attr("src",beachData.imageSrc);
+
+    var strURL =  BEACH_YEAR_LOOKUP.replace("<BID>",gblBeachId);
+    $.ajax({
+        type: 'GET',
+        url: strURL,
+        crossDomain: true,
+        cache: true,
+        dataType: 'json',
+        success: function (data) {
+            populateYearLookup(data);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+               console.log(xhr.status);
+               console.log(thrownError);
+        }
     });
     
 
 }
-function initDetailApp(qsbeach) {
 
+function initApp() {
+
+	var strURL = DATA_URL;
     $.ajax({
         type: 'GET',
-        url: BEACH_URL,
+        url: strURL,
+		//jsonpCallback : 'CALLBACK',
         crossDomain: true,
-        //contentType: "application/json",
-        //cache: true,
+        cache: true,
         dataType: 'json',
         success: function (data) {
-            //TODO: fix this when get proper URL.
-                var json = data.sort(dynamicSort("","BWQR_BEACH_LETTER"));
-                populateDetails(qsbeach,json);
+                gblBeachJSON = data.sort(dynamicSort("","areaCD"));
+                $("#reportDate").text(moment(gblBeachJSON[0].reports[0].published).format(DISPLAY_DATE_FORMAT));
+                setupMap();
             },
         error: function (xhr, ajaxOptions, thrownError) {
                console.log(xhr.status);
@@ -385,20 +360,47 @@ function initDetailApp(qsbeach) {
     
 }
 
-/* -- Daily Historical Data Functions -------------------------------*/
+
+function initDetailApp() {
+
+    var strURL =  BEACH_URL.replace("<BID>",gblBeachId);
+    $.ajax({
+        type: 'GET',
+        url: strURL,
+        cache: true,
+        crossDomain: true,
+        dataType: 'jsonp',
+        success: function (data) {
+                populateDetails(data);
+            },
+        error: function (xhr, ajaxOptions, thrownError) {
+               console.log(xhr.status);
+               console.log(thrownError);
+            }
+    });
+    
+}
+
+/* -- Daily Historical Data Functions -------------------------------
+I could blank out calendar rows by using Days Lookup, so user doesn't select a bad day..but that is expensive
+*/
 function generateDailyHistory(data) {
 
-	var strRows ="";
-	historyData = data.sort(dynamicSort("","BWQR_BEACH_LETTER"));	
-	$.each(historyData , function(i, item) {
-        var eCnt = (typeof item.BWQR_BEACH_ECOLI_COUNT === "undefined") ? "--" : item.BWQR_BEACH_ECOLI_COUNT;
+    var strRows ="";
+    var historyData = data.sort(dynamicSort("","AREAcD"));   
+    $.each(historyData , function(i, item) {
+        //var eCnt = (typeof item.BWQR_BEACH_ECOLI_COUNT === "undefined") ? "--" : item.BWQR_BEACH_ECOLI_COUNT;
+        var eCnt = ( item.reports.length === 0 || typeof item.reports[0].ecoli === "undefined" || item.reports[0].ecoli === null || item.reports[0].statusCd =='UNTESTED') ? "--" : item.reports[0].ecoli;
         strRows += "<div class='row'>";
-        strRows += "<div class='col-md-3'>" + item.BWQR_BEACH_NAME  + "</div>";
+        strRows += "<div class='col-md-3'>" + item.name  + "</div>";
         strRows += "<div class='col-md-1'>" + eCnt + "</div>";
-        if (statusImages[item.BWQR_BEACH_STATUS_NAME]) {
-            strRows += "<div class='col-md-7'><img src='" + statusImages[item.BWQR_BEACH_STATUS_NAME].medium + "' alt='" + item.BWQR_BEACH_STATUS_NAME + "'>&nbsp;&nbsp;" + item.BWQR_BEACH_ADVISORY + "</div>";
+        if (item.reports.length === 0) {
+            strRows += "<div class='col-md-7 nodata'>No data found</div></div>";
+        
+        } else if (statusImages[item.reports[0].statusCd]) {
+            strRows += "<div class='col-md-7'><img src='" + statusImages[item.reports[0].statusCd].medium + "' alt='" + item.reports[0].statusCd + "'>&nbsp;&nbsp;" + item.reports[0].advisory + "</div>";
         } else {
-            strRows += "<div class='col-md-7'>" + item.BWQR_BEACH_STATUS_NAME + item.BWQR_BEACH_ADVISORY + "</div>";
+            strRows += "<div class='col-md-7'>" + item.reports[0].statusCd + "&nbsp;&nbsp;" + item.reports[0].advisory + "</div>";
             
         }
         strRows += "</div>";
@@ -412,15 +414,15 @@ function generateDailyHistory(data) {
 }
 function getHistoryData(date) {
 
+ var strURL = DAILY_BEACH_HISTORY.replace("<YYYY-MM-DD>",date);
    $.ajax({
         type: 'GET',
-        url: DAILY_BEACH_HISTORY + date,
+        url: strURL,
         crossDomain: true,
-        //contentType: "application/json",
-        //cache: true,
+        cache: true,
         dataType: 'json',
         success: function (data) {
-			generateDailyHistory(data)
+            generateDailyHistory(data);
         },
         error: function (xhr, ajaxOptions, thrownError) {
                console.log(xhr.status);
@@ -428,21 +430,21 @@ function getHistoryData(date) {
             }
     });
 }
-function initHistoryApp(qsbeach) {
+function initHistoryApp() {
 
-	$('#historyDate').datepicker({
+    $('#historyDate').datepicker({
             todayBtn: true,
             forceParse: false,
             autoclose: true,
             format: 'yyyy-mm-dd',  /* what is the city standard*/
             date: new Date(),
-            todayHighlight: true,
+            todayHighlight: true
     });  
 
-	$('.datepicker').datepicker()
-		.on('changeDate', function(e) {
-				getHistoryData(e.target.value);
-			});
+    $('.datepicker').datepicker()
+        .on('changeDate', function(e) {
+                getHistoryData(e.target.value);
+            });
 
  
     
@@ -453,7 +455,7 @@ function initHistoryApp(qsbeach) {
 function defineAppCode() {
     var strCode="";
     if (document.location.hostname.length === 0) {
-        strCode += '<link rel="stylesheet" href="js/datepicker/datepicker.css">';
+        strCode += '<link rel="stylesheet" href="datepicker/datepicker.css">';
         strCode += '<link rel="stylesheet" href="static_files/assets/css/bootstrap-multiselect.css">';
         strCode += '<link rel="stylesheet" href="tablesorter/css/theme.blue.css">';
         strCode += '<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">';
@@ -461,13 +463,9 @@ function defineAppCode() {
         strCode += '<link rel="stylesheet" href="css/safe.css">';
         strCode += '<link rel="stylesheet" href="css/beaches.css">';
         strCode += '<script type="text/javascript" src="static_files/assets/validator/bootstrapValidator.min.js"></script>';  
-       // strCode += '<script type="text/javascript" src="tablesorter/js/jquery.tablesorter.js"></script>';
-       // strCode += '<script type="text/javascript" src="tablesorter/js/jquery.tablesorter.widgets.js"></script>';
-       // strCode += '<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js"></script>';
         strCode += '<script type="text/javascript" src="static_files/assets/multiselect/bootstrap-multiselect.js"></script>';        
         strCode += '<script type="text/javascript" src="static_files/assets/datepicker/bootstrap-datepicker.js"></script>';
         strCode += '<script type="text/javascript" src="static_files/assets/datepicker/moment-with-locales.js"></script>';
-        //strCode += '<script type="text/javascript" src="js/jquery.bootpag.min.js"></script>';
         strCode += '<script type="text/javascript" src="/placeholders/placeholders.min.js"></script>';
 
    } else {  
@@ -479,14 +477,10 @@ function defineAppCode() {
         strCode += '<link rel="stylesheet" href="/static_files/WebApps/Health/safe/css/safe.css">';
         strCode += '<link rel="stylesheet" href="/static_files/WebApps/Health/SwimSafe/css/beaches.css">';
         strCode += '<script type="text/javascript" src="/static_files/assets/validator/bootstrapValidator.min.js"></script>';
-        //strCode += '<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?v=3&libraries=places"></script>';
-        //strCode += '<script type="text/javascript" src="/tablesorter/js/jquery.tablesorter.js"></script>';
-        //strCode += '<script type="text/javascript" src="/tablesorter/js/jquery.tablesorter.widgets.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/multiselect/bootstrap-multiselect.js"></script>';
         strCode += '<script type="text/javascript" src="/datepicker/bootstrap-datepicker.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/datepicker/moment-with-locales.js"></script>';
         strCode += '<script type="text/javascript" src="/placeholders/placeholders.min.js"></script>';
-        //strCode += '<script type="text/javascript" src="/static_files/assets/pagination/jquery.bootpag.min.js"></script>';
     }
     return strCode;
 
@@ -508,9 +502,10 @@ function loadHistoryPage() {
     var strCode = defineAppCode();
     $("#appCodeMap").html(strCode);
      if (document.location.hostname.length === 0) {
-        statusImages = { "Unsafe" : {large: "images/beaches_statusunsafe_l.gif", medium: "images/beaches_unsafe_medium.gif"},
-                         "Safe" : {large:"images/beaches_statussafe_l.gif", medium: "images/beaches_safe_medium.gif"},
-                         "No data" : {large:"images/beaches_statusnodata_l.gif", medium: "images/beaches_nodata_medium.gif"}
+        statusImages = { "UNSAFE" : {large: "images/beaches_statusunsafe_l.gif", medium: "images/beaches_unsafe_medium.gif"},
+                         "SAFE" : {large:"images/beaches_statussafe_l.gif", medium: "images/beaches_safe_medium.gif"},
+                         "NO_DATA" : {large:"images/beaches_statusnodata_l.gif", medium: "images/beaches_nodata_medium.gif"},
+                         "UNTESTED" : {large:"images/beaches_statusnodata_l.gif", medium: "images/beaches_nodata_medium.gif"}
                          };
         $("#appDisplayMap").load('html/beachHistory.html', function() {initHistoryApp();});
     } else {
@@ -525,22 +520,23 @@ function loadHistoryPage() {
 
 }
 
-function loadDetailPage(qsbeach) {
+function loadDetailPage() {
     var strCode = defineAppCode();
     $("#appCodeMap").html(strCode);
      if (document.location.hostname.length === 0) {
-        statusImages = { "Unsafe" : {large: "images/beaches_statusunsafe_l.gif", medium: "images/beaches_unsafe_medium.gif"},
-                         "Safe" : {large:"images/beaches_statussafe_l.gif", medium: "images/beaches_safe_medium.gif"},
-                         "No data" : {large:"images/beaches_statusnodata_l.gif", medium: "images/beaches_nodata_medium.gif"}
+        statusImages = { "UNSAFE" : {large: "images/beaches_statusunsafe_l.gif", medium: "images/beaches_unsafe_medium.gif"},
+                         "SAFE" : {large:"images/beaches_statussafe_l.gif", medium: "images/beaches_safe_medium.gif"},
+                         "NO_DATA" : {large:"images/beaches_statusnodata_l.gif", medium: "images/beaches_nodata_medium.gif"},
+                         "UNTESTED" : {large:"images/beaches_statusnodata_l.gif", medium: "images/beaches_nodata_medium.gif"}
                          };
-        $("#appDisplayMap").load('html/beachDetail.html', function() {initDetailApp(qsbeach);});
+        $("#appDisplayMap").load('html/beachDetail.html', function() {initDetailApp();});
     } else {
         /* in WCM, we stay in the same page, but lets hide the "teaser above" . Kinda hooky*/
          var prevTeaser = $("#appDisplayMap").parents("section").parent().prev().find("section");
         if (prevTeaser.find("H1").text() === "Toronto Beaches Water Quality") {
             prevTeaser.hide();
         }
-        $("#appDisplayMap").load('/static_files/WebApps/Health/SwimSafe/html/beachDetail.html', function() {initDetailApp(qsbeach);});
+        $("#appDisplayMap").load('/static_files/WebApps/Health/SwimSafe/html/beachDetail.html', function() {initDetailApp();});
     
     }
 
@@ -548,12 +544,12 @@ function loadDetailPage(qsbeach) {
 
 
 $( document ).ready(function() {
-	var qshistory = $.QueryString.history;
-	var qsbeach = $.QueryString.beach;
+    var qshistory = $.QueryString.history;
+    gblBeachId = $.QueryString.beach;
      if (qshistory) {
-        loadHistoryPage()
-    } else if (qsbeach) {
-        loadDetailPage(qsbeach)
+        loadHistoryPage();
+    } else if (gblBeachId) {
+        loadDetailPage();
     } else {
         loadPage();
     }
@@ -572,3 +568,5 @@ $( document ).ready(function() {
         return b;
     })(window.location.search.substr(1).split('&'));
 })(jQuery);
+
+})(this);

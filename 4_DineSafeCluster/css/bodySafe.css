@@ -1,10 +1,21 @@
+#maincontent table .serviceNameTbl {
+	margin: 0px;
+	width: 100%;
+}
+#maincontent table .serviceNameTbl td {
+	padding: 0px;
+}
+#maincontent table .serviceNameTbl td:first-child {
+	padding: 0px;
+	width: 40px;
+}
 #maincontent table .serviceTbl {
 	margin: 0px;
 	width: 100%;
 }
 #maincontent table .serviceTbl td {
 	padding: 0px;
-	width: 30%;
+	width: 25%;
 }
 #maincontent table .serviceTbl td  img{
 	margin-bottom: 2px;
@@ -12,44 +23,10 @@
 
 #maincontent table .serviceTbl td:first-child {
 	padding: 0px;
-	width: 70%;
+	width: 75%;
 }
 
-#maincontent ul#alphaPagination.nav-tabs {
-   /*border-bottom: 2px solid #346488;
-    padding: 0 0 0 10px;
-	*/
-}
-#alphaPagination.nav > li > a {
-    margin-top: 8px;
-    padding: 10px 8px;
-}
-#alphaPagination.nav > li > a > span {
-    display: none;
-}
-#alphaPagination.nav-tabs > li.available > a, #alphaPagination.nav-tabs > li.available > a:hover, #alphaPagination.nav-tabs > li.available > a:focus {
-    background-color: #efefef;
-    border: 1px solid #efefef;
-    color: #000;
-}
-#alphaPagination.nav-tabs > li.active > a, #alphaPagination.nav-tabs > li.active > a:hover, #alphaPagination.nav-tabs > li.active > a:focus {
-    background-color: #346488;
-    border: 1px solid #346488;
-    color: #fff;
-}
-#alphaPagination.nav-tabs > li.active > a > span, #alphaPagination.nav-tabs > li.active > a:hover > span, #alphaPagination.nav-tabs > li.active > a:focus > span, #alphaPagination.nav-tabs > li.available > a > span, #alphaPagination.nav-tabs > li.available > a:hover > span, #alphaPagination.nav-tabs > li.available > a:focus > span {
-    background-color: #fef6d3;
-    border: 1px solid #c2c2c2;
-    border-radius: 3px;
-    color: #000;
-    display: block;
-    font-size: 10px;
-    line-height: 10px;
-    padding: 0 1px;
-    position: absolute;
-    right: -2px;
-    top: -3px;
-}
+
 #maincontent #resultTable {
     margin-top: 0;
 }
@@ -65,15 +42,18 @@
 #maincontent #resultTable th:first-child {
     border-left-width: 0;
 }
-.liStatusIcon {
-	margin-right: 10px;
-}
+
 #maincontent table .serviceTbl td.liServiceStatusText {
 	padding-left: 20px;
 }
 
+
 .infractionDetails {
-	border: 1px solid #ddd;;
+	/*border-bottom: 1px solid #ddd;;*/
+}
+
+.infractionDetails div.row div.col-md-12:last-child{
+	border-bottom: 1px solid #ddd;;
 }
 .detaiLink {
 	margin-left: 10px;

@@ -1,3 +1,27 @@
+/*
+.fdn a.opinionlab-sidebar::after, a.opinionlab-sidebar::after {
+    content: url("http://images.bbycastatic.ca/sf/images/ui/opinionlab/bby.png");
+    display: inline-block;
+    position: absolute;
+    right: 14px;
+    text-decoration: inherit;
+    top: 10px;
+    transform: rotate(90deg);
+}
+*/
+
+
+#maincontent table .serviceNameTbl {
+	margin: 0px;
+	width: 100%;
+}
+#maincontent table .serviceNameTbl td {
+	padding: 0px;
+}
+#maincontent table .serviceNameTbl td:first-child {
+	padding: 0px;
+	width: 40px;
+}
 #maincontent table .serviceTbl {
 	margin: 0px;
 	width: 100%;
@@ -15,7 +39,7 @@
 	width: 65%;
 }
 .accHdr {
-	margin-left: 40%;
+	margin-left: 45%;
 	
 }
 .InfoServiceDiv {

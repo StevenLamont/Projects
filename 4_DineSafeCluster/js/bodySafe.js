@@ -22,16 +22,16 @@ Notes:  Seems to be a bug in clusterer.. if you hit reset map twice in a row.. t
    'use strict';
    
 var randKey =  (new Date()).valueOf();
-var KML_MASTER = 'https://docs.google.com/uc?id=0B-j2Y49nfiw2MGY3X190bGVsV2c&rand=' + randKey;
-var DETAIL_URL = "http://app.toronto.ca/opendata/tphir/pss_insp_details.json?v=1&callback=?&est_id=";
-var DATA_URL = 'http://app.toronto.ca/opendata/tphir/pss_est_list.json?v=1';
-var SEARCH_URL = "http://app.toronto.ca/opendata/tphir/pss_est_map.json?v=1&callback=?";
-var ALPHA_COUNT_URL = 'http://app.toronto.ca/opendata/tphir/pss_est_initial_count.json?v=1&callback=?';
+var KML_MASTER = 'https://docs.google.com/uc?id=0B-j2Y49nfiw2MGY3X190bGVsV2c&rand=' + randKey;  //Can't use just "//" here..
+var DETAIL_URL = "//app.toronto.ca/opendata/tphir/pss_insp_details.json?v=1&callback=?&est_id=";
+var DATA_URL = '//app.toronto.ca/opendata/tphir/pss_est_list.json?v=1';
+var SEARCH_URL = "//app.toronto.ca/opendata/tphir/pss_est_map.json?v=1&callback=?";
+var ALPHA_COUNT_URL = '//app.toronto.ca/opendata/tphir/pss_est_initial_count.json?v=1&callback=?';
 
-// http://app.toronto.ca/opendata/tphir/pss_est_list.json?v=1&callback=?&service_type_cd=7018.7016.7023.7019.7020.7022.7017.7024&facility_status_cd=PASS.COND.FAIL&facility_name_initial=
-//var SEARCH_URL = 'http://app.toronto.ca/opendata/tphir/pss_est_list.json?v=1&callback=?&service_type_cd=7018.7016.7023.7019.7020.7022.7017.7024&facility_status_cd=PASS.COND.FAIL&facility_name_initial=';
-var SERVICE_TYPE_URL = 'http://app.toronto.ca/opendata/tphir/pss_srvc_types.json?v=1&callback=?';
-var STATUS_URL = 'http://app.toronto.ca/opendata/tphir/pss_est_status.json?v=1&callback=?';
+var SERVICE_TYPE_URL = '//app.toronto.ca/opendata/tphir/pss_srvc_types.json?v=1&callback=?';
+var STATUS_URL = '//app.toronto.ca/opendata/tphir/pss_est_status.json?v=1&callback=?';
+
+var gblTotalEstablishments;
 var gblStatusData;
 var gblTypeData;
 
@@ -44,20 +44,28 @@ var gblPagingMethod = ALPHA_PAGING_METHOD;
 
 var CommonInfoWindow = new google.maps.InfoWindow();
 var statusIcons = { 
-            "PASS" : { large: "/static_files/WebApps/Health/safe/images/pass_large.png", medium: "/static_files/WebApps/Health/safe/images/pass_small.png",small: "/static_files/WebApps/images/marker_dot_pass.png"},
-            "COND" : { large: "/static_files/WebApps/Health/safe/images/conditional_large.png", medium: "/static_files/WebApps/Health/safe/images/conditional_small.png",small: "/static_files/WebApps/images/marker_dot_pass.png"},
-            "FAIL" : { large: "/static_files/WebApps/Health/safe/images/closed_large.png", medium: "/static_files/WebApps/Health/safe/images/closed_small.png",small: "/static_files/WebApps/images/marker_dot_closed.png"}
+            "PASS" : { large: "/static_files/WebApps/Health/safe/images/pass_large.png", medium: "/static_files/WebApps/Health/safe/images/pass_small.png",small: "/static_files/WebApps/Health/safe/images/pass_circle.gif"},
+            "COND" : { large: "/static_files/WebApps/Health/safe/images/conditional_large.png", medium: "/static_files/WebApps/Health/safe/images/conditional_small.png",small: "/static_files/WebApps/Health/safe/images/conditional_circle.gif"},
+            "FAIL" : { large: "/static_files/WebApps/Health/safe/images/closed_large.png", medium: "/static_files/WebApps/Health/safe/images/closed_small.png",small: "/static_files/WebApps/Health/safe/images/closed_circle.gif"}
             };
+/*
 var markerImages = { 
             'multi': {icon: '/static_files/WebApps/images/marker_dot_multi.png', value : 4},
             'PASS' : {icon: '/static_files/WebApps/images/marker_dot_pass.png', value : 1},
             'COND' : {icon: '/static_files/WebApps/images/marker_dot_conditional.png', value : 2},
             'FAIL' : {icon: '/static_files/WebApps/images/marker_dot_closed.png', value : 3}
             };
+*/
+var markerImages = { 
+            'multi': {icon: '/static_files/WebApps/Health/safe/images/s_multi.png', value : 4},
+            'PASS' : {icon: '/static_files/WebApps/Health/safe/images/s_pass.png', value : 1},
+            'COND' : {icon: '/static_files/WebApps/Health/safe/images/s_conditional.png', value : 2},
+            'FAIL' : {icon: '/static_files/WebApps/Health/safe/images/s_closed.png', value : 3}
+            };
 var CLUSTER_IMAGES = '/static_files/WebApps/images/mc';
 var STREET_VIEW_ICON ='/static_files/WebApps/Health/safe/images/streetView.png';
 
-var TPH_API_DATE_FORMAT = "MM/DD/YYYY";
+var TPH_API_DATE_FORMAT = "YYYY-MM-DD";
 var DISPLAY_DATE_FORMAT = "MMMM DD, YYYY";
 var CLUSTER_TO_KML_ZOOM_SWITCH = 15;
 var RESET_ZOOM_LEVEL = 11;
@@ -104,19 +112,24 @@ function switchToStreetView(objPosition) {
     });
     
 }
-//clean up map/src references in code and make them really be global.
-//https://drive.google.com/file/d/0B-j2Y49nfiw2dGU2d0pHS2xERm8/view?usp=sharing
+
 /* our numbering is zero based, so increment for display purposes */
 function setPageStatus( start, end, totalRows) {
-    $("#RowStart").html(start +1);
     if (end > totalRows) { 
     $("#RowEnd").html(totalRows);
     } else {
         $("#RowEnd").html(end + 1);
     }
     $("#TotalRows").html(totalRows);
+    
     var numPages = Math.ceil(totalRows / gblRowsPerPage);
-        $('#numberPageSelection').bootpag({
+    if ( numPages === 0) {
+        numPages = 1;
+        $("#RowStart").html(0);
+    } else {
+        $("#RowStart").html(start +1);
+    }   
+    $('#numberPageSelection').bootpag({
         total: numPages
     }); 
 }
@@ -134,11 +147,11 @@ function resetAdvancedFilters() {
         //  }
         //}
     }); 
-    $("#dateFrom").val("");
-    $("#dateTo").val("");
+    //$("#dateFrom").val("");
+    //$("#dateTo").val("");
     //$("#wardFilter").val("0");
     //$("#wardFilter").multiselect('refresh');
-    $("#incHistory").prop('checked', false);
+    //$("#incHistory").prop('checked', false);
 }
 
 
@@ -146,7 +159,8 @@ function resetFilters() {
     CommonInfoWindow.close();   
     resetAdvancedFilters();
     $(".searchString").each(function( index ) { 
-        this.value="";
+        $(this).val("");
+		$(this).next('.clearer').hide();
     });
 
 }
@@ -203,20 +217,22 @@ function determineSearchParms() {
     //    searchURLAdd += "&ward=" + wards;
     //    search = true;
     //}
-    if ($("#incHistory").prop('checked')) {
-         searchURLAdd += "&checkInspectionHistory=true";
-         search = true;
-    }
-    var dateFrom = $("#dateFrom").val(); 
-    var dateTo = $("#dateTo").val();
-    if (dateFrom !== "") {
-        searchURLAdd += "&from=" + moment(dateFrom).format(TPH_API_DATE_FORMAT);
-        search = true;
-    }    
-    if (dateTo !== "") {
-        searchURLAdd += "&to=" + moment(dateTo).format(TPH_API_DATE_FORMAT);
-        search = true;
-    }
+    //if ($("#incHistory").prop('checked')) {
+    //     searchURLAdd += "&checkInspectionHistory=true";
+    //     search = true;
+    //}
+    
+    /* this isn't working, but leave in for now API missing it.*/
+    //var dateFrom = $("#dateFrom").val(); 
+    //var dateTo = $("#dateTo").val();
+    //if (dateFrom !== "") {
+    //    searchURLAdd += "&earliest=" + moment(dateFrom).format(TPH_API_DATE_FORMAT);
+    //    search = true;
+    //}    
+    //if (dateTo !== "") {
+    //    searchURLAdd += "&latest=" + moment(dateTo).format(TPH_API_DATE_FORMAT);
+    //    search = true;
+    //}
  
     return { filtersApplied: search, urlParms: searchURLAdd};
 }
@@ -225,38 +241,54 @@ function determineSearchParms() {
 /* Map Related Functions ---------------------------------------------------------------------------------*/
 
 //Details are for establishments. Infractions and actions are single strings (unlike dine safe
-//look for fine and converiuonDate
+//look for fine and converiuonDate. can be multiple record per date.
 function reorgDetails (data) {
     
     var estData = {};
     estData.estId = data[0].estId;
     estData.estName = data[0].estName;
-    estData.estStatusCd = data.estStatusCd;//TODO.. fix this when api si fixed
+    estData.estStatusCd = data.estStatusCd;//TODO.. fix this when api is fixed
     estData.address = data[0].addressFull;
     estData.services = {};
     $.each(data, function(i, item) {
         if (!estData.services[item.serviceTypeDesc]) {
             estData.services[item.serviceTypeDesc] = {
-                inspections : []
+                inspections : {}
             };
         }
-        estData.services[item.serviceTypeDesc].inspections.push( {
-            date : item.inspectionDate,
-            status : item.inspectionStatusText,
-            statusCd : item.inspectionStatusCd,
-            infraction: item.infractionTypeDesc,
-            action: item.actionDesc,
-            amountFined: item.amountFined,
-            outcome: item.outcome,
-            convictionDate: item.convictionDate
+        
+        var insObj = {date: item.inspectionDate, status: item.inspectionStatusText, statusCd : item.inspectionStatusCd,infractions : []};
+        if (!estData.services[item.serviceTypeDesc].inspections[item.inspectionDate]) {
+            estData.services[item.serviceTypeDesc].inspections[item.inspectionDate] = insObj;
+        } 
+        //estData.services[item.serviceTypeDesc].inspections[item.inspectionDate] = insObj;
+        /* for passed items.. all of these will be null */
+        if (item.infractionTypeDesc !== null) {
+            estData.services[item.serviceTypeDesc].inspections[item.inspectionDate].infractions.push( {
+                infraction: item.infractionTypeDesc,
+                action: item.actionDesc,
+                amountFined: item.amountFined,
+                outcome: item.outcome,
+                convictionDate: item.convictionDate
+            });
+        }
+       // estData.services[item.serviceTypeDesc].inspections.push( {
+       //     date : item.inspectionDate,
+       //     status : item.inspectionStatusText,
+       //     statusCd : item.inspectionStatusCd,
+       //     infraction: item.infractionTypeDesc,
+       ///     action: item.actionDesc,
+       //     amountFined: item.amountFined,
+        ///    outcome: item.outcome,
+        //    convictionDate: item.convictionDate
             
-        });
+       // });
     });
  
     return estData;
 }
 
-/* do we want bacgroudn colors of red. and yellow for infractions -- see ddinesage)*/
+/* do we want background colors of red. and yellow for infractions -- see ddinesage)*/
 
 function setupDetailsModal(data) {
     var estData = reorgDetails(data);
@@ -269,28 +301,27 @@ function setupDetailsModal(data) {
     $.each(estData.services, function(serviceType, service) {
         insStr += "<h3>" + serviceType + "</h3>"; 
         $.each(service.inspections, function(i, inspection) {
+            inscnt++;
             insStr += "<div class='row'><div class='col-md-11 col-md-offset-1'>";
             insStr += "<img src='" + statusIcons[inspection.statusCd].small + "' alt='" + inspection.status + "'>";
             insStr += "Inspection  Date: " +  inspection.date + " (" + inspection.status + ")";
-            if (inspection.infraction !== null) {
-                inscnt++;
-                
-                insStr += "<a class='detaiLink' href='#infraction_" + inscnt + "' data-toggle='collapse'>Details</a></div>";
-                insStr += "<div id='infraction_" + inscnt + "' class='infractionDetails  collapse'>";
+            if (inspection.infractions.length > 0) {
+                insStr += "<a class='detaiLink' href='#inspection_" + inscnt + "' data-toggle='collapse'>Infractions</a></div>";
+                insStr += "<div id='inspection_" + inscnt + "' class='infractionDetails  collapse'>";
+            }
+            $.each(inspection.infractions, function(i, infraction) {
                 insStr += "<div class='row'><div class='col-md-10 col-md-offset-2'>";
-                insStr += "<div class='col-md-12'><span class='modalFieldLabel'>Description: </span>" + inspection.infraction + "</div>";
-                insStr += "<div class='col-md-12'><span class='modalFieldLabel'>Action: </span>" + inspection.action + "</div>";
-                if (inspection.convictionDate !== null) {
-                    insStr += "<div class='col-md-12'><span class='modalFieldLabel'>Outcome Date: </span>" + inspection.convictionDate + "</div>";
-                    insStr += "<div class='col-md-12'><span class='modalFieldLabel'>Outcome: </span>" + inspection.outcome + "</div>";
-                    insStr += "<div class='col-md-12'><span class='modalFieldLabel'>Amount Fined: </span>" + inspection.amountFined + "</div>";
+                insStr += "<div class='col-md-12'><span class='modalFieldLabel'>Description: </span>" + infraction.infraction + "</div>";
+                insStr += "<div class='col-md-12'><span class='modalFieldLabel'>Action: </span>" + infraction.action + "</div>";
+                if (infraction.convictionDate !== null) {
+                    insStr += "<div class='col-md-12'><span class='modalFieldLabel'>Outcome Date: </span>" + infraction.convictionDate + "</div>";
+                    insStr += "<div class='col-md-12'><span class='modalFieldLabel'>Outcome: </span>" + infraction.outcome + "</div>";
+                    insStr += "<div class='col-md-12'><span class='modalFieldLabel'>Amount Fined: </span>" + infraction.amountFined + "</div>";
                 
                 }
-                insStr += "</div></div></div>";
-                            
-            } else {
-                insStr += "</div>";
-            }
+                insStr += "</div></div>";  //infreaction row.
+            });           
+            insStr += "</div>"; //end of infraction detail
             insStr += "</div></div>"; //finish row
             
         });
@@ -301,8 +332,7 @@ function setupDetailsModal(data) {
 
 function showInspectionDetails (estId) {
 
-  var url = DETAIL_URL  + estId;
-    console.log(url);
+    var url = DETAIL_URL  + estId;
     $.ajax({
         type: 'GET',
         url: url,
@@ -338,26 +368,17 @@ function createInfoWindow(KMLEvent_latLng, infoData) {
     //$("#map-loader").hide();
 
     var content = "<div class='content infoDiv'>";
-    //if (infoData.establishments.length === 1) {
-    //    content += "<div class='row infoRow'>" ; 
-    //    content += "<div class='col-md-12'><img src='" + statusIcons[infoData.establishments[0].status].medium + "'>&nbsp;&nbsp;<span class='infoImportant orgLink'><a href='#' data-id='" + infoData.establishments[0].estId + "'onclick='showInspectionDetails("+ infoData.establishments[0].estId + ")'>" + infoData.establishments[0].name + "</a></span></div>";
-    //    content += "</div>";
-    //    content += "<div class='row infoRow'><div class='col-md-offset-1 col-md-12'>" + infoData.address + "</div></div>";
-    //    content += "<a class='svLink' ref='#' onclick='switchToStreetView(\"" + KMLEvent_latLng + "\")'><img src='" + STREET_VIEW_ICON + "' alt='StreetView'></a></div></div>";
-    //} else {
-        //content += "<div class='row infoRow'>" ;
-        if (infoData.establishments.length > 1) {
-            content += "<div class='row infoRow'><div class='col-md-12'><span class='infoImportant'>" + infoData.address + "</span></div></div>";
-            content += "<div class='row infoRow infoHeader'><div class='col-md-12'>" + infoData.establishments.length + " establishments at this address</div></div>";
-        } else {
-            content += "<div class='row infoRow infoHeader'><div class='col-md-12'><span class='infoImportant'>" + infoData.address + "</span></div></div>";
+    if (infoData.establishments.length > 1) {
+        content += "<div class='row infoRow'><div class='col-md-12'><span class='infoImportant'>" + infoData.address + "</span></div></div>";
+        content += "<div class='row infoRow infoHeader'><div class='col-md-12'>" + infoData.establishments.length + " establishments at this address</div></div>";
+    } else {
+        content += "<div class='row infoRow infoHeader'><div class='col-md-12'><span class='infoImportant'>" + infoData.address + "</span></div></div>";
             
-        }
-        for (var i = 0; i < infoData.establishments.length; i++) {
-            //onclick='showInspectionDetails(" + infoData.establishments[i].estId + ")'
+    }
+    for (var i = 0; i < infoData.establishments.length; i++) {
         content += "<div class='row infoRow'><div class='col-md-12'><img src='" + statusIcons[infoData.establishments[i].status].medium + "'>&nbsp;&nbsp;<span class='infoImportant orgLink'><a href='#' data-id='" + infoData.establishments[i].estId + "'>" + infoData.establishments[i].name + "</a></span></div></div>";
         }
-        content += "<div class='row infoRow'><div class='col-md-12'><a  class='svLink' href='#' data-latlng='" + KMLEvent_latLng + "'><img src='" + STREET_VIEW_ICON + "' alt='StreetView'></a></div></div>";
+    content += "<div class='row infoRow'><div class='col-md-12'><a  class='svLink' href='#' data-latlng='" + KMLEvent_latLng + "'><img src='" + STREET_VIEW_ICON + "' alt='StreetView'></a></div></div>";
         
     //}  
     content += "</div>";    
@@ -413,13 +434,14 @@ function clearMarkers(markers) { /*ignore parms*/
 }
 
 function plotMarkers(data) { /*ignore parms*/
+    var bounds = new google.maps.LatLngBounds();
     var locations = mergeLocations(data);
     gblMapMarkers = [];
-    Object.keys(locations).forEach(function(key, idx, array) {                    
+    Object.keys(locations).forEach(function(key, idx, array) {      
+        
         var location = locations[key];
-    //for( var i = 0; i < data.length; i++ ) {
-        //var location = data[i];                    
         var latlng = new google.maps.LatLng( location.lat, location.lon );
+        bounds.extend(latlng);  
         var imageVal = 1;
         var imageIndex = "PASS";
         for (var i = 0; i < location.establishments.length; i++){
@@ -453,8 +475,9 @@ function plotMarkers(data) { /*ignore parms*/
     gblMarkerCluster = new MarkerClusterer(gblMap, gblMapMarkers, { title : 'locations', averageCenter : true, ignoreHidden: true , minimumClusterSize : 2, imagePath : CLUSTER_IMAGES , maxZoom : CLUSTER_TO_KML_ZOOM_SWITCH});//,{
     shellCluster('hide');
         
-    console.log('plot marker finsihed -seting zoomn level to 11');
-    gblMap.setZoom(RESET_ZOOM_LEVEL);
+    if (data.length > 0) {
+        gblMap.fitBounds(bounds);
+    }
     
     $("#mapLoader").modal('hide');
 }
@@ -511,8 +534,9 @@ function loadShellMarkerData() {
             plotMarkerShells(data)
         },
         error: function (xhr, ajaxOptions, thrownError) {
-               console.log(xhr.status);
-               console.log(thrownError);
+            bootbox.alert("An error has occured. Please try again.");
+            console.log(xhr.status);
+            console.log(thrownError);
         }
     }); 
 }
@@ -526,7 +550,7 @@ function redrawMap() {
     gblKMLLayer.setMap( null );
     clearMarkers(gblMapMarkers);
     var url = SEARCH_URL + searchURLAdd.urlParms + "&row_start=0&row_count=10000";
-    console.log(url);
+    //console.log(url);
     $.ajax({
         type: 'GET',
         url: url,
@@ -537,8 +561,10 @@ function redrawMap() {
             plotMarkers(data);
             },
         error: function (xhr, ajaxOptions, thrownError) {
-               console.log(xhr.status);
-               console.log(thrownError);
+            $("#mapLoader").modal('hide');
+            bootbox.alert("An error has occured. Please try again.");
+            console.log(xhr.status);
+            console.log(thrownError);
             }
         }); 
     
@@ -550,7 +576,9 @@ function resetMapToKML() {
         markerCluster('hide');        
         gblKMLLayer.setMap(  gblMap );
         gblMapSrc = 'KML';
-        gblMap.setZoom(gblMap.getZoom());
+        //gblMap.setZoom(gblMap.getZoom());
+        resetMap();
+        setTotalDisplay(gblTotalEstablishments);
     }
 }
 function resetMap() {
@@ -576,7 +604,7 @@ function setCluster(cluster, markers, flag) { /*ignore parms*/
         markers[i].setVisible( visibility);
     }
     if (cluster ) {
-        console.log("repaint:" + cluster);
+        //console.log("repaint:" + cluster);
         cluster.repaint();
         google.maps.event.trigger(gblMap,'resize');
     }
@@ -670,7 +698,7 @@ function initMap() {
         zoomControl: true
     });
     gblMap.addListener('zoom_changed', function() {
-         console.log("Zoom Event:" + gblMap.getZoom() + " " + gblPagingMethod);
+        //console.log("Zoom Event:" + gblMap.getZoom() + " " + gblPagingMethod);
         //If searching, then using generated markers, otherwise using shell markers or KML
         if (gblPagingMethod === NUMERIC_PAGING_METHOD) {
             shellCluster('hide');
@@ -692,7 +720,7 @@ function initMap() {
     
     setupMapSearchBox();    
         
-    gblMap.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(
+    gblMap.controls[google.maps.ControlPosition.BOTTOM].push(
         document.getElementById('legend'));   
 
     if(navigator.geolocation) {
@@ -761,12 +789,14 @@ function getSearchData(srch) {
             savePageData(data);
             gblNextPage = 0;
             $('#numberPageSelection').bootpag({page: 1});
-           
+            setTotalDisplay(gblFacDataCnt);
             generatePageListing();
             },
         error: function (xhr, ajaxOptions, thrownError) {
-               console.log(xhr.status);
-               console.log(thrownError);
+                $("#listLoader").modal('hide');
+                bootbox.alert("An error has occured. Please try again.");
+                console.log(xhr.status);
+                console.log(thrownError);
             }
         });
     
@@ -790,8 +820,10 @@ function generateAlphaPage() {
             loadListView(gblFacData);
             },
         error: function (xhr, ajaxOptions, thrownError) {
-               console.log(xhr.status);
-               console.log(thrownError);
+            $("#listLoader").modal('hide');
+            bootbox.alert("An error has occured. Please try again.");
+            console.log(xhr.status);
+            console.log(thrownError);
             }
         });
 }
@@ -825,6 +857,7 @@ function generatePageListing() {
 
 function showLinkOnMap(estId, lat,lng) {
 
+    showInspectionDetails(estId);
     var panorama = gblMap.getStreetView();
     if(panorama.getVisible() ) {
         panorama.setVisible(false);
@@ -837,6 +870,7 @@ function showLinkOnMap(estId, lat,lng) {
     estData.establishments = [{estId : estData.estId, name: estData.estName, status : estData.estStatusCd}];
     estData.address = estData.addressFull;
     createInfoWindow(latLng, estData ); 
+    window.scrollTo(0, $("#map-wrapper").offset().top);
 
 }
 
@@ -850,9 +884,9 @@ function loadListView(facData) {
     
         strRows += "<tr id='dinerow" + idx + "'>";
         //onclick='showLinkOnMap("+ facility.estId + "," + facility.lat + "," + facility.lon + ")
-        strRows += "<td class='col-md-5'><img class='liStatusIcon' src='" + statusIcons[facility.estStatusCd].large + "' alt='" + facility.estStatusText + "'><a class='mapLink' href='#' data-id = '" + facility.estId + "' data-lat='" + facility.lat + "' data-lng='" + facility.lon + "'>" + facility.estName + "</a></td>" ;
-        strRows += "<td class='col-md-4'>" + facility.addressFull + "</td>" ;
-        strRows += "<td class='col-md-3'><table class='serviceTbl'><tbody>";
+        strRows += "<td class='col-md-5'><table class='serviceNameTbl'><tbody><tr><td><img class='liStatusIcon' src='" + statusIcons[facility.estStatusCd].large + "' alt='" + facility.estStatusText + "'></td><td><a class='mapLink' href='#' data-id = '" + facility.estId + "' data-lat='" + facility.lat + "' data-lng='" + facility.lon + "'>" + facility.estName + "</a></td></tr></tbody></table></td>" ;
+        strRows += "<td class='col-md-3'>" + facility.addressFull + "</td>" ;
+        strRows += "<td class='col-md-4'><table class='serviceTbl'><tbody>";
         
         $.each(facility.services, function(sidx, service) {
             strRows +=  "<tr><td><img src='" + statusIcons[service.status].small + "' alt='" + service.statusText + "'>" + service.serviceTypeDesc + "</td><td class='liServiceStatusText'>" + service.statusText + "</td></tr>" ;
@@ -863,21 +897,7 @@ function loadListView(facData) {
     strRows = (strRows ==="") ? "<tr><td colspan='4' class='NoData'>No Establishment found, check search options and try again</td></tr>" : strRows;
     listingBody.html(strRows); //.trigger('update');
     $("#listLoader").modal('hide');
-/*  
-    var $table = $("#safetable").tablesorter(
-        {theme: 'blue',     
-        widthFixed : false,    
-        widgets: ["filter"],       
-        widgetOptions : {   filter_columnFilters: true,       
-                filter_cssFilter   : '',          
-                filter_childRows   : false,       
-                filter_ignoreCase  : true,        
-                filter_reset : '.reset',          
-                filter_searchDelay : 300,         
-                filter_startsWith  : false,       
-                filter_hideFilters : false        }   
-        });
-        */
+
 }
 
 function setPagingMode(mode, startLetter) {
@@ -971,7 +991,7 @@ function setUpEvents() {
     });
     $(".searchString").keypress(function(e) {
         var KeyCode = e.which || e.keyCode || 0;
-        if (KeyCode === 13 || KeyCode === 9) {
+        if (KeyCode === 13) {
             doSearch();
         }
     });
@@ -991,27 +1011,52 @@ function setUpEvents() {
     }); 
     
      $("#maincontent").on("click",".available a", function() {
+        //$("#alphaPagination").children('li').removeClass('active');
+        //$(this).parent().addClass('active');
         showAlphaPage($(this).text().substring(0,1));
         return false;
     });
+    $("#maincontent").on("click",".unavailable a", function(e) {
+         e.preventDefault();
+        return false;
+    });     
     
     $("#maincontent").on("click","span.orgLink a", function() {
         showInspectionDetails($(this).attr("data-id"));
         return false;
     }); 
     
-    $("#maincontent").on("click","div.svLink a", function() {
+    $("#maincontent").on("click","div a.svLink", function() {
         switchToStreetView($(this).attr("data-latlng"));
         return false;
     }); 
-    /* we actually want thwe click to occur to reposition the page to the top href="#" */
+
     $("#maincontent").on("click","a.mapLink", function() {
         showLinkOnMap($(this).attr("data-id"), $(this).attr("data-lat"), $(this).attr("data-lng"));
-        //return false;
+        return false;
+    }); 
+    $("#gotoListingTop").click(function () {
+        window.scrollTo(0, $("#safetable").offset().top);
+        return false;
+    });
+    
+    $(window).resize(function() {
+        var x = $("#appDisplayMap")[0].getBoundingClientRect();
+        var eleWidth = $("#gotoListingTop").width();
+        $("#gotoListingTop").css("left", x.left + x.width - eleWidth);
     }); 
 }
 
 function showAlphaPage(alpha) {
+    var charCode = alpha.charCodeAt(0);
+    var alphaPages = $("#alphaPagination");
+    alphaPages.children('li').removeClass('active');
+    if (charCode >= 65 && charCode <= 90) {
+        alphaPages.children('li').eq(charCode - 64).addClass('active');
+    } else {
+        alphaPages.children('li').eq(0).addClass('active');
+    }
+    //$(this).parent().addClass('active');
     setPagingMode(ALPHA_PAGING_METHOD,alpha);
     generatePageListing();
 }
@@ -1035,6 +1080,9 @@ function processAlphaCounts(data) {
             
         if (charCode >= 65 && charCode <= 90) {
             alphaPages.children('li').eq(charCode - 64).addClass('available').find('.found').html(count);
+            if (count === 0) {
+                alphaPages.children('li').eq(charCode - 64).addClass('unavailable').addClass('disabled');
+            }
         } else {
             numberTotal = numberTotal + count;
         }
@@ -1042,14 +1090,20 @@ function processAlphaCounts(data) {
     if (numberTotal > 0) {
         alphaPages.children('li').eq(0).addClass('available').find('.found').html(numberTotal);
         foundStartIdx = "0";
+    } else {
+        alphaPages.children('li').eq(0).addClass('unavailable').addClass('disabled');
     }
-        
+    setTotalDisplay(total);     
+    gblTotalEstablishments = total;
+    showAlphaPage(foundStartIdx);
+}
+
+function setTotalDisplay(total) {
     if (total == 1) {
         $("#srchResults").html(total + ' Establishment Found');
     } else {
         $("#srchResults").html(total + ' Establishments Found');
     }
-    showAlphaPage(foundStartIdx);
 }
 function determineAlphaCounts() {
    $.ajax({
@@ -1060,7 +1114,6 @@ function determineAlphaCounts() {
         dataType: 'jsonp',
         success: function (data) {
             processAlphaCounts(data);
-
             },
         error: function (xhr, ajaxOptions, thrownError) {
                console.log(xhr.status);
@@ -1096,8 +1149,7 @@ function setupFilters() {
         crossDomain: true,
         dataType: 'jsonp',
         success: function (data) {
-            gblStatusData = data;
-           
+            gblStatusData = data;           
         },
         error: function (xhr, ajaxOptions, thrownError) {
             console.log(xhr.status);
@@ -1110,14 +1162,17 @@ function setupFilters() {
     //    includeSelectAllOption: true,
     //    buttonWidth: '100%'            
     //}); 
-    $('.input-daterange').datepicker({
-            todayBtn: true,
-            forceParse: false,
-            autoclose: true,
-            format: 'yyyy-mm-dd',  /* what is the city standard*/
-            date: new Date(),
-            todayHighlight: true
-    }); 
+    
+    
+    //$('.input-daterange').datepicker({
+    //        todayBtn: true,
+    //        forceParse: false,
+    //        autoclose: true,
+    //        format: 'yyyy-mm-dd',  /* what is the city standard*/
+    //        date: new Date(),
+    //        todayHighlight: true,
+    //        endDate:"0d"
+    //}); 
     
     $.when.apply(null, promises).done(function(){
         initFilter( $("#serviceTypeFilter"), gblTypeData, "serviceTypeCode", "serviceTypeDesc");
@@ -1138,34 +1193,30 @@ function initApp() {
     loadShellMarkerData(); //the url here is bad. we need a more effiecient one.
     setupFilters();
     setUpEvents();
-      
-    //var $table = $('table').tablesorter();
+    $(window).trigger("resize");      
+
 }
 
 function loadPage() {
     var strCode="";
     if (document.location.hostname.length === 0) {
         statusIcons = { 
-            "PASS" : { large: "images/map/pass_large.png", medium: "images/map/pass_small.png",small: "images/map/marker_dot_pass.png"},
-            "COND" : { large: "images/map/conditional_large.png", medium: "images/map/conditional_small.png",small: "images/map/marker_dot_conditional.png"},
-            "FAIL" : { large: "images/map/closed_large.png", medium: "images/map/closed_small.png",small: "images/map/marker_dot_closed.png"}
+            "PASS" : { large: "images/map/pass_large.png", medium: "images/map/pass_small.png",small: "images/map/pass_circle.gif"},
+            "COND" : { large: "images/map/conditional_large.png", medium: "images/map/conditional_small.png",small: "images/map/conditional_circle.gif"},
+            "FAIL" : { large: "images/map/closed_large.png", medium: "images/map/closed_small.png",small: "images/map/closed_circle.gif"}
             };
         markerImages = { 
-            'multi': {icon: 'images/map/marker_dot_multi.png', value : 4},
-            'PASS' : {icon:'images/map/marker_dot_pass.png', value : 1},
-            'COND' : {icon:'images/map/marker_dot_conditional.png', value : 2},
-            'FAIL' : {icon:'images/map/marker_dot_closed.png', value : 3}
+            'multi': {icon: 'images/map/multi_marker.png', value : 4},
+            'PASS' : {icon:'images/map/pass_marker.png', value : 1},
+            'COND' : {icon:'images/map/conditional_marker.png', value : 2},
+            'FAIL' : {icon:'images/map/closed_marker.png', value : 3}
             };
         CLUSTER_IMAGES = 'images/mc';           
         STREET_VIEW_ICON ='images/map/streetView.png';
-        strCode += '<link rel="stylesheet" href="js/datepicker/datepicker.css">';
+        strCode += '<link rel="stylesheet" href="datepicker/datepicker.css">';
         strCode += '<link rel="stylesheet" href="static_files/assets/css/bootstrap-multiselect.css">';
-        //strCode += '<link rel="stylesheet" href="tablesorter/css/theme.blue.css">';
-        //strCode += '<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">';
         strCode += '<link rel="stylesheet" href="css/safe.css">';
         strCode += '<link rel="stylesheet" href="css/bodySafe.css">';
-        //strCode += '<script type="text/javascript" src="tablesorter/js/jquery.tablesorter.js"></script>';
-        //strCode += '<script type="text/javascript" src="tablesorter/js/jquery.tablesorter.widgets.js"></script>';
         strCode += '<script type="text/javascript" src="static_files/assets/multiselect/bootstrap-multiselect.js"></script>';        
         strCode += '<script type="text/javascript" src="static_files/assets/datepicker/bootstrap-datepicker.js"></script>';
         strCode += '<script type="text/javascript" src="static_files/assets/datepicker/moment-with-locales.js"></script>';
@@ -1178,14 +1229,10 @@ function loadPage() {
         $("#appCodeMap").html(strCode);
         $("#appDisplayMap").load('html/bodySafeListing.html', function() {initApp();});
    } else {  
-        strCode += '<link rel="stylesheet" href="datepicker/datepicker.css">';
+        strCode += '<link rel="stylesheet" href="/datepicker/datepicker.css">';
         strCode += '<link rel="stylesheet" href="/static_files/assets/multiselect/bootstrap-multiselect.css">';
-        //strCode += '<link rel="stylesheet" href="/tablesorter/css/theme.blue.css">';
-        //strCode += '<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">';
         strCode += '<link rel="stylesheet" href="/static_files/WebApps/Health/safe/css/safe.css">';
         strCode += '<link rel="stylesheet" href="/static_files/WebApps/Health/BodySafe/css/bodySafe.css">';
-        //strCode += '<script type="text/javascript" src="/tablesorter/js/jquery.tablesorter.js"></script>';
-        //strCode += '<script type="text/javascript" src="/tablesorter/js/jquery.tablesorter.widgets.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/multiselect/bootstrap-multiselect.js"></script>';
         strCode += '<script type="text/javascript" src="/datepicker/bootstrap-datepicker.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/datepicker/moment-with-locales.js"></script>';
@@ -1196,7 +1243,6 @@ function loadPage() {
         
         $("#appCodeMap").html(strCode);
         $("#appDisplayMap").load('/static_files/WebApps/Health/BodySafe/html/bodySafeListing.html', function() {initApp();});
-        //$("#appDisplayMap").load('/4_DineSafe/html/dineSafeListing.html', function() {initApp();});
     }
 
 }

@@ -1,36 +1,58 @@
 <div class="gridbase">
     <p>Search results of inspections of Toronto food premises conducted over the past 2 years. By using this page you accept the <a href="#disclaimer" data-toggle="modal" data-target="#disclaimer">terms of use</a></p>
 </div>
+ <h2 class="sr-only">map of facilties</h2>
  <div class="row">
     <div class="col-xs-12 col-sm-12">
-			<div id="zoom"></div>
         <div>
-        <input id="map-input" class="controls" type="text" placeholder="Search Google Maps" >
-        <input id="resetMap" class="resetMap" type="button" value="Reset Map" />
-        <div style="height: 468px; width: 100%;" >
-        <div id="map-wrapper">
-        <div id="map-canvas" style="height: 468px; width: 100%;"></div>
-        <p id="map-loader" style="display: none;">
-            Loading...
-        <br>
-            <img alt="loading" src="/static_files/assets/images/preload.gif">
-        </p>
-        </div>
+			<input id="map-input" class="controls" type="text" placeholder="Search Google Maps" >
+			<input id="resetMap" class="resetMap" type="button" value="Reset Map" />
+			<div style="height: 468px; width: 100%;" >
+				<div id="map-wrapper">
+					<div id="map-canvas" style="height: 468px; width: 100%;"></div>
+				</div>
 
-        <div id="legend" class="customControl mapLegend">
-            <div class="customButton">
-            <p class="leading"><strong>Legend:</strong></p>
-            <ul>
-            <li><img alt="pass" src="/static_files/WebApps/Health/DineSafe/images/map/marker_pass.png" height="17" width="17" /> Pass</li>
-            <li><img alt="Conditional Pass" src="/static_files/WebApps/Health/DineSafe/images/map/marker_conditional.png" height="17" width="17" /> Conditional Pass</li>
-            <li><img alt="Closed" src="/static_files/WebApps/Health/DineSafe/images/map/marker_close.png" height="17" width="17" /> Closed</li>
-            <li><img alt="Multiple Estabishments" src="/static_files/WebApps/Health/DineSafe/images/map/marker_multi.png" height="17" width="17" /> Multiple Establishments</li>
-            </ul>
+				<div id="legend" class="customControl mapLegend">
+					<div class="customButton">
+                    <!--p class="leading"><strong>Legend:</strong></p-->
+					<ul>
+                    <li><strong>Legend:</strong></li>
+                    <li><img alt="pass" src="/static_files/WebApps/Health/safe/images/s_pass.png"/> Pass</li>
+                    <li><img alt="Conditional Pass" src="/static_files/WebApps/Health/safe/images/s_conditional.png"/> Conditional Pass</li>
+                    <li><img alt="Closed" src="/static_files/WebApps/Health/safe/images/s_closed.png"/> Closed</li>
+                    <li><img alt="Multiple Estabishments" src="/static_files/WebApps/Health/safe/images/s_multi.png"/> Multiple Establishments</li>
+                    </ul>
+                    </div>
+                </div>
+			</div>
+		</div>
+	</div>
+</div>
+
+ <div class="modal fade" id="mapLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" ><h2>loading map...</h2></div>
+            <div class="modal-body">
+                <div class="progress progress-striped active" style="margin-bottom:0;">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
             </div>
         </div>
     </div>
+</div>
+<div class="modal fade" id="listLoader" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog" aria-hidden="true" style="padding-top:15%; overflow-y:visible;">
+    <div class="modal-dialog modal-s">
+        <div class="modal-content">
+            <div class="modal-header" ><h2>loading listing...</h2></div>
+            <div class="modal-body">
+                <div class="progress progress-striped active" style="margin-bottom:0;">
+                    <div class="progress-bar" style="width: 100%"></div>
+                </div>
+            </div>
+        </div>
     </div>
- </div>
+</div>
 <div class="modal fade" id="inspectionDetails" tabindex="-1" role="dialog" aria-labelledby="InspectionDetails" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -67,7 +89,8 @@
 </div>
 
 
-    <div class="col-xs-12 col-sm-12">
+<h2  class="sr-only">Numeric Paging Selections</h2>	
+<div class="col-xs-12 col-sm-12">
    <div id="numPagination" class="allPagination">
 
         <nav class="navStyle pull-left" id="numberPageSelection"></nav> 
@@ -329,8 +352,10 @@
 	</div>
 </div>
 
+<h2  class="sr-only">Search Result</h2>
+<div><a id="gotoListingTop" class="safesidebar" href="">top of listing</a></div>
 <div class="table-responsive">
-<table id="dinetable" class="table table-stripped tablesorter tablesorter-blue">    
+<table id="safetable" class="table table-stripped tablesorter tablesorter-blue">    
     <thead> 
         <tr role="row">
             <!--th class="col-md-1"><span class="hidden-xs">Status<span></th-->

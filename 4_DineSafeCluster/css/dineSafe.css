@@ -14,7 +14,9 @@
 
 
 /* info window items */
-
+.imgOffset {
+	margin-left: 49px;
+}
 .insIcon {
 	margin-right: 20px;
 	
