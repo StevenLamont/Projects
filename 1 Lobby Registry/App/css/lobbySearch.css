@@ -461,7 +461,7 @@ legend.poh {
 
 
 @media (max-width: 1200px) {
-	.modal-dialog { width: 90%;}
+	.modal-dialog { width: 100%;}
 
 	.table-responsive {
     width: 100%;

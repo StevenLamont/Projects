@@ -87,8 +87,8 @@ var rptColumns = {
                         {column: 'SMLLobbyistNames', cls: '', style: 'width: 265px;white-space: normal;', label: 'Lobbyist Name(s)', title: 'Lobbyist Name(s)'},
                         {column: 'SMLBusOrg', cls: '', style: 'width: 265px;white-space: normal;', label: 'Business/Org', title: 'Business&#47;Organization'},
                         {column: 'SMLSubjectMatter', cls: '', style: 'width: 345px;white-space: normal;', label: 'Subject Matter', title: 'Subject Matter'},
-                        {column: 'SMLStatus', cls: '', style: 'width: 70px', label: 'Status', title: 'Subject Matter Registration  Status'},
-                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 90px;white-space: normal;', label: 'Subject Matter No.', title: 'Subject Matter Registration No.'}
+                        {column: 'SMLStatus', cls: '', style: 'width: 70px;white-space: normal;', label: 'Status', title: 'Subject Matter Registration  Status'},
+                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 100px;white-space: normal;', label: 'Subject Matter No.', title: 'Subject Matter Registration No.'}
                         ]
                 },              
     'LobbyRpt': {Idx: 'A', DataSource : "/LobbyistRegistryRestWeb/disclosure/startWith/<PGALPHA>/2?callback=?&pageNum=<PGNUM>&maxResults=<MAXRES>",
@@ -99,7 +99,7 @@ var rptColumns = {
                         {column: 'SMLClient', cls: '', style: 'width: 185px;white-space: normal;', label: 'Client', title: 'Client'},
                         {column: 'SMLSubjectMatter', cls: '', style: 'width: 205px;white-space: normal;', label: 'Subject Matter', title: 'Subject Matter'},
                         {column: 'SMLLobRegNo', cls: '', style: 'width: 95px;', label: 'Lobbyist<br />Reg No.', title: 'Lobbyist Registration No.'},
-                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 95px;white-space: normal;', label: 'Subject Matter No.', title: 'Subject Matter Registration No.'}
+                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 100px;white-space: normal;', label: 'Subject Matter No.', title: 'Subject Matter Registration No.'}
                         ]
                 },
 
@@ -111,7 +111,7 @@ var rptColumns = {
                         {column: 'SMLSubjectMatter', cls: '', style: 'width: 230px;white-space: normal;', label: 'Subject Matter', title: 'Subject Matter'},
                         {column: 'SMLLobbyistNames', cls: '', style: 'width: 230px;white-space: normal;', label: 'Lobbyist Name(s)', title: 'Lobbyist Name(s)'},
                         {column: 'SMLStatus', cls: '', style: 'width: 70px;', label: 'Status', title: 'Subject Matter Registration Status'},
-                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 95px;white-space: normal;', label: 'Subject Matter No.', title: 'Subject Matter Registration No.'}
+                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 100px;white-space: normal;', label: 'Subject Matter No.', title: 'Subject Matter Registration No.'}
                         ]
                 },
     'POHCommRpt' : {Idx: 'N', DataSource : "/LobbyistRegistryRestWeb/disclosure/4?callback=?&pageNum=<PGNUM>&maxResults=<MAXRES>",
@@ -125,7 +125,7 @@ var rptColumns = {
                         {column: 'SMLRequestMeeting', cls: '', style: 'width: 95px;white-space: normal;', label: 'Request a Meeting', title: 'Request a Meeting'},
                         {column: 'SMLResultOfMeetingRequest', cls: '', style: 'width: 95px;white-space: normal;', label: 'Result of Request', title: 'Result of Meeting Request. &#13;Only applies to Consultant/Voluntary'},
                         {column: 'SMLDateOfRequest', cls: '', style: 'width: 95px;white-space: normal;', label: 'Date of Request', title: 'Date of Request. &#13;Only applies to Consultant/Voluntary'},
-                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 95px;white-space: normal;', label: 'Subject Matter No.', title: 'Subject Matter Registration No.'}
+                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 100px;white-space: normal;', label: 'Subject Matter No.', title: 'Subject Matter Registration No.'}
                         
                         ]
                 },
@@ -137,7 +137,7 @@ var rptColumns = {
                         {column: 'SMLLobbyistNames', cls: '', style: 'width: 210px;white-space: normal;', label: 'Lobbyist Name(s)',  title: 'Lobbyist Name(s)'},
                         {column: 'SMLLobbyistType', cls: '', style: 'width: 95px;white-space: normal;', label: 'Lobbyist Type',  title: 'Lobbyist Type'},
                         {column: 'SMLFinContributors', cls: '', style: 'width: 150px;white-space: normal;', label: 'Financial Contributors',  title: 'Financial Contributors'},
-                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 95px;white-space: normal;', label: 'Subject Matter No.',  title: 'Subject Matter Registration No.'}
+                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 100px;white-space: normal;', label: 'Subject Matter No.',  title: 'Subject Matter Registration No.'}
                         ]
                 },
     'BusOrgClientRpt' : {Idx: 'A', DataSource : "/LobbyistRegistryRestWeb/disclosure/startWith/<PGALPHA>/6?callback=?&pageNum=<PGNUM>&maxResults=<MAXRES>",
@@ -148,7 +148,7 @@ var rptColumns = {
                         {column: 'SMLLobbyistType', cls: '', style: 'width: 95px;white-space: normal;', label: 'Lobbyist Type', title: 'Lobbyist Type'},
                         {column: 'SMLBeneficiaries', cls: '', style: 'width: 190px;white-space: normal;', label: 'Beneficiaries', title: 'Beneficiaries'},
                         {column: 'SMLFinContributors', cls: '', style: 'width: 110px;white-space: normal;', label: 'Financial Contributors', title: 'Financial Contributors'},
-                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 95px;white-space: normal;', label: 'Subject Matter No.', title: 'Subject Matter Registration No.'}
+                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 100px;white-space: normal;', label: 'Subject Matter No.', title: 'Subject Matter Registration No.'}
                         ]
                 },
 
@@ -161,7 +161,7 @@ var rptColumns = {
                         {column: 'SMLLobbyistType', cls: '', style: 'width: 95px;white-space: normal;', label: 'Lobbyist Type', title: 'Lobbyist Type'},
                         {column: 'SMLBeneficiaries', cls: '', style: 'width: 110px;white-space: normal;', label: 'Beneficiaries', title: 'Beneficiaries'},
                         {column: 'SMLStatus', cls: '', style: 'width: 65px;', label: 'Status', title: 'Subject Matter Registration Status'},
-                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 95px;white-space: normal;', label: 'Subject Matter No.', title: 'Subject Matter Registration No.'}
+                        {column: 'SMLSubjectMatterNo', cls: '', style: 'width: 100px;white-space: normal;', label: 'Subject Matter No.', title: 'Subject Matter Registration No.'}
                         ]
                 }
     };
@@ -1738,7 +1738,7 @@ function detailCommitteeMeetings(item) {
 
             strRows += "<tr><td>&nbsp;</td></tr>";
             strRows += "<tr class='labelRow'><td>" +  escapeHtml(meet.committeeName) + "</td></tr>";
-            strRows += "<tr><td>Meeting Date " +  escapeHtml(meet.meetingDate) + "</td></tr>";
+            strRows += "<tr><td>Meeting Date: " +  escapeHtml(meet.meetingDate) + "</td></tr>";
             strRows += "<tr><td>&nbsp;</td></tr>";
 
             if (typeof meet.attendeeCommitteeMemberList !== 'undefined' && meet.attendeeCommitteeMemberList) {
@@ -1843,7 +1843,7 @@ function loadListing() {
         strCode += '<link rel="stylesheet" href="/static_files/assets/multiselect/bootstrap-multiselect.css">';
         strCode += '<link rel="stylesheet" href="/tablesorter/css/theme.blue.css">';
         strCode += '<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">';
-        strCode += '<link rel="stylesheet" href="/City%20Of%20Toronto/Sandbox/Steve/LobbyRegistry3/css/devlobbySearch.css">';
+        strCode += '<link rel="stylesheet" href="/City%20Of%20Toronto/Sandbox/Steve/LobbyRegistry3/css/lobbySearch.css">';
         strCode += '<script type="text/javascript" src="/static_files/assets/multiselect/bootstrap-multiselect.js"></script>';
         strCode += '<script type="text/javascript" src="/datepicker/bootstrap-datepicker.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/datepicker/moment-with-locales.js"></script>';
@@ -1887,7 +1887,7 @@ function loadDetail(jsonData, SMId, LRId, searchStr) {
         strCode += '<link rel="stylesheet" href="/static_files/assets/multiselect/bootstrap-multiselect.css">';
         strCode += '<link rel="stylesheet" href="/tablesorter/css/theme.blue.css">';
         strCode += '<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">';
-        strCode += '<link rel="stylesheet" href="/City%20Of%20Toronto/Sandbox/Steve/LobbyRegistry3/css/devSMDetail.css">';
+        strCode += '<link rel="stylesheet" href="/City%20Of%20Toronto/Sandbox/Steve/LobbyRegistry3/css/SMDetail.css">';
         strCode += '<script type="text/javascript" src="/static_files/assets/multiselect/bootstrap-multiselect.js"></script>';
         strCode += '<script type="text/javascript" src="/datepicker/bootstrap-datepicker.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/datepicker/moment-with-locales.js"></script>';
