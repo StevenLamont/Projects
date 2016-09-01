@@ -1,0 +1,266 @@
+
+.form-group-horizontal .form-control-feedback {right: -30px; line-height:25px;}
+
+label.required:before { color: red;margin-left: 5px;margin-right: 5px;content: "*"}
+
+/* override COT standard bootstrap css from cot_app.cs*/
+#maincontent .has-error {
+    border: 0px solid red;
+}
+#maincontent #buttonbar .navbar li {
+    background-color: #eee;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    min-width: 120px;
+    text-align: center;
+}
+
+#maincontent table th, #maincontent table td, #maincontent form table th, #maincontent form table td {
+     vertical-align: inherit; 
+     text-align: inherit; 
+    line-height: inherit;
+     word-break:inherit; 
+}
+
+#maincontent .form-group  {margin-bottom:10px;}
+#maincontent button {margin:0;}
+.nav > li > button {
+    display: block;
+    padding: 10px 15px;
+    position: relative;
+}
+.nav-pills > li > button {
+    border-radius: 4px;
+}
+li.active button {
+    background-color: #337ab7;
+    color: #fff;
+	width: 100%;
+	
+}
+/* standard datetimerpicker css is 320px fpor some reason.*/
+.datetimepicker {
+    width: inherit!important;
+}
+
+
+.angular-google-map-container { height: 400px; }
+
+#mapSearchBox { width: 200px; margin-top: 10px;}
+
+#mapSearchBox {
+    background-color: #fff;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    margin-left: 12px;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 300px;
+}
+
+/* these two entries for dropdown near end of the form to show fully */
+.entryField .dropdown-menu {
+    position: relative !important;
+}
+
+.multiSelect .checkboxLayer {
+    position: relative !important;
+}
+
+
+.weeklyField { margin-top: 28px!important;}
+
+/* we override the COT maincintent standard . and also that show errors requires form-control */
+.timepick {
+    background-color: transparent;
+    border: 0 none;
+    box-shadow: none;
+}
+.timepick table {
+    border-collapse: collapse;
+    margin: 0!important;
+    border: 0 none!important;
+}
+.timepick table td  {
+    line-height: 1.5em;
+    padding: 0!important;
+    text-align: left;
+    vertical-align: top;
+}
+
+.timepick table tr td:nth-of-type(n+2) {
+    border: 0 none!important;
+}
+
+#maincontent legend {
+    margin-left: 0px;
+    margin-right: 0px;
+    font-size: 16px;
+    font-weight: bold;
+    
+}
+
+#ecForm ul.dropdown-menu {
+    margin: 0;
+    max-height: 100%;
+    overflow-y: auto;
+    padding: 0;
+    width: 100%;
+}
+
+.eventFeature{
+	min-width: 125px;
+}
+/* stylized checkboxes -- should be acorporate standard. Delete these if so
+   required checkboxes to have labels.
+ */
+ 
+/*
+input[type=radio],input[type=checkbox] {
+    display: none!important;
+}
+*/
+.chkLabel {
+    font-weight: normal;
+	margin-bottom: 0px;
+}
+.radioLabel {
+    font-weight: normal;
+	margin-bottom: 0px;
+}
+
+/*
+input[type=radio] + label:before{
+
+    font-family:'FontAwesome';
+    content:"\f10c   ";
+	font-size: 1.5em;
+
+}
+input[type=radio]:checked + label:before{
+    font-family:'FontAwesome';
+    content:"\f058   ";
+	font-size: 1.5em;
+
+}
+
+
+input[type=checkbox] + label:before{
+
+	font-size: 1.5em;
+    font-family:'FontAwesome';
+    content:"\f096 ";
+}
+
+input[type=checkbox]:checked + label:before{
+    font-family:'FontAwesome';
+    content:"\f14a ";
+	font-size: 1.5em;
+}
+*/
+.selectedLocation {
+	background: rgba(255, 0, 0, 0.1) none repeat scroll 0 0;
+}
+
+/* for stylized radio and checkboxes -- old attempt
+#ecForm div.btn-group > label:before {
+    font-family:'FontAwesome';
+    content:"\f10c";
+    float: left;
+    margin-right: 5px;
+    color: inherit;
+}
+#ecForm div.btn-group > label.active:before {
+    font-family:'FontAwesome';
+    content:"\f05d";
+    float: left;
+    margin-right: 5px;
+    color: inherit;
+}
+#ecForm button[uib-btn-checkbox]:before {
+        font-family:'FontAwesome';
+    content:"\f096";
+    float: left;
+    margin-right: 5px;
+    color: inherit;
+}
+#ecForm button[uib-btn-checkbox].active:before {
+        font-family:'FontAwesome';
+    content:"\f14a";
+    float: left;
+    margin-right: 5px;
+    color: inherit;
+}
+
+#ecForm .checkbox-group .btn {
+    border-radius: 0;
+    
+}
+.featureBtn {
+    width: auto;
+    text-align: left;
+    
+}
+
+.partnerType {
+    min-width: 200px;
+    text-align: left;
+    border-radius: 0;
+    margin-left: 0!important;
+}
+.newEvent {
+    min-width: 75px;
+    text-align: left;
+    border-radius: 0;
+    margin-left: 0!important;
+}
+*/
+
+
+#ecForm .table-responsive {
+    margin: 0 ;
+}
+
+.fileinput-button input {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px !important;
+    direction: ltr;
+    cursor: pointer;
+}
+
+.deleteShape {
+    margin-top: 4px!important;
+    height: 27px;
+}
+#lowerButtonBar {
+    margin-top: 10px;
+}
+
+.hide-iframe {
+  visibility: hidden;
+  position: absolute;
+  left: -999em;
+}
+
+@media (max-width: 768px) {
+    .weeklyField { margin-top: 0px;}
+    #ecForm  fieldset {  border: 1px solid silver; }
+    #lowerRightButtonBar  .pull-right {
+        float: none !important;
+        margin-top: 10px;
+    }
+	#mapSearchBox {width: 100px;}
+}
+
+@media (max-width: 1200px) {
+
+}
+
+

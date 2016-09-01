@@ -1,0 +1,1401 @@
+<!--
+I wanted to break each tab into a seperate ng-Include to make it easier to read..
+the ng_include adds another div and this seems to have prevented the tabs for working correctly because the target ID were two children of
+the tab-content and not 1.
+-->
+<main role="main" id="maincontent" class="container">
+<section data-ng-controller="EventCalendarController as ec" class="container" >
+<div id="event-criteria" class="ng-hide" data-ng-show="ec.event.terms === ''" data-ng-hide="ec.event.terms === 'disagree'||ec.event.terms === 'agree'">
+        <div id="event-criteria-title"><h2>Event Criteria</h2></div>
+        <div class="row">
+            <article class="media col-xs-12">
+                <div id="event-criteria-body">
+				<p>The City of Toronto reserves the right to edit/exclude listings. This calendar is managed by the City of Toronto Visitor Services <u>with an objective to promote festivals, events and exhibits that will be of interest to tourists and residents discovering Toronto</u>. Events must meet the criteria outlined below (exceptions may be made at the discretion of the Calendar Administrator and Management even if the event satisfies the objectives for this site).</p>
+				<p><b> Please note that to ensure that we are able to process </b><b><u>festivals, events and exhibits that will be of interest to tourists in a timely manner</u></b><b>, as of autumn 2015 we have temporarily suspended the approval of seminars, workshops and consumer shows unless they are the generator of significant visitor numbers.</b></p>
+				<p><b>1. Location: <br>
+				Events must take place within the <a target="_blank" class="blink" href="http://wx.toronto.ca/festevents.nsf/Map?OpenPage">boundaries of the City of Toronto</a> may include multi-venue events with some locations outside the City provided that the majority of locations are inside the City and the focus of the event listing is on Toronto activities.</b><br>
+				</p>
+				<p>2. Events must be open to all members of the public.</p>
+				<p>3. A title sponsor that is included in the event name will be included in the listing. There will be no other sponsors or partners listed on the website. </p>
+				<p>4. Both free and ticketed events are eligible.<br>
+				Definition of free event or function: If admission to or attendance at the event or function, whether it is held inside or outside, is free of charge then the event is considered free. Minimal charges for on-site food, additional events/concerts contained within the boundaries of the event or function may be allowed.<br>
+				</p>
+				<p>5. Retail promotion events are not eligible.<br>
+				Definitions include events hosted by retail stores including the advertising of a business, sidewalk sale, store sale, store liquidation or dining special.<br>
+				</p>
+				<p>6.  Events must be time specific and must include a start date and end date.  Open-ended, ongoing events will not be accepted.</p>
+				<p>7.  Events must be held in a physical location that can be accessed by the public.<bt>
+				For example, online contests or recruitment events will not be accepted.</p>
+				
+				<p>8. For your event to qualify as fully barrier-free and wheelchair-accessible, your event venue/location must offer an accessible entrance with no steps AND a wheelchair-accessible washroom (if the venue offers public washrooms). If you do not meet both requirements, please select the partially accessible option.</p>
+				<p>9. Events shall not promote hatred or derision of any group and shall not discriminate on any grounds covered by the Ontario Human Rights Code or the City’s Non- Discrimination Policy, including but not limited to race, ancestry, place of origin, colour, ethnic origin, citizenship, creed, sex, sexual orientation, age, marital status, family status or handicap. In the event that the City becomes aware of any violation of these principles the event will immediately be removed from the calendar without notice and without penalty.</p>
+				<hr width="100%" size="2" align="left">
+                </div>
+                
+
+            </article>
+        </div>
+</div>
+
+<div id="cot-template-terms" class="ng-hide" data-ng-show="ec.event.terms === ''" data-ng-hide="ec.event.terms === 'disagree'||ec.event.terms === 'agree'">
+    <div id="cot-terms" class="">
+        <div id="cot-terms-title"><h2>Terms of Use Agreement</h2></div>
+        <div class="row">
+            <article class="media col-xs-12">
+                <div id="cot-terms-body">
+
+                <p>Completing this form does not in any way guarantee that your event will be listed on the City web site. The City is not responsible for the accuracy of the information at the time of posting: it is the responsibility of the organizer to inform the City of changes to the information submitted.</p>
+                <p>All applications are subject to editing at the discretion of the Calendar Administrator. Editing will be used to clarify any applications that require a touch up.  </p>
+                <p>The information you provide will be made available to the public via the City of Toronto Web site and will serve to provide valuable information on economic growth and benefits of Toronto festivals and events.</p>
+                <br>
+                <p>The City of Toronto is committed to protecting the privacy of any personal information you may provide us on this Festivals and events application form, and will not appear on the Web i.e. home address or home telephone number, fax or e-mail address.</p>
+                <br>
+                <p>Our practices are in compliance with the privacy provisions of the Municipal Freedom of Information and Protection of Privacy Act. </p>
+                <p>The personal information on this form is collected under the authority of the City of Toronto Act , 2006, s. 136, and By-law No. 12-2006. The information is used to process your request to place an event on the City's Festivals and Events Calendar and to send reminders for future events. Questions about this collection can be directed to the Festivals &amp; Events Calendar Administrator, City Hall, 8th Floor, West Tower, 100 Queen Street West, Toronto, ON, M5H 2N2 or by email <a href="mailto:spevcal@toronto.ca" target="_top">spevcal@toronto.ca </a>. Please note that staff are available to assist you during standard business hours Monday to Friday.</p>
+                <br>
+                <b>The information hereby provided is correct to the best of my knowledge.</b>
+                </div>
+                
+                <div class="buttons">
+                    <button id="cot-terms-agree" class="btn btn-success" data-ng-click="ec.event.terms='agree'" type="button">Agree</button>
+                    <button id="cot-terms-disagree" class="btn btn-success" data-ng-click="ec.event.terms='disagree'" type="button">Disagree</button>
+                
+                </div>
+            </article>
+        </div>
+    </div>
+</div>
+<div id="cot-template-terms-disagree" class="ng-hide" data-ng-show="ec.event.terms=='disagree'">
+    <div id="cot-terms" class="">
+        <div id="cot-terms-title"><h2>Unable to Proceed</h2></div>
+        <div class="row">
+            <article class="media col-xs-12">
+                <div id="cot-terms-body"><p>Terms must be agreed before continuing to the Event Calendar submission.</p></div>
+                <div class="buttons">
+                    <button id="cot-terms-return" data-ng-click="ec.event.terms='no'" class="btn btn-default"  type="button">Terms and Conditions</button>
+                    <button id="cot-terms-homepage" data-ng-click="ec.gotoHomePage()"  class="btn btn-default"  type="button">Return to City of Toronto Home Page</button>
+                </div>
+            </article>
+        </div>
+    </div>
+</div>  
+
+<div id="mainFormComponents" class="ng-hide" data-ng-show="ec.event.terms=='agree'">
+
+<div id="buttonbar" >
+    <h1>New Festival and Event Submission</h1>  
+	
+   <div id="eventNavBar" class="navbar hidden-xs hidden-sm"> 
+        <div class="navbar-inner">
+        <ul class="nav nav-pills" >
+            <li ng-class="{'active' : ec.appCntl.tab == 1}">
+                <a  href="" data-ng-click='ec.showTab(1)' data-toggle="tab" data-step="1"><p class='btntitle'>Step 1</p><p class="btndesc">General</p></a>  </li>
+            <li ng-class="{'active' : ec.appCntl.tab == 2}"><a  href="" data-ng-click='ec.showTab(2)' data-toggle="tab" data-step="2"><p class='btntitle'>Step 2</p><p class="btndesc">Features & Attributes</p></a> </li>
+            <li ng-class="{'active' : ec.appCntl.tab == 3}"><a href="" data-ng-click='ec.showTab(3)' data-toggle="tab" data-step="3"><p class='btntitle'>Step 3</p><p class="btndesc">Date & Time</p></a></li>
+            <li ng-class="{'active' : ec.appCntl.tab == 4}"><a href="" data-ng-click='ec.showTab(4)' data-toggle="tab" data-step="4"><p class='btntitle'>Step 4</p><p class="btndesc">Location</p></a></li>
+            <li ng-class="{'active' : ec.appCntl.tab == 5}"><a href="" data-ng-click='ec.showTab(5)' data-toggle="tab" data-step="5"><p class='btntitle'>Step 5</p><p class="btndesc">Admission Cost</p></a></li>
+            <li ng-class="{'active' : ec.appCntl.tab == 6}"><a href="" data-ng-click='ec.showTab(6)' data-toggle="tab" data-step="6"><p class='btntitle'>Step 6</p><p class="btndesc">Upload Image</p></a></li>
+            <li ng-class="{'active' : ec.appCntl.tab == 7}"><a href="" data-ng-click='ec.showTab(7)' data-toggle="tab" data-step="7"><p class='btntitle'>Step 7</p><p class="btndesc">Contact Details</p></a></li>
+            <li data-ng-if="ec.opMode == 'update'" ng-class="{'active' : ec.appCntl.tab == 8}"><a href="" data-ng-click='ec.showTab(8)' data-toggle="tab" data-step="8"><p class='btntitle'>&nbsp;</p><p class="btndesc">Admin</p></a></li>
+        </ul>
+        </div>
+    </div>
+
+</div>	
+<form id="ecForm" name="ecForm"  data-ng-submit="ec.submit()"  novalidate >
+
+<div uib-tabset active="ec.appCntl.tab"  class="tab-content"> 
+
+<div uib-tab index="1"  class="tab-pane fade">
+    <h2>Step 1: General Information</h2>
+    <div id="ec-step1" class="panel-body">
+        <div class="row">
+            <div id="eventNameElement" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="eventName" class="control-label">
+                        <span>Event Name</span>
+                    </label>
+                    <div class="entryField">
+                        <input id="eventName" data-ng-model="ec.event.eventName"  class="form-control" type="text" name="eventName" title="Event Name" placeholder=""></input>
+                    </div>
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.eventName.$touched || ecForm.$submitted) && ecForm.eventName.$error">
+                    <span data-ng-message="required">Event Name is required and cannot be left blank.</span>
+                </small>                
+            </div>
+        </div>
+
+        <div class="row">
+            <div id="descriptionElement" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="description" class="control-label">
+                    <span>Description</span>
+                    </label>
+                   
+                    <div class="entryField">
+                        <textarea id="description" data-ng-model="ec.event.description" class="form-control"  data-ng-minlength="5" data-ng-maxlength="750"  name="description" title="Description" placeholder=""></textarea>
+                    </div>
+                     <p class="helptext">750 characters maximum  <span ng-show="ecForm.description.$valid" class="form-help pull-right">{{750-ec.event.description.length}} characters remaining</span></p>
+                </div>
+				
+                <small class="help-block" data-ng-messages="(ecForm.description.$touched || ecForm.$submitted) && ecForm.description.$error">
+                    <span data-ng-message="minlength">The event description is too short.</span>
+                    <span data-ng-message="maxlength">The event description is too long.</span>
+                    <span data-ng-message="required">The event description is required.</span>
+                    <span data-ng-message="pattern">Special characters are not allowed.</span>
+                </small>
+            </div>
+        </div>
+
+        
+        <div class="row">      
+        
+            <h4 class="grid-title" style="margin-left: 15px;">Public Information Sources <span style="font-weight: normal"> (Please provide at least one source the public can contact for more information regarding your event)</span></h4>
+
+            <div id="eventWebSiteElement" class="col-xs-12 col-md-4 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+                <div>
+                    <label for="eventWebsite"  class="control-label"><span>Event Website</span></label>
+                        <div class="entryField">
+                            <input id="eventWebsite" data-ng-model="ec.event.eventWebsite" data-ng-required='ec.PSIEntered()' class="form-control" type="url" 
+							pattern="https?:\/\/.+" name="eventWebsite" title="Event Website" placeholder="http(s)://...">
+                        </div>                         
+
+                </div>
+                <small class="help-block"  data-ng-messages="(ecForm.eventWebsite.$touched || ecForm.$submitted) && ecForm.eventWebsite.$error">
+                    <span data-ng-message="required">One of the public information sources items must be entered.</span>
+                    <span data-ng-message="url">Event website URL is not valid. It must start with http:// or https://</span>
+                    <span data-ng-message="pattern">Event website URL is not valid. It must start with http:// or https://</span>
+                </small>
+                
+
+            </div>
+            <div id="eventEmailElement" class="col-xs-12 col-md-4 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+                <div>
+                    <label for="eventEmail" class="control-label"><span>Event Email</span></label>
+                        <div class="entryField">
+                            <input id="eventEmail" data-ng-model="ec.event.eventEmail" data-ng-required='ec.PSIEntered()' class="form-control"  type="email" name="eventEmail" title="Event email" placeholder="">
+                        </div>                         
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.eventEmail.$touched || ecForm.$submitted) && ecForm.eventEmail.$error">
+                    <span data-ng-message="required">One of the public information sources items must be entered.</span>
+                    <span data-ng-message="email">Email address is not formatted correctly.</span>
+                </small>
+                
+
+            </div>
+            <div id="eventPhoneElement" class="col-xs-12 col-md-2 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+                <div>
+                    <label for="eventPhone" class="control-label"><span>Event Phone</span></label>
+                        <div class="entryField">
+                            <input id="eventPhone" data-ng-model="ec.event.eventPhone" data-ng-required='ec.PSIEntered()' data-ui-us-phone-number class="form-control"  type="text" name="eventPhone" title="Event phone" placeholder=""> <!-- ui-mask="(999) 999-9999"  ui-mask-placeholder ui-mask-placeholder-char="_"-->
+                        </div>                         
+                </div>
+
+                <small class="help-block" data-ng-messages="(ecForm.eventPhone.$touched || ecForm.$submitted) && ecForm.eventPhone.$error">
+                    <span data-ng-message="required">One of the public information sources items must be entered.</span>
+                    <span data-ng-message="usPhoneNumber">Phone number is not valid.</span>                    
+                </small>
+                
+
+            </div>
+            <div id="eventPhoneExtElement" class="col-xs-12 col-md-2 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+                <div>
+                    <label for="eventPhoneExt" class="control-label"><span>Phone Ext.</span></label>
+                        <div class="entryField">
+                            <input id="eventPhoneExt" data-ng-model ="ec.event.eventPhoneExt" class="form-control"  type="text" ng-pattern="/^[0-9]*$/" name="eventPhoneExt" title="Event phone extension" placeholder="">
+                        </div>                         
+
+                </div>
+
+                <small class="help-block" data-ng-messages="(ecForm.eventPhoneExt.$touched || ecForm.$submitted) && ecForm.eventPhoneExt.$error">
+                    <span data-ng-message="pattern">Phone number extension accepts numeric data only.</span>
+                </small>
+                
+
+            </div>
+        </div>     
+
+
+        <div class="row">
+            <div id="partnerTypeElement" class="col-xs-12 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }'>
+                <label for="partnerType" class="control-label">
+                    <span>Event Partnership Type</span>
+                </label>
+
+                <div class="form-control">
+                    <div class="horizontal entryField">
+                        <input type="radio" id="presentedby" name="partnerType"  data-ng-model ="ec.event.partnerType" data-ng-change="ec.blur('#partnerType')"  title="Presented By Partnership Type" value="presentedby">
+                        <label class="radioLabel" for="presentedby">Presented By</label>
+                    </div>
+                    <div class="horizontal entryField">
+                        <input type="radio" id="producedby" name="partnerType" data-ng-model ="ec.event.partnerType" data-ng-change="ec.blur('#partnerType')" title="Produced By Partnership Type" value="producedby" >
+                        <label class="radioLabel" for="producedby">Produced By</label>
+                    </div>
+                    <div class="horizontal entryField">
+                        <input type="radio" id="sponsoredby" name="partnerType" data-ng-model ="ec.event.partnerType" data-ng-change="ec.blur('#partnerType')" title="Sponsored By Partnership Type" value="sponsoredby">
+                        <label class="radioLabel" for="sponsoredby">Sponsored By</label>
+                    </div>
+                    <div class="horizontal entryField">
+                        <input type="radio" id="nopartner" name="partnerType"  data-ng-model ="ec.event.partnerType" data-ng-change="ec.blur('#partnerType')" title="No Partnership Type" value="none">
+                        <label class="radioLabel" for="nopartner">None</label>
+                    </div>
+                    <input id="partnerType" name="partnerType" type="text" data-ng-model ="ec.event.partnerType" class="form-control" style="display: none">
+                    
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.partnerType.$touched || ecForm.$submitted) && ecForm.partnerType.$error">
+                    <span data-ng-message="required">An event partnership type must be selected.</span>
+                </small>                
+            </div>
+        </div>
+    
+        <div class="row">
+            <div id="partnerNameElement" class="col-xs-12 form-group form-group-vertical" data-ng-if="(ec.event.partnerType !='none' && ec.event.partnerType)"  data-show-errors="{ showSuccess: true }">
+                <label for="partnerName" class="control-label"><span>Partner Name</span><span></span></label>
+                    <div class="entryField">
+                        <input type="text" data-ng-model="ec.event.partnerName"  name="partnerName" id="partnerName" title="Partner Name" class="form-control" placeholder="">
+                    </div>
+                <small class="help-block" data-ng-messages="(ecForm.partnerName.$touched || ecForm.$submitted) && ecForm.partnerName.$error">
+                    <span data-ng-message="required">You must specify the partner name that the event is presented, produced or sponsored by.</span>
+                </small> 
+            </div>
+        </div>
+    
+        <div class="row">
+            <div id="expectedPeakElement" class="col-xs-12 col-md-6 form-group form-group-vertical"  data-show-errors='{ showSuccess: true }'>
+                <label for="expectedPeak" class="control-label"><span>Expected Peak Attendance</span><span></span></label>
+                    <div class="entryField">
+                        <input type="text" data-ui-number-mask="0" data-ng-model ="ec.event.expectedPeak" name="expectedPeak" id="expectedPeak" title="Expected Peak Attendance" class="form-control" placeholder="">
+                    </div>
+				<p class="helptext">These numbers will not be published in the front-end of the calendar</p>
+                <small class="help-block" data-ng-messages="(ecForm.expectedPeak.$touched || ecForm.$submitted) && ecForm.expectedPeak.$error">
+                    <span data-ng-message="required">The expected peak attendance must be entered.</span>
+                    <span data-ng-message="number">Invalid characters entered.</span>
+                </small> 
+            </div>
+            <div id="expectedAvgElement" class="col-xs-12 col-md-6 form-group form-group-vertical"  data-show-errors='{ showSuccess: true }'>
+                <label for="expectedAvg" class="control-label"><span>Expected Average Attendance</span><span></span></label>
+                    <div class="entryField">
+                        <input type="text" data-ui-number-mask="0" data-ng-model ="ec.event.expectedAvg" name="expectedAvg" id="expectedAvg" title="Expected Average Attendance" class="form-control" placeholder="">
+                    </div>
+                <small class="help-block" data-ng-messages="(ecForm.expectedAvg.$touched || ecForm.$submitted) && ecForm.expectedAvg.$error">
+                    <span data-ng-message="required">The expected average attendance must be entered.</span>
+                    <span data-ng-message="number">Invalid characters entered.</span>                  
+                </small> 
+            </div>          
+        </div>      
+    </div>
+
+</div>
+
+<div  uib-tab index="2"   class="tab-pane fade">
+    <h2>Step 2: Other Information</h2>
+    <div id="ec-step2" class="panel-body" >
+        <div class="row">
+            <div id="eventCategoryElement" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="category" class="control-label">
+                        <span>Event Category:</span>
+                       
+                    </label>
+                     <span>(Select a maximum of 3 categories)</span>
+                    <div id="categorySel"  class="entryField" >
+                        <div 
+                        isteven-multi-select
+                        input-model="ec.eventCategories"
+                        output-model="ec.event.category"
+                        output-properties="name"
+                        button-label="name"
+                        helper-elements="filter reset"
+                        item-label="name"
+                        max-labels="2"
+                        max-height="500px"
+                        disable-property = 'disabledInd'
+                        on-close="ec.blur('#category')"
+                        on-item-click="ec.limitSelection( data, ec.eventCategories, ec.event.category, 3 )"
+                        on-reset="ec.clearSelection( data, ec.eventCategories, ec.event.category)"
+                        tick-property="ticked">
+                        </div>
+                        <!-- this is for the form validation (data-show-errors) the multi-select doesn't have a requred option -->
+                        <input type="text" data-ng-model ="ec.event.category" id="category" name="category" class="form-control"  style="display:none"  />
+                        <!--input type="text" data-ng-model ="event.category" name="category" class="form-control"  style="display:none" required /-->
+                    </div>
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.category.$touched || ecForm.$submitted) && ecForm.category.$error">
+                    <span data-ng-message="required">Event Category is required and cannot be left blank.</span>
+                </small>                
+            </div>
+        </div>
+        <div class="row" data-ng-if="(ec.isSportsSelected)">
+            <div id="SportsSubcategoryElement" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <!--div-->
+                    <label for="sportsSubcategory" class="control-label">
+                        <span>Sports - Subcategory</span>
+                        <span></span>
+                    </label>
+                    <div id="ddSportsSubCategory" class="entryField" 
+                        directive-id = 'ddSportsBtn'
+                        isteven-multi-select
+                        input-model="ec.sportsSubcategories"
+                        helper-elements="none"
+                        output-model="ec.event.sportsSubcategory"
+                        output-properties="name"
+                        selection-mode="single"
+                        button-label="name"
+                        item-label="name"
+                        max-labels="1"
+                        on-close="ec.blur('#sportsSubcategory')"
+                        disable-property = 'disabledInd'
+                        tick-property="ticked"
+                        title="Sports Subcategory" >
+                    </div>
+                    <input id="sportsSubcategory" type="text" data-ng-model="ec.event.sportsSubcategory"  name="sportsSubcategory"  class="form-control" style="display:none">
+                    
+                <!--/div-->
+                <small class="help-block" data-ng-messages="(ecForm.sportsSubcategory.$touched || ecForm.$submitted) && ecForm.sportsSubcategory.$error">
+                    <span data-ng-message="required">Sports Subcategory is required and cannot be left blank.</span>
+                </small>                
+            </div>  
+        </div>        
+        <!-- removed required from all inputs below -->
+        <div class="row">
+            <div id="accessiblityElement" class="col-xs-12 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }'>
+                <label for="accessibility" class="control-label">
+                    <span>Accessibility</span>
+                </label>
+            
+                <div class="form-control">
+                    <div class="horizontal entryField">
+                        <input id="fullAccessibility" name="accessibility" data-ng-model="ec.event.accessibility"  data-ng-change="ec.blur('#accessibility')" title="Fully Accessibility" type="radio"  value="full"><label class="radioLabel" for="fullAccessibility">Fully Accessible</label>
+                    </div>
+                    <div class="horizontal entryField">
+                        <input id="partialAccessibility" name="accessibility" data-ng-model="ec.event.accessibility"  data-ng-change="ec.blur('#accessibility')" title="Partially Accessibile" type="radio"  value="partial"><label class="radioLabel" for="partialAccessibility">Partially Accessible</label>
+                    </div>
+                    <div class="horizontal entryField">
+                        <input id="noAccessibility" name="accessibility" data-ng-model="ec.event.accessibility" data-ng-change="ec.blur('#accessibility')" title="Not Accessibile" type="radio" value="none"><label class="radioLabel" for="noAccessibility">Not Accessible</label>
+                    </div>
+                </div>
+                <input id="accessibility" type="text" data-ng-model="ec.event.accessibility"  name="accessibility"  class="form-control" style="display:none">
+ 
+                <small class="help-block" data-ng-messages="(ecForm.accessibility.$touched || ecForm.$submitted) && ecForm.accessibility.$error">
+                    <span data-ng-message="required">An accessibility option must be selected.</span>
+                </small>
+                
+
+            </div>
+        </div>
+        <div class="row" data-ng-if="(ec.event.accessibility == 'partial')">
+            <div id="accessibilityNotesElement" class="col-xs-12 col-md-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="accessibilityNotes" class="control-label">
+                        <span>Accessibility Notes</span>
+                    </label>
+					<span>(Please describe what partial accessibility means at your event)</span>
+					
+                    <div class="entryField">
+                        <input type="text" data-ng-model="ec.event.accessibilityNotes" name="accessibilityNotes" id="accessibilityNotes"  title="Accessibility Notes"  class="form-control"    placeholder="">
+                    </div> 
+
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.accessibilityNotes.$touched || ecForm.$submitted) && ecForm.accessibilityNotes.$error">
+                    <span data-ng-message="required">Accessiblity notes must be entered.</span>
+                </small>                
+            </div>  
+        </div>
+        <div class="row">
+            <div id="eventFeaturesElement" class="col-xs-12 col-md-12 form-group form-group-horizontal">
+                <div>
+                    <label class="control-label">
+                        <span>Features</span><span class="optional">(optional)</span>
+                    </label>
+                    <div class="form-control">
+                        <div data-ng-repeat="feature in ec.availableFeatures" class="horizontal entryField">
+                            <input class="form-control " id="feature-{{$index}}" name="feature-{{$index}}"  data-ng-model ="ec.event.features[[feature.id]]" title="{{feature.name}}" type="checkbox" class="form-control checkbox" value="true" ><label class="chkLabel eventFeature" for="feature-{{$index}}">&nbsp;{{feature.name}}&nbsp;</label>
+                        </div>
+
+                    </div>                  
+
+                </div>
+            </div>   
+        </div>   
+        <div class="row" data-ng-if="(ec.event.features['Paid Parking'] == true)">
+            <div id="parkingCostElement" class="col-xs-12 col-sm-2 col-md-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="parkingCost" class="control-label">
+                        <span>Parking Cost Information</span>
+                        <span></span>
+                    </label>
+                    <div class="entryField">
+                        <input id="parkingCost" data-ng-model="ec.event.parkingCost" class="form-control"  type="text"  name="parkingCost" title="Parking Cost" placeholder="">
+                    </div> 
+
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.parkingCost.$touched || ecForm.$submitted) && ecForm.parkingCost.$error">
+                    <span data-ng-message="number">Invalid cost amount entered.</span>
+                </small>                
+            </div>  
+        </div>
+        <!-- removed required from all inout options below -->
+        <div class="row">
+            <div id="alcoholElement" class="col-xs-12 col-md-12 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+                <label for="alcoholServed" class="control-label"><span>Alcohol Being Served?</span><span></span></label>
+                <div class="form-control">
+                    <div class="horizontal entryField">
+                        <input id="alcoholServedYes" type="radio" name="alcoholServed" data-ng-model="ec.event.alcoholServed"  data-ng-change="ec.blur('#alcoholServed')" title="Alcohol Served"  value="Yes"><label class="radioLabel" for="alcoholServedYes">Yes</label>
+                    </div>
+                    <div class="horizontal entryField">
+                        <input id="alcoholServedNo" type="radio" name="alcoholServed" data-ng-model="ec.event.alcoholServed"  data-ng-change="ec.blur('#alcoholServed')" title="No Alcohol Served"  value="No"><label class="radioLabel" for="alcoholServedNo">No</label>
+                    </div>                          
+                </div>
+                <input id="alcoholServed" type="text" data-ng-model="ec.event.alcoholServed" name="alcoholServed" class="form-control" style="display:none">
+                
+                <p class="helptext" data-ng-show="(ec.event.alcoholServed =='Yes')">Note. Stating that liquor is being served at your event on this form does not in any way grant you permission to have a liqour license.<br>
+                    <a target="_blank" href="http://toronto.ca/faq/licenses_permits.htm">Information on applying for a liqour license</a>
+                </p>         
+
+                <small class="help-block" data-ng-messages="(ecForm.alcoholServed.$touched || ecForm.$submitted) && ecForm.alcoholServed.$error">
+                    <span data-ng-message="required">An alcohol served option must be selected.</span>
+                </small>
+            </div>
+        </div>
+
+        
+        
+    </div>
+    </div>
+    <div uib-tab index="3"  class="tab-pane fade">
+        <h2>Step 3: Date &amp; Time</h2>
+        <div id="ec-step3" class="panel-body" >
+        <div class="row">
+            <div id="frequencyElement" class="col-xs-12 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }'>
+                <label for="frequency" class="control-label">
+                    <span>Event Frequency</span>
+                </label>
+                <div class="form-control" >
+                    <div class="horizontal entryField">
+                        <input id="frequenceyonce" name="frequency" data-ng-change="ec.blur('#frequency');ec.frequencyChanged()" data-ng-model="ec.event.frequency"  title="Occurs Once" type="radio"  value="once" >
+                        <label class="radioLabel" for="frequenceyonce">Occurs Once</label>
+                    </div>
+                    <div class="horizontal entryField">
+                        <input id="frequenceydates" name="frequency" data-ng-change="ec.blur('#frequency');ec.frequencyChanged()" data-ng-model="ec.event.frequency"  title="Occurs on Specific Dates" type="radio" value="dates" >
+                        <label class="radioLabel" for="frequenceydates">Multiple Dates</label>
+                    </div>
+                    <div class="horizontal entryField">
+                        <input id="frequenceyweekly" name="frequency" data-ng-change="ec.blur('#frequency');ec.frequencyChanged()" data-ng-model="ec.event.frequency"  title="Weekly Frequency" type="radio"  value="weekly">
+                        <label class="radioLabel" for="frequenceyweekly">Recurs Weekly</label>
+                    </div>
+                </div>
+                <input id="frequency" name="frequency" type="text" data-ng-model ="ec.event.frequency" class="form-control" style="display: none">				
+                <small class="help-block" data-ng-messages="(ecForm.frequency.$touched || ecForm.$submitted) && ecForm.frequency.$error">
+                    <span data-ng-message="required">Event frequncy is required.</span>
+                </small>    
+            </div>
+        </div>
+       <div class="row" data-ng-if="(ec.event.frequency =='once')">
+            <div id="startDateTimeElement" class="col-xs-12 col-md-6 form-group form-group-vertical" data-show-errors="{ showSuccess: true }">
+                <label id="startDateTimeLbl" for="startDateTime" class="control-label">
+                    <span>Event Start Date and Time</span> 
+                </label>
+                <div class="entryField">
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" id="ddEventStartDateTime" role="button" data-toggle="dropdown" data-target="#" href="">
+                            <div class="input-group">
+                                <input  id="startDateTime" name="startDateTime" type="text" class="form-control" data-ng-model="ec.event.startDateTime" data-ng-change="ec.eventDateChanged()" data-date-time-input="MMMM D, YYYY h:mm a" placeholder="January 01, 2016 07:00 PM">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                             </div>
+                        </a>
+                        <ul class="dropdown-menu" role=	"menu" aria-labelledby="startDateTimeLbl">
+                           <datetimepicker data-ng-model="ec.event.startDateTime" data-ng-change="ec.eventDateChanged()" data-datetimepicker-config="{ renderOn: 'eventdatechange', dropdownSelector: '#ddEventStartDateTime', minView: 'minute', startView: 'month', minuteStep: 1, modelType : 'moment'}" data-before-render="ec.beforeRenderStartDateTime($view, $dates, $leftDate, $upDate, $rightDate,'EventStartDateTime',ec.event.endDateTime)"></datetimepicker>
+                        </ul>
+                    </div>
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.startDateTime.$touched || ecForm.$submitted) && ecForm.startDateTime.$error">
+                    <span data-ng-message="required">Event start date is required and cannot be left blank.</span>
+                </small>                
+            </div>
+            <div id="endDateTimeElement" class="col-xs-12 col-md-6 form-group form-group-vertical" data-show-errors="{ showSuccess: true }">
+                <div>
+                    <label id="endDateTimeLbl" for="endDateTime" class="control-label">
+                        <span>Event End Date & Time</span>
+                    </label>
+                    <div class="entryField">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="ddEventEndDateTime" role="button" data-toggle="dropdown" data-target="#" href="">
+                                <div class="input-group">
+                                    <input id="endDateTime" name="endDateTime" type="text" class="form-control" data-ng-model="ec.event.endDateTime" data-ng-change="ec.eventDateChanged()" data-date-time-input="MMMM DD, YYYY hh:mm a">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="endDateTimeLbl">
+                                <datetimepicker data-ng-model="ec.event.endDateTime" data-ng-change="ec.eventDateChanged()" data-datetimepicker-config="{ renderOn: 'eventdatechange', dropdownSelector: '#ddEventEndDateTime', minView: 'minute', startView: 'month', minuteStep: 1, modelType : 'moment' }" data-before-render="ec.beforeRenderEndDateTime($view, $dates, $leftDate, $upDate, $rightDate,'EventEndDateTime', ec.event.startDateTime)"></datetimepicker>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.endDateTime.$touched || ecForm.$submitted) && ecForm.endDateTime.$error">
+                    <span data-ng-message="required">Event end date is required and cannot be left blank.</span>
+                </small>                
+            </div>          
+        </div>   <!-- end row -->
+        
+        <div class="row" data-ng-if="(ec.event.frequency == 'dates' || ec.event.frequency == 'weekly')">
+            <div id="startDateElement" class="col-xs-12 col-md-6 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label id="starttDateLbl" for="startDate" class="control-label">
+                        <span >Event Start Date</span>  
+                    </label>
+                    <div class="entryField">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="ddEventStartDate" role="button" data-toggle="dropdown" data-target="#" href="">
+                                <div class="input-group">
+                                    <input id="startDate" name="startDate" type="text" class="form-control" data-ng-model="ec.event.startDate" data-ng-change="ec.eventDateChanged()" data-date-time-input="MMMM DD, YYYY">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="ddEventStartDate">
+                                <datetimepicker  data-ng-model="ec.event.startDate" data-ng-change="ec.eventDateChanged()"  data-datetimepicker-config="{ renderOn: 'eventdatechange', dropdownSelector: '#ddEventStartDate', minView: 'day', startView: 'month', minuteStep: 1, modelType : 'moment'}" data-before-render="ec.beforeRenderStartDateTime($view, $dates, $leftDate, $upDate, $rightDate, 'EventStartDate',ec.event.endDate)"></datetimepicker>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.startDate.$touched || ecForm.$submitted) && ecForm.startDate.$error">
+                    <span data-ng-message="required">Event start date is required and cannot be left blank.</span>
+                </small>                
+            </div>
+            <div id="endDateElement" class="col-xs-12 col-md-6 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label id="endDateLbl" for="endDate" class="control-label">
+                        <span>Event End Date</span>
+                    </label>
+                    <div class="entryField">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="ddEventEndDate" role="button" data-toggle="dropdown" data-target="#" href="">
+                                <div class="input-group">
+                                    <input id="endDate"  name="endDate" type="text" class="form-control" data-ng-model="ec.event.endDate" data-ng-change="ec.eventDateChanged()" data-date-time-input="MMMM DD, YYYY">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="ddEventEndDate">
+                                <datetimepicker data-ng-model="ec.event.endDate" data-ng-change="ec.eventDateChanged()" data-datetimepicker-config="{ renderOn: 'eventdatechange',dropdownSelector: '#ddEventEndDate', minView: 'day', startView: 'month', minuteStep: 1, modelType : 'moment' }" data-before-render="ec.beforeRenderEndDateTime($view, $dates, $leftDate, $upDate, $rightDate,'EventEndDate', ec.event.startDate)"></datetimepicker>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.endDate.$touched || ecForm.$submitted) && ecForm.endDate.$error">
+                    <span data-ng-message="required">Event end date is required and cannot be left blank.</span>
+                </small>           
+            </div>          
+        </div>   <!-- end row -->
+
+        <div  data-ng-if="(ec.event.frequency =='dates')">
+            <h4  class="grid-title">Specific Date(s) &amp; Time(s) for Event                  
+            </h4>
+            <div class="row" style="margin-bottom: 20px;">
+
+                <div class="col-xs-12 col-md-push-10 col-md-2">    
+                    <button type="button" class="btn btn-info pull-right" data-ng-click="ec.addOccurrenceDateRow()"><span class="glyphicon glyphicon-plus"></span><span>Add Occurrence</span></button>             
+                </div>
+            </div>
+            <div class="row" data-ng-repeat="occurDate in ec.event.dates" >
+            <fieldset>
+                <div id="occurDescElement" class="col-xs-12 col-md-3 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                    <label for="occurDesc-{{$index}}" class="control-label">
+                        <span>Description</span>
+                    </label>
+                    <div class="entryField">
+                        <input type="text" id="occurDesc-{{$index}}" data-ng-model="occurDate.description" class="form-control"  name="occurDesc-{{$index}}" title="enter description" placeholder=""></input>
+                    </div>
+                    <small class="help-block" data-ng-messages="(ecForm['occurDesc-'+$index].$touched || ecForm.$submitted) && ecForm['occurDesc-'+$index].$error">
+                        <span data-ng-message="required">Description is required and cannot be left blank.</span>
+                    </small>                    
+                </div>
+
+                <div id="occurStartElement" class="col-xs-12 col-md-4 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                    <label id="oStartDateTime-{{$index}}" for="occurStartDateTime-{{$index}}" class="control-label">
+                        <span>Start Date &amp; Time</span>
+                    </label>                
+                    <div>
+                    <div class="entryField">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="ddOccurStartDateTime-{{$index}}" role="button" data-toggle="dropdown" data-target="#" href="">
+                                <div class="input-group">
+                                    <input id="occurStartDateTime-{{$index}}"  name="occurStartDateTime-{{$index}}"   type="text" class="form-control" data-ng-model="occurDate.startDate" data-ng-change="ec.eventDateChanged()" data-date-time-input="MMMM DD, YYYY hh:mm a">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="oStartDateTime-{{$index}}">
+                                <datetimepicker data-ng-model="occurDate.startDate" data-ng-change="ec.eventDateChanged()" data-datetimepicker-config="{ renderOn: 'eventdatechange', dropdownSelector: '#ddOccurStartDateTime-' + $index, startView: 'month',minuteStep: 1, modelType : 'moment'}"  data-before-render="ec.beforeRenderStartDateTime($view, $dates, $leftDate, $upDate, $rightDate,'occurStartDate',occurDate.endDate, ec.event.startDate, ec.event.endDate)"></datetimepicker>
+                            </ul>
+                        </div>
+                    </div>
+                    </div>
+                    <small class="help-block" data-ng-messages="(ecForm['occurStartDateTime-'+$index].$touched || ecForm.$submitted) && ecForm['occurStartDateTime-'+$index].$error">
+                        <span data-ng-message="required">Start date is required and cannot be left blank.</span>
+                    </small>                
+ 
+                </div>
+                <div id="occurEndElement" class="col-xs-12 col-md-4 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                    <label id="oEndDateTime-{{$index}}" for="occurEndDateTime-{{$index}}" class="control-label">
+                        <span>End Date &amp; Time</span>
+                    </label>                
+                    <div class="entryField">
+                        <div class="dropdown">
+                            <a class="dropdown-toggle" id="ddOccurEndDateTime-{{$index}}" role="button" data-toggle="dropdown" data-target="#" href="">
+                                <div class="input-group">
+                                    <input id="occurEndDateTime-{{$index}}"  name="occurEndDateTime-{{$index}}" type="text" class="form-control" data-ng-model="occurDate.endDate" data-ng-change="ec.eventDateChanged()" data-date-time-input="MMMM DD, YYYY hh:mm a">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>                                     
+                                </div>
+                            </a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="oEndDateTime-{{$index}}">
+                                <datetimepicker data-ng-model="occurDate.endDate" data-ng-change="ec.eventDateChanged()" data-datetimepicker-config="{  renderOn: 'eventdatechange', dropdownSelector: '#ddOccurEndDateTime-'+ $index , startView: 'month',minuteStep: 1, modelType : 'moment'}" data-before-render="ec.beforeRenderEndDateTime($view, $dates, $leftDate, $upDate, $rightDate,'occurEndDate', occurDate.startDate, ec.event.startDate, ec.event.endDate)"></datetimepicker>
+                            </ul>
+                        </div>
+                    </div>
+                    <small class="help-block" data-ng-messages="(ecForm['occurEndDateTime-'+$index].$touched || ecForm.$submitted) && ecForm['occurEndDateTime-'+$index].$error">
+                        <span data-ng-message="required">End date is required and cannot be left blank.</span>
+                    </small>                  
+                </div>
+                <div class="form-group form-group-vertical" style="display:inline-block;width:90px;">
+                    <label class="control-label">
+                        <span>&nbsp;</span>
+                    </label>
+                    <div class="entryField">
+                        <button type="button" class="btn btn-danger grid-remove" data-ng-click="ec.removeOccurrenceDateRow($index)"><span class="glyphicon glyphicon-remove"></span><span>Remove</span></button>
+                    </div>
+                </div>  
+            </fieldset>
+            </div> <!-- end row -->
+        </div> <!-- show monthly datest -->
+        
+        <!-- weekly events -->
+        
+        <div data-ng-if="(ec.event.frequency =='weekly')">
+            <h4 class="grid-title">Weekly Date(s) &amp; Time(s) for Event</h4>
+            <div class="row" >
+                <div  class="col-xs-12  col-md-push-9 col-md-3"><button type="button" class="btn btn-info pull-right" data-ng-click="ec.addWeeklyOccurrenceRow()"><span class="glyphicon glyphicon-plus"></span><span>Add Occurrence</span></button></div>
+            </div>
+            <div class="row" data-ng-repeat="weeklyDate in ec.event.weeklyDates">
+              <fieldset>
+                <div id="weeklyDescElement-{{$index}}" class="col-xs-12 col-md-3 form-group" data-show-errors='{ showSuccess: true }'>
+                    <label for="weeklyDesc-{{$index}}" class="control-label">
+                        <span>Description</span>
+                    </label>                
+                    <div class="entryField weeklyField">
+                        <input type="text" style="line-height: 26px" id="weeklyDesc-{{$index}}" data-ng-model ="weeklyDate.description" class="form-control"  name="weeklyDesc-{{$index}}" title="enter description" placeholder="optional description"></input>
+                    </div>
+                </div>  
+            
+                <div id="dayOfWeekElement-{{$index}}" class="col-xs-12 col-md-2 form-group"  data-show-errors='{ showSuccess: true }'>
+                    <label for="dayOfWeek-{{$index}}btn" class="control-label">
+                        <span>Day of Week</span>
+                    </label>
+                    <!--        input-model="weeklyDate.dayOfWeekValues"   //This could be vm.inoutmodel[$index].dayOfWeekValues -- and add along with addWeeklyDate?? -->
+                    <div class="weeklyField"> 
+                        <div isteven-multi-select 
+                            directive-id = "dayOfWeek-{{$index}}btn"
+                            input-model="ec.weeklyDatesIM[$index].dayOfWeekValues"   
+                            helper-elements="none"
+                            output-model="weeklyDate.weekDay"
+                            selection-mode="single"
+                            button-label="day"
+                            item-label="day"
+                            output-properties="day" 
+                            on-close="ec.blur('#dayOfWeek-' + $index)"
+                            tick-property="ticked">
+                        </div>
+                    </div>
+                    <!-- this is for the form validation (data-show-errors) the multi-select doesn't have a requred option -->
+                    <input type="text" data-ng-model ="weeklyDate.weekDay" id="dayOfWeek-{{$index}}" name="dayOfWeek-{{$index}}" class="form-control"  style="display:none"  />
+                    <small class="help-block" data-ng-messages="(ecForm['dayOfWeek-'+$index].$touched || ecForm.$submitted) && ecForm['dayOfWeek-'+$index].$error">
+                        <span data-ng-message="required">Day of Week is required.</span>
+                    </small>              
+                </div>
+                
+                
+                <!--
+                <div id="dayOfWeek-{{$index}}" class="horizontal entryField">
+                        <label class="control-label"><span>Day of Week</span></label>
+                        <div class="horizontal entryField">
+                        
+                        </div>
+                    </div>
+                -->
+                <div id="timepickStartElement-{{$index}}" class="timepick col-xs-12 col-md-2 form-group" data-show-errors='{ showSuccess: true }'>
+                    <label class="control-label">
+                        <span>Start Time</span>
+                    </label>    
+                    <div uib-timepicker  name="timepickStart-{{$index}}" class="form-control timepick"   data-ng-model="weeklyDate.startTime" hour-step="1" minute-step="5" show-meridian="true"></div>
+                    <small class="help-block" data-ng-messages="(ecForm['timepickStart-'+$index].$touched || ecForm.$submitted) && ecForm['timepickStart-'+$index].$error">
+                        <span data-ng-message="required">Day of Week is required.</span>
+                    </small>                    
+                </div>
+                
+                <div  id="timepickEndElement-{{$index}}"  class="timepick col-xs-12 col-md-2 form-group"  data-show-errors='{ showSuccess: true }'>
+                    <label class="control-label">
+                        <span>End Time</span>
+                    </label>
+                    <div uib-timepicker name="timepickEnd-{{$index}}" class="form-control timepick"  data-ng-model="weeklyDate.endTime" hour-step="1" minute-step="5" show-meridian="true"></div>
+                    <small class="help-block" data-ng-messages="(ecForm['timepickEnd-'+$index].$touched || ecForm.$submitted) && ecForm['timepickEnd-'+$index].$error">
+                        <span data-ng-message="required">Day of Week is required.</span>
+                    </small>                    
+                </div>
+            
+                <div class="col-md-2" >
+                    <label class="control-label">
+                        <span>&nbsp;</span>
+                    </label>
+                    <div>
+                    <button type="button" class="btn btn-danger grid-remove pull-right weeklyField" data-ng-click="ec.removeWeeklyOccurrenceRow($index)"><span class="glyphicon glyphicon-remove"></span><span>Remove</span></button>
+                    </div>
+                </div>
+            </fieldset>
+            </div> <!-- end of rows -->
+        </div> <!-- show weekly dates -->
+        <div class="row">
+            <div id="timeInfoElement" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <label for="transitInfo" class="control-label">
+                    <span>Additional Event Date and/or Time Information:</span>
+                    </label>
+                    <div class="entryField">
+                        <textarea id="transitInfo" data-ng-model="ec.event.timeInfo" class="form-control"   data-ng-maxlength="750"  name="timeInfo" title="Event Time Information" placeholder=""></textarea>
+						<p class="helptext">750 characters maximum  <span ng-show="ecForm.timeInfo.$valid" class="form-help pull-right">{{750-ec.event.timeInfo.length}} characters remaining</span></p>
+                        <!--p class="helptext">If your event is taking place at multiple venues but different dates, please detail this information. For example: Date 1 at 111 Yonge. Date 2 at 2323 Yonge. Date 3 at 21 Yonge</p-->
+
+					   <!--p class="helptext">Please provide any additional clarification information.</p-->
+
+                    </div>
+                <small class="help-block" data-ng-messages="(ecForm.timeInfo.$touched || ecForm.$submitted) && ecForm.timeInfo.$error">
+                    <span data-ng-message="maxlength">The additional event information is too long.</span>
+                </small>			
+                    
+            </div>
+        </div>
+        </div> <!-- end panel -->
+    </div>
+        
+    <div uib-tab index="4"  class="tab-pane fade">
+        <h2>Step 4: Location</h2>
+        <p>Use the the 'Add Event Location' button and enter information related to one or more locations for the event. The address field is automatically validated.  This adress will be used to map the event.
+        If desired, enter an alternate display address which will appear in the event description but not be used for mapping purposes.</p>
+        <p>An advanced method exists by clicking on the 'Advanced Location Identification via Mapping' at the bottom of the screen</p>
+		
+		<p class="helptext">Please remember that this is an event calendar produced by the City of Toronto to help promote Toronto events. None city events will not be approved.</p>
+        <div id="ec-step4" class="panel-body" style="padding-top: 0; padding-bottom: 0" >
+               <!--div><button type='button' id="delete-button">Delete Selected Shape</button></div-->
+  
+
+        <div class="row" style="margin-top: 10px;">
+        <div class="col-md-12">
+           
+            <button type="button" class="btn btn-info pull-right"  data-ng-click="ec.addLocation()">Add Event Location</button>
+        </div>
+        </div>      
+        <h4 class="grid-title">Locations</h4>
+        
+        <div data-ng-repeat="location in ec.event.locations" data-ng-init="vm.locIndex = $index" >
+        <fieldset>
+        <legend>Location {{$index + 1}}
+            <button type="button" class="btn btn-danger grid-remove pull-right" data-ng-click="ec.removeLocation($index)"><span class="glyphicon glyphicon-remove"></span><span>Remove</span></button>
+        </legend>
+       
+        <div class="row">              
+            <div id="venueNameElement-{{vm.locIndex}}" class="col-xs-12 col-md-6 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+                <div>
+                    <label for="venueName-{{vm.locIndex}}" class="control-label"><span>Venue Name</span></label>
+                    <div class="entryField">
+                        <input id="venueName-{{vm.locIndex}}" data-ng-model="location.venueName" class="form-control" type="text" name="venueName-{{vm.locIndex}}" title="Event Venue" placeholder="">
+                    </div>                         
+                </div>
+
+                <small class="help-block" data-ng-messages="(ecForm['venueName-' + vm.locIndex].$touched || ecForm.$submitted) && ecForm['venueName-' + vm.locIndex].$error">
+                    <span data-ng-message="required">Event Venue is required.</span>
+                </small>
+            </div>
+            
+
+            
+        </div>
+        
+        <div class="row">
+            <div id="eventAddressElement-{{vm.locIndex}}" class="col-xs-12 col-md-6 form-group form-group-horizontal" data-show-errors="{ showSuccess: true }">
+                <label for="location-{{vm.locIndex}}" class="control-label"><span>Address</span></label>
+                <div class="entryField">
+                    <input id="location-{{vm.locIndex}}" data-ng-disabled="location.type != 'marker'" data-ng-model="location.address" data-ng-model-options="{ updateOn: 'blur' }" data-ng-change="ec.locationAddressChanged($index)"  class="form-control"  type="text"  name="location-{{vm.locIndex}}" title="Location" placeholder="# street, toronto, on" >
+                    <!--
+                    <div class="col-md-1">
+                        <button type="button" data-ng-show="location.type == 'marker'" data-ng-click="ec.verifyLocationAddress($index)" class="btn btn-info"><span class="glyphicon glyphicon-map-marker"></span><span>Verify Address</span></button>
+                    </div>
+                    -->
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm['location-' + vm.locIndex].$touched || ecForm.$submitted) && ecForm['location-' + vm.locIndex].$error">
+                    <span data-ng-message="required">The location address is required.</span>
+                    <span data-ng-message="notGeoCoded">The address has not been verified.</span>
+                </small>
+            </div>
+            
+            <div id="eventDisplayAddressElement-{{vm.locIndex}}" class="col-xs-12 col-md-6 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+                <div>
+                    <label for="displayAddress-{{vm.locIndex}}" class="control-label"><span>Display Address</span></label>
+                    <div class="entryField">
+                        <input id="displayAddress-{{vm.locIndex}}" data-ng-model ="location.displayAddress" class="form-control" type="text" name="displayAddress-{{vm.locIndex}}" title="Address to used when displaying event" placeholder="">
+                    </div>                         
+                </div>
+
+                <small class="help-block" data-ng-messages="(ecForm['displayAddress-' + vm.locIndex].$touched || ecForm.$submitted) && ecForm['displayAddress-' + vm.locIndex].$error">
+                    <span data-ng-message="required">Display address is required.</span>
+                </small>
+            </div>          
+        </div>
+        
+        <div class="row">
+            <div id="timeInfoElement-{{vm.locIndex}}" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <label for="transitInfo-{{vm.locIndex}}" class="control-label">
+                    <span>Public Transit Information</span>
+                    </label>
+                    <div class="entryField">
+                        <textarea id="transitInfo-{{vm.locIndex}}" data-ng-model="location.transitInfo" class="form-control"  name="transitInfo-{{vm.locIndex}}" title="Transit Information" placeholder=""></textarea>
+                        <p class="helptext">Please provide clear directions to the venue and indicate nearest subway/bus routes.</p>
+
+                    </div>
+                    
+                    
+            </div>
+        </div> 
+    </fieldset>
+    </div>  <!-- end of repeat of locaiton -->  
+    <div class="">
+        <button type="button" class="btn btn-primary pull-left col-xs-12" style="margin-bottom: 10px;" data-ng-click="ec.toggleMap()">
+            <span class="hidden-xs">Advanced Location Identification via Mapping&nbsp;&nbsp;</span>
+            <span class="visible-xs-inline hidden-md">Locations via Mapping&nbsp;&nbsp;</span>
+            <span data-ng-show="!ec.appCntl.showMap" class="glyphicon glyphicon-chevron-down"></span>
+            <span data-ng-show="ec.appCntl.showMap" class="glyphicon glyphicon-chevron-up"></span>
+        </button>
+         
+    </div>
+
+        </div> <!-- end body panel -->
+        </div> <!-- end tab -->
+    
+    <div uib-tab index="5"  class="tab-pane fade">
+        <h2>Step 5: Admission Costs</h2>
+        <div id="ec-step5" class="panel-body" >
+        <div class="row">
+            <div id="costRangeElement" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <!--div-->
+                    <label for="costRange" class="control-label">
+                        <span>Cost Range</span>
+                        <span></span>
+                    </label>
+                    <div id="ddCostRange" class="entryField" 
+                        directive-id = 'ddCostRangeBtn'
+                        isteven-multi-select
+                        input-model="ec.costRanges"
+                        helper-elements="none"
+                        output-model="ec.event.costRange"
+                        output-properties="value"
+                        button-label="value"
+                        item-label="value"
+                        max-labels="3"
+                        max-height="500px"
+                        on-close="ec.blur('#costRange')"
+                        disable-property = 'disabledInd'
+                        tick-property="ticked"
+                        title="Searchable Cost Range" >
+                    </div>
+                    <!-- type = hidden is notr validated -->
+                    
+                    <input id="costRange" type="text" data-ng-model="ec.event.costRange"  name="costRange"  class="form-control" style="display:none">
+                    
+                <!--/div-->
+                <small class="help-block" data-ng-messages="(ecForm.costRange.$touched || ecForm.$submitted) && ecForm.costRange.$error">
+                    <span data-ng-message="required">Cost Range is required and cannot be left blank.</span>
+                </small>                
+            </div>  
+        </div>
+        
+        <h4 class="grid-title">Amounts</h4>
+        <div class="row">
+            <!--fieldset>
+            <legend>Amounts</legend-->
+            <div id="childCostElement" class="col-xs-12 col-sm-2 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="childCost" class="control-label">
+                        <span>Child</span>
+                        <span></span>
+                    </label>
+                    <!-- todo: fimd, delevelop a masl for thos? -->
+                    <div class="input-group entryField">
+                        <span class="input-group-addon">$</span>
+                        <input id="childCost" data-ng-model="ec.event.cost.child" class="form-control"  type="text" data-ui-number-mask="2" name="childCost" title="Child Cost" placeholder="">
+                    </div> 
+
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.childCost.$touched || ecForm.$submitted) && ecForm.childCost.$error">
+                    <span data-ng-message="number">Invalid cost amount entered.</span>
+                </small>                
+            </div>  
+            <div id="youthCostElement" class="col-xs-12 col-sm-2 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="youthCost" class="control-label">
+                        <span>Youth</span>
+                        <span></span>
+                    </label>
+                    <!-- todo: fimd, delevelop a masl for thos? -->
+                    <div class="input-group entryField">
+                        <span class="input-group-addon">$</span>                    
+                        <input id="youthCost" data-ng-model="ec.event.cost.youth" class="form-control"   type="text" data-ui-number-mask="2" name="youthCost" title="Youth Cost" placeholder="" >
+                    </div> 
+
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.youthCost.$touched || ecForm.$submitted) && ecForm.youthCost.$error">
+                    <span data-ng-message="number">Invalid cost amount entered.</span>
+                </small>                
+            </div> 
+            <div id="studentCostElement" class="col-xs-12 col-sm-2 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="studentCost" class="control-label">
+                        <span>Student</span>
+                        <span></span>
+                    </label>
+                    <!-- todo: fimd, delevelop a masl for thos? -->
+                    <div class="input-group entryField">
+                        <span class="input-group-addon">$</span>                    
+                        <input id="studentCost" data-ng-model="ec.event.cost.student" class="form-control"  type="text" data-ui-number-mask="2" name="studentCost" title="Senior Cost" placeholder="" >
+                    </div> 
+
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.studentCost.$touched || ecForm.$submitted) && ecForm.studentCost.$error">
+                    <span data-ng-message="number">Invalid cost amount entered.</span>
+                </small>                
+            </div>          
+            <div id="adultCostElement" class="col-xs-12 col-sm-2 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="adultCost" class="control-label">
+                        <span>Adult</span>
+                        <span></span>
+                    </label>
+                    <!-- todo: fimd, delevelop a masl for thos? -->
+                    <div class="input-group entryField">
+                        <span class="input-group-addon">$</span>
+                        <input id="adultCost" data-ng-model="ec.event.cost.adult" class="form-control"   type="text" data-ui-number-mask="2" name="adultCost" title="Adult Cost" placeholder="" >
+                    </div> 
+
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.adultCost.$touched || ecForm.$submitted) && ecForm.adultCost.$error">
+                    <span data-ng-message="number">Invalid cost amount entered.</span>
+                </small>                
+            </div>  
+            <div id="seniorCostElement" class="col-xs-12 col-sm-2 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="seniorCost" class="control-label">
+                        <span>Senior</span>
+                        <span></span>
+                    </label>
+                    <!-- todo: fimd, delevelop a masl for thos? -->
+                    <div class="input-group entryField">
+                        <span class="input-group-addon">$</span>                    
+                        <input id="seniorCost" data-ng-model="ec.event.cost.senior" class="form-control"  type="text" data-ui-number-mask="2" name="seniorCost" title="Senior Cost" placeholder="" >
+                    </div> 
+
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.seniorCost.$touched || ecForm.$submitted) && ecForm.seniorCost.$error">
+                    <span data-ng-message="number">Invalid cost amount entered.</span>
+                </small>                
+            </div>  
+
+            <!--/fieldset-->         
+        </div>
+		<div class="row">
+            <div id="reservationsRequiredElement" class="col-xs-12 col-md-12 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+                <label for="reservationsRequired" class="control-label"><span>Reservations Required?</span><span></span></label>
+                <div class="form-control">
+                    <div class="horizontal entryField">
+                        <input id="reservationsRequiredYes" type="radio" name="reservationsRequired" data-ng-model="ec.event.reservationsRequired"  data-ng-change="ec.blur('#reservationsRequired')" title="Reservations Required"  value="Yes"><label class="radioLabel" for="reservationsRequiredYes">Yes</label>
+                    </div>
+                    <div class="horizontal entryField">
+                        <input id="reservationsRequiredNo" type="radio" name="reservationsRequired" data-ng-model="ec.event.reservationsRequired"  data-ng-change="ec.blur('#reservationsRequired')" title="No Reservations Required"  value="No"><label class="radioLabel" for="reservationsRequiredNo">No</label>
+                    </div>                          
+                </div>
+                <input id="reservationsRequired" type="text" data-ng-model="ec.event.reservationsRequired" name="reservationsRequired" class="form-control" style="display:none">
+
+                <small class="help-block" data-ng-messages="(ecForm.reservationsRequired.$touched || ecForm.$submitted) && ecForm.reservationsRequired.$error">
+                    <span data-ng-message="required">An reservation option must be selected.</span>
+                </small>
+            </div>
+        </div>
+              
+        <div class="row">
+            <div id="otherCostInfoElement" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="otherCostInfo" class="control-label">
+                    <span>Other Cost Infomation</span>
+                    </label>
+                    <div class="entryField">
+                        <textarea id="otherCostInfo" data-ng-model="ec.event.otherCostInfo" class="form-control"  name="otherCostInfo" title="Other Cost Infomation" placeholder=""></textarea>
+                    </div>
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.otherCostInfo.$touched || ecForm.$submitted) && ecForm.otherCostInfo.$error">
+                    <span data-ng-message="required">Other Cost Infomation is required when no specific cost values has been entered.</span>
+                </small>
+            </div>
+        </div>          
+        </div>
+    </div>  
+    
+    <div uib-tab index="6"  class="tab-pane fade">
+        <h2>Step 6: Image Upload</h2>
+        <p>Optionally upload an image to be displayed with the event posting</p>
+        <p> The image must be of file type: bmp, jpg, jpeg, gif, png and should not exceed 2 MB in size (actual size TBD)</p>
+        <div id="ec-step6" class="panel-body" >
+            <div class="row">
+                       
+
+
+                <div class="col-md-10" style="margin-bottom: 40px">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width:50%;">Name</th>
+                                <th data-ng-show="ec.uploader.isHTML5">Size</th>
+                                <th data-ng-show="ec.uploader.isHTML5">Progress</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- though there is a repeat, the will be only one image (as by configuration)--> 
+                            <tr data-ng-repeat="item in ec.uploader.queue">
+                                <td>
+                                    <strong>{{ item.file.name }}</strong>
+                                    <!-- Image preview -->
+                                    <!--auto height-->
+                                    <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
+                                    <!--auto width-->
+                                    <div data-ng-show="ec.uploader.isHTML5" data-ng-thumb="{ file: item._file, height: 100 }"></div>
+                                    <!--fixed width and height -->
+                                    <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
+                                </td>
+                                <td data-ng-show="ec.uploader.isHTML5" nowrap>{{ item.file.size/1024/1024|number:2 }} MB</td>
+                                <td data-ng-show="ec.uploader.isHTML5">
+                                    <div class="progress" style="margin-bottom: 0;">
+                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <span data-ng-show="item.isSuccess"><i class="glyphicon glyphicon-ok"></i></span>
+                                    <span data-ng-show="item.isCancel"><i class="glyphicon glyphicon-ban-circle"></i></span>
+                                    <span data-ng-show="item.isError"><i class="glyphicon glyphicon-remove"></i></span>
+                                </td>
+                                <td nowrap>
+                                    <button type="button" class="btn btn-success btn-xs" data-ng-click="item.upload()" data-ng-disabled="item.isReady || item.isUploading || item.isSuccess">
+                                        <span class="glyphicon glyphicon-upload"></span> Upload
+                                    </button>
+                                    <button type="button" class="btn btn-warning btn-xs" data-ng-click="item.cancel()" ng-disabled="!item.isUploading">
+                                        <span class="glyphicon glyphicon-ban-circle"></span> Cancel
+                                    </button>
+                                    <button type="button" class="btn btn-danger btn-xs" data-ng-click="item.remove()">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr data-ng-repeat="itemDesc in ec.uploader.queue" style="background: inherit">
+                            <td><label for="imagedesc-{{$index}}">Photo Cutline</label></td>
+                            <td colspan="4">
+                                <input id="imagedesc-{{$index}}" data-ng-model="ec.event.image.Description" class="form-control"  type="text"  name="imagedesc-{{$index}}" title="Description of Image" placeholder="" >
+                            </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="progress" style="">
+                        <div class="progress-bar" role="progressbar" data-ng-style="{ 'width': ec.uploader.progress + '%' }"></div>
+                    </div>
+                </div> 
+
+                <div class="col-md-2" >
+
+                    <span class="btn btn-info fileinput-button" data-ng-show="ec.uploader.queue.length < 1">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Select Image File</span>
+                    <input type="file" data-nv-file-select="" data-uploader="ec.uploader"   /><br/>
+                    </span>
+
+                </div>
+
+                
+            </div>
+        </div>
+    </div>
+        
+    <div uib-tab index="7"  class="tab-pane fade">
+        <h2>Step 7: Contact Details</h2>        
+        <div id="ec-step7" class="panel-body" >
+        <div class="row">
+            <div class="col-md-12">
+                <p class="helptext">Please complete all mandatory Fields; this information will not be displayed on event page.<br><br>
+                </p>         
+            </div>
+        </div>
+        <div class="row">
+            <div id="orgNameElement" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="orgName" class="control-label">
+                        <span>Name of Organization</span>
+                    </label>
+                    <div class="entryField">
+                        <input id="orgName" data-ng-model="ec.event.orgName"  class="form-control" type="text" name="orgName" title="Name of Organization" placeholder="">
+                    </div>
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.orgName.$touched || ecForm.$submitted) && ecForm.orgName.$error">
+                    <span data-ng-message="required">Name  of Organization is required and cannot be left blank.</span>
+                </small>                
+            </div>
+        </div>  
+        <div class="row">
+            <div id="contactNameElement" class="col-xs-12 col-md-6 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="contactName" class="control-label">
+                        <span>Contact Name</span>
+                    </label>
+                    <div class="entryField">
+                        <input id="contactName" data-ng-model="ec.event.contactName"  class="form-control" type="text" name="contactName" title="Contact Name" placeholder="">
+                    </div>
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.contactName.$touched || ecForm.$submitted) && ecForm.contactName.$error">
+                    <span data-ng-message="required">Contact Name  is required and cannot be left blank.</span>
+                </small>                
+            </div>
+           <div id="contactTitleElement" class="col-xs-12 col-md-6 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="contactTitle" class="control-label">
+                        <span>Title</span>
+                    </label>
+                    <div class="entryField">
+                        <input id="contactTitle" data-ng-model="ec.event.contactTitle"  class="form-control" type="text" name="contactTitle" title="Contact Title" placeholder="">
+                    </div>
+                </div>
+            </div>
+        </div>       
+        <div class="row">
+            <div id="orgAddressElement" class="col-xs-12 col-md-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <div>
+                    <label for="orgAddress" class="control-label">
+                        <span>Address</span>
+                    </label>
+                    <div class="entryField">
+                        <input id="orgAddress" data-ng-model="ec.event.orgAddress" class="form-control" type="text" name="orgAddress" title="Organization Address" placeholder="Street or building number followed by street name, suite and floor.">
+                    </div>
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.orgAddress.$touched || ecForm.$submitted) && ecForm.orgAddress.$error">
+                    <span data-ng-message="required">Address  is required and cannot be left blank.</span>
+                </small>                
+            </div>
+        </div>
+        
+        <div class="row">
+            <div id="orgPhoneElement" class="col-xs-12 col-md-3 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+                <div>
+                    <label for="orgPhone" class="control-label"><span>Phone Number</span></label>
+                    <div class="entryField">
+                        <input id="orgPhone" data-ng-model="ec.event.orgPhone" data-ui-us-phone-number class="form-control"  type="text" name="orgPhone" title="Organization phone" placeholder="" >
+                    </div>                         
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.orgPhone.$touched || ecForm.$submitted) && ecForm.orgPhone.$error">
+                    <span data-ng-message="required">Phone number is required.</span>
+                    <span data-ng-message="usPhoneNumber">Phone number is not valid.</span>
+                </small>
+            </div>
+            <div id="orgPhoneExtElement" class="col-xs-12 col-md-3 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+                <div>
+                    <label for="orgPhoneExt" class="control-label"><span>Phone Ext.</span></label>
+                    <div class="entryField">
+                        <input id="orgPhoneExt" data-ng-model="ec.event.orgPhoneExt" class="form-control"  type="text" ng-pattern="/^[0-9]*$/" name="orgPhoneExt" title="Event phone ext" placeholder="">
+                    </div>                         
+                </div>
+
+                <small class="help-block" data-ng-messages="(ecForm.orgPhoneExt.$touched || ecForm.$submitted) && ecForm.orgPhoneExt.$error"> 
+                    <span data-ng-message="required">Phone number extension is required.</span>
+                    <span data-ng-message="pattern">Phone number extension accepts numeric data only.</span>
+                </small>
+                
+
+            </div>
+            <div id="orgFaxElement" class="col-xs-12 col-md-3 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+                <div>
+                    <label for="orgFax" class="control-label"><span>Fax Number</span></label>
+                    <div class="entryField">
+                        <input id="orgFax" data-ng-model="ec.event.orgFax" class="form-control"  type="text" name="orgFax" title="Organization fax number" placeholder=""  data-ui-us-phone-number>
+                    </div>                         
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.orgFax.$touched || ecForm.$submitted) && ecForm.orgFax.$error"> 
+                    <span data-ng-message="required">Phone number is not formatted correctly.</span>
+                </small>
+            </div>
+            <div id="orgEmailElement" class="col-xs-12 col-md-3 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+                <div>
+                    <label for="orgEmail" class="control-label"><span>Email</span></label>
+                    <div class="entryField">
+                        <input id="orgEmail" data-ng-model="ec.event.orgEmail" class="form-control"  type="email" name="orgEmail" title="Organization's email" placeholder="">
+                    </div>                         
+                </div>
+                <small class="help-block" data-ng-messages="(ecForm.orgEmail.$touched || ecForm.$submitted) && ecForm.orgEmail.$error">
+                    <span data-ng-message="required">Email address is required.</span>
+                    <span data-ng-message="email">Email address is not formatted correctly.</span>
+                </small>
+            </div>          
+        </div>              
+        <div class="row">
+            <div id="orgTypeElement" class="col-xs-12 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }'>
+                <label for="orgType" class="control-label">
+                    <span>Organization Type</span>
+                </label>
+
+                <div class="form-control">
+                    <div class="horizontal entryField">
+                        <input id="nonProfit" name="orgType" data-ng-model="ec.event.orgType" data-ng-change="ec.blur('#orgType')"  title="Non-Profit Organization Type" type="radio"  value="Non-Profit">
+                        <label for="nonProfit" class="radioLabel">Non-Profit</label>
+                    </div>
+                    <div class="horizontal entryField">
+                        <input id="publicagency" name="orgType" data-ng-model="ec.event.orgType" data-ng-change="ec.blur('#orgType')"  title="Public Agency Organization Type" type="radio"  value="Public Agency">
+                        <label for="publicagency" class="radioLabel">Public Agency</label>
+                    </div>
+                    <div class="horizontal entryField">
+                        <input id="privbus" name="orgType" data-ng-model="ec.event.orgType" data-ng-change="ec.blur('#orgType')"  title="Private/Business Organization Type" type="radio"  value="Private/Business">
+                        <label for="privbus" class="radioLabel">Private/Business</label>
+                    </div>
+                    <div class="horizontal entryField">
+                        <input id="otherOrgType" name="orgType" data-ng-model="ec.event.orgType"   title="Other Organization Type" type="radio"  value="Other">
+                        <label for="otherOrgType" class="radioLabel">Other</label>
+                    </div>
+                </div>
+                <input id="orgType" name="orgType"  type="text" data-ng-model ="ec.event.orgType" class="form-control" style="display: none"/>
+                
+                <small class="help-block" data-ng-messages="(ecForm.orgType.$touched || ecForm.$submitted) && ecForm.orgType.$error">
+                    <span data-ng-message="required">Organization Type is required.</span>
+                </small>
+            </div>
+        </div>
+		</div>  
+	</div>
+    <div uib-tab index="8"  class="tab-pane fade" data-ng-if="ec.opMode == 'update'">
+        <h2>Administration</h2>
+        <div id="ec-step7" class="panel-body" >
+
+        <div class="row">
+            <div id="FeatureEventElement" class="col-xs-12 col-md-12 form-group form-group-horizontal">
+                <div>
+					
+                    <label class="control-label">
+                        <span>Featured Event</span><span class="optional"></span>
+                    </label>
+					
+                    <div class="form-control">
+                        <div class="horizontal entryField">
+                            <input class="form-control " id="featuredEvent" name="featuredEvent"  data-ng-model ="ec.event.admin.featuredEvent" title="Featured Event?" type="checkbox" class="form-control checkbox" value="true" ><label class="chkLabel" for="featuredEvent">&nbsp;Featured Event</label>
+                        </div>
+
+                    </div>                  
+
+                </div>
+            </div> 
+        </div>  
+        <div class="row">
+            <div id="newsLetterElement" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <!--div-->
+                    <label for="newsLetter" class="control-label">
+                        <span>Newsletter</span>
+                        <span></span>
+                    </label>
+
+						
+                    <div id="ddnewsLetter" class="entryField" 
+                        directive-id = 'ddnewsLetterBtn'
+                        isteven-multi-select
+                        input-model="ec.newsLetters"
+                        helper-elements="reset"
+                        output-model="ec.event.admin.newsLetter"
+                        output-properties="value"
+                        button-label="value"
+                        item-label="value"
+                        max-labels="3"
+                        max-height="500px"
+                        on-close="ec.blur('#newsLetter')"
+                        disable-property = 'disabledInd'
+                        tick-property="ticked"
+                        title="Searchable News Letter" >
+                    </div>
+                    <!-- type = hidden is notr validated -->
+                    
+                    <input id="newsLetter" type="text" data-ng-model="ec.event.newsLetter"  name="newsLetter"  class="form-control" style="display:none">
+                    
+                <!--/div-->
+                <small class="help-block" data-ng-messages="(ecForm.newsLetter.$touched || ecForm.$submitted) && ecForm.newsLetter.$error">
+                    <span data-ng-message="required">Cost Range is required and cannot be left blank.</span>
+                </small>                
+            </div>  
+        </div>		
+        </div>
+    </div>  
+</div> <!-- end tab content-->
+</form>
+
+<div id="mapPanel" class="tab-pane" data-ng-show="ec.appCntl.showMap && ec.appCntl.tab == 4">        
+    <div class="panel-body">
+        <div class="row">            
+            <p class="helptext">Using standard google map drawing tools, you can add new locations to the event by using the drawing tools and adding markers, lines or areas to the map. 
+             Once the shape is added to the map, the venue name and display address can then be added to the location above.
+            </p>
+
+            <ui-gmap-google-map center='ec.map.center' fit="true" options="ec.map.options" control="ec.map.mapControl"  zoom='ec.map.zoom'>
+            <ui-gmap-search-box  template="ec.searchbox.template" events="ec.searchbox.events"></ui-gmap-search-box>           
+            <ui-gmap-drawing-manager options="ec.drawingManagerOptions" control="ec.drawingManagerControl" events="ec.drawingManagerEvents"></ui-gmap-drawing-manager>
+             
+            <ui-gmap-map-control position="TOP_CENTER">
+                <button type='button' class="btn btn-sm btn-default deleteShape" data-ng-class="{'btn-warning': danger}" data-ng-show="ec.selectedShape != null" data-ng-click="ec.deleteSelectedShape()">Delete Selected Location</button>
+            </ui-gmap-map-control>  
+            <ui-gmap-map-control position="RIGHT_TOP">
+                <button type='button' class="btn btn-sm btn-default resetMap" data-ng-class="{'btn-warning': danger}" data-ng-click="ec.resetMap()">Reset</button>
+            </ui-gmap-map-control>
+            </ui-gmap-google-map>
+        </div>
+    </div>
+</div>
+    
+<div id='lowerButtonBar' class='row' data-ng-show="ec.event.terms=='agree'">
+    <div  class="col-xs-12 col-sm-6 col-md-6">
+        <button type="button" id="prevStep" class="btn btn-success" data-ng-click="ec.prevTab()" data-ng-show="ec.appCntl.tab > 1" ><i class="glyphicon glyphicon-chevron-left"></i> Prev Step</button>
+
+        <button type="button" id="nextStep" class="btn btn-success"  data-ng-click="ec.nextTab()" data-ng-show="ec.appCntl.tab < ec.MAX_TABS">Next Step <i class="glyphicon glyphicon-chevron-right"></i></button>
+    </div>
+    <div id='lowerRightButtonBar' class="col-xs-12 col-sm-6 col-md-6">
+        <div class="pull-right">
+            <button type="button" id="resetFormBtn" class="btn btn-danger" data-ng-show="ec.opMode != 'update'" data-ng-click="ec.resetForm()">Reset Form</button>
+            <button type="button" id="submitBtn" class="btn btn-success" data-ng-show="ec.opMode != 'update'"  data-ng-click="ec.submit()">Submit <i class="glyphicon glyphicon-ok"></i></button>
+            <button type="button" id="cancelBtn" class="btn btn-success" data-ng-show="ec.opMode == 'update'" data-ng-click="ec.cancelEdit()">Cancel <i class="glyphicon glyphicon-ok"></i></button>
+            <button type="button" id="saveBtn" class="btn btn-success" data-ng-show="ec.opMode == 'update'" data-ng-click="ec.returnRecord()">Save Record <i class="glyphicon glyphicon-ok"></i></button>
+        </div>
+    </div>
+</div>
+
+</div>
+<br><br>
+
+<div data-ng-show="ec.canDebug">
+    <button type="button"  class="btn btn-info" data-ng-click="ec.debug=!ec.debug">Toggle Debug Info</button>
+    <div data-ng-show="ec.debug">
+        <button type="button" class="btn btn-danger grid-remove" data-ng-click="ec.getAllRecords()"><span class="glyphicon glyphicon-remove"></span><span>Get All Data</span></button>
+        <input  style="width:300px" id='dataId' data-ng-model="ec.recIdInput" /> 
+        <button type="button" id="submit3" class="btn btn-info" data-ng-click="ec.getOneRecord()">Get Record</button>
+        <button type="button" id="edit" class="btn btn-info" data-ng-click="ec.editRecord()">Edit Record</button>
+        <button type="button" id="submit4" class="btn btn-info" data-ng-click="ec.revertRecordToOriginal()">Revert Record to Original Submission</button>
+        <button type="button" id="submit5" class="btn btn-info" data-ng-click="ec.updateRecord()">Update Record </button>
+        Hello {{ec.greetMe}}!
+        <pre>event = {{ec.event | json}}</pre>
+        <pre>appCntl = {{ec.appCntl | json}}</pre>
+        <pre>vm.weeklyDatesIM = {{ec.weeklyDatesIM | json}}</pre>
+    
+        <div id="dataTable" class="table-responsive"  data-ng-show="ec.debug"></div>  
+    </div>
+</div>
+</section>
+
+
+</main>
