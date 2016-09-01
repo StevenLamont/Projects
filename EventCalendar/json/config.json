@@ -1,0 +1,14 @@
+{ 
+	"app-settings": {
+		"appName": "City of Toronto Event Calendar",
+		"hasBreadcrumb": true,
+		"hasLeftNav": true,
+		"terms": {
+			"enabled": true
+		},
+		"appmodules": [
+			{"target": "left", "type": "template", "name": "../eventcal/html/eventcal-left.html"},
+			{"target": "right", "type": "template", "name": "../eventcal/html/eventcal-right.html"}
+		]
+	}
+}
