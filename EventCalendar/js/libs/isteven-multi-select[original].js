@@ -29,8 +29,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE 
  * SOFTWARE.
  * --------------------------------------------------------------------------------
- * 2016/09/06 - Modified by Steve Lamont
- *   added "close" button option.
  */
 
 'use strict'
@@ -88,7 +86,6 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
                 all     : true,
                 none    : true,
                 reset   : true,
-                close   : true,
                 filter  : true
             };
 
@@ -238,7 +235,7 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
                     clearButton     = [];
                 
                 // If available, then get select all, select none, and reset buttons
-                if ( $scope.helperStatus.all || $scope.helperStatus.none || $scope.helperStatus.reset || $scope.helperStatus.close) {                                                       
+                if ( $scope.helperStatus.all || $scope.helperStatus.none || $scope.helperStatus.reset ) {                                                       
                     selectButtons = element.children().children().next().children().children()[ 0 ].getElementsByTagName( 'button' );                    
                     // If available, then get the search box and the clear button
                     if ( $scope.helperStatus.filter ) {                                            
@@ -256,7 +253,7 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
                 }
                
                 // Get checkboxes
-                if ( !$scope.helperStatus.all && !$scope.helperStatus.none && !$scope.helperStatus.reset && !$scope.helperStatus.filter && !$scope.helperStatus.close) {
+                if ( !$scope.helperStatus.all && !$scope.helperStatus.none && !$scope.helperStatus.reset && !$scope.helperStatus.filter ) {
                     checkboxes = element.children().children().next()[ 0 ].getElementsByTagName( 'input' );
                 }
                 else {
@@ -754,9 +751,6 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
                         $scope.refreshButton();                                                                          
                         $scope.onReset();                        
                         break;
-                    case 'CLOSE':
-                        angular.element( document ).trigger( 'click' );
-                        break;
                     case 'CLEAR':
                         $scope.tabIndex = $scope.tabIndex + 1;
                         $scope.onClear();    
@@ -951,7 +945,6 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
             $scope.icon.selectAll  = '&#10003;';    // a tick icon
             $scope.icon.selectNone = '&times;';     // x icon
             $scope.icon.reset      = '&#8630;';     // undo icon            
-            $scope.icon.close      = '&times;';     //SML - Change this?
             // this one is for the selected items
             $scope.icon.tickMark   = '&#10003;';    // a tick icon 
 
@@ -960,7 +953,6 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
                 $scope.lang.selectAll       = $sce.trustAsHtml( $scope.icon.selectAll  + '&nbsp;&nbsp;' + $scope.translation.selectAll );
                 $scope.lang.selectNone      = $sce.trustAsHtml( $scope.icon.selectNone + '&nbsp;&nbsp;' + $scope.translation.selectNone );
                 $scope.lang.reset           = $sce.trustAsHtml( $scope.icon.reset      + '&nbsp;&nbsp;' + $scope.translation.reset );
-                $scope.lang.close           = $sce.trustAsHtml( $scope.icon.close      + '&nbsp;&nbsp;' + $scope.translation.close );
                 $scope.lang.search          = $scope.translation.search;                
                 $scope.lang.nothingSelected = $sce.trustAsHtml( $scope.translation.nothingSelected );                
             }
@@ -968,7 +960,6 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
                 $scope.lang.selectAll       = $sce.trustAsHtml( $scope.icon.selectAll  + '&nbsp;&nbsp;Select All' );                
                 $scope.lang.selectNone      = $sce.trustAsHtml( $scope.icon.selectNone + '&nbsp;&nbsp;Select None' );
                 $scope.lang.reset           = $sce.trustAsHtml( $scope.icon.reset      + '&nbsp;&nbsp;Reset' );
-                $scope.lang.close           = $sce.trustAsHtml( $scope.icon.close      + '&nbsp;&nbsp;Close' );
                 $scope.lang.search          = 'Search...';
                 $scope.lang.nothingSelected = 'None Selected';                
             }
@@ -1049,32 +1040,25 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
             // overlay layer
             '<div class="checkboxLayer">' +
                 // container of the helper elements
-                '<div class="helperContainer" ng-if="helperStatus.filter || helperStatus.all || helperStatus.none || helperStatus.reset || helperStatus.close ">' +
+                '<div class="helperContainer" ng-if="helperStatus.filter || helperStatus.all || helperStatus.none || helperStatus.reset ">' +
                     // container of the first 3 buttons, select all, none and reset
-                    '<div class="line" ng-if="helperStatus.all || helperStatus.none || helperStatus.reset || helperStatus.close">' +
+                    '<div class="line" ng-if="helperStatus.all || helperStatus.none || helperStatus.reset ">' +
                         // select all
-                        '<button type="button" class="helperButton" aria-lebel="select all options"' +
+                        '<button type="button" class="helperButton"' +
                             'ng-disabled="isDisabled"' + 
                             'ng-if="helperStatus.all"' +
                             'ng-click="select( \'all\', $event );"' +
                             'ng-bind-html="lang.selectAll">' +
                         '</button>'+
                         // select none
-                        '<button type="button" class="helperButton" aria-lebel="select no options"' +
+                        '<button type="button" class="helperButton"' +
                             'ng-disabled="isDisabled"' + 
                             'ng-if="helperStatus.none"' +
                             'ng-click="select( \'none\', $event );"' +
                             'ng-bind-html="lang.selectNone">' +
                         '</button>'+
-                        // close
-                        '<button type="button" class="helperButton reset" aria-lebel="close selection dropdown"' +
-                            'ng-disabled="isDisabled"' + 
-                            'ng-if="helperStatus.close"' +
-                            'ng-click="select( \'close\', $event );"' +
-                            'ng-bind-html="lang.close">'+
-                        '</button>' +
                         // reset
-                        '<button type="button" class="helperButton reset" aria-lebel="reset selection"' +
+                        '<button type="button" class="helperButton reset"' +
                             'ng-disabled="isDisabled"' + 
                             'ng-if="helperStatus.reset"' +
                             'ng-click="select( \'reset\', $event );"' +
@@ -1090,7 +1074,7 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
                             'ng-change="searchChanged()" class="inputFilter"'+
                             '/>'+
                         // clear button
-                        '<button type="button" class="clearButton" ng-click="clearClicked( $event )" aria-lebel="clear filter text">×</button> '+
+                        '<button type="button" class="clearButton" ng-click="clearClicked( $event )" >×</button> '+
                     '</div> '+
                 '</div> '+
                 // selection items
