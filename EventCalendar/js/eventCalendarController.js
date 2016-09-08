@@ -160,10 +160,59 @@
     vm.drawingManagerOptions = {};    
     vm.drawingManagerControl = {};  
     
-    /* we broadacast to the other datepickers that a key date has changed and thus they need to re-render their views */
-    vm.eventDateChanged = function () {
+    /* we broadacast to the other datepickers that a key date has changed and thus they need to re-render their views 
+	   problem: If we debound in the model-options, it messes the formmaters. *check this
+	   if we don't debounce, this calls on each keystroke.. and we have too many events.
+	   we can't blur because the control isn't moving to the next field. (i changed thre html so that tabbing is working better)
+	
+		onChange on the picker is ok.. as the change comes in all at once.
+		
+		If the person uses the picker after manually setting the date, we need to blur as well.
+	*/
+    vm.eventDateChanged = function (fromDt, toDt) {
+		console.log("Change");
         $scope.$broadcast('eventdatechange');          
     };
+    vm.eventDateBlur = function (fromfld, fromDt, tofld, toDt) {
+		console.log('blur:' , fromfld,fromDt, tofld,toDt);
+		if (typeof fromDt !== 'undefined' && typeof toDt !== 'undefined' && moment(fromDt) > moment(toDt)) {
+			$scope.ecForm[fromfld].$setValidity("baddate", false);
+            $scope.ecForm[tofld].$setValidity("baddate",false);
+		} else {
+			$scope.ecForm[fromfld].$setValidity("baddate", true);
+            $scope.ecForm[tofld].$setValidity("baddate",true);			
+			
+		}
+		$scope.$broadcast('eventdatechange');   
+	}
+    vm.eventOccurDateBlur = function (startfld, startDt, endfld, endDt, eventStartDt, eventEndDt) {
+		console.log('blur:' , startfld, startDt,endfld, endDt);
+		if (typeof startDt !== 'undefined' && typeof endDt !== 'undefined' && moment(startDt) > moment(endDt).endOf('day')) {
+			$scope.ecForm[startfld].$setValidity("baddate", false);
+            $scope.ecForm[endfld].$setValidity("baddate",false);
+		} else {
+			$scope.ecForm[startfld].$setValidity("baddate", true);
+            $scope.ecForm[endfld].$setValidity("baddate",true);			
+			
+		}
+		if (typeof startDt !== 'undefined'  && (moment(startDt) < moment(eventStartDt).startOf('day') ||  moment(startDt) > moment(eventEndDt).endOf('day')   ) ) {
+			$scope.ecForm[startfld].$setValidity("badoccurdate", false);
+		} else {
+			$scope.ecForm[startfld].$setValidity("badoccurdate", true);		
+		}
+		if (typeof endDt !== 'undefined'  && (moment(endDt) > moment(eventEndDt).endOf('day')  ||  moment(endDt) < moment(eventStartDt).startOf('day')   ) ) {
+			$scope.ecForm[endfld].$setValidity("badoccurdate", false);
+		} else {
+			$scope.ecForm[endfld].$setValidity("badoccurdate", true);		
+		}
+
+		
+		$scope.$broadcast('eventdatechange');   
+	}	
+ //   vm.eventOccurDateChanged = function (Idx) {
+//		console.log("Render:" + 'eventdatechange' + Idx);
+ //       $scope.$broadcast('eventdatechange' + Idx);          
+ //   };
     
     vm.uploader  = new FileUploader({
             url: 'https://was8-inter-dev.toronto.ca/cc_sr_v1/upload/eventcal/eventcal',
@@ -344,7 +393,8 @@
                     /* this is geoCoding by lat/lng to get address */
                     geocoder.geocode({'location':  newShape.position}, function(results, status) {
                         if (status === google.maps.GeocoderStatus.OK) {
-                            mapObject.address = results[0].formatted_address;                                  
+                            mapObject.address = results[0].formatted_address;    
+							mapObject.geoCoded = true;
                         }
                         $timeout(function() {
                             addLocation(mapObject);
@@ -666,6 +716,32 @@
         
     }
  
+    /* check fields that can't be done easily in the form */
+    function crossValidations() {
+        /* geocode any addresses not already geocode. this may now be redundant */
+        angular.forEach(vm.event.locations, function(location, rowIdx) {
+            if (!location.geoCoded && !_.isEmpty(location.address) && location.type === google.maps.drawing.OverlayType.MARKER) {
+                $log.debug("found non-geocoded address");
+                location.address = "";  //This causes an error.
+                //geoCodeAddress(location.address,function(latLng, address) {
+                //    $timeout(function() {
+                //        vm.event.locations[rowIdx].coords = latLng;
+                //        vm.event.locations[rowIdx].address = address;
+                //        console.log("found non-geocoded address: geocided to :" + address);
+                //        vm.event.locations[rowIdx].geoCoded = true;
+                //    });
+                //});
+            }
+        });
+    
+    //    if (moment(vm.event.startDateTime) > moment(vm.event.endDateTime)) {
+    //        $scope.ecForm.startDateTime.$setValidity("baddate", false);
+    //        $scope.ecForm.endDateTime.$setValidity("baddate",false);
+	//	} else {		
+	//	    $scope.ecForm.startDateTime.$setValidity("baddate", true);
+    //       $scope.ecForm.endDateTime.$setValidity("baddate",true);
+    //    }
+    }
     
     /* this function removes optional data that is no longer valid based on the last data the user entered */
     function cleanInput() {
@@ -677,8 +753,6 @@
             delete vm.event.endDate;
             delete vm.event.dates;  
             delete vm.event.weeklyDates; 
-            vm.event.startDate = moment(vm.event.startDateTime).startOf('day');
-            vm.event.endDate = moment(vm.event.endDateTime).startOf('day');
         } else if (vm.event.frequency == 'dates') {
             delete vm.event.weeklyDates; 
             delete vm.event.startDateTime;
@@ -716,23 +790,17 @@
             delete vm.event.image;
         }
         
-        /* geocode any addresses not already geocode. this may now be redundant */
-        angular.forEach(vm.event.locations, function(location, rowIdx) {
-            if (!location.geoCoded && !_.isEmpty(location.address) && location.type === google.maps.drawing.OverlayType.MARKER) {
-                $log.debug("found non-geocoded address");
-                location.address = "";  //This causes an error.
-                //geoCodeAddress(location.address,function(latLng, address) {
-                //    $timeout(function() {
-                //        vm.event.locations[rowIdx].coords = latLng;
-                //        vm.event.locations[rowIdx].address = address;
-                //        console.log("found non-geocoded address: geocided to :" + address);
-                //        vm.event.locations[rowIdx].geoCoded = true;
-                //    });
-                //});
-            }
-        });
+
         
         
+    }
+    
+    /* 1: we want a startDate and EndDate on all records for searching in front-end */
+    function setCalculatedFields() {
+        if (vm.event.frequency == 'once') {
+            vm.event.startDate = moment(vm.event.startDateTime).startOf('day');
+            vm.event.endDate = moment(vm.event.endDateTime).startOf('day');
+        }
     }
     
     /* this focuses the form to the 1st error. It needs to deal with tabs. */
@@ -769,6 +837,7 @@
         $scope.ecForm.$setSubmitted(); //we need to manually set this due to our buttons. Our validations rely on it.
         
         cleanInput();
+        crossValidations();
         $scope.$broadcast('show-errors-check-validity');
 
         if ($scope.ecForm.$invalid) {
@@ -777,6 +846,7 @@
             return; 
         }
 
+        setCalculatedFields();
         vm.progressbar.start();
         var jsonData = { 'calEvent' : vm.event};
         
@@ -1299,7 +1369,7 @@
     
     */
     function beforeRenderStartDateTime($view, $dates, $leftDate, $upDate, $rightDate, where, enddt, parentStartDt, parentEndDt) {
-
+		console.log("render start");
         $log.debug(where + " " + $view + " Parent Start:" + (typeof parentStartDt === 'undefined' ? "blank" : moment( parentStartDt).format("YYYYMMDD HH:mm")) + 
                                           " Parent end:" + (typeof parentEndDt === 'undefined' ? "blank" : moment( parentEndDt).format("YYYYMMDD HH:mm ")) + 
                                           " end date:" + (typeof enddt === 'undefined' ? "blank" : moment( enddt).format("YYYYMMDD HH:mm")));
@@ -1344,7 +1414,7 @@
 
     /* on some validation */
     function beforeRenderEndDateTime($view, $dates, $leftDate, $upDate, $rightDate, where,startdt, parentStartDt, parentEndDt) {
-
+		console.log("render end " + $view);
         //console.log(where + " " + $view + " Parent Start:" + (typeof parentStartDt === 'undefined' ? "blank" : moment( parentStartDt).format("YYYYMMDD HH:mm"))  + 
         //                                  " Parent end:" + (typeof parentEndDt === 'undefined' ? "blank" : moment( parentEndDt).format("YYYYMMDD HH:mm")) + 
         //                                  " Start date:" + (typeof startdt === 'undefined' ? "blank" : moment( startdt).format("YYYYMMDD HH:mm")));
