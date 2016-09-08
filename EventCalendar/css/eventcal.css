@@ -24,6 +24,12 @@ label.required:before { color: red;margin-left: 5px;margin-right: 5px;content: "
 }
 
 #maincontent .form-group  {margin-bottom:10px;}
+
+#maincontent .input-group-addon a {
+	color: inherit;
+}
+
+
 #maincontent button {margin:0;}
 .nav > li > button {
     display: block;
@@ -99,6 +105,7 @@ li.active button {
     margin-right: 0px;
     font-size: 16px;
     font-weight: bold;
+	padding-bottom: 12px; /* mostly for chrome */
     
 }
 
