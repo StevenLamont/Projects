@@ -1,0 +1,55 @@
+
+<div id="welcomemsg"></div>
+<section id="hsiadmin">
+<div id="hsilist">
+	<div class="row">
+		<div class="col-xs-12 col-sm-10">
+			<h2>Service and Benefit Entries</h2>
+		</div>
+		<div class="col-xs-12 col-sm-2">
+			<button id="addNewServiceBenefit" class="btn btn-success"><span class="glyphicon glyphicon-plus"></span> Add New</button>
+		</div>
+	</div>
+</div>
+</div>
+</section>
+<section id="hsimodals">
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header"><button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span></button>
+					<h4 id="loginModalLabel" class="modal-title">User Login</h4>
+				</div>
+				<div id="serviceModalBody" class="modal-body">
+					<form class="alert ng-pristine ng-valid ng-submitted">
+						<label for="username">Username</label>:
+						<input class="form-control" type="text" id="username" value="">
+						<label for="password">Password</label>:
+						<input class="form-control" type="password" id="password" value="">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
+					<button class="btn btn-success" type="button" onclick="login();">Login</button>
+				</div>
+			</div>
+		</div>
+	</div>
+		
+	<div class="modal fade" id="ruleModal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header"><button class="close" type="button" data-dismiss="modal"> <span aria-hidden="true">&times;</span> <span class="sr-only">Close</span></button>
+					<h4 id="ruleModalLabel" class="modal-title">Service/Benefit Rule Generator</h4>
+				</div>
+				<div id="ruleModalBody" class="modal-body">
+					
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-success" type="button" data-dismiss="modal">Cancel</button>
+					<button class="btn btn-success" type="button" onclick="saveRule();">Save</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
