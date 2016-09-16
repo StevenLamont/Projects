@@ -1,0 +1,26 @@
+{
+	"title": "Finding Childcare",
+	"category": "Childcare",
+	"description": "Child care in the City of Toronto is available in over 900 licensed child care centres and through 19 licensed home child care agencies working with over 2,000 approved home care providers. Children served by licensed child care range in age from infant to school age.",
+	"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=ff825e0076113410VgnVCM10000071d60f89RCRD",
+	"keywords": "parents, children, families, home care",
+	"relatedlinks": [{
+		"name": "Child care locator",
+		"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=434763f843ae0410VgnVCM10000071d60f89RCRD&vgnextchannel=6d3e8ed34ce9e310VgnVCM10000071d60f89RCRD"
+	},
+	{
+		"name": "Centres A - Z",
+		"link": "http://www1.toronto.ca/children/dmc/a2z/a2za.html"
+	},
+	{
+		"name": "Child care centres by Ward",
+		"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=b2ef3fea960bf310VgnVCM10000071d60f89RCRD&vgnextchannel=6d3e8ed34ce9e310VgnVCM10000071d60f89RCRD"
+	}],
+	"rules": [{
+		"op": "",
+		"rule": [
+			{"op": "", "rule": "Age 65+"},
+			{"op": "AND", "rule": "OW"}
+			],
+		}]
+}

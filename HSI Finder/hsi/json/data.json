@@ -1,0 +1,114 @@
+[{
+	"title" : "Title",
+	"type" : "Service",
+	"category": "Housing",
+	"description" : "Description description description description description description description description description description description description description description description description description description description description description description description description description description description.",
+	"link": "http://google.com",
+	"keywords": "keywords",
+	"categories" : ["youth"],
+	"relatedlinks" : [{"name": "Related Link 1", "link": "#"},{"name": "Related Link 2", "link": "#"},{"name": "Related Link 3", "link": "#"}],
+	"rules": []
+},
+{
+	"title": "Aboriginal Housing",
+	"category": "Housing",
+	"description": "There are several agencies in Toronto that provide housing support and programs to the Aboriginal community.",
+	"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=fdbcd0ca45b73510VgnVCM10000071d60f89RCRD#abhousing",
+	"keywords": "aboriginal, housing, first nations, native, transitional housing, community housing, government housing, public housing, social housing, subsidized housing, rent-geared-to-income, low income housing, Indiginous, RGI",
+	"categories": ["indigenous",
+	"housesupport",
+	"homeless",
+	"tenant"],
+	"relatedlinks": [{
+		"name": "Aboriginal Crisis Services",
+		"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=fdbcd0ca45b73510VgnVCM10000071d60f89RCRD#abcrisis"
+	},
+	{
+		"name": "Aboriginal Employment Support",
+		"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=fdbcd0ca45b73510VgnVCM10000071d60f89RCRD#abemployment"
+	},
+	{
+		"name": "Aboriginal Legal Resources",
+		"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=fdbcd0ca45b73510VgnVCM10000071d60f89RCRD#ablegal"
+	},
+	{
+		"name": "Aboriginal Recreational Activities",
+		"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=fdbcd0ca45b73510VgnVCM10000071d60f89RCRD#abrecreation"
+	}],
+	"rules": [{"op": "", "rule": "Age 0-17 OR Age 18-29 AND OW"}, {"op": "OR", "rule": "Age 18-29 AND OW"},{"op": "AND", "rule": "Age 0-17 AND OW"}]
+},
+{
+	"title" : "Finding Childcare",
+	"category": "Childcare",
+	"description" : "Child care in the City of Toronto is available in over 900 licensed child care centres and through 19 licensed home child care agencies working with over 2,000 approved home care providers. Children served by licensed child care range in age from infant to school age.",
+	"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=ff825e0076113410VgnVCM10000071d60f89RCRD",
+	"keywords": "parents, children, families, home care",
+	"relatedlinks" : [{"name": "Child care locator", "link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=434763f843ae0410VgnVCM10000071d60f89RCRD&vgnextchannel=6d3e8ed34ce9e310VgnVCM10000071d60f89RCRD"},{"name": "Centres A - Z", "link": "http://www1.toronto.ca/children/dmc/a2z/a2za.html"},{"name": "Child care centres by Ward", "link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=b2ef3fea960bf310VgnVCM10000071d60f89RCRD&vgnextchannel=6d3e8ed34ce9e310VgnVCM10000071d60f89RCRD"}],
+	"rules": [{"op": "", "rule": [{ "op" : "", "rule" : "Age 65+"},  { "op" : "AND", "rule" : "OW"}]}]
+},
+{
+	"title" : "Child Care Fee Subsidy",
+	"subsidy": true,
+	"category": "Childcare",
+	"description" : "A child care fee subsidy helps a family with the cost of licensed child care.",
+	"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=ce1ad25ed83ae310VgnVCM10000071d60f89RCRD",
+	"keywords": "parents, children, families, home care",
+	"categories" : ["parent"],
+	"relatedlinks" : [{"name": "Fee Subsidy Calculator",  "link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=198b5f2bda51f310VgnVCM10000071d60f89RCRD"}, {"name": "Apply for a child care fee subsidy", "link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=198b5f2bda51f310VgnVCM10000071d60f89RCRD&vgnextchannel=bcd25e0076113410VgnVCM10000071d60f89RCRD"},{"name": "Keeping your fee subsidy", "link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=d6bad25ed83ae310VgnVCM10000071d60f89RCRD&vgnextchannel=bcd25e0076113410VgnVCM10000071d60f89RCRD"}, {"name": "Frequently asked questions", "link":"http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=96b37503c793f310VgnVCM10000071d60f89RCRD&vgnextchannel=bcd25e0076113410VgnVCM10000071d60f89RCRD"}],
+	"rules": [{"op": "", "rule": "Has Children"}]
+},
+{
+	"title" : "Aboriginal Childcare Programs",
+	"category": "Childcare",
+	"description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=ce1ad25ed83ae310VgnVCM10000071d60f89RCRD",
+	"keywords": "parents, children, families, home care, first nations, native, aboriginals",
+	"categories" : ["parent", "indigenous"],
+	"relatedlinks" : [{"name": "Gizhaadaawgamik", "link": "http://www1.toronto.ca/children/dmc/webreg/gcreg4184.html"},{"name": "Scarborough Child and Family Life Centre", "link": "http://www1.toronto.ca/children/dmc/webreg/gcreg12124.html"}],
+	"rules": []
+},
+{
+	"title" : "Aboriginal Programs for School age children",
+	"category": "Childcare",
+	"description" : "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.",
+	"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=ce1ad25ed83ae310VgnVCM10000071d60f89RCRD",
+	"keywords": "parents, children, families, home care, first nations, native, aboriginals",
+	"categories" : ["parent", "indigenous"],
+	"relatedlinks" : [{"name": "After School Programs", "link": "http://www.nativechild.org/children-a-families/scarborough-child-and-family-life-centre"},{"name": "Summer Camp", "link": "http://www.nativechild.org/youth/camp-programs"}],
+	"rules": []
+},
+
+{
+	"title" : "Supports while you work",
+	"category": "Employment",
+	"description" : "If you are working and you would like to explore career options, Employment and Social Services may be able to help you. Many people work and are still eligible for some social assistance. Employment and Social Services has supports in place to help as you start to work. Supports include help with employment start-up costs and child care costs.",
+	"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=12f9707b1a280410VgnVCM10000071d60f89RCRD&vgnextchannel=d7b2975f88801410VgnVCM10000071d60f89RCRD",
+	"keywords": "employment, ontario works, career, job",
+	"categories" : ["employmentsupport", "ontarioworks", "employed", "adult", "youth"],
+	"relatedlinks" : [{"name": "Employment Centres",  "link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=9319cff9501c0410VgnVCM10000071d60f89RCRD&vgnextchannel=d7b2975f88801410VgnVCM10000071d60f89RCRD"},{"name": "Help with employment and school costs", "link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=59e9707b1a280410VgnVCM10000071d60f89RCRD&vgnextchannel=d7b2975f88801410VgnVCM10000071d60f89RCRD"}, {"name": "Ontario Works Rights & Responsibilities", "link":"http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=9164ac30050d0410VgnVCM10000071d60f89RCRD&vgnextchannel=d7b2975f88801410VgnVCM10000071d60f89RCRD"}],
+	"rules": []
+},
+{
+	"title" : "Job Incentive Program",
+	"category": "Employment",
+	"description" : "The Job Incentive Program offers work-based learning opportunities in the Toronto Public Service for Toronto residents who receive OW (Ontario Works) or ODSP (Ontario Disability Support Program).",
+	"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=550a707b1a280410VgnVCM10000071d60f89RCRD&vgnextchannel=e371be83a3d01410VgnVCM10000071d60f89RCRD#JIP",
+	"keywords": "employment, ontario works, career, job",
+	"categories" : ["employmentsupport", "ontarioworks", "employed", "adult", "youth"],
+	"relatedlinks" : [{"name": "Employment Centres", "link":"http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=a5c3d08099380410VgnVCM10000071d60f89RCRD"}, {"name": "Mentoring Immigrants Program",  "link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=d472ea9955d9a310VgnVCM10000071d60f89RCRD&vgnextchannel=d84ae03bb8d1e310VgnVCM10000071d60f89RCRD"},{"name": "The mentoring partnership", "link": "http://www.thementoringpartnership.com/"}],
+	"rules": []
+},
+{
+	"title" : "Home Ownership Assistance",
+	"subsidy": true,
+	"category": "Housing",
+	"description" : "The City of Toronto works with a number of groups that provide affordable home ownership opportunities. ",
+	"link": "http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=630707ceb6f8e310VgnVCM10000071d60f89RCRD&vgnextchannel=05d407ceb6f8e310VgnVCM10000071d60f89RCRD",
+	"keywords": "housing, homes, ownership",
+	"categories" : ["housesupport", "parents", "adult", "youth", "indigenous"],
+	"relatedlinks" : [{"name": "Daniels Corporation", "link":"http://www.danielsoneparkplace.com/"}, {"name": "Options for Homes",  "link": "http://www.optionsforhomes.ca/"},{"name": "Habitat for Hummanity", "link": "http://www.torontohabitat.ca/apply-for-a-home/information-session-dates.html"}, {"name": "Miziwe Biik Development Corporation", "link": "http://www.mbdc.ca/"}],
+	"rules": []
+}]
+
+
+

@@ -1,0 +1,411 @@
+<main role="main" id="maincontent" class="container">				
+	<section id="app-nav-left" class="hide hidden-print col-xs-12 col-sm-3" ng-if="hasLeftLav">
+	</section>		
+	<div id="app-content-full" ng-class="{{body_class}}" ng-controller="content-frame">
+		<div class="row">
+			<section id="app-content-top" class="col-xs-12">
+			<section id="wizard">
+				<h2 id="wizardTitle">Resident Status</h2>
+				<!--WIZARD START-->
+				
+					<section id="step1" data-step=1 data-title="Resident Information" class="step active">
+						<div class="row">
+							<div class="col-xs-12 col-md-6">
+								<div class="input-group">
+									<label class="questionLabel">Do you live, work in, or plan to move to the City of Toronto?</label>
+									<div class="filter form-control filterresident">
+										<div class=""><input id="torontoresident" data-qval="Resident" name="torontoresident" type="radio" value="yes"/> Yes</div>
+										<div class=""><input id="nottorontoresident" data-qval="Non-Resident" name="torontoresident" type="radio" value="no"/> No</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<div class="helptitle">Why is the information important?</div>
+								<div class="helptext">There may be services, and money that is only for people who are living or working in the City of Toronto.</div>
+							</div>
+						</div>
+					</section>
+				
+				
+				
+					<section id="step2" data-step=2 data-title="Age Information" class="step">
+						<div class="row">
+							<div class="col-xs-12 col-md-6">
+								<div class="input-group">
+									<label class="questionLabel">What is your age?</label>
+									<div class="filter form-control filterage">
+										<div class=""><input name="agegroup" type="radio" data-qval="Age 0-17" value="0-17 years old"/> 17 years old and under</div>
+										<div class=""><input name="agegroup" type="radio" data-qval="Age 18-29" value="18-29 years old"/> 18-29 years old</div>
+										<div class=""><input name="agegroup" type="radio" data-qval="Age 30-59" value="30-59 years old"/> 30-59 years old</div>
+										<div class=""><input name="agegroup" type="radio" data-qval="Age 60-64" value="60-64 years old"/> 60-64 years old</div>
+										<div class=""><input name="agegroup" type="radio" data-qval="Age 65+" value="65+ years old"/> 65+ years old</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<div class="helptitle">Why is the information important?</div>
+								<div class="helptext">There may be information, services, and money that is only for people of certain ages.</div>
+							</div>
+						</div>
+					</section>
+					
+					<section id="step3" data-step=3  data-title="Language Information" class="step">
+						<div class="row">
+							<div class="col-xs-12 col-md-6">
+								<div class="input-group">
+									<label class="questionLabel">What language do you like to receive services in?</label>
+									<div class="filter form-control filterlanguage">
+										<div class=""><input name="language" type="radio" data-qval="English" value="English"/> English</div>
+										<div class=""><input name="language" type="radio" data-qval="French" value="French"/> French</div>
+										<div class="input-group">
+											<div class="input-group-addon"><input id="languageOther" name="language" type="radio" value="Other"/> Other:</div>
+											<div><input id="languageOtherText" name="languageOther" type="text" value="" class="form-control"/></div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<div class="helptitle">Why is the information important?</div>
+								<div class="helptext">The City of Toronto officially provides services in French and English. We can also use translators who speak other languages. Knowing what languages people like to receive services in will help us to better serve the community in the future.</div>
+							</div>
+						</div>
+					</section>
+
+					<section id="step4" data-step=4 data-title="Financial Information" class="step">
+						<div class="row">
+							<div class="col-xs-12 col-md-6">
+								<div class="input-group">
+									<label class="questionLabel">Are you in financial need?</label>
+									<div class="filter form-control filterfinancialneed">
+										<div class=""><input id="financialneedyes" name="financialneed" type="radio" data-qval="Financial Need" value="yes"/> 
+												<label for="financialneedyes">Yes</label></div>
+										<div class=""><input id="financialneedno" name="financialneed" type="radio" data-qval="No Financial Need" value="no"/>
+												<label for="financialneedno">No</label></div>
+										<div class=""><input id="financialneeddontknow" name="financialneed" type="radio" data-qval="Unsure Financial Need"  value="no"/>
+												<label for="financialneeddontknow">Don't Know</label></div>
+									</div>
+								</div>
+								<div class="input-group">
+									<label class="questionLabel">Are you currently receiving any of the following?</label>
+									<p class="helptext">Select all that apply</p>
+									<div class="filter form-control filtersubsidy">
+										<div class=""><input id="ow" name="ow" type="checkbox" data-qval="OW" value="ow"/> Ontario Works</div>
+										<div class=""><input id="odsp" name="odsp" type="checkbox" data-qval="ODSP" value="odsp"/> Ontario Disability Support</div>
+										<div class=""><input id="ccfs" name="ccfs" type="checkbox" data-qval="Child Care Fee Subsidy" value="ccfs"/> Child Care Fee Subsidy</div>
+										<div class=""><input id="tch" name="tch" type="checkbox" data-qval="Subsidized Housing" value="tch"/> Subsidized Housing/Rent Subsidy</div>
+										<div class=""><input id="ha" name="ha" type="checkbox" data-qval="Housing Allowance" value="ha"/> Housing Allowance</div>
+										<div class=""><input id="ncbs" name="ncbs" type="checkbox" data-qval="Child Beneift Supplement" value="ncbs"/> National Child Benefit Supplement</div>
+										<div class=""><input id="ei" name="ei" type="checkbox" data-qval="EI" value="ei"/> Employment Insurance</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<div class="helptitle">Why is the information important?</div>
+								<div class="helptext">There may be services and money available for people in financial need or  who are already receiving certain benefits or subsidies.</div>
+							</div>
+						</div>
+					</section>
+
+					<section id="step5" data-step=5 data-title="School Information" class="step">
+						<div class="row">
+							<div class="col-xs-12 col-md-6">
+								<div class="input-group">
+									<label class="questionLabel">Are you currently in school?</label>
+									<div class="filter form-control filterschool">
+										<div class=""><input id="fulltimeschool" name="schooloption" type="radio" data-qval="FT Student" value="fulltime"/> Full-time</div>
+										<div class=""><input id="parttimeschool" name="schooloption" type="radio" data-qval="PT Student" value="parttime"/> Part-time</div>
+										<div class=""><input id="notinschool" name="schooloption" type="radio" data-qval="Not Student" value="notinschool"/> I am not currently in school</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<div class="helptitle">Why is the information important?</div>
+								<div class="helptext">There may be services and money available for people who are in school.</div>
+							</div>
+						</div>
+					</section>					
+					
+					
+					<section id="step6" data-step=6 data-title="Parenting Information" class="step">
+						<div class="row">
+							<div class="col-xs-12 col-md-6">
+								<div class="input-group">
+									<label class="questionLabel">Do you have any children in the following age groups?</label>
+									<p class="helptext">Select all that apply</p>
+									<div class="filter form-control filterparent">
+										<div class=""><input id="childagerange1" name="childagerange1" type="checkbox" data-qval="Child Ages 0-2" value="0 - 2 years old"/> 2 and under</div>
+										<div class=""><input id="childagerange2" name="childagerange2" type="checkbox" data-qval="Child Ages 3-4" value="3 - 4 years old"/> 3 - 4 years old</div>
+										<div class=""><input id="childagerange3" name="childagerange3" type="checkbox" data-qval="Child Ages 5-6" value="5 - 6 years old"/> 5 - 6 years old</div>
+										<div class=""><input id="childagerange4" name="childagerange4" type="checkbox" data-qval="Child Ages 7-10" value="7 - 10 years old"/> 7 - 10 years old</div>
+										<div class=""><input id="childagerange5" name="childagerange5" type="checkbox" data-qval="Child Ages 11-12" value="11 - 12 years old"/> 11 - 12 years old</div>
+										<div class=""><input id="childagerange6" name="childagerange6" type="checkbox" data-qval="Child Ages 13-16" value="13 - 16 years old"/> 13 - 16 years old</div>
+										<div class=""><input id="childagerange7" name="childagerange7" type="checkbox" data-qval="Child Ages 17-18" value="17 - 18 years old"/> 17 - 18 years old</div>
+										<div class=""><input id="childagerange8" name="childagerange8" type="checkbox" data-qval="Expecting Child" value="Expecting"/> I do not currently have a child, but am expecting a child</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<div class="helptitle">Why is the information important?</div>
+								<div class="helptext">There may be information, services and money available to you or your children depending on the age of the child/children.</div>
+							</div>
+						</div>
+					</section>
+
+					<section id="step7" data-step=7 data-title="Employment Information" class="step">
+						<div class="row">
+							<div class="col-xs-12 col-md-6">
+								<div class="input-group">
+									<label class="questionLabel">What is your current employment status?</label>
+									<div class="filter form-control filteremployment">
+										<div class=""><input id="employedFT" name="employment" type="radio" data-qval="Employed FT"  value="Employed Full-Time"/> Employed Full-Time</div>
+										<div class=""><input id="employedPT" name="employment" type="radio" data-qval="Employed PT" value="Employed Part-Time"/> Employed Part-Time</div>
+										<div class=""><input id="unemployed" name="employment" type="radio" data-qval="Unemployed" value="Unemployed"/> Unemployed</div>
+										<div class=""><input id="retired" name="employment" type="radio" data-qval="Retired" value="Retired"/> Retired</div>
+										<div class=""><input id="matleave" name="employment" type="radio" data-qval="Mat-Leave" value="Maternity Leave"/> Maternity Leave</div>
+										<br/><p class="helptext">Select all that apply</p>
+										<div class=""><input id="lookingforwork" name="lookingforwork" type="checkbox" data-qval="Looking-for-work" value="Looking for work"/> I am currently looking for work</div>
+										<div class=""><input id="lookingtoupgrade" name="lookingtoupgrade" type="checkbox" data-qval="Looking-to-upgrade" value="Looking to upgrade skills"/> I am looking to upgrade my skills</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<div class="helptitle">Why is the information important?</div>
+								<div class="helptext">There may be information, services, and money available to you depending on your employment status.</div>
+							</div>
+						</div>
+					</section>		
+
+					
+					<section id="step8" data-step=8 data-title="Income Information" class="step">
+						<div class="row">
+							<div class="col-xs-12 col-md-6">
+								<div class="input-group">
+									<label class="questionLabel">What is your approximate combined household income?</label>
+									<div class="filter form-control filterincome">
+										<div class=""><input id="salrange1" name="salrange" type="radio" data-qval="Income 0-20K" value="$0 - $20,000"/> $0 - $20,000</div>
+										<div class=""><input id="salrange2" name="salrange" type="radio" data-qval="Income 20K-50K" value="$20,000 - $50,000"/> $20,000 - 50,000</div>
+										<div class=""><input id="salrange3" name="salrange" type="radio" data-qval="Income 50K-80K" value="$50,000 - $80,000"/> $50,000 - $80,000</div>
+										<div class=""><input id="salrange4" name="salrange" type="radio" data-qval="Income 80K-100K" value="$80,000 - $100,000"/> $80,000 - $100,000</div>
+										<div class=""><input id="salrange5" name="salrange" type="radio" data-qval="Income 100K+" value="$100,000+"/> $100,000+</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<div class="helptitle">Why is the information important?</div>
+								<div class="helptext">Question for Work Stream: Do we still need this with rephrased question #4?</div>
+							</div>
+						</div>
+					</section>	
+					
+					<section id="step9" data-step=9 data-title="Housing Information" class="step">
+						<div class="row">
+							<div class="col-xs-12 col-md-6">
+								<div class="input-group">
+									<label class="questionLabel">What is your current housing status?</label>
+									<div class="filter form-control filterhousing">
+										<div class=""><input name="housing" type="radio" data-qval="Home Owner" value="Owner"/> Own</div>
+										<div class=""><input name="housing" type="radio" data-qval="Renter" value="Renter"/> Rent</div>
+										<div class=""><input name="housing" type="radio" data-qval="Homeless" value="Homeless"/> Homeless</div>
+										<div class=""><input name="housing" type="radio" data-qval="Rent Free" value="Housed Rent Free"/> Housed rent free</div>
+										<br/><p class="helptext">Select all that apply</p>
+										<div class=""><input id="riskofeviction" name="riskofeviction" type="checkbox" data-qval="Eviction Risk" value="Risk of eviction"/> I am at risk of being evicted</div>
+										<div class=""><input id="riskofforeclosure" name="riskofforeclosure" type="checkbox" data-qval="Foreclosure Risk" value="Risk of foreclosure"/> I am at risk of foreclosure</div>
+										<div class=""><input id="lookingforhousing" name="lookingforhousing" type="checkbox" data-qval="Looking for Housing" value="Looking for housing"/> I am looking for housing</div>		
+									</div>
+								</div>						
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<div class="helptitle">Why is the information important?</div>
+								<div class="helptext">There may be information, services and money available to you based on housing status.</div>
+							</div>
+						</div>
+					</section>	
+
+					<section id="step10" data-step=10 data-title="Health Information" class="step">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<div class="input-group">
+									<label class="questionLabel">Does anyone in the household need help with the cost of?</label>
+									<p class="helptext">Select all that apply</p>
+									<div class="filter form-control filtercare">
+										<div class=""><input id="medicalordental" name="medicalordental" type="checkbox" data-qval="Medical Need" value="medicalordental"/> Medical or dental items or services (e.g., eye glasses, dentures, medication, medical supplies, special food)</div>
+										<div class=""><input id="homesafety" name="homesafety" type="checkbox" data-qval="Home Safety" value="homesafety"/> Home safety (e.g., smoke alarms) or improvements/repairs</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<div class="helptitle">Why is the information important?</div>
+								<div class="helptext">There may be money available to help with the cost of medical, dental or home safety items. This might depend on your income, and other factors.</div>
+							</div>
+						</div>
+					</section>						
+							
+					<section id="step11" data-step=11 data-title="Disability Information" class="step">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6">
+								<div class="input-group">
+									<label class="questionLabel">Does anyone in your home live with: ?</label>
+									<p class="helptext">Select all that apply</p>
+									<div class="filter form-control filterdisability">
+										<div class=""><input id="disabled" name="disabled" type="checkbox" data-qval="Disability" value="disabled"/> A disability or a special need</div>
+										<div class=""><input id="mentalhealth" name="disabledchild" type="checkbox" data-qval="Mental Health" value="mentalhealth"/> A mental health issue</div>
+										<div class=""><input id="addiction" name="disabledparent" type="checkbox" data-qval="Addiction" value="addiction"/> An addiction</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-12 col-md-6">
+								<div class="helptitle">Why is the information important?</div>
+								<div class="helptext">There may be information, services and money available to you or someone in your household specific to your special need.</div>
+							</div>
+						</div>
+					</section>		
+					
+					
+					<section id="step12" data-step=12 data-title="Other Information" class="step">
+							<div class="row">
+								<div class="col-xs-12 col-sm-6">
+									<div class="input-group">
+										<label class="questionLabel">Does the following apply to anyone in your household?</label>
+										<p class="helptext">Select all that apply</p>
+										<div class="filter form-control filterother">
+											<div class=""><input id="domesticviolence" type="checkbox" data-qval="Domestic Violence" value="domesticviolence"/> A victim of domestic violence</div>
+											<div class=""><input id="terminal" type="checkbox" data-qval="Terminally Ill" value="terminal"/> Terminally Ill</div>
+											<div class=""><input id="incarcerated" type="checkbox" data-qval="Conviction Issue" value="incarcerated"/> About to be or recently released from prison/a correctional facility</div>
+											<div class=""><input id="funeral" type="checkbox" data-qval="Funeral Cost" value="funeral"/> In need of help to pay for a funeral</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-12 col-md-6">
+									<div class="helptitle">Why is the information important?</div>
+									<div class="helptext">There may be information, services and money available to you or someone in your household specific to your special need.</div>
+								</div>
+							</div>
+					</section>						
+				<div class="progress">
+				  <div id="stepprogress" class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+					0% Complete
+				  </div>
+				</div>
+				<script>
+				updateProgressBar();
+				</script>
+				<section id="prevnext">
+					<button id="prevstep" class="btn btn-success" onclick="prevStep();" disabled><span class="glyphicon glyphicon glyphicon-arrow-left"></span> Back</button>
+					<button id="nextstep" class="btn btn-success" onclick="nextStep();">Next <span class="glyphicon glyphicon glyphicon-arrow-right"></span></button>
+					<button id="finishstep" class="btn btn-success hide" onclick="finishStep();">Complete <span class="glyphicon glyphicon glyphicon-ok"></span></button>
+				</section>
+			</section>
+				<!--WIZARD END-->
+				
+				<!--RESULTS START -->
+				
+				<!--WIZARD SUMMARY START -->
+				<div id="wizardSummary" class="hide row">
+					<h2 id="wizardSummaryTitle">Results</h2>
+					<div class="col-xs-12 summarytext">
+						<p>Based on your answers, here is some information, services, benefits and subsidies offered through the City of Toronto that you might want to know about. You can read more to see if it is right for you, if you might be eligible (where applicable), and what to do next.</p>
+						<p>If you don't find what you are looking for here, you can contact:</p>
+						<ul>
+							<li><a href="http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=86d3ba2ae8b1e310VgnVCM10000071d60f89RCRD">311</a>: 24/7 multilingual information on City and non-emergency services</li>
+							<li><a href="http://www.211toronto.ca/">211</a>: 24/7 multilingual information on/referral to community services in Toronto</li>
+						</ul>
+						<p>You can also:</p>
+						<ul>
+							<li>find out about City of Toronto <a href="http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=5b1619f8602a0410VgnVCM10000071d60f89RCRD&WT.rd_id=parks">recreation</a> and <a href="http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=a253ba2ae8b1e310VgnVCM10000071d60f89RCRD">healthy living</a> programs </li>
+							<li>find out about all that the City of Toronto has to offer by searching on the <a href="https://toronto.ca">City's main page</a></li>
+						</ul>
+					</div>
+					
+					<div class="row">
+						<div class="col-xs-12 col-md-8">
+							
+							<div class="col-xs-12 searchbar">
+								<div class="col-xs-12 col-sm-8 col-md-10">
+									<input id='hsi_searchtext' class="form-control" placeholder="Keyword search">
+									<button id="hsi_searchreset" title="Clear the search field and the related results." class="hide" onclick="resetSearch();"><span class="glyphicon glyphicon-remove"></span></button>
+								</div>
+								<div class="col-xs-12 col-sm-4 col-md-2">
+									<button id="btnSearchResults" class="btn btn-success" onclick="searchResults();">Search</button>
+								</div>
+							</div>
+							<div id="hsi_searchresultscount" class="hide searchresultscount"></div>
+							<div id="hsi_searchresults" class="hide"></div>
+							<section id="hsi_tabs" class="col-xs-12">
+								<ul class="nav nav-tabs">
+									<li role="presentation" data-toggle="tab" href="#hsi_benefit" data-placement="top" title="View benefits and subsidies"><a href="#">Benefits</a></li>
+									<li role="presentation" data-toggle="tab" href="#hsi_childcare" data-placement="top" title="View services & benefits related to Childcare"><a href="#">Childcare</a></li>
+									<li role="presentation" data-toggle="tab" href="#hsi_employment"data-placement="top" title="View services & benefits related to Employment"><a href="#">Employment</a></li>
+									<li role="presentation" data-toggle="tab" href="#hsi_housing"data-placement="top" title="View services & benefits related to Housing"><a href="#">Housing</a></li>
+								</ul>
+								<section id="hsi_benefit" class="tabresult tab-pane fade in active"></section>
+								<section id="hsi_childcare" class="tabresult tab-pane fade"></section>
+								<section id="hsi_employment" class="tabresult tab-pane fade"></section>
+								<section id="hsi_housing" class="tabresult tab-pane fade"></section>
+							</section>
+						</div>
+						
+						<div class="col-xs-12 col-md-4">
+							<div class="headerRow">
+								<div class="col-xs-6">
+									<h2 data-toggle="tooltip" data-placement="top" title="Click to see a summary of the selected answers"><a data-toggle="collapse"  href="#summarydetails">Settings</a></h2>
+								</div>
+								<div class="col-xs-6 right">
+									<button id="editSettings" class="btn btn-success" data-toggle="tooltip" data-placement="top" title="The listing of services & benefits to the left has been tailored according to the answers you provided. Click this button to change any of your answers and regenerate the list." onclick="startStep();"><span class='glyphicon glyphicon-cog'></span>Edit</button>
+								</div>
+							</div>
+							<div id="summarydetails" class="panel-collapse collapse"></div>
+						</div>
+					</div>
+				</div>
+				<!--WIZARD SUMMARY END -->
+<!--	
+				
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="input-group">
+							<label class="input-group-addon">Keyword Search</label>
+							<div class="filter form-control filtersearch">
+								<div class="row">
+									<div class="col-xs-9 col-md-10">
+										<input id="searchText" class="form-control" type="text" placeholder="Keyword search..."/>
+									</div>
+									<div class="col-xs-3 col-md-2">
+										<button onclick="showResults();" class="btn btn-success"><span class="glyphicon glyphicon-search"></span>Search</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				-->
+			</section>
+
+			<section id="app-content-left" class="col-xs-12 col-md-8">
+
+				
+				
+		
+			</section>
+			
+			<section id="app-content-right" class="col-xs-12 col-md-4">
+			
+			</section>
+
+			<section id="app-content-bottom" class="col-xs-12">
+				<!--
+				<section id="hsi_search" class="hide">
+					<div class="row searchHeader">
+						<div class="col-xs-6">
+							<h2>Search/Filtered Results</h2>
+						</div>
+						<div class="col-xs-6 searchreset">
+							<button class="btn btn-danger" onclick="clearSearch();"><span class="glyphicon glyphicon-remove"></span>Clear Results</button>
+						</div>
+					</div>
+					<div id="searchResults"></div>
+				</section>		
+				-->
+			</section>
+		</div>
+	</div>
+</main>
