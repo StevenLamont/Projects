@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta property="og:title" content="City of Toronto Event Calendar">
+	<meta property="og:description" content="City of Toronto Event Calendar">
+	<meta name="keywords" content="City of Toronto Event Calendar">
+	<meta name="description" content="City of Toronto Event Calendar">
+	<meta name="Author" content="Rob Williams">
+	<meta name="Owner" content="Rob Williams">
+	<meta name="DC.title" content="City of Toronto Event Calendar">
+	<meta name="DC.description" lang="en" content="">
+	<meta name="DC.language" content="en-CA">
+	<meta name="DC.subject" content="City of Toronto Event Calendar">
+	<meta name="WT.sp" content="City of Toronto Event Calendar">
+	<link rel="stylesheet" href="../corev1.0/css/bootstrap.min.css">
+	<!--[if lt IE 9]>
+		<script src="../corev1.0/js/html5shiv.js"></script>
+		<script src="../corev1.0/js/respond.min.js"></script>
+	<![endif]-->
+	<script src="../corev1.0/js/jquery-1.11.0.min.js"></script>
+	<script src="../corev1.0/js/bootstrap.min.js"></script>
+	<!--script type="text/javascript" src="js/angular.js"></script-->
+
+	<link href="../corev1.0/css/bootstrap_cot_customizations.css" rel="stylesheet" type="text/css" media="all">
+	<link href="../corev1.0/css/cot_app.css" rel="stylesheet" type="text/css" media="all">
+	<script src="../corev1.0/js/bootstrap_cot_customizations.js" type="text/javascript" charset="utf-8"></script>
+
+<script type="text/javascript" src="js/lodash.min.js"></script>
+<script type="text/javascript" src="js/sweetalert.min.js"></script>
+<script type="text/javascript" src="js/moment-with-locales.js"></script>
+
+
+<script type="text/javascript" src="nprogress.js"></script>	
+<script type="text/javascript" src="CommonComponentsApis.js"></script>	
+<!--script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3?&libraries=places,geometry"></script-->
+<script type="text/javascript" src="eventCalendarConversion.js"></script>	
+
+	<title>Conversion: Event Calendar - </title>
+</head>
+<script>
+</script>
+<body>
+<div id="data" data-obj='{"obj-1": "some text","obj-2": "text-2","obj-3": "text-3"}'>
+    Download Event Details (Domino Data)
+</div>
+<button id="getHeaders" title="getHeaders" class="btn btn-default" type="button">   
+      <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Get Headers
+</button>
+<button id="getHeaderTotals" title="getDetails" class="btn btn-default" type="button">   
+      <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Get Header Totals
+</button>
+<button id="getDetails" title="getDetails" class="btn btn-default" type="button">   
+      <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Get All Details
+</button>
+
+<button id="reloadData" title="getStats" class="btn btn-default" type="button">   
+      <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Reload Data
+</button>
+
+<button id="transformData" title="getStats" class="btn btn-default" type="button">   
+      <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Transform Data
+</button>
+<button id="processImages" title="getStats" class="btn btn-default" type="button">   
+      <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Process Images
+</button>
+<button id="postData" title="getStats" class="btn btn-default" type="button">   
+      <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Post Data
+</button>
+
+<div id="convData">
+    Download Converted Data
+</div>
+<div id="enhConvData">
+    Download Enhanced Converted Data
+</div>
+<div id="logData">
+    Download Conversion Log
+</div>
+<br>
+<button id="dumpLog" title="getStats" class="btn btn-default" type="button">   
+      <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Dump Log
+</button>
+<br>
+<button id="postImage" title="getStats" class="btn btn-default" type="button">   
+      <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Test Post Image
+</button>
+
+<img id="img" src=""/> 
+
+
+<div id='log'>
+</div>
+</body>
+</html>
