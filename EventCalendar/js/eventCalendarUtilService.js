@@ -39,7 +39,7 @@
             }); 
         }
         */
-        if (modelField.length === maxSelects) {
+        if (modelField.length >= maxSelects) {
             angular.forEach( modelData, function(item, i) {
                 if (item.ticked !== true) {
                     item.disabledInd = true;

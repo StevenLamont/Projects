@@ -15,7 +15,7 @@ label.required:before { color: red;margin-left: 5px;margin-right: 5px;content: "
     min-width: 120px;
     text-align: center;
 }
-
+#ec-step6 a {text-decoration:none!important; color: white!important;  background-color: #337ab7!important;}
 #maincontent table th, #maincontent table td, #maincontent form table th, #maincontent form table td {
      vertical-align: inherit; 
      text-align: inherit; 

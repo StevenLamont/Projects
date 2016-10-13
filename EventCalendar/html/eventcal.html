@@ -97,7 +97,7 @@ the tab-content and not 1.
             <li ng-class="{'active' : ec.appCntl.tab == 6}"><a href="" data-ng-click='ec.showTab(6)' data-toggle="tab" data-step="6" aria-label="step 6"><p class='btntitle'>Step 6</p><p class="btndesc">Upload Image</p></a></li>
             <li ng-class="{'active' : ec.appCntl.tab == 7}"><a href="" data-ng-click='ec.showTab(7)' data-toggle="tab" data-step="7" aria-label="step 7"><p class='btntitle'>Step 7</p><p class="btndesc">Contact Details</p></a></li>
             <li data-ng-if="ec.opMode == 'update'" ng-class="{'active' : ec.appCntl.tab == 8}">
-				<a href="" data-ng-click='ec.showTab(8)' data-toggle="tab" data-step="8" aria-label="admin"><p class='btntitle'>&nbsp;</p><p class="btndesc">Admin</p></a></li>
+				<a href="" data-ng-click='ec.showTab(8)' data-toggle="tab" data-step="8" aria-label="admin"><p class='btntitle'>&nbsp;Step 8</p><p class="btndesc">Admin</p></a></li>
         </ul>
         </div>
     </div>
@@ -308,7 +308,7 @@ the tab-content and not 1.
                         button-label="name"
                         helper-elements="none filter reset close"
                         item-label="name"
-                        max-labels="2"
+                        max-labels="3"
                         max-height="500px"
                         disable-property = 'disabledInd'
                         on-close="ec.blur('#category')"
@@ -657,8 +657,8 @@ the tab-content and not 1.
                     <div class="entryField">
 						<div class="input-group">
 							<input id="occurStartDateTime-{{$index}}"  name="occurStartDateTime-{{$index}}"   type="text" class="form-control" 
-								data-ng-model="occurDate.startDate" 
-								data-ng-blur="ec.eventOccurDateBlur('occurStartDateTime-'+$index,occurDate.startDate, 'occurEndDateTime-'+$index,occurDate.endDate,ec.event.startDate, ec.event.endDate)" 
+								data-ng-model="occurDate.startDateTime" 
+								data-ng-blur="ec.eventOccurDateBlur('occurStartDateTime-'+$index,occurDate.startDateTime, 'occurEndDateTime-'+$index,occurDateTime.endDate,ec.event.startDate, ec.event.endDate)" 
 								data-date-time-input="MMMM DD, YYYY hh:mm a"
 								data-date-parse-strict="false"  data-date-formats="['YYYYMMDD H:mm a']" placeholder="yyyy/mm/dd hh:mm am/pm">
 							<div class="input-group-addon">	
@@ -669,9 +669,9 @@ the tab-content and not 1.
 						</div>
 						<div id="occStartDateTimedd-{{$index}}" class="dropdown">
                             <ul class="dropdown-menu" role="menu" aria-labelledby="oStartDateTime-{{$index}}">
-                                <datetimepicker data-ng-model="occurDate.startDate" 
-								data-ng-change="ec.eventOccurDateBlur('occurStartDateTime-'+$index,occurDate.startDate, 'occurEndDateTime-'+$index,occurDate.endDate,ec.event.startDate, ec.event.endDate)" 
-								data-datetimepicker-config="{ renderOn: 'eventdatechange', dropdownSelector: '#ddOccurStartDateTime-' + $index, startView: 'month',minuteStep: 1, modelType : 'moment'}"  data-before-render="ec.beforeRenderStartDateTime($view, $dates, $leftDate, $upDate, $rightDate,'occurStartDate',occurDate.endDate, ec.event.startDate, ec.event.endDate)"></datetimepicker>
+                                <datetimepicker data-ng-model="occurDate.startDateTime" 
+								data-ng-change="ec.eventOccurDateBlur('occurStartDateTime-'+$index,occurDate.startDateTime, 'occurEndDateTime-'+$index,occurDate.endDateTime,ec.event.startDate, ec.event.endDate)" 
+								data-datetimepicker-config="{ renderOn: 'eventdatechange', dropdownSelector: '#ddOccurStartDateTime-' + $index, startView: 'month',minuteStep: 1, modelType : 'moment'}"  data-before-render="ec.beforeRenderStartDateTime($view, $dates, $leftDate, $upDate, $rightDate,'occurStartDate',occurDate.endDateTime, ec.event.startDate, ec.event.endDate)"></datetimepicker>
                             </ul>
 						</div>
                     </div>
@@ -689,8 +689,8 @@ the tab-content and not 1.
                     <div class="entryField">
 						<div class="input-group">
 							<input id="occurEndDateTime-{{$index}}"  name="occurEndDateTime-{{$index}}" type="text" class="form-control" 
-									data-ng-model="occurDate.endDate"
-									data-ng-blur="ec.eventOccurDateBlur('occurStartDateTime-'+$index,occurDate.startDate, 'occurEndDateTime-'+$index,occurDate.endDate,ec.event.startDate, ec.event.endDate)" 
+									data-ng-model="occurDate.endDateTime"
+									data-ng-blur="ec.eventOccurDateBlur('occurStartDateTime-'+$index,occurDate.startDateTime, 'occurEndDateTime-'+$index,occurDate.endDate,ec.event.startDate, ec.event.endDate)" 
 									data-date-time-input="MMMM DD, YYYY hh:mm a"
                                     data-date-parse-strict="false"  data-date-formats="['YYYYMMDD H:mm a']" placeholder="yyyy/mm/dd hh:mm am/pm"> 
 							<div class="input-group-addon">	
@@ -702,10 +702,10 @@ the tab-content and not 1.
                         <div id="occEndDateTimedd-{{$index}}" class="dropdown">
                           
                             <ul class="dropdown-menu" role="menu" aria-labelledby="oEndDateTime-{{$index}}">
-                                <datetimepicker data-ng-model="occurDate.endDate" 
-									data-ng-change="ec.eventOccurDateBlur('occurStartDateTime-'+$index,occurDate.startDate, 'occurEndDateTime-'+$index,occurDate.endDate,ec.event.startDate, ec.event.endDate)" 
+                                <datetimepicker data-ng-model="occurDate.endDateTime" 
+									data-ng-change="ec.eventOccurDateBlur('occurStartDateTime-'+$index,occurDate.startDateTime, 'occurEndDateTime-'+$index,occurDate.endDate,ec.event.startDate, ec.event.endDate)" 
 									data-datetimepicker-config="{  renderOn: 'eventdatechange', dropdownSelector: '#ddOccurEndDateTime-'+ $index , startView: 'month',minuteStep: 1, modelType : 'moment'}" 
-									data-before-render="ec.beforeRenderEndDateTime($view, $dates, $leftDate, $upDate, $rightDate,'occurEndDate', occurDate.startDate, ec.event.startDate, ec.event.endDate)">
+									data-before-render="ec.beforeRenderEndDateTime($view, $dates, $leftDate, $upDate, $rightDate,'occurEndDate', occurDate.startDateTime, ec.event.startDate, ec.event.endDate)">
 								</datetimepicker>
                             </ul>
                         </div>
@@ -853,22 +853,22 @@ the tab-content and not 1.
         </div>      
         <h4 class="grid-title">Locations</h4>
         
-        <div data-ng-repeat="location in ec.event.locations" data-ng-init="vm.locIndex = $index" >
+        <div data-ng-repeat="location in ec.event.locations" data-ng-init="ec.locIndex = $index" >
         <fieldset>
         <legend>Location {{$index + 1}}
             <button type="button" class="btn btn-danger grid-remove pull-right" data-ng-click="ec.removeLocation($index)"><span class="glyphicon glyphicon-remove"></span><span>Remove</span></button>
         </legend>
        
         <div class="row">              
-            <div id="venueNameElement-{{vm.locIndex}}" class="col-xs-12 col-md-6 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+            <div id="venueNameElement-{{ec.locIndex}}" class="col-xs-12 col-md-6 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
                 <div>
-                    <label for="venueName-{{vm.locIndex}}" class="control-label"><span>Venue Name</span></label>
+                    <label for="venueName-{{ec.locIndex}}" class="control-label"><span>Venue Name</span></label>
                     <div class="entryField">
-                        <input id="venueName-{{vm.locIndex}}" data-ng-model="location.venueName" class="form-control" type="text" name="venueName-{{vm.locIndex}}" title="Event Venue" placeholder="">
+                        <input id="venueName-{{ec.locIndex}}" data-ng-model="location.venueName" class="form-control" type="text" name="venueName-{{ec.locIndex}}" title="Event Venue" placeholder="">
                     </div>                         
                 </div>
 
-                <small class="help-block" data-ng-messages="(ecForm['venueName-' + vm.locIndex].$touched || ecForm.$submitted) && ecForm['venueName-' + vm.locIndex].$error">
+                <small class="help-block" data-ng-messages="(ecForm['venueName-' + ec.locIndex].$touched || ecForm.$submitted) && ecForm['venueName-' + ec.locIndex].$error">
                     <span data-ng-message="required">Event Venue is required.</span>
                 </small>
             </div>
@@ -878,43 +878,43 @@ the tab-content and not 1.
         </div>
         
         <div class="row">
-            <div id="eventAddressElement-{{vm.locIndex}}" class="col-xs-12 col-md-6 form-group form-group-horizontal" data-show-errors="{ showSuccess: true }">
-                <label for="location-{{vm.locIndex}}" class="control-label"><span>Address</span></label>
+            <div id="eventAddressElement-{{ec.locIndex}}" class="col-xs-12 col-md-6 form-group form-group-horizontal" data-show-errors="{ showSuccess: true }">
+                <label for="location-{{ec.locIndex}}" class="control-label"><span>Address</span></label>
                 <div class="entryField">
-                    <input id="location-{{vm.locIndex}}" data-ng-disabled="location.type != 'marker'" data-ng-model="location.address" data-ng-model-options="{ updateOn: 'blur' }" data-ng-change="ec.locationAddressChanged($index)"  class="form-control"  type="text"  name="location-{{vm.locIndex}}" title="Location" placeholder="# street, toronto, on" >
+                    <input id="location-{{ec.locIndex}}" data-ng-disabled="location.type != 'marker'" data-ng-model="location.address" data-ng-model-options="{ updateOn: 'blur' }" data-ng-change="ec.locationAddressChanged($index)"  class="form-control"  type="text"  name="location-{{ec.locIndex}}" title="Location" placeholder="# street, toronto, on" >
                     <!--
                     <div class="col-md-1">
                         <button type="button" data-ng-show="location.type == 'marker'" data-ng-click="ec.verifyLocationAddress($index)" class="btn btn-info"><span class="glyphicon glyphicon-map-marker"></span><span>Verify Address</span></button>
                     </div>
                     -->
                 </div>
-                <small class="help-block" data-ng-messages="(ecForm['location-' + vm.locIndex].$touched || ecForm.$submitted) && ecForm['location-' + vm.locIndex].$error">
+                <small class="help-block" data-ng-messages="(ecForm['location-' + ec.locIndex].$touched || ecForm.$submitted) && ecForm['location-' + ec.locIndex].$error">
                     <span data-ng-message="required">The location address is required.</span>
                     <span data-ng-message="notGeoCoded">The address has not been verified.</span>
                 </small>
             </div>
             
-            <div id="eventDisplayAddressElement-{{vm.locIndex}}" class="col-xs-12 col-md-6 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
+            <div id="eventDisplayAddressElement-{{ec.locIndex}}" class="col-xs-12 col-md-6 form-group form-group-horizontal" data-show-errors='{ showSuccess: true }' >
                 <div>
-                    <label for="displayAddress-{{vm.locIndex}}" class="control-label"><span>Display Address</span></label>
+                    <label for="displayAddress-{{ec.locIndex}}" class="control-label"><span>Display Address</span></label>
                     <div class="entryField">
-                        <input id="displayAddress-{{vm.locIndex}}" data-ng-model ="location.displayAddress" class="form-control" type="text" name="displayAddress-{{vm.locIndex}}" title="Address to used when displaying event" placeholder="">
+                        <input id="displayAddress-{{ec.locIndex}}" data-ng-model ="location.displayAddress" class="form-control" type="text" name="displayAddress-{{ec.locIndex}}" title="Address to used when displaying event" placeholder="">
                     </div>                         
                 </div>
 
-                <small class="help-block" data-ng-messages="(ecForm['displayAddress-' + vm.locIndex].$touched || ecForm.$submitted) && ecForm['displayAddress-' + vm.locIndex].$error">
+                <small class="help-block" data-ng-messages="(ecForm['displayAddress-' + ec.locIndex].$touched || ecForm.$submitted) && ecForm['displayAddress-' + ec.locIndex].$error">
                     <span data-ng-message="required">Display address is required.</span>
                 </small>
             </div>          
         </div>
         
         <div class="row">
-            <div id="timeInfoElement-{{vm.locIndex}}" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
-                <label for="transitInfo-{{vm.locIndex}}" class="control-label">
+            <div id="timeInfoElement-{{ec.locIndex}}" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <label for="transitInfo-{{ec.locIndex}}" class="control-label">
                     <span>Public Transit Information</span>
                     </label>
                     <div class="entryField">
-                        <textarea id="transitInfo-{{vm.locIndex}}" data-ng-model="location.transitInfo" class="form-control"  name="transitInfo-{{vm.locIndex}}" title="Transit Information" placeholder=""></textarea>
+                        <textarea id="transitInfo-{{ec.locIndex}}" data-ng-model="location.transitInfo" class="form-control"  name="transitInfo-{{ec.locIndex}}" title="Transit Information" placeholder=""></textarea>
                         <p class="helptext">Please provide clear directions to the venue and indicate nearest subway/bus routes.</p>
 
                     </div>
@@ -1132,7 +1132,10 @@ the tab-content and not 1.
                                     <!--auto height-->
                                     <!--<div ng-thumb="{ file: item.file, width: 100 }"></div>-->
                                     <!--auto width-->
-                                    <div data-ng-show="ec.uploader.isHTML5" data-ng-thumb="{ file: item._file, height: 100 }"></div>
+                                    <div data-ng-if="ec.uploader.isHTML5 && ec.newImageInUse" data-ng-thumb="{ file: item._file, height: 100 }"></div>
+									<div data-ng-if="ec.opMode == 'update' && ec.event.image.binId && !ec.newImageInUse">
+										<img src="https://was8-inter-dev.toronto.ca/cc_sr_v1/upload/edc_eventcal/{{ec.event.image.binId}}?sid={{ec.appCntl.sid}}" alt="event logo" height="100" 
+									</div>
                                     <!--fixed width and height -->
                                     <!--<div ng-thumb="{ file: item.file, width: 100, height: 100 }"></div>-->
                                 </td>
@@ -1157,12 +1160,19 @@ the tab-content and not 1.
                                     <button type="button" class="btn btn-danger btn-xs" data-ng-click="item.remove()">
                                         <span class="glyphicon glyphicon-trash"></span> Remove
                                     </button>
+									<span data-ng-if="ec.opMode == 'update' && ec.event.image.binId && !ec.newImageInUse">
+                                    <a target="_blank" download ng-href="https://was8-inter-dev.toronto.ca/cc_sr_v1/upload/edc_eventcal/{{ec.event.image.binId}}?sid={{ec.appCntl.sid}}" class="btn btn-primary btn-xs" >
+                                        <span class="glyphicon glyphicon-download"></span> Download
+                                    </a>									
+									</span>
+									
+									
                                 </td>
                             </tr>
                             <tr data-ng-repeat="itemDesc in ec.uploader.queue" style="background: inherit">
                             <td><label for="imagedesc-{{$index}}">Photo Cutline</label></td>
                             <td colspan="4">
-                                <input id="imagedesc-{{$index}}" data-ng-model="ec.event.image.Description" class="form-control"  type="text"  name="imagedesc-{{$index}}" title="Description of Image" placeholder="" >
+                                <input id="imagedesc-{{$index}}" data-ng-model="ec.event.image.description" class="form-control"  type="text"  name="imagedesc-{{$index}}" title="Description of Image" placeholder="" >
                             </td>
                             </tr>
                         </tbody>
@@ -1177,7 +1187,9 @@ the tab-content and not 1.
                     <span class="btn btn-info fileinput-button" data-ng-show="ec.uploader.queue.length < 1">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>Select Image File</span>
+					<element ng-if="ec.uploader">
                     <input type="file" data-nv-file-select="" data-uploader="ec.uploader"   /><br/>
+					</element>
                     </span>
 
                 </div>
@@ -1339,7 +1351,7 @@ the tab-content and not 1.
     </div>
     <div uib-tab index="8"  class="tab-pane fade" data-ng-if="ec.opMode == 'update'">
         <h2>Administration</h2>
-        <div id="ec-step7" class="panel-body" >
+        <div id="ec-step8" class="panel-body" >
 
         <div class="row">
             <div id="FeatureEventElement" class="col-xs-12 col-md-12 form-group form-group-horizontal">
@@ -1358,12 +1370,31 @@ the tab-content and not 1.
 
                 </div>
             </div> 
-        </div>  
+        </div>        
+		<div class="row">
+            <div id="IncludeInNewsletterElement" class="col-xs-12 col-md-12 form-group form-group-horizontal">
+                <div>
+                    
+                    <label class="control-label">
+                        <span>Include In Newsletter</span><span class="optional"></span>
+                    </label>
+                    
+                    <div class="form-control">
+                        <div class="horizontal entryField">
+                            <input class="form-control " id="includeInNewsletter" name="includeInNewsletter"  data-ng-model ="ec.event.admin.includeInNewsletter" title="Include In Newsletter?" type="checkbox" class="form-control checkbox" value="true" ><label class="chkLabel" for="includeInNewsletter">&nbsp;include In Newsletter?</label>
+                        </div>
+
+                    </div>                  
+
+                </div>
+            </div> 
+        </div>   
+		
         <div class="row">
             <div id="newsLetterElement" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
                 <!--div-->
-                    <label for="newsLetter" class="control-label">
-                        <span>Newsletter</span>
+                    <label for="newsLetterCategory" class="control-label">
+                        <span>Newsletter Category</span>
                         <span></span>
                     </label>
 
@@ -1371,28 +1402,91 @@ the tab-content and not 1.
                     <div id="ddnewsLetter" class="entryField" 
                         directive-id = 'ddnewsLetterBtn'
                         isteven-multi-select
-                        input-model="ec.newsLetters"
+						selection-mode="single"
+                        input-model="ec.newsletterCategories"
                         helper-elements="reset"
-                        output-model="ec.event.admin.newsLetter"
+                        output-model="ec.event.admin.newsletterCategory"
                         output-properties="value"
                         button-label="value"
                         item-label="value"
-                        max-labels="3"
+                        max-labels="1"
                         max-height="500px"
-                        on-close="ec.blur('#newsLetter')"
+                        on-close="ec.blur('#newsLetterCategory')"
                         disable-property = 'disabledInd'
                         tick-property="ticked"
-                        title="Searchable News Letter" >
+                        title="Searchable News Letter Category" >
                     </div>
                     <!-- type = hidden is notr validated -->
                     
-                    <input id="newsLetter" type="text" data-ng-model="ec.event.newsLetter"  name="newsLetter"  class="form-control" style="display:none">
+                    <input id="newsLetterCategory" type="text" data-ng-model="ec.event.admin.newsLetterCategory"  name="newsLetterCategory"  class="form-control" style="display:none">
                     
                 <!--/div-->
-                <small class="help-block" data-ng-messages="(ecForm.newsLetter.$touched || ecForm.$submitted) && ecForm.newsLetter.$error">
-                    <span data-ng-message="required">Cost Range is required and cannot be left blank.</span>
+                <small class="help-block" data-ng-messages="(ecForm.newsLetterCategory.$touched || ecForm.$submitted) && ecForm.newsLetter.$error">
+                    <span data-ng-message="required">News Letter Category is required and cannot be left blank.</span>
+                </small>                
+            </div> 
+		</div>
+        <div class="row" data-ng-if="(ec.newsletterSubCatRequired)">
+            <div id="NewsLetterSubcategoryElement" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                <!--div-->
+                    <label for="newsLetterSubcategory" class="control-label">
+                        <span>Newsletter Subcategory</span>
+                        <span></span>
+                    </label>
+                    <div id="ddnewsLetterSubcategory" class="entryField" 
+                        directive-id = 'ddnewsLetterSubcategoryBtn'
+                        isteven-multi-select
+                        input-model="ec.newsletterSubcategories"
+                        helper-elements="none"
+                        output-model="ec.event.admin.newsletterSubcategory"
+                        output-properties="value"
+                        selection-mode="single"
+                        button-label="value"
+                        item-label="value"
+                        max-labels="1"
+                        on-close="ec.blur('#newsLetterSubcategory')"
+                        disable-property = 'disabledInd'
+                        tick-property="ticked"
+                        title="NewsLetter Subcategory" >
+                    </div>
+                    <input id="newsLetterSubcategory" type="text" data-ng-model="ec.event.sportsSubcategory"  name="newsLetterSubcategory"  class="form-control" style="display:none">
+                    
+                <!--/div-->
+                <small class="help-block" data-ng-messages="(ecForm.newsLetterSubcategory.$touched || ecForm.$submitted) && ecForm.newsLetterSubcategory.$error">
+                    <span data-ng-message="required">NewsLetter Subcategory is required and cannot be left blank.</span>
                 </small>                
             </div>  
+        </div>  		
+        <div class="row">
+            <div id="commentsSection" class="col-xs-12 form-group form-group-vertical" data-show-errors='{ showSuccess: true }'>
+                  <div>
+                    <label for="reviewerComments" class="control-label">
+                      <span>Reviewer comments</span>
+                    </label>
+                    <div class="entryField">
+                      <textarea id="reviewerComments" data-ng-model="ec.event.admin.reviewerComments" class="form-control" data-ng-minlength="2" data-ng-maxlength="750" name="reviewerComments" title="Reviewer Comments" placeholder=""></textarea>
+                    </div>
+                    <p class="helptext">750 characters maximum <span ng-show="ecForm.description.$valid" class="form-help pull-right">{{750-ec.event.admin.reviewerComments.length}} characters remaining</span></p>
+                  </div>
+                  <small class="help-block" data-ng-messages="(ecForm.description.$touched || ecForm.$submitted) && ecForm.description.$error">
+                    <span data-ng-message="minlength">The comment is too short.</span>
+                    <span data-ng-message="maxlength">The comment is too long.</span>
+                    <span data-ng-message="required">The comment is required.</span>
+                    <span data-ng-message="pattern">Special characters are not allowed.</span>
+                </small>
+                </div>
+        </div>
+        <div class="row" ng-if="ec.opMode == 'update'">
+                <div class="col-xs-12 form-group form-group-horizontal">
+                  <div class="pull-right">
+                    <button type="button" id="preBtn" class="btn btn-success" ng-click="ec.returnRecord('PRE')">Pre-Approve <i class="fa fa-check-square-o" aria-hidden="true" title="Pre-approve this event entry"></i></button>
+                    <button type="button" id="pndBtn" class="btn btn-warning" ng-show="!(ec.appCntl.callerState == 'pending')" ng-click="ec.returnRecord('PND')">Mark Pending <i class="fa fa-clock-o" aria-hidden="true" title="Mark this event entry as pending"></i></button>
+                    <button type="button" id="aprBtn" class="btn btn-success" ng-show="ec.roles.indexOf(ec.admin) > -1 || ec.roles.indexOf(ec.approver) > -1" ng-click="ec.returnRecord('APR')">Approve <i class="fa fa-thumbs-up" aria-hidden="true" title="Approve this event entry"></i></button>
+                    <button type="button" id="rejBtn" class="btn btn-danger" ng-show="!(ec.appCntl.callerState == 'rejected')" ng-click="ec.returnRecord('REJ')">Reject <i class="fa fa-thumbs-down" aria-hidden="true" title="Reject this event entry"></i></button>
+                    <button type="button" id="delBtn" class="btn btn-danger" ng-click="ec.returnRecord('DEL')">Delete <i class="fa fa-trash" aria-hidden="true" title="Delete this event entry"></i></button>
+                  </div>
+                </div>
+            </div>			
         </div>      
         </div>
     </div>  
@@ -1446,13 +1540,14 @@ the tab-content and not 1.
         <button type="button" class="btn btn-danger grid-remove" data-ng-click="ec.getAllRecords()"><span class="glyphicon glyphicon-remove"></span><span>Get All Data</span></button>
         <input  style="width:300px" id='dataId' data-ng-model="ec.recIdInput" /> 
         <button type="button" id="submit3" class="btn btn-info" data-ng-click="ec.getOneRecord()">Get Record</button>
-        <button type="button" id="edit" class="btn btn-info" data-ng-click="ec.editRecord()">Edit Record</button>
         <button type="button" id="submit4" class="btn btn-info" data-ng-click="ec.revertRecordToOriginal()">Revert Record to Original Submission</button>
         <button type="button" id="submit5" class="btn btn-info" data-ng-click="ec.updateRecord()">Update Record </button>
+        <button type="button" id="submit6" class="btn btn-info" data-ng-click="ec.approveRecord()">Approve Record </button>
         Hello {{ec.greetMe}}!
+		new Image {{ec.newImageInUse}}
         <pre>event = {{ec.event | json}}</pre>
         <pre>appCntl = {{ec.appCntl | json}}</pre>
-        <pre>vm.weeklyDatesIM = {{ec.weeklyDatesIM | json}}</pre>
+        <!--pre>ec.weeklyDatesIM = {{ec.weeklyDatesIM | json}}</pre-->
     
         <div id="dataTable" class="table-responsive"  data-ng-show="ec.debug"></div>  
     </div>

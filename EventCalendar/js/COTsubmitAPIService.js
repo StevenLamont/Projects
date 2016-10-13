@@ -30,6 +30,7 @@
             submit: _submit,
             login: _login,
             update:_update,
+            approve:_approve,
             retrieve: _retrieve,
             getRepoData : _getRepoData
         };
@@ -98,21 +99,39 @@
         
         function _update(userName, password, eventType, eventId, jsonData) {
    
-            _login(eventType, userName, password);
-            var payloadStr= JSON.stringify(jsonData);
-            var update = {};
-            update.payload = payloadStr;
-            var strURL = UPDATE_URL.replace("<eventType>",eventType).replace("<eventId>",eventId).replace("<sid>",gblSID) + JSON.stringify(update);
-            $http.get(strURL)
-                .success(function(data){
-                    console.log(data);
-                })
-            .error(function(data, status, headers, config) {
-                  console.log(data);
-            });     
+            _login(eventType, userName, password)
+			.then(function(httpCall) {
+				var payloadStr= JSON.stringify(jsonData); //  .replace(/\%/g,"_");  /* another bug in the api */
+				var update = {};
+				update.payload = payloadStr;
+				var strURL = UPDATE_URL.replace("<eventType>",eventType).replace("<eventId>",eventId).replace("<sid>",gblSID) + encodeURIComponent(JSON.stringify(update));
+				$http.get(strURL)
+					.success(function(data){
+						console.log(data);
+					})
+				.error(function(data, status, headers, config) {
+					console.log(data);
+				});     
+			});
    
         }
-
+        function _approve(userName, password, eventType, eventId, jsonData) {
+   
+            _login(eventType, userName, password)
+			.then(function(httpCall) {
+				var update = {};
+				update.status = 'APR';
+				var strURL = UPDATE_URL.replace("<eventType>",eventType).replace("<eventId>",eventId).replace("<sid>",gblSID) + JSON.stringify(update);
+				$http.get(strURL)
+					.success(function(data){
+						console.log(data);
+					})
+				.error(function(data, status, headers, config) {
+					console.log(data);
+				});     
+			});
+   
+        }
         /*
         notes: when you logon and set a cookie, you are not suppoosed to need to put &sid. -- test this and it doesn't seem to work
         TODO: look at the api, do I need eventType?

@@ -1,7 +1,7 @@
 (function () {   
     var eventCalendarApp = angular.module('eventCalendarApp',
         ['ui.router','ngMessages','isteven-multi-select','ui.bootstrap.showErrors','ui.bootstrap', 'ui.dateTimeInput','ui.bootstrap.datetimepicker',
-         'uiGmapgoogle-maps','ui.utils.masks','ngStorage','oitozero.ngSweetAlert','angularFileUpload','ngProgress','eventCalendarCache','ngCoTForms','ngCoTSubmit', 'ngCoTThumb','ngCoTGoogleMapUtils'])
+         'uiGmapgoogle-maps','ui.utils.masks','ngStorage','oitozero.ngSweetAlert','angularFileUpload','ngProgress','eventCalendarCache','ngCoTForms','ngCoTSubmit', 'ngCoTThumb','ngCoTGoogleMapUtils','ngLogin'])
         .config(['uiGmapGoogleMapApiProvider', function(GoogleMapApiProviders) {
                 GoogleMapApiProviders.configure({
                 //v: '3.17',
@@ -12,8 +12,9 @@
             }])
         //http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/
         .config(['$logProvider', function ($logProvider) {
-             $logProvider.debugEnabled(true);
-        }]);
+             $logProvider.debugEnabled(false);
+        }])
+  ;		
   
 eventCalendarApp.run(['$rootScope','$log',
   function($rootScope, $log) {
