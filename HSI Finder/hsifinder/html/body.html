@@ -5,10 +5,22 @@
 		<div class="row">
 			<section id="app-content-top" class="col-xs-12">
 			<section id="wizard">
-				<h2 id="wizardTitle">Resident Status</h2>
+				<h2 id="wizardTitle">Service and Benefit Finder Tool</h2>
 				<!--WIZARD START-->
 				
-					<section id="step1" data-step=1 data-title="Resident Information" class="step active">
+					<section id="step0" data-step=0 data-title="Landing Page" class="step active">
+						<div class="row">
+							<div class="col-xs-12 col-md-6">
+							<p>"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..."
+							"There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain..."
+							What is Lorem Ipsum?
+
+							Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+							</p>
+							</div>	
+						</div>
+					</section>
+					<section id="step1" data-step=1 data-title="Resident Information" class="step">
 						<div class="row">
 							<div class="col-xs-12 col-md-6">
 								<div class="input-group">
@@ -221,7 +233,7 @@
 						</div>
 					</section>	
 
-					<section id="step10" data-step=10 data-title="Health Information" class="step">
+					<section id="step10" data-step=10 data-title="Household Need Information" class="step">
 						<div class="row">
 							<div class="col-xs-12 col-sm-6">
 								<div class="input-group">
@@ -332,15 +344,17 @@
 							<div id="hsi_searchresults" class="hide"></div>
 							<section id="hsi_tabs" class="col-xs-12">
 								<ul class="nav nav-tabs">
-									<li role="presentation" data-toggle="tab" href="#hsi_benefit" data-placement="top" title="View benefits and subsidies"><a href="#">Benefits</a></li>
-									<li role="presentation" data-toggle="tab" href="#hsi_childcare" data-placement="top" title="View services & benefits related to Childcare"><a href="#">Childcare</a></li>
-									<li role="presentation" data-toggle="tab" href="#hsi_employment"data-placement="top" title="View services & benefits related to Employment"><a href="#">Employment</a></li>
+									<li role="presentation" data-toggle="tab" href="#hsi_benefit" data-placement="top" title="View benefits and subsidies"><a href="#">Financial Benefits/Subsidies</a></li>
+									<li role="presentation" data-toggle="tab" href="#hsi_childcare" data-placement="top" title="View services & benefits related to Childcare"><a href="#">Children</a></li>
+									<li role="presentation" data-toggle="tab" href="#hsi_employment"data-placement="top" title="View services & benefits related to Employment"><a href="#">Employment and Social Services</a></li>
 									<li role="presentation" data-toggle="tab" href="#hsi_housing"data-placement="top" title="View services & benefits related to Housing"><a href="#">Housing</a></li>
+									<li role="presentation" data-toggle="tab" href="#hsi_medical"data-placement="top" title="View services & benefits related to Medical"><a href="#">Medical</a></li>
 								</ul>
 								<section id="hsi_benefit" class="tabresult tab-pane fade in active"></section>
 								<section id="hsi_childcare" class="tabresult tab-pane fade"></section>
 								<section id="hsi_employment" class="tabresult tab-pane fade"></section>
 								<section id="hsi_housing" class="tabresult tab-pane fade"></section>
+								<section id="hsi_medical" class="tabresult tab-pane fade"></section>
 							</section>
 						</div>
 						
@@ -354,6 +368,9 @@
 								</div>
 							</div>
 							<div id="summarydetails" class="panel-collapse collapse"></div>
+							<div id="summarydetailsMsg">
+							<p class='notice hide' id='unspecifiedmsg'>Some key questions were not answered.  This will limit the results</p>
+							</div>
 						</div>
 					</div>
 				</div>
