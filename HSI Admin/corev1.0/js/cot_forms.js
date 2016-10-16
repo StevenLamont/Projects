@@ -119,13 +119,16 @@ cot_form.prototype.addRow = function(id,row) {
 	var app = this;
 	var oTable = $("#"+id + " tbody")[0];
 	oTR = oTable.appendChild(document.createElement('tr'));
-	oTR.id = id + '-row-' + $('#' + id + ' tbody tr').length;
+	var curtbllen = $('#' + id + ' tbody tr').length;
+	//oTR.id = id + '-row-' + $('#' + id + ' tbody tr').length;
+	oTR.id = id + '-row-' + curtbllen;
 	$.each(row.fields, function(l, field) {
 		var oFieldDiv = oTR.appendChild(document.createElement('td'));
 		//CORE FIELD LOGIC
 		var sType = (field.type||"")?field.type:'text';
 		var newField = jQuery.extend({}, field);
-		newField.id = newField.id + "-" + $('#' + id + ' tbody tr').length;
+		//newField.id = newField.id + "-" + $('#' + id + ' tbody tr').length;
+		newField.id = newField.id + "-" +  curtbllen;
 		var x = app.callFunction(app[sType+'FieldRender'],newField);
 		oFieldDiv.appendChild(x);
 	});
@@ -133,7 +136,11 @@ cot_form.prototype.addRow = function(id,row) {
 	oTD.className = 'text-right';
 	var oBTN = oTD.appendChild(document.createElement('button'));
 	oBTN.className = 'btn btn-danger grid-remove';
-	oBTN.onclick = function () {app.removeRow(id + '-row-' + $('#' + id + ' tbody tr').length)};
+	oBTN.setAttribute("data-refid", oTR.id);
+	//oBTN.onclick = function () {app.removeRow(id + '-row-' + $('#' + id + ' tbody tr').length)};
+	oBTN.onclick = function () {
+		app.removeRow($(this).data("refid"));
+	};
 	var oSpan = oBTN.appendChild(document.createElement('span'));
 	oSpan.className = 'glyphicon glyphicon-remove';
 	oSpan = oBTN.appendChild(document.createElement('span'));
@@ -260,10 +267,14 @@ cot_form.prototype.processField = function(oRow, oVal, row, field) {
 		oVal.fields[field.id].validators.callback.callback = function(value, validator, $field) {
 			//return value === '' || $field.intlTelInput('isValidNumber');
 			if (IEversion < 10) {
-				if (value.match(/^\(\d{3}\) ?\d{3}( |-)?\d{4}|^\d{3}( |-)?\d{3}( |-)?\d{4}/)) {
+				if (!field.required) {
 					return true;
-				} else  {
-					return false;
+				} else {
+					if (value.match(/^\(\d{3}\) ?\d{3}( |-)?\d{4}|^\d{3}( |-)?\d{3}( |-)?\d{4}/)) {
+						return true;
+					} else  {
+						return false;
+					}
 				}
 			} else {
 				return value === '' || $field.intlTelInput('isValidNumber');
@@ -397,6 +408,7 @@ cot_form.prototype.datetimepickerFieldRender = function(field) {
 	o.id = field.id + "container";
 	var oField = o.appendChild(document.createElement('input'));
 	oField.id = field.id;
+	oField.name = field.id;
 	oField.type = 'text';
 	oField.value += (field.value||"")?field.value:'';
 	oField.className += (field.required||"")?'form-control required':'form-control';

@@ -17,8 +17,8 @@ var CC_API = function (opt_options) {
     
     
     Notes: I can trap a '500' error on a post, but I can seem to get to work on a GET. These APIs use mostly GETs 
-	
-	5) I could make this such that all NProgress call are conditional on them being loaded.. (if you used this lib strictly for retrieval, then there is no need for nProgress)
+    
+    5) I could make this such that all NProgress call are conditional on them being loaded.. (if you used this lib strictly for retrieval, then there is no need for nProgress)
 */
     
     if (typeof NProgress === 'undefined') {
@@ -35,7 +35,7 @@ var CC_API = function (opt_options) {
     this.UPDATE_URL = this.API_HOST + "/cc_sr_admin_v1/retrieve/eventrepo/<eventType>/<eventId>?callback=?&sid=<sid>&json=";
 
     //this.SUBMIT_URL = this.API_HOST + "/cc_sr_v1/submit/<eventType>?callback=?&json=";  is the submit API on both inter and intra?
-    this.SUBMIT_URL = "https://was8-inter-dev.toronto.ca/cc_sr_v1/submit/<eventType>?callback=?&json=";
+    this.SUBMIT_URL = this.API_HOST + "/cc_sr_admin_v1/submit/<eventType>?callback=?&json=";
     NProgress.configure({ showSpinner: false });
 
 };
@@ -195,7 +195,7 @@ CC_API.prototype.updateRepoEntry = function(eventType, eventId, jsonData) {
                     
                 },
                 error: function (jqXHR, exception) {
-					 NProgress.done();
+                     NProgress.done();
                     //CC_API.prototype.appAlert("Updated Failed.","A common component API service has failed. Please try again at another time.");
                     deferred.reject({'type': "Updated Failed.", error:"A common component API service has failed. Please try again at another time."});
                     console.log(jqXHR);
@@ -211,7 +211,7 @@ CC_API.prototype.updateRepoEntry = function(eventType, eventId, jsonData) {
 /* if I go a post (and no JSONP) then I can trap a 500 error */
 CC_API.prototype.updateRepoEntryStatus = function(eventType, eventId, status) {
     NProgress.start();
-    console.log("delete " + eventId);
+    console.log("Status Change: " + eventId + " to: " + status);
     var deferredUS = $.Deferred();
     this.checkSession()
         .done(function(thisObj) {  
@@ -246,11 +246,45 @@ CC_API.prototype.updateRepoEntryStatus = function(eventType, eventId, status) {
     return  deferredUS; 
 };
 
-CC_API.prototype.submitNewRepoEntry = function(jsonData) {
+CC_API.prototype.submitNewRepoEntry = function(eventType,jsonData, keepFiles) {
     NProgress.start();
     var deferred = $.Deferred();
-    var strURL = this.SUBMIT_URL.replace('<eventType>',APP_EVENT_TYPE) + encodeURIComponent(JSON.stringify(jsonData));
-    
+    var strURL = this.SUBMIT_URL.replace('<eventType>',eventType).replace("?callback=","").replace('&json=',""); // + encodeURIComponent(JSON.stringify(jsonData));
+    if (keepFiles) {
+        strURL += "&keepFiles=" + keepFiles;            
+    }
+    //var d=JSON.stringify(jsonData); This was attemot by johan
+    var request = $.ajax({
+        url :  strURL,
+        type : "POST",
+        data: JSON.stringify(jsonData),
+        //crossDomain: true, 
+        dataType: 'json', 
+        data: JSON.stringify(jsonData),
+        cache: false,               
+        timeout: 10000,
+        success : function(data) {
+            NProgress.done();
+            deferred.resolve(data);
+        },
+        error: function (xhr, exception) {
+            NProgress.done();
+            //CC_API.prototype.appAlert("Submission Failed.","A common component API service has failed. Please try again at another time.");
+            deferred.reject({'type': "Submission Failed", error:"A common component API service has failed. Please try again at another time."});
+        },
+    }); 
+
+    return deferred;   
+};
+
+/* GET version
+CC_API.prototype.submitNewRepoEntry = function(eventType,jsonData, keepFiles) {
+    NProgress.start();
+    var deferred = $.Deferred();
+    var strURL = this.SUBMIT_URL.replace('<eventType>',eventType) + encodeURIComponent(JSON.stringify(jsonData));
+    if (keepFiles) {
+        strURL += "&keepFiles=" + keepFiles;            
+    }   
     var request = $.ajax({
         url :  strURL,
         type : "GET",
@@ -269,3 +303,4 @@ CC_API.prototype.submitNewRepoEntry = function(jsonData) {
     });
     return deferred;   
 };
+*/

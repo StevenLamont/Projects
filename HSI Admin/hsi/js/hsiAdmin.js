@@ -16,6 +16,8 @@
 
   5) There is no webtrends tracking in here.. I assume it is not needed.
   
+  6) What is the status of a submitted record?  It is Yes,  We will change it APR and have an automatic data query dataset.
+  
 
   
   ToDo:  the "success" of cot_form wasn't working for me.. but try again.. Now that I prevented default on submit, it may work as expected.
@@ -26,15 +28,18 @@ var globalRuleNo;
 var oRule = {};
 var oSubRules = [];
 var gblCC_API = new CC_API({apihost: "https://was8-intra-dev.toronto.ca"});
+var gblCC_API_APPROVE_STATUS = 'APR';
 
 var APP_EVENT_TYPE = "HSI_Services_Benefits"; // this is really EventType
 var APP_REPO_NAME = "HSI_Services_Benefits"; // this is the repo defined for the EventType (currently the same as eventType)
+//var APP_EVENT_TYPE = "HSI_Services_Benefits"; // this is really EventType
+//var APP_REPO_NAME = "HSI_Services_Benefits"; // this is the repo defined for the EventType (currently the same as eventType)
 var gblRepoData;
 var gblCurrentRowId = 0;
 var gblCurrentListId = 0;
 
 /* this rules array should be identical to the one in the finder app */
-var rules = [
+var gblRules = [
 {"text": "Select Rule...", "value": ""},
 {"text": "RESIDENT: Toronto Resident", "value": "Resident"},
 {"text": "RESIDENT: Toronto Non-Resident", "value": "Non-Resident"},
@@ -50,6 +55,7 @@ var rules = [
 {"text": "FINANCIAL NEED: Don't Know", "value": "Unsure Financial Need"},
 {"text": "RECIPIENT: Ontario Works", "value": "OW"},
 {"text": "RECIPIENT: Ontario Disability Support", "value": "ODSP"},
+{"text": "RECIPIENT: NOT Ontario Disability Support", "value": "NOT ODSP"},
 {"text": "RECIPIENT: Child Care Fee Subsidy", "value": "Child Care Fee Subsidy"},
 {"text": "RECIPIENT: Subsidized Housing/Rent", "value": "Subsidized Housing"},
 {"text": "RECIPIENT: Housing Allowance", "value": "Housing Allowance"},
@@ -57,6 +63,7 @@ var rules = [
 {"text": "RECIPIENT: Employment Insurance", "value": "EI"},
 {"text": "SCHOOL: Full-Time", "value": "FT Student"},
 {"text": "SCHOOL: Part-Time", "value": "PT Student"},
+{"text": "SCHOOL: Not In School", "value": "Not Student"},
 {"text": "CHILDREN: All Age Groups", "value": "Has Children"},
 {"text": "CHILDREN: Age Group 1 (0-2)", "value": "Child Ages 0-2"},
 {"text": "CHILDREN: Age Group 2 (3-4)", "value": "Child Ages 3-4"},
@@ -65,6 +72,7 @@ var rules = [
 {"text": "CHILDREN: Age Group 5 (11-12)", "value": "Child Ages 11-12"},
 {"text": "CHILDREN: Age Group 6 (13-16)", "value": "Child Ages 13-16"},
 {"text": "CHILDREN: Age Group 7 (17-18)", "value": "Child Ages 17-18"},
+{"text": "CHILDREN: Age Group 8 (expecting)", "value": "Expecting Child"},
 {"text": "EMPLOYMENT: Full-Time", "value": "Employed FT"},
 {"text": "EMPLOYMENT: Part-Time", "value": "Employed PT"},
 {"text": "EMPLOYMENT: Unemployed", "value": "Unemployed"},
@@ -80,16 +88,12 @@ var rules = [
 {"text": "HOUSING: Own","value": "Home Owner"},
 {"text": "HOUSING: Rent","value": "Renter"},
 {"text": "HOUSING: Homeless","value": "Homeless"},
+{"text": "HOUSING: Housed Rent Free","value": "Rent Free"},
 {"text": "HOUSING: Risk of Eviction","value": "Eviction Risk"},
 {"text": "HOUSING: Risk of Foreclosure","value": "Foreclosure Risk"},
 {"text": "HOUSING: Looking for Housing","value": "Looking for Housing"},
-{"text": "HEALTH NEED: Dental","value": "Dental Need"},
 {"text": "HEALTH NEED: Medical","value": "Medical Need"},
-{"text": "HEALTH NEED: Eye Care","value": "Eye Care Need"},
-{"text": "HEALTH NEED: Assistive Device","value": "Assistive Device Need"},
-{"text": "HEALTH NEED: Medication","value": "Medication Need"},
-{"text": "HEALTH NEED: Special Diet","value": "Dietary Need"},
-{"text": "HEALTH NEED: Pregnancy Care","value": "Pregnancy Care Need"},
+{"text": "HEALTH NEED: Home Safety","value": "Home Safety"},
 {"text": "DISABILITY: Disability","value": "Disability"},
 {"text": "DISABILITY: Mental Health Issue","value": "Mental Health"},
 {"text": "DISABILITY: Addiction Issue","value": "Addiction"},
@@ -187,8 +191,7 @@ function validateAndSubmitForm() {
 function showExistingData() {
     var sHTML = "";
     var listId = 0;
-    //gblCC_API.getRepoData(APP_EVENT_TYPE, APP_REPO_NAME , 'Yes', 0 ,100)
-    gblCC_API.getRepoData(APP_EVENT_TYPE, null , 'Yes', 0 ,100)
+    gblCC_API.getRepoData(APP_EVENT_TYPE, null , gblCC_API_APPROVE_STATUS, 0 ,100)
         .done(function( repoData) {
             $.each(repoData, function(i, entry) {
                 var row = JSON.parse(entry.payload);
@@ -253,6 +256,7 @@ function setupEvents() {
     $("#maincontent").on("click","a#cancelBtn",function() {
         showList();
     }); 
+
 }
 
 
@@ -273,7 +277,7 @@ function setupEvents() {
      This code create a formItems object to track the type of input found in the form. Related radio button will all have the same name and will be represented once.
      It then populates formObj with relevant data.
     */
-	
+    
 function getCOTFormItems(formId) {
 
    var formItems = {};
@@ -294,23 +298,23 @@ function extractCOTFormData(formItems) {
 
 
     var formObj = {};  
-	$.each(formItems, function(i, item) {	
-		if (item.type !== 'radio' && item.type !== 'checkbox' ) {
-			formObj[item.name] = $(item.tag + '[name="' + item.name + '"]').val();
-		} else if (item.type == 'checkbox') {
-			formObj[item.name] =  $(item.tag + '[name="' + item.name + '"]')[0].checked; 
-		} else {
-			formObj[item.name] = $("input:checked[name='" +item.name + "']").val(); 
-		}
-	});
+    $.each(formItems, function(i, item) {   
+        if (item.type !== 'radio' && item.type !== 'checkbox' ) {
+            formObj[item.name] = $(item.tag + '[name="' + item.name + '"]').val();
+        } else if (item.type == 'checkbox') {
+            formObj[item.name] =  $(item.tag + '[name="' + item.name + '"]')[0].checked; 
+        } else {
+            formObj[item.name] = $("input:checked[name='" +item.name + "']").val(); 
+        }
+    });
     console.log(formObj);   
     return formObj;
 
 }
 function getCOTFormData(formId) {
-	var formItems = getCOTFormItems(formId);
-	var formObj = extractCOTFormData(formItems);
-	return formObj;
+    var formItems = getCOTFormItems(formId);
+    var formObj = extractCOTFormData(formItems);
+    return formObj;
 }
 
 /*
@@ -445,13 +449,13 @@ function getFormData() {
             var propName = rl[0].replace("rl","").toLowerCase();
             relLink[rl[1]][propName] =rawFormData[key];
         } else {
-			/* for regular input fields, copy data */
+            /* for regular input fields, copy data */
             formData[key] = rawFormData[key];
         }
         console.log(key, rawFormData[key]);
         
     });
-	
+    
     var relatedlinks = [];
     $.each(relLink, function(i, link) {
         if (link.title !== "" && link.link !== "") {
@@ -482,7 +486,9 @@ function submitData() {
     if (gblCurrentRowId !== 0) {
         gblCC_API.updateRepoEntry( APP_EVENT_TYPE, gblCurrentRowId, formData)
             .done(function(data) {
-				appAlert("success","The update was successful");
+                //gblCC_API.updateRepoEntryStatus(APP_EVENT_TYPE,gblCurrentRowId, "TMP")
+                gblCC_API.updateRepoEntryStatus(APP_EVENT_TYPE, gblCurrentRowId, gblCC_API_APPROVE_STATUS)
+                appAlert("success","The update was successful");
                 updateCacheData(gblCurrentRowId, formData);
             })
             .fail(function(errorData) {
@@ -491,9 +497,11 @@ function submitData() {
             });
         
     } else {
-        gblCC_API.submitNewRepoEntry(formData)
+        /* when we submit, we immediately approve it */
+        gblCC_API.submitNewRepoEntry(APP_EVENT_TYPE, formData)
         .done(function(data) {
-             location.reload(); //Reload form to see data removed
+             gblCC_API.updateRepoEntryStatus(APP_EVENT_TYPE, data.EventMessageResponse.Event.EventID, gblCC_API_APPROVE_STATUS)
+              .done(function(error) { location.reload(); })
         })
         .fail(function(errorData) {
             ApiAlert(errorData);
@@ -511,20 +519,20 @@ function showList() {
 
 /* this is another function that could be in CotForms. [checkbox logic not fully tested!*/
 function putCOTFormData(formId, jsonData) {
-	var formItems = getCOTFormItems(formId);
+    var formItems = getCOTFormItems(formId);
     
     if (jsonData !== "") {
-		Object.keys(jsonData).forEach(function(key, i, array) {
-			if (typeof formItems[key] === 'undefined') {
-				return true; //we have data that is not stored in the form..
-			}
-			if ( formItems[key].type !== 'radio' && formItems[key].type !== 'checkbox' ) {
-				$(formItems[key].tag + "[name='" + key + "']").val(jsonData[key]);
-			} else if (formItems[key].type === 'radio') {
-				$("input[name='" + key + "'][value='" + jsonData[key] + "']").prop("checked", true);
-			 } else if (formItems[key].type === 'checkbox') {
-				$("input[name='" + key + "']").prop("checked", jsonData[key]);
-			 }
+        Object.keys(jsonData).forEach(function(key, i, array) {
+            if (typeof formItems[key] === 'undefined') {
+                return true; //we have data that is not stored in the form..
+            }
+            if ( formItems[key].type !== 'radio' && formItems[key].type !== 'checkbox' ) {
+                $(formItems[key].tag + "[name='" + key + "']").val(jsonData[key]);
+            } else if (formItems[key].type === 'radio') {
+                $("input[name='" + key + "'][value='" + jsonData[key] + "']").prop("checked", true);
+             } else if (formItems[key].type === 'checkbox') {
+                $("input[name='" + key + "']").prop("checked", jsonData[key]);
+             }
         });  
     }
     
@@ -558,16 +566,32 @@ function showForm(rowId, listId, jsonData) {
     s0.addRow(new cot_row([
           {"id":"type","title":"Type", "required": false, "type": "radio", "value": "service", "choices": [{"value": "service", "text": "Service"}, {"value": "benefit", "text": "Benefit"}],"orientation":"horizontal"}
     ]));
+    /*
     s0.addRow(new cot_row([
           {"id":"chk","title":"chkTest", "required": false, "type": "checkbox", "value": "checked", "choices": [{"value": "service", "text": "Service"},{"value": "service2", "text": "Service2"}]}
     ]));    
     s0.addRow(new cot_row([
           {"id":"chk2","title":"chkTest2", "required": false, "type": "checkbox", "value": "checked", "choices": [{"value": "service3", "text": "Service"}]}
     ]));    
+    */
     s0.addRow(new cot_row([
-        {"id":"category","title":"Category", "required": true, "type": "dropdown", "class": "col-md-12", 
-        "choices": [{"text": "Childcare"},{"text": "Employment"},{"text": "Housing"}]}
-    ]));    
+        {"id":"category","title":"Category", "type": "dropdown", "class": "col-md-12", 
+        "choices": [{"text": ""},{"text": "Childcare"},{"text": "Employment"},{"text": "Housing"},{"text": "Medical"}],
+        validators: {
+            callback: {
+                callback: function(value, validator) {
+                var type = $('input[name="type"]:checked').val();
+                if (type === 'service' && value === "") {
+                    return {
+                        valid: false,
+                        message: 'A service requires a category',
+                    };
+                } else {
+                    return true;
+                }
+            }}
+        }}
+        ]));    
     s0.addRow(new cot_row([
         {"id":"keywords","title":"Keywords", "required": true,posthelptext : "Enter a list of comma seperated words that a user might use when searching for this title"}
     ]));    
@@ -594,28 +618,44 @@ function showForm(rowId, listId, jsonData) {
     ]));
     s1.addRow(new cot_row([
         {"id":"condition2","title":"Condition 2","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}]},
-        {"id":"rule2","title":"Rule 1", "class": "col-xs-12 col-sm-6 col-md-8","type": "static", "value": "Not Set"},
+        {"id":"rule2","title":"Rule 2", "class": "col-xs-12 col-sm-6 col-md-8","type": "static", "value": "Not Set"},
         {"id":"edit2", "type": "html", "html" : "<a onclick='showRuleModal(2);' class=' rulebtn btn btn-info'>Edit</a>", "class": "col-xs-12 col-sm-2 col-md-1"},
         {"id":"clear2", "type": "html", "html" : "<a onclick='clearRule(2);' class=' rulebtn btn btn-danger'>Clear</a>", "class": "col-xs-12 col-sm-2 col-md-1"}        
     ]));
     s1.addRow(new cot_row([
-        {"id":"condition3","title":"Condition 2","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}]},
-        {"id":"rule3","title":"Rule 1", "class": "col-xs-12 col-sm-6 col-md-8","type": "static", "value": "Not Set"},
+        {"id":"condition3","title":"Condition 3","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}]},
+        {"id":"rule3","title":"Rule 3", "class": "col-xs-12 col-sm-6 col-md-8","type": "static", "value": "Not Set"},
         {"id":"edit3", "type": "html", "html" : "<a onclick='showRuleModal(3);' class=' rulebtn btn btn-info'>Edit</a>", "class": "col-xs-12 col-sm-2 col-md-1"},
         {"id":"clear3", "type": "html", "html" : "<a onclick='clearRule(3);' class=' rulebtn btn btn-danger'>Clear</a>", "class": "col-xs-12 col-sm-2 col-md-1"}        
     ]));
     s1.addRow(new cot_row([
-        {"id":"condition4","title":"Condition 2","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}]},
-        {"id":"rule4","title":"Rule 1", "class": "col-xs-12 col-sm-6 col-md-8","type": "static", "value": "Not Set"},
+        {"id":"condition4","title":"Condition 4","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}]},
+        {"id":"rule4","title":"Rule 4", "class": "col-xs-12 col-sm-6 col-md-8","type": "static", "value": "Not Set"},
         {"id":"edit4", "type": "html", "html" : "<a onclick='showRuleModal(4);' class=' rulebtn btn btn-info'>Edit</a>", "class": "col-xs-12 col-sm-2 col-md-1"},
         {"id":"clear4", "type": "html", "html" : "<a onclick='clearRule(4);' class=' rulebtn btn btn-danger'>Clear</a>", "class": "col-xs-12 col-sm-2 col-md-1"}        
     ]));
     s1.addRow(new cot_row([
-        {"id":"condition5","title":"Condition 2","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}]},
-        {"id":"rule5","title":"Rule 1", "class": "col-xs-12 col-sm-6 col-md-8","type": "static", "value": "Not Set"},
+        {"id":"condition5","title":"Condition 5","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}]},
+        {"id":"rule5","title":"Rule 5", "class": "col-xs-12 col-sm-6 col-md-8","type": "static", "value": "Not Set"},
         {"id":"edit5", "type": "html", "html" : "<a onclick='showRuleModal(5);' class=' rulebtn btn btn-info'>Edit</a>", "class": "col-xs-12 col-sm-2 col-md-1"},
         {"id":"clear5", "type": "html", "html" : "<a onclick='clearRule(5);' class=' rulebtn btn btn-danger'>Clear</a>", "class": "col-xs-12 col-sm-2 col-md-1"}        
     ]));
+    
+    /*
+    s1.addRow(new cot_row([
+        {"id":"condition6","title":"Condition 6","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}]},
+        {"id":"rule6","title":"Rule 6", "class": "col-xs-12 col-sm-6 col-md-8","type": "static", "value": "Not Set"},
+        {"id":"edit6", "type": "html", "html" : "<a onclick='showRuleModal(6);' class=' rulebtn btn btn-info'>Edit</a>", "class": "col-xs-12 col-sm-2 col-md-1"},
+        {"id":"clear6", "type": "html", "html" : "<a onclick='clearRule(6);' class=' rulebtn btn btn-danger'>Clear</a>", "class": "col-xs-12 col-sm-2 col-md-1"}        
+    ]));    
+    s1.addRow(new cot_row([
+        {"id":"condition7","title":"Condition 7","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}]},
+        {"id":"rule7","title":"Rule 7", "class": "col-xs-12 col-sm-6 col-md-8","type": "static", "value": "Not Set"},
+        {"id":"edit7", "type": "html", "html" : "<a onclick='showRuleModal(7);' class=' rulebtn btn btn-info'>Edit</a>", "class": "col-xs-12 col-sm-2 col-md-1"},
+        {"id":"clear7", "type": "html", "html" : "<a onclick='clearRule(7);' class=' rulebtn btn btn-danger'>Clear</a>", "class": "col-xs-12 col-sm-2 col-md-1"}        
+    ]));    
+    */
+    
     var s2 = f.addSection(new cot_section({
         "id":"hsi-submit",
         "class": "submitsection"
@@ -626,9 +666,9 @@ function showForm(rowId, listId, jsonData) {
     //f.success=this.successxx;
     f.render({"target":"#app-content-top"});
     
-	putCOTFormData('hsi-form', jsonData);
+    putCOTFormData('hsi-form', jsonData);
     
-	//Rules and related links are different than single fields, so special processing is required
+    //Rules and related links are different than single fields, so special processing is required
     //By Default, one row will exist in the grid, add neccessary rows before filling
     var addBtn = $( "#relLinks" ).find("button");
     if (typeof jsonData.relatedlinks !== 'undefined') {
@@ -663,32 +703,38 @@ function showForm(rowId, listId, jsonData) {
             if ( globalRuleNo > 1) {
                 $("select[name='condition" + globalRuleNo + "']").val(rule.op);
             }
-            $("#rule" + globalRuleNo).html(createRuleText(oRule[globalRuleNo].subrule1,oRule[globalRuleNo].subcondition2,oRule[globalRuleNo].subrule2,oRule[globalRuleNo].subcondition3,oRule[globalRuleNo].subrule3,oRule[globalRuleNo].subcondition4,oRule[globalRuleNo].subrule4,oRule[globalRuleNo].subcondition5,oRule[globalRuleNo].subrule5) );
+            $("#rule" + globalRuleNo).html(createRuleText(oRule[globalRuleNo].subrule1,
+                                                          oRule[globalRuleNo].subcondition2,oRule[globalRuleNo].subrule2,oRule[globalRuleNo].subcondition3,oRule[globalRuleNo].subrule3,
+                                                          oRule[globalRuleNo].subcondition4,oRule[globalRuleNo].subrule4,oRule[globalRuleNo].subcondition5,oRule[globalRuleNo].subrule5,
+                                                          oRule[globalRuleNo].subcondition6,oRule[globalRuleNo].subrule6,oRule[globalRuleNo].subcondition7,oRule[globalRuleNo].subrule7,
+                                                          oRule[globalRuleNo].subcondition8,oRule[globalRuleNo].subrule8                                                        
+                                                          ));
         });
     }
     
 }
 
-function successxx() {
-    alert("xx");
-}
+
 function showRuleModal(ruleNo) {
     globalRuleNo = ruleNo;
     $("#ruleModal").modal();
 }
 
-function createRuleText(r1, c2, r2, c3, r3, c4, r4, c5, r5) {
+function createRuleText(r1, c2, r2, c3, r3, c4, r4, c5, r5, c6, r6, c7, r7,c8, r8) {
     var ruletxt = "";
     ruletxt =  "<b>" + r1 + "</b>";
     ruletxt += (typeof r2 !== "undefined" && r2 !=="") ? " " + c2 + " <b>" + r2 + "</b>" : "";
     ruletxt += (typeof r3 !== "undefined" && r3 !=="") ? " " + c3 + " <b>" + r3 + "</b>" : "";
     ruletxt += (typeof r4 !== "undefined" && r4 !=="") ? " " + c4 + " <b>" + r4 + "</b>" : "";
     ruletxt += (typeof r5 !== "undefined" && r5 !=="") ? " " + c5 + " <b>" + r5 + "</b>" : "";
+    ruletxt += (typeof r6 !== "undefined" && r6 !=="") ? " " + c6 + " <b>" + r6 + "</b>" : "";
+    ruletxt += (typeof r7 !== "undefined" && r7 !=="") ? " " + c7 + " <b>" + r7 + "</b>" : "";
+    ruletxt += (typeof r8 !== "undefined" && r8 !=="") ? " " + c8 + " <b>" + r8 + "</b>" : "";
     return ruletxt;
 }
 
 /* TODO:  I'm using some of rob's original code to display rules (oRule concept) but also use my different version and maintain both. I should need both
-    In really, Robs has a hardcoded 5 rules.  We sava and retrieve an array of any amount of rules.
+    In really, Robs has a hardcoded 5 rules.  We save and retrieve an array of any amount of rules.
 
   */
 function saveRule() {
@@ -698,12 +744,18 @@ function saveRule() {
     var r3 = $("select[name='subrule3']").val();
     var r4 = $("select[name='subrule4']").val();
     var r5 = $("select[name='subrule5']").val();
+    var r6 = $("select[name='subrule6']").val();
+    var r7 = $("select[name='subrule7']").val();
+    var r8 = $("select[name='subrule8']").val();
     var c2 = $("select[name='subcondition2']").val();
     var c3 = $("select[name='subcondition3']").val();
     var c4 = $("select[name='subcondition4']").val();
     var c5 = $("select[name='subcondition5']").val();
+    var c6 = $("select[name='subcondition6']").val();
+    var c7 = $("select[name='subcondition7']").val();
+    var c8 = $("select[name='subcondition8']").val();
 
-    $("#rule" + globalRuleNo).html(createRuleText(r1, c2, r2, c3, r3, c4, r4, c5, r5));
+    $("#rule" + globalRuleNo).html(createRuleText(r1, c2, r2, c3, r3, c4, r4, c5, r5, c6, r6,c7, r7,c8, r8 ));
     $("#ruleModal").modal('hide');
     
     oRule[globalRuleNo] = {};
@@ -712,10 +764,16 @@ function saveRule() {
     oRule[globalRuleNo].subrule3 = r3;
     oRule[globalRuleNo].subrule4 = r4;
     oRule[globalRuleNo].subrule5 = r5;
+    oRule[globalRuleNo].subrule6 = r6;
+    oRule[globalRuleNo].subrule7 = r7;
+    oRule[globalRuleNo].subrule8 = r8;
     oRule[globalRuleNo].subcondition2 = c2;
     oRule[globalRuleNo].subcondition3 = c3;
     oRule[globalRuleNo].subcondition4 = c4;
     oRule[globalRuleNo].subcondition5 = c5;
+    oRule[globalRuleNo].subcondition6 = c6;
+    oRule[globalRuleNo].subcondition7 = c7;
+    oRule[globalRuleNo].subcondition8 = c8;
     
     oSubRules[globalRuleNo] = [];
     if (typeof r1 !== "undefined" && r1 !=="") {
@@ -733,7 +791,15 @@ function saveRule() {
     if (typeof r5 !== "undefined" && r5 !=="") {
         oSubRules[globalRuleNo].push({ "op" :c5, "subrule" : r5 });
     }
-    
+    if (typeof r6 !== "undefined" && r6 !=="") {
+        oSubRules[globalRuleNo].push({ "op" :c6, "subrule" : r6 });
+    }
+    if (typeof r7 !== "undefined" && r7 !=="") {
+        oSubRules[globalRuleNo].push({ "op" :c7, "subrule" : r7 });
+    }  
+    if (typeof r8 !== "undefined" && r8 !=="") {
+        oSubRules[globalRuleNo].push({ "op" :c8, "subrule" : r8 });
+    } 
 }
 
 
@@ -748,6 +814,12 @@ function showRuleForm() {
     var c4 = (typeof oRule[globalRuleNo]!=='undefined') ? oRule[globalRuleNo].subcondition4 : "";
     var r5 = (typeof oRule[globalRuleNo]!=='undefined') ? oRule[globalRuleNo].subrule5 : "";
     var c5 = (typeof oRule[globalRuleNo]!=='undefined') ? oRule[globalRuleNo].subcondition5 : "";
+    var r6 = (typeof oRule[globalRuleNo]!=='undefined') ? oRule[globalRuleNo].subrule6 : "";
+    var c6 = (typeof oRule[globalRuleNo]!=='undefined') ? oRule[globalRuleNo].subcondition6 : "";
+    var r7 = (typeof oRule[globalRuleNo]!=='undefined') ? oRule[globalRuleNo].subrule7 : "";
+    var c7 = (typeof oRule[globalRuleNo]!=='undefined') ? oRule[globalRuleNo].subcondition7 : "";
+    var r8 = (typeof oRule[globalRuleNo]!=='undefined') ? oRule[globalRuleNo].subrule8 : "";
+    var c8 = (typeof oRule[globalRuleNo]!=='undefined') ? oRule[globalRuleNo].subcondition8 : "";
 
     $("#ruleModalBody").html("");
     var f = new cot_form({
@@ -759,25 +831,36 @@ function showRuleForm() {
         "title":"Service/Benefit Rules"
     }));
     s1.addRow(new cot_row([
-        {"id":"subrule1","title":"Rule 1", "class": "col-xs-12 col-sm-6 col-md-10 col-sm-offset-4 col-md-offset-2", "type": "dropdown", "choices": rules, "value": r1}  
+        {"id":"subrule1","title": "Rule " + globalRuleNo, "class": "col-xs-12 col-sm-6 col-md-10 col-sm-offset-4 col-md-offset-2", "type": "dropdown", "choices": gblRules, "value": r1}  
     ]));
     s1.addRow(new cot_row([
         {"id":"subcondition2","title":"Condition","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}], "value": c2},
-        {"id":"subrule2","title":"Rule", "class": "col-xs-12 col-sm-6 col-md-10","type": "dropdown", "choices": rules, "value": r2} 
+        {"id":"subrule2","title":"Rule", "class": "col-xs-12 col-sm-6 col-md-10","type": "dropdown", "choices": gblRules, "value": r2} 
     ]));
     s1.addRow(new cot_row([
         {"id":"subcondition3","title":"Condition","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}], "value": c3},
-        {"id":"subrule3","title":"Rule", "class": "col-xs-12 col-sm-6 col-md-10","type": "dropdown", "choices": rules, "value": r3} 
+        {"id":"subrule3","title":"Rule", "class": "col-xs-12 col-sm-6 col-md-10","type": "dropdown", "choices": gblRules, "value": r3} 
     ]));
     s1.addRow(new cot_row([
         {"id":"subcondition4","title":"Condition","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}], "value": c4},
-        {"id":"subrule4","title":"Rule", "class": "col-xs-12 col-sm-6 col-md-10","type": "dropdown", "choices": rules, "value": r4} 
+        {"id":"subrule4","title":"Rule", "class": "col-xs-12 col-sm-6 col-md-10","type": "dropdown", "choices": gblRules, "value": r4} 
     ]));
     s1.addRow(new cot_row([
         {"id":"subcondition5","title":"Condition","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}], "value": c5},
-        {"id":"subrule5","title":"Rule", "class": "col-xs-12 col-sm-6 col-md-10","type": "dropdown", "choices": rules, "value": r5} 
+        {"id":"subrule5","title":"Rule", "class": "col-xs-12 col-sm-6 col-md-10","type": "dropdown", "choices": gblRules, "value": r5} 
     ]));
-
+    s1.addRow(new cot_row([
+        {"id":"subcondition6","title":"Condition","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}], "value": c6},
+        {"id":"subrule6","title":"Rule", "class": "col-xs-12 col-sm-6 col-md-10","type": "dropdown", "choices": gblRules, "value": r6} 
+    ]));
+    s1.addRow(new cot_row([
+        {"id":"subcondition7","title":"Condition","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}], "value": c7},
+        {"id":"subrule7","title":"Rule", "class": "col-xs-12 col-sm-6 col-md-10","type": "dropdown", "choices": gblRules, "value": r7} 
+    ]));
+    s1.addRow(new cot_row([
+        {"id":"subcondition8","title":"Condition","type": "dropdown", "class": "col-xs-12 col-sm-4 col-md-2", "choices": [{"text": "AND"},{"text": "OR"}], "value": c8},
+        {"id":"subrule8","title":"Rule", "class": "col-xs-12 col-sm-6 col-md-10","type": "dropdown", "choices": gblRules, "value": r8} 
+    ]));
     f.render({"target":"#ruleModalBody"});
 }
 
