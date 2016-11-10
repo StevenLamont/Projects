@@ -3,20 +3,6 @@
 */
 
 (function () {
-    //var strURL = "http://was8-inter-dev.toronto.ca/cc_sr_v1/submit/" + pathVars + '?format=jsonp&callback=JSON_CALLBACK&json={"calEvent": ' + JSON.stringify($scope.event) + "}" + "&sid=" + getCookie('sid');
-
-    //var SUBMIT_URL = "http://was8-inter-dev.toronto.ca/cc_sr_v1/submit/<eventType>?callback=JSON_CALLBACK&json=";
-    //var SUBMIT_URL = "http://was8-inter-dev.toronto.ca/cc_sr_v1/submit/<eventType>?format=jsonp&callback=JSON_CALLBACK&json=";
-    var SUBMIT_URL_ANGULAR = "http://was8-inter-dev.toronto.ca/cc_sr_v1/submit/<eventType>?callback=angularcallbacks_0&json=";
-    var UPDATE_URL = "https://was8-intra-dev.toronto.ca/cc_sr_admin_v1/retrieve/eventrepo/<eventType>/<eventId>?sid=<sid>&json=";
-    var RETRIEVE_URL = "https://was8-intra-dev.toronto.ca/cc_sr_admin_v1/retrieve/eventrepo/<eventType>/<eventId>?sid=<sid>";
-    var GET_REPO_URL = "https://was8-intra-dev.toronto.ca/cc_sr_admin_v1/retrieve/eventrepo/<eventType>?sid=<sid>&json=" ; 
-                       //https://was8-intra-dev.toronto.ca/cc_sr_admin_v1/retrieve/eventrepo/<eventType>/<eventId>?sid=<sid>";
-    var AUTH_URL = "https://was8-intra-dev.toronto.ca/cc_sr_admin_v1/session?app=<eventType>&user=<userName>&pwd=<password>";
-    
-    //var AUTH_URL = "https://was8-intra-dev.toronto.ca/cc_sr_admin_v1/session?user=<userName>&pwd=<password>";
-    
-    var gblSID;
     
     function angularcallbacks_0(data) {
         console.log(data);
@@ -24,8 +10,22 @@
     }
 	
 	/* it's bad to put a alert here.. the defered isn't returning the error */
-    var submitAPIService = function ($http, $q) {
+    var submitAPIService = function ($http, $q, $location) {
     
+	var currentHost = $location.protocol() + "://" + $location.host() + ":" + $location.port();
+	if ($location.host() === "localhost")  {
+		//currentHost = "https://was-inter-qa.toronto.ca";
+		currentHost = "https://was8-inter-dev.toronto.ca";
+	}
+	var adminHost = currentHost.replace("inter","intra");
+	console.log(currentHost, adminHost);
+    var SUBMIT_URL_ANGULAR = currentHost +  "/cc_sr_v1/submit/<eventType>?callback=angularcallbacks_0&json=";
+    var UPDATE_URL = adminHost + "/cc_sr_admin_v1/retrieve/eventrepo/<eventType>/<eventId>?sid=<sid>&json=";
+    var RETRIEVE_URL = adminHost + "/cc_sr_admin_v1/retrieve/eventrepo/<eventType>/<eventId>?sid=<sid>";
+    var GET_REPO_URL = adminHost + "/cc_sr_admin_v1/retrieve/eventrepo/<eventType>?sid=<sid>&json=" ; 
+    var AUTH_URL = adminHost + "/cc_sr_admin_v1/session?app=<eventType>&user=<userName>&pwd=<password>";
+    
+    var gblSID;
         var service = {
             submit: _submit,
             login: _login,
@@ -98,7 +98,7 @@
 
         
         function _update(userName, password, eventType, eventId, jsonData) {
-   
+			var deferred = $q.defer();
             _login(eventType, userName, password)
 			.then(function(httpCall) {
 				var payloadStr= JSON.stringify(jsonData); //  .replace(/\%/g,"_");  /* another bug in the api */
@@ -108,12 +108,13 @@
 				$http.get(strURL)
 					.success(function(data){
 						console.log(data);
+						deferred.resolve(data);						
 					})
 				.error(function(data, status, headers, config) {
 					console.log(data);
 				});     
 			});
-   
+			return deferred.promise; 
         }
         function _approve(userName, password, eventType, eventId, jsonData) {
    
@@ -125,6 +126,7 @@
 				$http.get(strURL)
 					.success(function(data){
 						console.log(data);
+						 
 					})
 				.error(function(data, status, headers, config) {
 					console.log(data);
@@ -258,6 +260,6 @@
 
     }
 
-    angular.module('eventCalendarApp').factory('tmpSubmitAPIService', ["$http","$q",  submitAPIService]);
+    angular.module('eventCalendarApp').factory('tmpSubmitAPIService', ["$http","$q","$location",  submitAPIService]);
 
 }());

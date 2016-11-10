@@ -1,19 +1,21 @@
 (function () {   
     var eventCalendarApp = angular.module('eventCalendarApp',
-        ['ui.router','ngMessages','isteven-multi-select','ui.bootstrap.showErrors','ui.bootstrap', 'ui.dateTimeInput','ui.bootstrap.datetimepicker',
-         'uiGmapgoogle-maps','ui.utils.masks','ngStorage','oitozero.ngSweetAlert','angularFileUpload','ngProgress','eventCalendarCache','ngCoTForms','ngCoTSubmit', 'ngCoTThumb','ngCoTGoogleMapUtils','ngLogin'])
+        ['ngSanitize','ui.router','ngMessages','isteven-multi-select','ui.bootstrap.showErrors','ui.bootstrap', 'ui.dateTimeInput','ui.bootstrap.datetimepicker',
+         'uiGmapgoogle-maps','ui.utils.masks','ngStorage','oitozero.ngSweetAlert','angularFileUpload','ngProgress','ecCoTEventCache','ngCoTSubmit','ngCoTSanitize', 'ngCoTThumb','ngCoTGoogleMapUtils','ngCoTLogin','ngCoTNotify'])
         .config(['uiGmapGoogleMapApiProvider', function(GoogleMapApiProviders) {
                 GoogleMapApiProviders.configure({
                 //v: '3.17',
                 libraries: 'drawing,places,geometry',
                  /*key: 'AIzaSyA9Io-J9gljYer98DORl5JwTgP-T9_H5GM'  -- cot doesn;'t wqork with localhost */
-                key: 'AIzaSyBXL8BLQRlaYJAQEgGTvASronb5yKWYKRg '
+                /*key: 'AIzaSyBXL8BLQRlaYJAQEgGTvASronb5yKWYKRg '*/
+				client: 'gme-cityoftoronto'
             });
             }])
         //http://solutionoptimist.com/2013/10/07/enhance-angularjs-logging-using-decorators/
         .config(['$logProvider', function ($logProvider) {
-             $logProvider.debugEnabled(false);
+             $logProvider.debugEnabled(true);
         }])
+
   ;		
   
 eventCalendarApp.run(['$rootScope','$log',

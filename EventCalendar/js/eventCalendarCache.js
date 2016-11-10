@@ -10,13 +10,13 @@ https://rclayton.silvrback.com/passing-state-via-services
 */
 
  (function () {
-    var eventCalendarCacheApp = angular.module('eventCalendarCache',
-        ['ngStorage'])
+    var ecCoTEventCache = angular.module('ecCoTEventCache',['ngStorage'])
     .config(['$localStorageProvider',
         function ($localStorageProvider) {
                 $localStorageProvider.setKeyPrefix('COTEventCal-');
         }])
-    .service('eventCalendarCacheService', function( $localStorage) {
+		
+    function ecCoTEventCacheService( $localStorage) {
      
         //var cache = {};
         this.putEvent = function(event, appCntl){
@@ -38,6 +38,7 @@ https://rclayton.silvrback.com/passing-state-via-services
             return eventCache;
         };
 
-})
+};
+ angular.module('ecCoTEventCache').service('ecCoTEventCacheService', ["$localStorage",ecCoTEventCacheService]);
 }());
 
