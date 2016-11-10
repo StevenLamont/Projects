@@ -1,7 +1,15 @@
-
 .form-group-horizontal .form-control-feedback {right: -30px; line-height:25px;}
-
-label.required:before { color: red;margin-left: 5px;margin-right: 5px;content: "*"}
+label.required:before { color: #a94442;margin-left: 5px;margin-right: 5px;content: "*"}
+label.required.help-block::before { color: inherit; content: "";  margin-left: 0;  margin-right: 0;}
+.help-block {font-size: 85%;font-weight: inherit;}
+#mandatory { color: #a94442;}
+#contactInfo { color:#337cbb; font-style: italic;margin-top: 5px}
+.requiredHelp {   font-size: 0.8em; line-height: 0.8em;}
+#maincontent .helptext {
+    color: #434343;
+    font-style: italic;
+    margin: 0;
+}
 
 /* override COT standard bootstrap css from cot_app.cs*/
 #maincontent .has-error {
@@ -15,6 +23,14 @@ label.required:before { color: red;margin-left: 5px;margin-right: 5px;content: "
     min-width: 120px;
     text-align: center;
 }
+
+#ecForm .nav-tabs {
+    border-bottom: 0px solid #ddd;
+	display: none;
+}
+
+
+.btntitle { font-weight: bold;}
 #ec-step6 a {text-decoration:none!important; color: white!important;  background-color: #337ab7!important;}
 #maincontent table th, #maincontent table td, #maincontent form table th, #maincontent form table td {
      vertical-align: inherit; 
@@ -22,11 +38,22 @@ label.required:before { color: red;margin-left: 5px;margin-right: 5px;content: "
     line-height: inherit;
      word-break:inherit; 
 }
+#cot-terms-body {
+    overflow-y: scroll;
+    height: 200px;
+    width: 100%;
+    border: 1px solid #DDD;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+#othTerms {
+    list-style-type: lower-roman!important;
+}
 
 #maincontent .form-group  {margin-bottom:10px;}
 
 #maincontent .input-group-addon a {
-	color: inherit;
+    color: inherit;
 }
 
 
@@ -42,8 +69,8 @@ label.required:before { color: red;margin-left: 5px;margin-right: 5px;content: "
 li.active button {
     background-color: #337ab7;
     color: #fff;
-	width: 100%;
-	
+    width: 100%;
+    
 }
 /* standard datetimerpicker css is 320px fpor some reason.*/
 .datetimepicker {
@@ -75,6 +102,9 @@ li.active button {
     position: relative !important;
 }
 
+#eventTypeElement {
+	display: none;
+}
 
 .weeklyField { margin-top: 28px!important;}
 
@@ -105,7 +135,7 @@ li.active button {
     margin-right: 0px;
     font-size: 16px;
     font-weight: bold;
-	padding-bottom: 12px; /* mostly for chrome */
+    padding-bottom: 12px; /* mostly for chrome */
     
 }
 
@@ -118,7 +148,14 @@ li.active button {
 }
 
 .eventFeature{
-	min-width: 125px;
+    min-width: 125px;
+}
+
+.labelChkBox {
+    margin: 0!important;
+    width: 13px!important;
+    height: 13px!important;
+
 }
 /* stylized checkboxes -- should be acorporate standard. Delete these if so
    required checkboxes to have labels.
@@ -131,11 +168,11 @@ input[type=radio],input[type=checkbox] {
 */
 .chkLabel {
     font-weight: normal;
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 .radioLabel {
     font-weight: normal;
-	margin-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 /*
@@ -143,20 +180,20 @@ input[type=radio] + label:before{
 
     font-family:'FontAwesome';
     content:"\f10c   ";
-	font-size: 1.5em;
+    font-size: 1.5em;
 
 }
 input[type=radio]:checked + label:before{
     font-family:'FontAwesome';
     content:"\f058   ";
-	font-size: 1.5em;
+    font-size: 1.5em;
 
 }
 
 
 input[type=checkbox] + label:before{
 
-	font-size: 1.5em;
+    font-size: 1.5em;
     font-family:'FontAwesome';
     content:"\f096 ";
 }
@@ -164,11 +201,11 @@ input[type=checkbox] + label:before{
 input[type=checkbox]:checked + label:before{
     font-family:'FontAwesome';
     content:"\f14a ";
-	font-size: 1.5em;
+    font-size: 1.5em;
 }
 */
 .selectedLocation {
-	background: rgba(255, 0, 0, 0.1) none repeat scroll 0 0;
+    background: rgba(255, 0, 0, 0.1) none repeat scroll 0 0;
 }
 
 /* for stylized radio and checkboxes -- old attempt
@@ -256,6 +293,32 @@ input[type=checkbox]:checked + label:before{
   left: -999em;
 }
 
+#attachmentTable tr {
+    border-bottom: 0!important;
+}
+
+#attachmentTable > tbody > tr > td, .table > tbody > tr > th, .table > tfoot > tr > td, .table > tfoot > tr > th, .table > thead > tr > td, .table > thead > tr > th {
+ border-top: 0!important;
+}
+
+#attachmentTable > tbody > tr > td.helptext {
+    padding-top: 0!important;
+    padding-bottom: 0!important;
+}
+ 
+.glyphicon-calendar {
+    width: 3em!important;  /* helps mobile devices */                                                                             
+    height: 1em!important;
+}
+ 
+@media (max-width: 415px) {
+	.datetimepicker .hour, .datetimepicker .minute {
+		font-size: 0.8em!important;
+	}
+	#maincontent table th, #maincontent table td, #maincontent form table th, #maincontent form table td {
+		padding: 0!important;
+	}		
+}
 @media (max-width: 768px) {
     .weeklyField { margin-top: 0px;}
     #ecForm  fieldset {  border: 1px solid silver; }
@@ -263,7 +326,8 @@ input[type=checkbox]:checked + label:before{
         float: none !important;
         margin-top: 10px;
     }
-	#mapSearchBox {width: 100px;}
+	.optIcon { display: none;}
+    #mapSearchBox {width: 100px;}
 }
 
 @media (max-width: 1200px) {
