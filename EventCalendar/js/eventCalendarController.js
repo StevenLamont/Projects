@@ -1,5 +1,8 @@
 (function () {
-/* SML Notes:
+/* Author: Steve Lamont
+   Date: 2016/10/01
+
+   SML Notes:
     issues/Notes with google maps.
     a) use config option on App, but you don't know when the libraries are loaded, so can't use constants right away
        --> hence MapAPI and MapIsReady events.
@@ -20,36 +23,43 @@
     Image Processing.
     1) If we reload an event from localstorage and there is a binId, the user will not know this and the image thumbnail will not be there. There is really nothing we can do. The code acutally blanks out any image info.  
     2) When we edit the event (an administrator) will have a session, so we can retrieve the image form the database. We will have a download button for the user to see the image.
-    3) They may want to edit it anyway..(can we work on a THUMBNAIL from the database.. 4) the thumbnail directive works off a file
       
+    4) http://stackoverflow.com/questions/9155136/chrome-file-upload-bug-on-change-event-wont-be-executed-twice-with-the-same-fi
       
-    Things to implement.
-       
-    11) when I geocode an address should I get rid of the postal code?? on <pstl< canada part as irrelvant??  It shows the user they are in the right city/country.. os leave it in.
-   
-    13) there is an option in showErrors to globally show bootstrap error classes. so no need to:  show-errors='{ showSuccess: true }  --check into this.
-    
-    Can I make a directive that is "onOf" - have a group like showErrors.. puts ng_reguired on each item.. but uses scope of directive and not conroller to detect entry
-      --> then also does an onblur for each element in the onOf after each 
-      
+    Dates:
+        I didn't put an edit on the start time and end time of weekly event because an event might start at 9:pm and end at 1:00AM. 
+        
+    General Notes:
+        Ad blocker uOrigin was blocking idcsMultiTrack 
+        
+    Sanitize: I created a santize directive.. but it was for every keystroke which causes problems on backspaces. (and maybe slow)
+        I end up creating a "onChange" event.  This isn't the best and rhe way I pass parms is kludgy
+        The other option is to sanitize on submission when validating fields.
+        Ideally I need a directive that fires after the model is updated and changes the model value.
+
+    When using 'update' mode, you could be on an "intra" site and use the cc_sr_admin_v1 apis
+             while in public submission mode we should on the "inter" site and use cc_sr_v1 apis.
     
 */
-    var APP_NAME = "SMLEventV1"; // this is really EventType
-    var APP_REPO = "smlrepo"; // this is really EventType
-    //var APP_NAME = "HSI_Services_Benefits"; // this is really EventType
-   // var APP_REPO = "HSI_Services_Benefits"; // this is really EventType
+    var API_PATH = "cc_sr_admin_v1";
+    //localhost
+    //var API_HOST = "https://was-inter-qa.toronto.ca";
+    //API_HOST = "https://was8-inter-dev.toronto.ca";
+    var API_HOST = "https://was8-intra-dev.toronto.ca";
+    var APP_REPO = "dev_eventcal"; // this is really EventType
+    var APP_NAME = "dev_eventcal"; // this is really EventType
+    //normal
+    //var API_HOST = ""; 
     //var APP_REPO = "edc_eventcal"; // this is really EventType
     //var APP_NAME = "edc_eventcal"; // this is really EventType
-    //var APP_REPO = "SMLEventDEMORepo"; // this is really EventType
-    //var APP_NAME = "SMLEventDEMO"; // this is really EventType
     
     
     
     var MAP_CENTER = { lat:  43.69587827770483, lng:  -79.45175170898438 };
     var RESET_ZOOM_LEVEL = 16;  
     var MAP_TAB = 4; //step in process which contains map which requires 'special' refresh process
-    var markerIcons = {'normal'   : 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png',
-                       'selected' : 'http://maps.google.com/mapfiles/ms/icons/red.png'
+    var markerIcons = {'normal'   : '//maps.google.com/mapfiles/ms/icons/blue-dot.png',
+                       'selected' : '//maps.google.com/mapfiles/ms/icons/red.png'
                        };
     var polyFills = { 'normal'  : {fillColor:'#000000', strokeColor: '#000000', strokeWeight: 2},
                       'selected': {fillColor:'#FF0000', strokeColor: '#FF0000', strokeWeight: 4}
@@ -59,15 +69,14 @@
     var CommonInfoWindow = null;
     
     
-    function EventCalendarController( $rootScope, $scope, $log,  $state, $parse,$http, $timeout, $document, uiGmapGoogleMapApi, uiGmapIsReady, FileUploader,  ngProgressFactory,  eventCalendarCacheService,eventCalendarDataService,eventCalendarUtilService,tmpSubmitAPIService, submitAPIService, FORM_EVENTS,googleMapUtilsService, Session, UserRoles, ngCoTNotifyService)  /*ignore parms*/{
+    function EventCalendarController( $rootScope, $scope, $sanitize, $sce, $log,  $state, $parse,$http, $timeout, $document, uiGmapGoogleMapApi, uiGmapIsReady, FileUploader,  ngProgressFactory, ecCoTEventCacheService, ecCoTDataService, ecCoTUtilService, tmpSubmitAPIService, CoTSubmitAPIService, CoTGoogleMapUtilsService, CoTSession, CoTUserRoles, CoTNotifyService)  /*ignore parms*/{
                                     
     var vm = this;
-    vm.roles = Session.userRoles; // need to know all the roles for this user
-    vm.admin = UserRoles.getUserRoles().admin; // need to know what the admin role is called for this application
-    vm.approver = UserRoles.getUserRoles().approver; // need to know what the approver role is called for this application
-    vm.editor = UserRoles.getUserRoles().editor; // need to know what the editor role is called for this application
+    vm.roles = CoTSession.userRoles; // need to know all the roles for this user
+    vm.admin = CoTUserRoles.getUserRoles().admin; // need to know what the admin role is called for this application
+    vm.approver = CoTUserRoles.getUserRoles().approver; // need to know what the approver role is called for this application
+    vm.editor = CoTUserRoles.getUserRoles().editor; // need to know what the editor role is called for this application
 
-    
     vm.MAX_TABS = 7;  // number of steps. i should probably calculate this on ready.
     
     $log.debug($state.current.data);
@@ -77,40 +86,40 @@
     /* view related variables, with 'event' being the most important */
     vm.canDebug = true;
     vm.debug = false;
-    vm.greetMe = 'Angular started';
+    vm.recIdInput = "";
+    vm.userId = "";
+    vm.pw= "";
+    vm.appRepo = APP_REPO;
 
-    vm.eventDefaults = {terms : "", recId : null, category : [], locations : [{ id: eventCalendarUtilService.guid(), type: 'marker'}], admin : { newsletterCategory : [], newsletterSubcategory : [], includeInNewsletter : false, featuredEvent :false}};
+    vm.eventDefaults = {terms : "", recId : null, category : [], locations : [{ id: ecCoTUtilService.guid(), type: 'marker'}], admin : { newsletterCategory : [], newsletterSubcategory : [], includeInNewsletter : false, featuredEvent :false}};
     vm.event = {terms : "", recId : null};
     vm.weeklyDatesIM = [];
     vm.appCntl = { tab : 1, showMap : false };
     vm.locationTabClicked = false;    
     vm.progressbar = ngProgressFactory.createInstance();
-	
-	vm.newImageInUse = false;
-
+    
+    vm.newImageInUse = false;
+    vm.imageURL = "";
     vm.locIndex  = -1;
     vm.occurIndex = -1;
-    vm.recIdInput = "";
-    
-    //vm.eventCategories = eventCalendarDataService.eventCategories();
-    //eventCalendarDataService.eventCategories().then(function (response) {
-    //  console.log("init");
-    //   $timeout(function() {
-    //      vm.eventCategories = response;
-    //  });
-    //});
+    vm.showSubmit = false;
+
+    vm.terms = function(response) {
+        vm.event.terms = response;
+        if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','0','WT.conv_type','Terms:' + response);
+        focusFirstElementInTab();
+    };
     vm.isSportsSelected = true;
     vm.newsletterSubCatRequired = false;
-    //vm.setNewletterSubcategories = setNewletterSubcategories;
-    //vm.costRanges = eventCalendarDataService.costRanges();
-    //vm.sportsSubcategories = eventCalendarDataService.sportsSubcategories();
-    eventCalendarDataService.eventFeatures().then(function(data) {
+    ecCoTDataService.eventFeatures().then(function(data) {
         vm.availableFeatures = data; 
     });
+
+    ecCoTDataService.helpText().then(function(data) {
+        vm.helpText = data; 
+    });
      
-    vm.daysOfWeek = eventCalendarDataService.daysOfWeek();
-    //vm.newsLetterCategories = eventCalendarDataService.newsletterCategories();
-    //vm.newsLetterSubcategories = eventCalendarDataService.newsletterSubcategories();
+    vm.daysOfWeek = ecCoTDataService.daysOfWeek();
     
     /* map related view variables */
     vm.selectedShape = null;
@@ -119,17 +128,18 @@
     vm.map.options = { MapTypeId: "satellite"};  // I don't have the google libraries loaded yet.. so can't use constants.
     vm.map.mapControl = {};
     vm.searchbox = { 
-        template:'searchbox.tpl.html', 
+        template:'ngCoT/shared/searchbox.tpl.html', 
         events:{ places_changed: googlePlaces }
     };
 
     /* -- view function references -- */
-    vm.limitSelection = eventCalendarUtilService.limitSelection;
-    vm.clearSelection = eventCalendarUtilService.clearSelection;
+    vm.limitSelection = ecCoTUtilService.limitSelection;
+    vm.clearSelection = ecCoTUtilService.clearSelection;
     vm.blur = function(selector) {
         $log.debug("blur:" + selector);
         angular.element(selector).blur();
     };
+    vm.sanitize = sanitize;
     vm.setTab = setTab;
     vm.resetForm = resetForm;
     vm.addOccurrenceDateRow = addOccurrenceDateRow;
@@ -137,10 +147,9 @@
     vm.addWeeklyOccurrenceRow = addWeeklyOccurrenceRow;
     vm.removeWeeklyOccurrenceRow = removeWeeklyOccurrenceRow;
     vm.frequencyChanged = frequencyChanged;
-    //Because i changed relevant sections to use NG-IF over NG-Show. I don't need to worry about errors that become hidden as NG-IF removes the component from the DOM unlike show whihc hides it.
-    //vm.resetFormValidation = function(){}; //resetFormValidation;
+    //Because i changed relevant sections to use NG-IF over NG-Show. I don't need to worry about errors that become hidden as NG-IF removes the component from the DOM unlike ng-show which hides it.
     vm.gotoHomePage = function() {
-        eventCalendarCacheService.removeEvent();
+        ecCoTEventCacheService.removeEvent();
         window.location.href = "http://toronto.ca";        
     };
     
@@ -149,10 +158,16 @@
     
     vm.addLocation = addLocation;
     vm.removeLocation = removeLocation;
+    vm.locationNameChanged = function(idx) { CommonInfoWindow.close();};
     vm.verifyLocationAddress = verifyLocationAddress;
     vm.locationAddressChanged = function(idx) {
         vm.event.locations[idx].geoCoded = false;
         verifyLocationAddress(idx);
+    };
+    vm.displayAddressIndChanged = function(idx) {
+        if ( !vm.event.locations[idx].displayAddressInd) {
+            delete vm.event.locations[idx].displayAddress;
+        }
     };
     vm.deleteSelectedShape = deleteSelectedShape;
     vm.PSIEntered = function() {
@@ -166,6 +181,8 @@
     };
         
     vm.submit = submit;
+    vm.preview = preview;
+
     vm.nextTab = nextTab;
     vm.prevTab = prevTab;
     vm.showTab = showTab;
@@ -175,9 +192,9 @@
     vm.getOneRecord = getOneRecord; 
     vm.returnRecord = returnRecord;
     vm.cancelEdit = function () {
-       //window.location.href = document.referrer;
-       // PL - allow it to go back to the ui-router state that called the form
-       $state.go(vm.appCntl.callerState);
+       if (vm.appCntl.callerState) {
+            $state.go(vm.appCntl.callerState);
+        }
     };   
     
     vm.toggleMap = function () {
@@ -193,171 +210,50 @@
     vm.drawingManagerControl = {};  
     
     /* we broadacast to the other datepickers that a key date has changed and thus they need to re-render their views 
-       problem: If we debound in the model-options, it messes the formmaters. *check this
+       problem: If we debounce in the model-options, it messes the formmaters. *check this
        if we don't debounce, this calls on each keystroke.. and we have too many events.
-       we can't blur because the control isn't moving to the next field. (i changed thre html so that tabbing is working better)
+       we can't blur because the control isn't moving to the next field. (i changed the html so that tabbing is working better)
     
         onChange on the picker is ok.. as the change comes in all at once.
         
         If the person uses the picker after manually setting the date, we need to blur as well.
     */
     vm.eventDateChanged = function (fromDt, toDt) {
-        //console.log("Change");
         $scope.$broadcast('eventdatechange');          
     };
-    vm.eventDateBlur = function (fromfld, fromDt, tofld, toDt) {
-        console.log('blur:' , fromfld,fromDt, tofld,toDt);
-        if (typeof fromDt !== 'undefined' && typeof toDt !== 'undefined' && moment(fromDt) > moment(toDt)) {
-            $scope.ecForm[fromfld].$setValidity("baddate", false);
-            $scope.ecForm[tofld].$setValidity("baddate",false);
-        } else {
-            $scope.ecForm[fromfld].$setValidity("baddate", true);
-            $scope.ecForm[tofld].$setValidity("baddate",true);          
-            
-        }
-        $scope.$broadcast('eventdatechange');   
-    }
-    vm.eventOccurDateBlur = function (startfld, startDt, endfld, endDt, eventStartDt, eventEndDt) {
-        console.log('blur:' , startfld, startDt,endfld, endDt);
-        if (typeof startDt !== 'undefined' && typeof endDt !== 'undefined' && moment(startDt) > moment(endDt).endOf('day')) {
-            $scope.ecForm[startfld].$setValidity("baddate", false);
-            $scope.ecForm[endfld].$setValidity("baddate",false);
-        } else {
-            $scope.ecForm[startfld].$setValidity("baddate", true);
-            $scope.ecForm[endfld].$setValidity("baddate",true);         
-            
-        }
-        if (typeof startDt !== 'undefined'  && (moment(startDt) < moment(eventStartDt).startOf('day') ||  moment(startDt) > moment(eventEndDt).endOf('day')   ) ) {
-            $scope.ecForm[startfld].$setValidity("badoccurdate", false);
-        } else {
-            $scope.ecForm[startfld].$setValidity("badoccurdate", true);     
-        }
-        if (typeof endDt !== 'undefined'  && (moment(endDt) > moment(eventEndDt).endOf('day')  ||  moment(endDt) < moment(eventStartDt).startOf('day')   ) ) {
-            $scope.ecForm[endfld].$setValidity("badoccurdate", false);
-        } else {
-            $scope.ecForm[endfld].$setValidity("badoccurdate", true);       
-        }
-
-        
-        $scope.$broadcast('eventdatechange');   
-    }   
- //   vm.eventOccurDateChanged = function (Idx) {
-//      console.log("Render:" + 'eventdatechange' + Idx);
- //       $scope.$broadcast('eventdatechange' + Idx);          
- //   };
     
-    var uploadURL = "https://was8-inter-dev.toronto.ca/cc_sr_v1/upload/" + APP_NAME + "/event_logo";
-    //var uploadURL = "https://was8-inter-dev.toronto.ca/cc_sr_v1/upload/edc_eventcal/event_logo";
-
-    vm.uploader  = new FileUploader({
-            url: uploadURL,
-            //headers:  {'Content-Type' : 'multipart/form-data'} -- don't do this,  not needed.it will create the header
-    });
-
-    //TODO: Clean up these events once fully implemented and removed unneeded.
-    vm.uploader.filters.push(
-        { name: 'imageFilter',
-          fn: function(item /*{File|FileLikeObject}*/, options) {
-             var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
-             return '|jpg|png|jpeg|gif|'.indexOf(type) !== -1;
-          }
-        },
-        { name: 'sizeFilter',
-          fn : function (item /*{File|FileLikeObject}*/, options) {
-            return item.size/1024/1024 < 2;
-         }
-        }
-    );
-    /*  There is no "remove" event.. so I created a watch on the queue length   */
-    vm.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
-            sweetAlert("Invalid file type.","Only image files less than 2 MB are allowed to be uploaded. \n (jpg, jpeg, png, gif)","error");
-        };
-    vm.uploader.onAfterAddingFile = function(fileItem) {
-            $log.debug('onAfterAddingFile', fileItem);
-            if (!vm.event.image) {
-                vm.event.image = {};
-            }
-            vm.event.image.fileName =  fileItem.file.name;  //since we are only allowing 1 image upload.
-            vm.event.image.fileSize =  fileItem.file.size;  //since we are only allowing 1 image upload.
-            vm.event.image.fileType =  fileItem.file.type;  //since we are only allowing 1 image upload.
-			vm.newImageInUse = true;
-        };
-    vm.uploader.onAfterAddingAll = function(addedFileItems) {
-            $log.debug('onAfterAddingAll', addedFileItems);
-        };
-    vm.uploader.onBeforeUploadItem = function(item) {
-            $log.debug('onBeforeUploadItem', item);
-        };
-    vm.uploader.onProgressItem = function(fileItem, progress) {
-            $log.debug('onProgressItem', fileItem, progress);
-        };
-    vm.uploader.onProgressAll = function(progress) {
-            $log.debug('onProgressAll', progress);
-        };
-    vm.uploader.onSuccessItem = function(fileItem, response, status, headers) {
-            $log.debug('onSuccessItem', fileItem, response, status, headers);
-            $timeout(function() {
-                if (!vm.event.image) {
-                    vm.event.image = {};
-                }
-                if ( response.hasOwnProperty("BIN_ID")) {
-                    vm.event.image.binId = response.BIN_ID[0];  //since we are only allowing 1 image upload.
-                } else {
-                    sweetAlert("File Upload Failed","The file upload was not successful. Please Try again!","error");
-                }
-            });
-        };
-    vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
-            sweetAlert("File Upload Failed","The file upload was not successful. Please Try again!","error");
-        };
-    vm.uploader.onCancelItem = function(fileItem, response, status, headers) {
-            $log.debug('onCancelItem', fileItem, response, status, headers);
-        };
-    vm.uploader.onCompleteItem = function(fileItem, response, status, headers) {
-            $log.debug('onCompleteItem', fileItem, response, status, headers);
-        };
-    vm.uploader.onCompleteAll = function() {
-            $log.debug('onCompleteAll');
-     };
-    $scope.$watch(angular.bind(vm, function () {
-        return vm.uploader.queue.length;
-    }), function (newVal) {
-          if (vm.uploader.queue.length === 0 ) {
-			vm.newImageInUse = false;
-            if (vm.event.image) {
-                delete vm.event.image.binId;
-                delete vm.event.image.fileName;
-                delete vm.event.image.fileSize;
-                delete vm.event.image.fileType;
-				
-            }
-          }
-    });
-    
+    vm.eventDateBlur = eventDateBlur;
+    vm.eventOccurDateBlur = eventOccurDateBlur;
     
     /* Once the document is ready*/
     angular.element(document).ready(function () {
+    
+        
         $log.debug('angular ready');
         //vm.MAX_TABS =  document.getElementsByClassName("btntitle").length;
-        var eventCache = eventCalendarCacheService.getEvent();
+        var eventCache = ecCoTEventCacheService.getEvent();
         if (eventCache.event === null) {
             $log.debug("loading event defaults");
             angular.copy(vm.eventDefaults,vm.event);
+            setupUploader();
+            resetViewState();
         } else {
             $log.debug("loading event found in local storage");
             angular.copy(eventCache.event,vm.event); 
             if (eventCache.appCntl) angular.copy(eventCache.appCntl,vm.appCntl);
-            vm.appCntl.opMode = $state.current.data.opMode;  //there muse be something stored to allow edit.. so ok here only.            
-            // PL - MAX_TABS needs to be 8 if this is an update to allow next/previous buttons to work properly
+            vm.appCntl.opMode = $state.current.data.opMode;  //there must be something stored to allow edit.. so ok here only.            
             if ( vm.appCntl.opMode ) {
                 if (vm.appCntl.opMode == 'update') {
                     vm.MAX_TABS = 8;
                 }
             }
             vm.appCntl.referrer = document.referrer;
+            setupUploader();
             resetViewState();           
-        }   
-        //displayTab(vm.appCntl.tab);
+        } 
+        
+        focusFirstElementInTab();
+
         //http://stackoverflow.com/questions/24078535/angularjs-controller-as-syntax-and-watch
         //With 'controller as', need to change how watch works. watch for thre locationTab to be click and if so, refresh the map.
         //Is this needed anymore?
@@ -373,7 +269,7 @@
     
         $scope.$watchCollection(angular.bind(vm, function () {
             return vm.event.category;
-        }), function (newVal, oldValue) {
+        }), function (newVal, oldVal) {
             vm.isSportsSelected = false;
             angular.forEach(newVal, function(item, i) {
                 if (item.name === "Sports") {
@@ -382,33 +278,34 @@
             });
         });
     
-        /* we want the subcategory cache to load before we start watching to avoid IO
-            a watch turns out to be better than an on-click event because ot reloading data*/
-        
+        /* 1) we want the subcategory cache to load before we start watching to avoid IO, so delay the watch a little
+           2) a watch turns out to be better than an on-click event because of reloading data.
+        */
         $timeout(function () {
-        $scope.$watchCollection(angular.bind(vm, function () {
-            return vm.event.admin.newsletterCategory;
-        }), function (newVal, oldValue) {
-            vm.newsletterSubCatRequired = false;
-            angular.forEach(newVal, function(item, i) {
-                if (item.value === "Attractions/Happenings" || item.value === "Sports" ) {
-                    vm.newsletterSubCatRequired = true;
-                    $timeout(function () {
-                        eventCalendarDataService.newsletterSubcategories(item.value).then(function(data) {
-                            vm.newsletterSubcategories = data;
-                        });
-                    });
-               // } else {
-                //  vm.event.admin.newsletterSubcategory = [];
+            $scope.$watchCollection(angular.bind(vm, function () {
+                return vm.event.admin.newsletterCategory;
+            }), function (newVal, oldVal) {
+                if (newVal > 0 && oldVal > 0 && newVal[0].value === oldVal[0].value) {
+                    $log.debug("subcat watch - no Category change, skip:" + newVal[0].value);
+                    return;
                 }
-            });
-        }); 
-        },1000);
-        
+                vm.newsletterSubCatRequired = false;
+                angular.forEach(newVal, function(item, i) {
+                    $log.debug("reload subcat" + item.value);
+                    if (item.value === "Attractions/Happenings" || item.value === "Sports" ) {
+                        vm.newsletterSubCatRequired = true;
+                        $timeout(function () {
+                            ecCoTDataService.newsletterSubcategories(item.value).then(function(data) {
+                                vm.newsletterSubcategories = data;
+                            });
+                        });
+                    }
+                });
+            }); 
+        },200);        
     });
         
-    /* Once the google map apis have loaded we can complete creating functions */
-    
+    /* Once the google map apis have loaded we can complete creating functions */    
     uiGmapGoogleMapApi.then(function (maps) {
         
         //http://stackoverflow.com/questions/12729122/angularjs-prevent-error-digest-already-in-progress-when-calling-scope-apply
@@ -467,7 +364,7 @@
             
                 var obj = args[0];
                 var newShape = obj.overlay;
-                var locId = eventCalendarUtilService.guid(); 
+                var locId = ecCoTUtilService.guid(); 
                 newShape.label = 1;
 
                 newShape.locId = locId;      //add custom field to overlay for our use
@@ -500,7 +397,7 @@
                             addLocation(mapObject);
                         });
                     });
-                    if (!googleMapUtilsService.isLatLngInToronto( newShape.position)) {
+                    if (!CoTGoogleMapUtilsService.isLatLngInToronto( newShape.position)) {
                         sweetAlert("Warning","Location is outside the city boundaries","warning");
                     }
             
@@ -544,34 +441,23 @@
                         vm.resetMap();
                     });
                 }
-            };
-            
+            };            
 
             resetMapData();
             
             var cityPolyline = new google.maps.Polyline({
-                path: googleMapUtilsService.cityPolylineCoords(),
+                path: CoTGoogleMapUtilsService.cityPolylineCoords(),
                 Geodesic: true,
                 strokeWeight: 1,
                 strokeColor:'#FF0000',
                 fillOpacity: 0.45,
                 editable: false,
-                draggable: false,
+                draggable: false
             });
             cityPolyline.setMap(vm.map.mapControl.getGMap());
-            
-            //var cityPolygon = new google.maps.Polygon({
-            //  paths: googleMapUtilsService.cityPolygon().coords,
-            //  strokeWeight: 1,
-            //  strokeColor:'green',
-            //  fillOpacity: 0.45,
-            //  editable: false,
-            //  draggable: false,
-            //});
-            //cityPolygon.setMap(vm.map.mapControl.getGMap());
-            
 
             $log.debug('controller ready');
+            
 
         }
         //Clear the current selection when the drawing mode is changed, or when the map is clicked.
@@ -579,8 +465,173 @@
             var drawingManager = vm.drawingManagerControl.getDrawingManager();    
             google.maps.event.addListener(drawingManager, 'drawingmode_changed', clearMapSelection);
         }
+        
+        
     });
     
+    function dataURItoBlob(dataURI) {
+    // convert base64/URLEncoded data component to raw binary data held in a string
+        var byteString;
+        if (dataURI.split(',')[0].indexOf('base64') >= 0)
+            byteString = atob(dataURI.split(',')[1]);
+        else
+            byteString = unescape(dataURI.split(',')[1]);
+
+        // separate out the mime component
+        var mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+
+        // write the bytes of the string to a typed array
+        var ia = new Uint8Array(byteString.length);
+        for (var i = 0; i < byteString.length; i++) {
+            ia[i] = byteString.charCodeAt(i);
+        }
+
+        return new Blob([ia], {type:mimeString});
+}
+    
+    
+    //http://stackoverflow.com/questions/13198131/how-to-save-a-html5-canvas-as-image-on-a-server
+    //http://stackoverflow.com/questions/25390598/append-called-on-an-object-that-does-not-implement-interface-formdata
+    //https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/toDataURL
+    /* There will be only one canvase element on the screen from the thumbnail */
+    function thumbnailUpload() {
+    
+        var canvas = angular.element( document.querySelector( 'canvas' ) )[0];  
+        var dataURL = canvas.toDataURL();
+        var blob = dataURItoBlob(dataURL);
+        var fd = new FormData();
+        var thumbNailFileNameArr = vm.event.image.fileName.split('.');
+        thumbNailFileNameArr.pop(); //.join('.') + ".png";
+        var thumbNailFileName = thumbNailFileNameArr.join('.') + "_th.png";
+        fd.append("file", blob, thumbNailFileName);
+        CoTSubmitAPIService.uploadAttachment(getApiHost(), APP_NAME,'event_logo',fd)
+            .then(function(response) {
+                if ( response.hasOwnProperty("BIN_ID")) {
+                    if (!vm.event.thumbImage) {
+                        vm.event.thumbImage = {};
+                    }
+                    vm.event.thumbImage.fileName =  thumbNailFileName;  
+                    vm.event.thumbImage.fileSize =  blob.size;  
+                    vm.event.thumbImage.fileType =  blob.type;  
+                    vm.event.thumbImage.binId = response.BIN_ID[0];  
+                    if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','2','WT.conv_type','ThumbNail Upload Successful');
+                } else {
+                    if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','2','WT.conv_type','ThumbNail Upload Failed');
+                    sweetAlert("File Upload Failure","The file upload was successful but the generated thumbnail failed. Please remove the image and try again!","error"); 
+                }
+            }, function(response){
+                if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','2','WT.conv_type','ThumbNail API Upload Failed');
+                sweetAlert("File Upload Failure","The file upload was successful but the generated thumbnail failed. Please remove the image and try again!","error"); 
+            });        
+    }
+    
+    function setupUploader() {
+    
+        var uploadURL = getApiHostPath() + "/upload/" + APP_NAME + "/event_logo";
+
+        vm.uploader  = new FileUploader({
+            url: uploadURL,
+            autoUpload: true,
+            queueLimit: 1
+        });
+
+        //TODO: Clean up these events once fully implemented and removed unneeded.
+        vm.uploader.filters.push(
+            { name: 'imageFilter',
+                fn: function(item /*{File|FileLikeObject}*/, options) {
+                    var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
+                    return '|jpg|png|jpeg|gif|'.indexOf(type) !== -1;
+                }
+            },
+            { name: 'sizeFilter',
+                fn : function (item /*{File|FileLikeObject}*/, options) {
+                    return item.size/1024/1024 < 2;
+                }
+            }
+        );
+        /*  There is no "remove" event.. so I created a watch on the queue length   */
+        vm.uploader.onWhenAddingFileFailed = function(item /*{File|FileLikeObject}*/, filter, options) {
+            sweetAlert("Invalid file.","The image must be: \n jpg, jpeg, png, gif and under 2 MB in size","error"); 
+        };
+        vm.uploader.onAfterAddingFile = function(fileItem) {
+            $log.debug('onAfterAddingFile', fileItem);
+            if (!vm.event.image) {
+            vm.event.image = {};
+            }
+            vm.event.image.fileName =  fileItem.file.name;  //since we are only allowing 1 image upload.
+            vm.event.image.fileSize =  fileItem.file.size;  //since we are only allowing 1 image upload.
+            vm.event.image.fileType =  fileItem.file.type;  //since we are only allowing 1 image upload.
+            vm.newImageInUse = true;
+        };
+        /*
+        vm.uploader.onAfterAddingAll = function(addedFileItems) {
+            $log.debug('onAfterAddingAll', addedFileItems);
+        };
+        vm.uploader.onBeforeUploadItem = function(item) {
+            $log.debug('onBeforeUploadItem', item);
+        };
+        vm.uploader.onProgressItem = function(fileItem, progress) {
+            $log.debug('onProgressItem', fileItem, progress);
+        };
+        vm.uploader.onProgressAll = function(progress) {
+            $log.debug('onProgressAll', progress);
+        };
+    */
+        vm.uploader.onSuccessItem = function(fileItem, response, status, headers) {
+            $log.debug('onSuccessItem', fileItem, response, status, headers);
+            if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','2','WT.conv_type','Image Upload Successful');
+                $timeout(function() {
+                    if (!vm.event.image) {
+                        vm.event.image = {};
+                    }
+                    if ( response.hasOwnProperty("BIN_ID")) {
+                        vm.event.image.binId = response.BIN_ID[0];  //since we are only allowing 1 image upload.
+                    } else {
+                        sweetAlert("File Upload Failed","The file upload was not successful. Please Try again!","error");
+                    }
+                });
+                thumbnailUpload();
+            };
+        
+        vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
+            if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','2','WT.conv_type','Image Upload Failed');
+                sweetAlert("File Upload Failed","The file upload was not successful. Please Try again!","error");
+        };
+        /*
+        vm.uploader.onCancelItem = function(fileItem, response, status, headers) {
+            $log.debug('onCancelItem', fileItem, response, status, headers);
+        };
+        vm.uploader.onCompleteItem = function(fileItem, response, status, headers) {
+            $log.debug('onCompleteItem', fileItem, response, status, headers);
+        };
+        vm.uploader.onCompleteAll = function() {
+            $log.debug('onCompleteAll');
+        };
+        */
+        $scope.$watch(angular.bind(vm, function () {
+            return vm.uploader.queue.length;
+        }), function (newVal) {
+            if (vm.uploader.queue.length === 0 ) {
+                vm.newImageInUse = false;
+                if (vm.event.image) {
+                    delete vm.event.image.binId;
+                    delete vm.event.image.fileName;
+                    delete vm.event.image.fileSize;
+                    delete vm.event.image.fileType;
+                    delete vm.event.image.url;                
+                }
+                if (vm.event.thumbImage) {
+                    delete vm.event.thumbImage.binId;
+                    delete vm.event.thumbImage.fileName;
+                    delete vm.event.thumbImage.fileSize;
+                    delete vm.event.thumbImage.fileType;
+                    delete vm.event.thumbImage.url;
+                }
+                //http://stackoverflow.com/questions/9155136/chrome-file-upload-bug-on-change-event-wont-be-executed-twice-with-the-same-fi
+                $('input[type="file"]').val(null);
+            }
+        });
+    }
     
     function resetFormValidation() {
         $scope.ecForm.$setPristine();   
@@ -591,11 +642,11 @@
     function reloadImage() {
         var fileItems = [];
         var fileItem = new FileUploader.FileItem(vm.uploader, {
-                    dateModified: 'today',
-                    size: vm.event.image.fileSize,
-                    type: vm.event.image.fileType,
-                    name: vm.event.image.fileName   //"https://was8-inter-dev.toronto.ca/cc_sr_v1/upload/edc_eventcal/5ekQN9onS1S5sRHgpv1iSQ?sid=bI9McHK7ul-OgZdF8UlNEFSlAL9szqHqxN31iddZDiQ"
-                });
+                dateModified: 'today',
+                size: vm.event.image.fileSize,
+                type: vm.event.image.fileType,
+                name: vm.event.image.fileName
+            });
 
         fileItem.progress = 100;
         fileItem.isUploaded = true;
@@ -607,69 +658,92 @@
 
         vm.uploader.onAfterAddingAll(fileItems);
         vm.uploader._render();
-		vm.newImageInUse = false; /* to counteract the fake loading */
+        vm.newImageInUse = false; /* to counteract the fake loading */
         
 
     }
     /* reset any state that can be calculated and thus was not stored */
     function resetViewState() {
-        //vm.eventCategories = eventCalendarUtilService.resetInputModel('name',vm.event.category, eventCalendarDataService.eventCategories());
-        eventCalendarDataService.eventCategories().then(function (data) {
-            vm.eventCategories = eventCalendarUtilService.resetInputModel('name',vm.event.category, data);
+        ecCoTDataService.eventCategories().then(function (data) {
+            vm.eventCategories = ecCoTUtilService.resetInputModel('name',vm.event.category, data);
+            vm.limitSelection( "", vm.eventCategories, vm.event.category, 3 ); // ideally this is needed, but how this is implemented is bad as the "3" is configured in the HTML
         });
-        vm.limitSelection( "", vm.eventCategories, vm.event.category, 3 ); // ideally this is needed, but how this is implemented is bad as the "3" is configured in the HTML
         
-        eventCalendarDataService.costRanges().then(function (data) {
-            vm.costRanges = eventCalendarUtilService.resetInputModel('value',vm.event.costRange, data)
-        });
-                
+        ecCoTDataService.eventThemes().then(function (data) {
+            vm.eventThemes = ecCoTUtilService.resetInputModel('name',vm.event.theme, data);
+        });     
+        
         if (vm.event.admin) {
-            eventCalendarDataService.newsletterCategories().then(function (data) {
-                vm.newsletterCategories = eventCalendarUtilService.resetInputModel('value',vm.event.admin.newsletterCategory, data);
-                //setNewletterSubcategories();
+            var newsCat = "";
+            ecCoTDataService.newsletterCategories().then(function (data) {
+                vm.newsletterCategories = ecCoTUtilService.resetInputModel('value',vm.event.admin.newsletterCategory, data);
                 
+                //setNewletterSubcategories();
                 if (vm.event.admin.newsletterCategory && vm.event.admin.newsletterCategory.length > 0) {
                     var selectedValue = vm.event.admin.newsletterCategory[0].value;
-                    //if (selectedValue === "Attractions/Happenings" || selectedValue === "Sports" ) {
-                    //  vm.newsletterSubCatRequired = true;
-                    //}
+                    if (selectedValue === "Attractions/Happenings" || selectedValue === "Sports" ) {
+                      vm.newsletterSubCatRequired = true;
+                    }
                     if (selectedValue) {
-                        eventCalendarDataService.newsletterSubcategories(selectedValue).then(function(data) {
-                            vm.newsletterSubcategories = eventCalendarUtilService.resetInputModel('value',vm.event.admin.newsletterSubcategory, data);
+                        $log.debug("load newsltter SubCat: " + selectedValue);
+                        ecCoTDataService.newsletterSubcategories(selectedValue).then(function(data) {
+                            vm.newsletterSubcategories = ecCoTUtilService.resetInputModel('value',vm.event.admin.newsletterSubcategory, data);
                         });
-                   }             
+                   }   
+                } else {
+                    ecCoTDataService.newsletterSubcategories("").then(function(data) {
+                            vm.newsletterSubcategories = data;
+                    });
                 }
                 
             });
 
         }
-        //vm.sportsSubcategories = eventCalendarUtilService.resetInputModel('name',vm.event.sportsSubcategory, eventCalendarDataService.sportsSubcategories());
-        eventCalendarDataService.sportsSubcategories().then(function (data) {
-            vm.sportsSubcategories = eventCalendarUtilService.resetInputModel('name',vm.event.sportsSubcategory, data);
+        //vm.sportsSubcategories = ecCoTUtilService.resetInputModel('name',vm.event.sportsSubcategory, ecCoTDataService.sportsSubcategories());
+        ecCoTDataService.sportsSubcategories().then(function (data) {
+            vm.sportsSubcategories = ecCoTUtilService.resetInputModel('name',vm.event.sportsSubcategory, data);
         });
         vm.weeklyDatesIM = [];
         angular.forEach(vm.event.weeklyDates, function(weeklyDate, i) {
-            vm.weeklyDatesIM.push({dayOfWeekValues :eventCalendarUtilService.resetInputModel('day',weeklyDate.weekDay, eventCalendarDataService.daysOfWeek())});
+            vm.weeklyDatesIM.push({dayOfWeekValues :ecCoTUtilService.resetInputModel('day',weeklyDate.weekDay, ecCoTDataService.daysOfWeek())});
         });
         vm.uploader.clearQueue();
         /* if the user has uploaded a file, got a binId and then refreshed his browser..we can't get this image since we need a session id, so ignore it */
         if (vm.event.image && vm.event.image.binId && vm.appCntl.opMode === 'update') {
             reloadImage();
         }
-        
+        if (vm.event.image && vm.event.image.binId) {
+            //the preview of image only seems to work on "inter" site.. possible bug?
+            //vm.imageURL = (vm.appCntl.opMode == 'update' ? getApiHost() + "/cc_sr_v1" : getApiHost() + "/cc_sr_v1") + "/upload/" + APP_NAME + "/" + vm.event.image.binId + "?sid=" + vm.appCntl.sid;
+            vm.imageURL = getApiHostPath()  + "/upload/" + APP_NAME + "/" + vm.event.image.binId + "?sid=" + vm.appCntl.sid;
+        }
+        if (vm.appCntl.tab === 7) vm.showSubmit = true;
     }
     /* note: if a field is new and in error, then the model isn't updated. The field data is not reset, so do a form reset, but this bypassing angular.   */
     function resetForm() {
-        $document.find("#ecForm")[0].reset();
-        vm.event.category = [];
-        vm.event.costRange = [];
-        vm.weeklyDatesIM = [];
-        angular.copy(vm.eventDefaults,vm.event);            
-        resetViewState();   
-        clearPlacesMarkers();
-        clearMapMarkers();
-        resetFormValidation();        
-        gotoTab(1);
+        sweetAlert({
+            title: "Are you sure?",
+            text: "This will clear the entire form and return it to its initial state!",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#5cb85c",
+            confirmButtonText: "Yes, clear all data!",
+            closeOnConfirm: true}, 
+            function(){ 
+                $document.find("#ecForm")[0].reset();
+                vm.event.category = [];
+                vm.event.costRange = [];
+                vm.weeklyDatesIM = [];
+                vm.showSubmit = false;
+                angular.copy(vm.eventDefaults,vm.event);            
+                resetViewState();   
+                clearPlacesMarkers();
+                clearMapMarkers();
+                resetFormValidation();   
+        
+                gotoTab(1);
+            });
+        
     }
     
     /* polygons can have more than one path, but probably not in our case. each path has serveral lat/lng points. 
@@ -721,12 +795,10 @@
             if (selectedValue === "Attractions/Happenings" || selectedValue === "Sports" ) {
                 vm.newsletterSubCatRequired = true;
                 $timeout(function () {
-                    eventCalendarDataService.newsletterSubcategories(selectedValue).then(function(data) {
+                    ecCoTDataService.newsletterSubcategories(selectedValue).then(function(data) {
                         vm.newsletterSubcategories = data;
                     });
                 });
-        //} else {
-        //  vm.event.admin.newsletterSubcategory = [];
             }
         }
     }
@@ -737,6 +809,9 @@
         }
         //vm.event.frequency.dates.push({startDate : moment(vm.event.startDate).startOf('hour'), endDate :moment(vm.event.startDate).add(1,'hour').startOf('hour')});
         vm.event.dates.push({});
+        $timeout(function() {
+            $("#ecForm").find("#occurDesc-" + (vm.event.dates.length -1)).focus();
+        },300);      
         saveState();
     }
     
@@ -753,9 +828,13 @@
         }
         var daysOfWeek = [];
         angular.copy( vm.daysOfWeek,  daysOfWeek);
-        //vm.event.weeklyDates.push( {dayOfWeekValues : daysOfWeek, weekDay : [], startTime:  moment().add(1, 'hour').startOf('hour'), endTime : moment().add(2, 'hour').startOf('hour')});
         vm.event.weeklyDates.push( {weekDay : [], startTime:  moment().add(1, 'hour').startOf('hour'), endTime : moment().add(2, 'hour').startOf('hour')});
         vm.weeklyDatesIM.push({dayOfWeekValues : daysOfWeek});
+        
+        $timeout(function() {
+            $("#ecForm").find("#weeklyDesc-" + (vm.event.weeklyDates.length -1)).focus();
+        },300);  
+
  }
     
     function removeWeeklyOccurrenceRow(rowId)  {
@@ -770,42 +849,29 @@
             addWeeklyOccurrenceRow();
         }
     }
-    
-
-    
-    /* otherCost info is required unless one of the costr values is entered (not-null);*/
-    /*
-    $scope.$watchCollection(angular.bind(vm, function () {
-        return vm.event.cost;
-        }), function (newVal, oldValue) {
-            vm.isOtherCostRequired = true;
-            if (newVal) {
-                angular.forEach($rootScope.Utils.ObjectKeys(newVal), function(item, i) {
-                    if (newVal[item] !== null) {
-                        vm.isOtherCostRequired = false;
-                    }
-                });
-            }
-        
-    }); 
-    */
-    
+       
     function addLocation(locObj) {
         if (typeof vm.event.locations === 'undefined') {
             vm.event.locations = [];
         }
         if (typeof locObj === 'undefined') {
-            vm.event.locations.push({ id: eventCalendarUtilService.guid(), type: 'marker'});
+            vm.event.locations.push({ id: ecCoTUtilService.guid(), type: 'marker'});
         } else {
             vm.event.locations.push(locObj);
         }
+        $timeout(function() {
+            $("#ecForm").find("#locationName-" + (vm.event.locations.length -1)).focus();
+        },300);
         saveState();
     }
     
     function removeLocation(rowIdx) {
+    
+        CommonInfoWindow.close();
         var locId = vm.event.locations[rowIdx].id;
+        vm.event.locations.splice(rowIdx, 1);   
         var markerIdx = -1;
-        vm.event.locations.splice(rowIdx, 1);       
+        
         angular.forEach(vm.mapMarkers, function(item, i) {
             if (item.locId === locId ) {
                 item.setMap(null);
@@ -852,16 +918,21 @@
         if (_.isEmpty(locAddress)) return;
         var locId = vm.event.locations[rowIdx].id;
  
-        geoCodeAddress(locAddress,function(latLng, address) {
+        geoCodeAddress(locAddress,function(latLng, address, status) {
             $timeout(function() {
-                vm.event.locations[rowIdx].coords = latLng;
-                vm.event.locations[rowIdx].address = address;
-                vm.event.locations[rowIdx].geoCoded = true;
+				if (latLng !== null) {
+					vm.event.locations[rowIdx].coords = latLng.toJSON();
+					vm.event.locations[rowIdx].address = address;
+					vm.event.locations[rowIdx].geoCoded = status;
+					if (vm.event.locations[rowIdx].coords !== null) {
+						updateMapMarker(locId, latLng, true);
+						if (!CoTGoogleMapUtilsService.isLatLngInToronto( latLng)) {
+							sweetAlert("Warning","Location is outside the city boundaries","warning");
+						}
+					}
+				}
             });
-            updateMapMarker(locId, latLng, true);
-            if (!googleMapUtilsService.isLatLngInToronto( latLng)) {
-                sweetAlert("Warning","Location is outside the city boundaries","warning");
-            }
+            
 
         });
         
@@ -875,25 +946,9 @@
         angular.forEach(vm.event.locations, function(location, rowIdx) {
             if (!location.geoCoded && !_.isEmpty(location.address) && location.type === google.maps.drawing.OverlayType.MARKER) {
                 $log.debug("found non-geocoded address");
-                location.address = "";  //This forces an error.
-                //geoCodeAddress(location.address,function(latLng, address) {
-                //    $timeout(function() {
-                //        vm.event.locations[rowIdx].coords = latLng;
-                //        vm.event.locations[rowIdx].address = address;
-                //        console.log("found non-geocoded address: geocided to :" + address);
-                //        vm.event.locations[rowIdx].geoCoded = true;
-                //    });
-                //});
+                location.address = null;  //This forces an error.
             }
         });
-    
-    //    if (moment(vm.event.startDateTime) > moment(vm.event.endDateTime)) {
-    //        $scope.ecForm.startDateTime.$setValidity("baddate", false);
-    //        $scope.ecForm.endDateTime.$setValidity("baddate",false);
-    //  } else {        
-    //      $scope.ecForm.startDateTime.$setValidity("baddate", true);
-    //       $scope.ecForm.endDateTime.$setValidity("baddate",true);
-    //    }
     }
     
     /* this function removes optional data that is no longer valid based on the last data the user entered */
@@ -906,6 +961,7 @@
             delete vm.event.endDate;
             delete vm.event.dates;  
             delete vm.event.weeklyDates; 
+            
         } else if (vm.event.frequency == 'dates') {
             delete vm.event.weeklyDates; 
             delete vm.event.startDateTime;
@@ -922,6 +978,9 @@
             }
         }
         
+        if (vm.event.freeEvent === 'Yes') {
+            delete vm.event.cost;
+        }
         if (!vm.isSportsSelected) {
             delete vm.event.sportsSubcategory;
         }        
@@ -938,29 +997,87 @@
             if (vm.event.admin.newsletterCategory[0].value !== "Attractions/Happenings" && vm.event.admin.newsletterCategory[0].value !== "Sports" ) {
                 vm.event.admin.newsletterSubcategory = [];
             } 
-            if (vm.uploader.queue.length > 0) { 
-                if (!vm.event.image || _.isEmpty(vm.event.image.binId)) {
-                    sweetAlert("Image Problem","The event image was not properly uploaded. Either upload the image or remove it.");
-                    $scope.ecForm.$setValidity("badImage", false);
-                } else {
-                    $scope.ecForm.$setValidity("badImage", true);
-                }
-            } else if (vm.event.image && _.isEmpty(vm.event.image.binId)) {
-                delete vm.event.image;
-            }
-        }
-        
 
-        
+        }
+        if (vm.uploader.queue.length > 0) { 
+            if (!vm.event.image || _.isEmpty(vm.event.image.binId)) {
+                sweetAlert("Image Problem","The event image was not properly uploaded. Either upload the image or remove it.");
+                $scope.ecForm.$setValidity("badImage", false);
+            } else {
+                $scope.ecForm.$setValidity("badImage", true);
+            }
+        } else if (vm.event.image && _.isEmpty(vm.event.image.binId)) {
+            delete vm.event.image;
+        }       
+
         
     }
     
-    /* 1: we want a startDate and EndDate on all records for searching in front-end */
+    /* 1: we want a startDate and EndDate on all records for searching in front-end 
+        for weekly and single occurrence events, we don't populate a [dates] array in the code, but
+        we need a consistent set of dates for the front-end, so we calculate them here
+    */
     function setCalculatedFields() {
         if (vm.event.frequency == 'once') {
             vm.event.startDate = moment(vm.event.startDateTime).startOf('day');
-            vm.event.endDate = moment(vm.event.endDateTime).startOf('day');
+            if (vm.event.endDateTime) {
+                vm.event.endDate = moment(vm.event.endDateTime).startOf('day');
+            } else {
+                vm.event.endDate = vm.event.startDate;
+            }
+			
+			vm.event.dates = [];
+			var dateObj = {};
+			if (vm.event.allDay) {
+                vm.event.startDateTime = moment(vm.event.startDateTime).startOf('day');
+                vm.event.endDateTime = moment(vm.event.endDateTime).startOf('day');
+				dateObj.allDay = vm.event.allDay;
+            }           
+            dateObj.startDateTime = vm.event.startDateTime;
+			dateObj.endDateTime = vm.event.endDateTime;
+            vm.event.dates.push(dateObj );
         }
+        
+        if (vm.event.frequency == 'weekly') {
+            vm.event.dates = [];
+            angular.forEach(vm.event.weeklyDates, function(day, idx) {
+                var dt = moment(vm.event.startDate);
+                var startTime = moment(day.startTime);
+                var endTime = moment(day.endTime);
+                var numDays = moment(vm.event.endDate).diff(dt, 'days') + 1;                
+                for (i=0; i<numDays;i++){
+                    //console.log(dt.format('dddd'), day.weekDay[0].day);
+                    if (day.weekDay[0] && dt.format('dddd') === day.weekDay[0].day) {
+                        //console.log(dt.day());
+                        var dtStartTime = moment(dt);
+                        dtStartTime = dtStartTime.add(startTime.hour(), 'hours');
+                        dtStartTime = dtStartTime.add(startTime.minute(), 'minutes');
+                        var dtEndTime = moment(dt);
+                        dtEndTime = dtEndTime.add(endTime.hour(), 'hours');
+                        dtEndTime = dtEndTime.add(endTime.minute(), 'minutes');
+                        
+                        //console.log(dtStartTime.format("YYYY-MM-DD HH:mm"), dtEndTime.format("YYYY-MM-DD HH:mm"));
+                        var dtObj = {  'startDateTime' : dtStartTime, 'endDateTime' : dtEndTime};
+                    
+                        vm.event.dates.push( dtObj);
+                        }
+                    dt = dt.add(1, 'days');
+                }
+                
+            
+            });
+        }       
+        
+        vm.event.categoryString = "";
+        angular.forEach(vm.event.category, function(cat, i) {
+            vm.event.categoryString += (vm.event.categoryString.length > 0 ? "," : "") + cat.name;
+        });
+        /* really only one theme but you never know ... */
+        vm.event.themeString = "";
+        angular.forEach(vm.event.theme, function(theme, i) {
+            vm.event.themeString += (vm.event.themeString.length > 0 ? "," : "") + theme.name;
+        });     
+
     }
     
     /* this focuses the form to the 1st error. It needs to deal with tabs. */
@@ -987,12 +1104,55 @@
             vm.appCntl.tab = parseInt(tab,10);
             
             }
-
-
     }
     
-    //TODO:  should we upload the file on submit??
+    function resetPreviewFocus() {
+        $('#previewBtn').focus();
+    }
+    
+    /* not used */
+    function sanatizeObject(obj) {
+        console.log(obj && obj.constructor);
+        for (var key in obj) {
+            console.log(key, typeof obj[key]  );
+            if (vm.event[key] !== null && typeof obj[key] !== 'object') {
+                console.log(obj[key], $sanitize(obj[key]),obj[key] &&  obj[key].constructor);
+                obj[key] = $sanitize(obj[key]);
+            } else {
+                
+                sanatizeObject(vm.event[key]);
+            }
+        }
+    }
+    /* Do I need to peform validation first? TBD.. I assume not but the data may be sparse. We do need calculated fields
+    This take what is the thumbnail vs the actual image
+    */
+    function preview() {
+    
+        setCalculatedFields();
+
+        var calEvent = { 'calEvent' : vm.event };
+        if (vm.newImageInUse) {
+            var canvas = angular.element( document.querySelector( 'canvas' ) )[0];  
+            var dataURL = canvas.toDataURL();
+            fecEventHelper.displayEvent(calEvent, { imgSrc: dataURL, onHidden:resetPreviewFocus });
+        } else if (vm.event.image && vm.event.image.binId) {
+            fecEventHelper.displayEvent(calEvent, { imgSrc: vm.imageURL, onHidden:resetPreviewFocus } );
+        } else {
+            fecEventHelper.displayEvent(calEvent, {onHidden:resetPreviewFocus});
+        }
+    }
+    
+    /* this is obscure. If the user is sitting in the location field, enters an invalid address, doesn't tab or have address validated, but hits
+      the submit button, then the geocoding which needs a timeout to update the vm doesn't finish in time and an event can be submitted with a bad locaiton 
+      This delay in the submission prevents this.
+      */
     function submit() {
+        $timeout(function() {
+            realSubmit(); 
+        },500);
+    }
+    function realSubmit() {
         
         $scope.ecForm.$setSubmitted(); //we need to manually set this due to our buttons. Our validations rely on it.
         
@@ -1003,6 +1163,7 @@
         if ($scope.ecForm.$invalid) {
             saveState();
             focusError();
+            if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','1','WT.conv_type','Submission Validation Failed');
             return; 
         }
 
@@ -1010,35 +1171,35 @@
         vm.progressbar.start();
         var jsonData = { 'calEvent' : vm.event};
         
-        /* in the real world, the user will not be able to edit the data after submitting, so updating the recId is not useful
+        /* in the end, the user will not be able to edit the data after submitting, so updating the recId is not useful
             in fact we will reset the form to blanks (and clean localStorage).
             The 'marking' of the attachment to 'keep' was recently added to the URL. 
         */
         var binLoc = null;   //if there is no binId, don't try to keep files..
         if (vm.event.image && vm.event.image.binId) binLoc =  '/calEvent/image/binId';
-        submitAPIService.submit(APP_NAME, jsonData, binLoc)
+        if (vm.event.thumbImage && vm.event.thumbImage.binId) binLoc +=  ',/calEvent/thumbImage/binId';
+        CoTSubmitAPIService.submit(getApiHost(), APP_NAME, jsonData, binLoc)
             .then(function(httpCall) {
                 if (typeof httpCall !== 'undefined') {
-                    sweetAlert("Submitted","The event was successfully submitted!","success");
+                    sweetAlert("Submitted","The event was successfully submitted!\nIf your event meets the criteria, your submission will be posted within two weeks.","success");
                     vm.progressbar.complete();
                     $timeout(function() {
-                        //vm.event.recId = httpCall.EventMessageResponse.Event.EventID;
                         vm.event.recId = httpCall.id;
-                        eventCalendarCacheService.removeEvent();
+                        ecCoTEventCacheService.removeEvent();
+                        if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','2','WT.conv_type','Successful Submission');
                         window.location.href = window.location.protocol + "//" + window.location.host +  window.location.pathname;
-                    },2000);
+                    },4000);
                 } else {
                     vm.progressbar.complete();
+                    if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','2','WT.conv_type','Submission API Failed');
                     sweetAlert("Submission Failed","The event was not submitted successfully. Please Try again!","error");
                 }
             }, function() {
                     vm.progressbar.complete();
+                    if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','2','WT.conv_type','Submission API Failed');
                     sweetAlert("Submission Failed","The event was not submitted successfully. Please Try again!","error");
             
             });
-
-
-        
     }
 
     // PL - added status parameter here to communicate back to the admin interface which action button was clicked
@@ -1052,6 +1213,7 @@
       if ($scope.ecForm.$invalid) {
         saveState();
         focusError();
+        if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','1','WT.conv_type','Admin Update Validation Failed');
         return;
       }
       setCalculatedFields();
@@ -1061,7 +1223,13 @@
       console.log("EventCalendarController broadcasting event-updated.");
 
       vm.appCntl.status = status;
-      ngCoTNotifyService.notify(status);
+      if (status == 'APR') {
+        if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','2','WT.conv_type', 'Approve Selected');
+      }
+      if (status == 'REJ') {
+        if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','2','WT.conv_type', 'Reject Selected');
+      }   
+      CoTNotifyService.notify(status);
     }
    
     
@@ -1069,11 +1237,10 @@
     function getOneRecord() {
     
         resetForm();
-        tmpSubmitAPIService.login(APP_NAME,"testweb1", "toronto")
+        tmpSubmitAPIService.login(APP_NAME,vm.userId, vm.pw)
         .then(function(data) {
             vm.appCntl.sid = data.sid;
-        });
-        tmpSubmitAPIService.retrieve("testweb1", "toronto", APP_NAME, vm.recIdInput)
+            tmpSubmitAPIService.retrieve(vm.userId, vm.pw, APP_NAME, vm.recIdInput)
             .then(function(request) {
                 $timeout(function() {                   
                     var o = JSON.parse(request.data.payload);
@@ -1086,30 +1253,37 @@
             })
             .then(function(data, status, headers, config) {
                 console.log(data);
-            });     
+            });
+        });
+     
     }
     
     /* TODO: To be removed */
     function updateRecord() {
         //todo: this are temporary to clean old data entered with old schema, doesn'/t validatse..
-        delete vm.event.eventCategories;
-        delete vm.event.costRanges;
-        delete vm.event.tab;
-        delete vm.event.showMap;
         cleanInput();
+        crossValidations();
+        $scope.$broadcast('show-errors-check-validity');        
         if ($scope.ecForm.$invalid) {
             saveState();
             focusError();
             return; 
         }       
-        $rootScope.$broadcast(FORM_EVENTS.saveRecord);
         setCalculatedFields();
+        saveState();
         var jsonData = { 'calEvent' : vm.event};
-        tmpSubmitAPIService.update("testweb1", "toronto", APP_NAME, vm.event.recId , jsonData);
+        resetFormValidation(); //again to be removed.. but if you save a record you should surf away
+        tmpSubmitAPIService.update(vm.userId, vm.pw, APP_NAME, vm.event.recId , jsonData)
+        .then(function() {
+            
+            window.location.reload(true);
+        });
     }
+    
+    /* TODO: To be removed */   
     function approveRecord() {
 
-        tmpSubmitAPIService.approve("testwebadm", "toronto", APP_NAME, vm.event.recId);
+        tmpSubmitAPIService.approve(vm.userId, vm.pw, APP_NAME, vm.event.recId);
     }
 
     
@@ -1122,7 +1296,7 @@
         sHTML += "<table class='table table-striped table-bordered' style='display: block; overflow-x: auto;'><tr><th >Status</th><th >Id</th><th>Event Name</th><th >Event Description</th><th class='col-md-3'>Item</th><th >Created</th><th class='col-md-2'>Update</th></tr>";
         
         //submitAPIService.getRepoData("testweb1", "toronto", "smlrepo", APP_NAME, 0 ,100)
-        tmpSubmitAPIService.getRepoData("testweb1", "toronto", APP_REPO, APP_NAME, 0 ,1000)
+        tmpSubmitAPIService.getRepoData(vm.userId, vm.pw, APP_REPO, APP_NAME, 0 ,2000)
             .then(function(httpCall) {
                 //alert(httpCall.data.length);
                 var sortedData = httpCall.data.sort(function(a,b) {return new Date(b.updated).getTime() - new Date(a.updated).getTime();});
@@ -1130,8 +1304,12 @@
                         var item = sortedData[j];
                         if (typeof item !== 'undefined') {
                             var o = JSON.parse(item.payload);
-                            var stat = (item.status=="Yes") ? "Submitted" : item.status;
-                            sHTML += "<tr><td>" + stat + "</td><td>" + item.id + "</td><td>"  + o.calEvent.eventName + "</td><td>" + o.calEvent.description +  "</td><td class='col-md-3'>" + JSON.stringify(item) + "</td><td>" + item.created +  "</td><td>" + item.updated + "</td></tr>";                    
+                            if (o.calEvent) {
+                                var stat = (item.status=="Yes") ? "Submitted" : item.status;
+                                sHTML += "<tr><td>" + stat + "</td><td>" + item.id + "</td><td>"  + o.calEvent.eventName + "</td><td>" + o.calEvent.description +  "</td><td class='col-md-3'>" + JSON.stringify(item) + "</td><td>" + item.created +  "</td><td>" + item.updated + "</td></tr>";                    
+                            } else {
+                                console.log(item.id, item.payload);
+                            }
                         }
                     }
                     sHTML += "</table>";
@@ -1188,7 +1366,7 @@
         angular.forEach(vm.event.locations, function(loc, i) {
             if (loc.type === google.maps.drawing.OverlayType.MARKER) {
                 
-                if (typeof loc.coords !== 'undefined' ) {
+                if (typeof loc.coords !== 'undefined' && loc.coords !== null) {
                     var latlng = new google.maps.LatLng( loc.coords.lat, loc.coords.lng );
                     updateMapMarker(loc.id, latlng, false);
                 }
@@ -1329,12 +1507,14 @@
         geocoder.geocode({'address':  address, 'bounds' : vm.map.mapControl.getGMap().getBounds()}, function(results, status) {
             if (status === google.maps.GeocoderStatus.OK) {
                 if (results[0]) {
-                    callback(results[0].geometry.location,results[0].formatted_address);
+                    callback(results[0].geometry.location,results[0].formatted_address, true);
                 } else {
-                    sweetAlert("No results found");
+                    callback(null, null,false);
+                    sweetAlert("Address verification failed","No results found");
                 }
             } else {
                 sweetAlert("Address verification failed","Please try another address (" + status + ")","warning");
+                callback(null, null, false);
             }
         });
     }   
@@ -1347,7 +1527,7 @@
         angular.forEach(vm.event.locations, function(loc, i) {
             if (loc.id ===  shapeLocId ) {
                 content = "<b>Location " + (i +1) + "</b>";
-                content += typeof loc.venueName != 'undefined' ? ": " + loc.venueName : "";
+                content += typeof loc.locationName != 'undefined' ? ": " + loc.locationName : "";
                 content += typeof loc.address != 'undefined' ? "<br>" + loc.address : "";
             }
         });
@@ -1391,7 +1571,7 @@
                         }
 
                     });
-                    if (!googleMapUtilsService.isLatLngInToronto( e.latLng)) {
+                    if (!CoTGoogleMapUtilsService.isLatLngInToronto( e.latLng)) {
                         sweetAlert("Warning","Location is outside the city boundaries","warning");
                     }
                 }  
@@ -1426,13 +1606,6 @@
 
     }
     
-
-    //TODO: I could use idx and latlng and update one row using this.locId.
-    //It looks like this.j() returns all the coordinates for the shape..
-    //http://stackoverflow.com/questions/12515748/event-after-modifying-polygon-in-google-maps-api-v3
-    //but be aware that this will fire off a large amount of triggered events
-    //This is the same as a polyline...
-      
      function updatePolygonCoords(idx, latLng) {
      
         var locId = this.locId;
@@ -1466,6 +1639,75 @@
             
 
     }
+
+    /* we want reasonable dates: no past, no > 3 years, from Date < to Date */
+    function eventDateBlur(fromfld, fromDt, tofld, toDt) {
+        //console.log('blur:' , fromfld,fromDt, tofld,toDt);
+        var today = moment().startOf('day');   
+
+        if (typeof fromDt !== 'undefined') {
+            if (today.diff(moment(fromDt), 'days') > 0) {
+                $scope.ecForm[fromfld].$setValidity("pastdate", false);
+            } else {
+                $scope.ecForm[fromfld].$setValidity("pastdate", true);
+            }
+            if (moment(fromDt).diff(today, 'years') > 2) {             
+                $scope.ecForm[fromfld].$setValidity("futuredate", false);
+            } else {
+                $scope.ecForm[fromfld].$setValidity("futuredate", true);
+            }
+        }
+        if (typeof toDt !== 'undefined') {      
+            if (today.diff(moment(toDt), 'days') > -1) {
+                $scope.ecForm[tofld].$setValidity("pastdate", false);
+            } else {
+                $scope.ecForm[tofld].$setValidity("pastdate", true);
+            }
+            if ( moment(toDt).diff(today, 'years') > 2) {
+                $scope.ecForm[tofld].$setValidity("futuredate", false);
+            } else {
+                $scope.ecForm[tofld].$setValidity("futuredate", true);
+            }
+            
+        } 
+        
+        if (typeof fromDt !== 'undefined' && typeof toDt !== 'undefined' && moment(fromDt) > moment(toDt)) {
+            $scope.ecForm[fromfld].$setValidity("baddate", false);
+            $scope.ecForm[tofld].$setValidity("baddate",false);
+        } else {
+            $scope.ecForm[fromfld].$setValidity("baddate", true);
+            $scope.ecForm[tofld].$setValidity("baddate",true); 
+        }
+        $scope.$broadcast('eventdatechange');   
+    }
+
+    function eventOccurDateBlur(startfld, startDtTime, endfld, endDtTime, eventStartDt, eventEndDt) {
+    
+        console.log('blur:' , startfld, startDtTime, endfld, endDtTime, eventStartDt, eventEndDt);
+        if (typeof startDtTime !== 'undefined' && typeof endDtTime !== 'undefined' && moment(startDtTime) > moment(endDtTime).endOf('day')) {
+            $scope.ecForm[startfld].$setValidity("badoccurdate1", false);
+            $scope.ecForm[endfld].$setValidity("badoccurdate1",false);
+        } else {
+            $scope.ecForm[startfld].$setValidity("badoccurdate1", true);
+            $scope.ecForm[endfld].$setValidity("badoccurdate1",true);         
+            
+        }
+        if (typeof startDtTime !== 'undefined'  && (moment(startDtTime) < moment(eventStartDt).startOf('day') ||  moment(startDtTime) > moment(eventEndDt).endOf('day')   ) ) {
+            $scope.ecForm[startfld].$setValidity("badoccurdate2", false);
+        } else {
+            $scope.ecForm[startfld].$setValidity("badoccurdate2", true);     
+        }
+        if (typeof endDtTime !== 'undefined'  && (moment(endDtTime) > moment(eventEndDt).endOf('day')  ||  moment(endDtTime) < moment(eventStartDt).startOf('day')   ) ) {
+            $scope.ecForm[endfld].$setValidity("badoccurdate2", false);
+        } else {
+            $scope.ecForm[endfld].$setValidity("badoccurdate2", true);       
+        }
+
+        
+        $scope.$broadcast('eventdatechange');   
+    }   
+
+
     
     //TODO: Problem.. The before render kicks in on each view of the dateppicker. since each start and end time are shown initially, they are both wide open
     // only when you click on month view does it reduce.. But the RenderOn event can be used to re-render related dropdowns after a date is changed.
@@ -1476,7 +1718,6 @@
     
     */
     function beforeRenderStartDateTime($view, $dates, $leftDate, $upDate, $rightDate, where, enddt, parentStartDt, parentEndDt) {
-        //console.log("render start");
         $log.debug(where + " " + $view + " Parent Start:" + (typeof parentStartDt === 'undefined' ? "blank" : moment( parentStartDt).format("YYYYMMDD HH:mm")) + 
                                           " Parent end:" + (typeof parentEndDt === 'undefined' ? "blank" : moment( parentEndDt).format("YYYYMMDD HH:mm ")) + 
                                           " end date:" + (typeof enddt === 'undefined' ? "blank" : moment( enddt).format("YYYYMMDD HH:mm")));
@@ -1559,11 +1800,12 @@
     
     
     function saveState() { 
-        eventCalendarCacheService.putEvent(vm.event,vm.appCntl);
+        ecCoTEventCacheService.putEvent(vm.event,vm.appCntl);
     }
     
     function setTab(tab) {
         vm.appCntl.tab = tab;
+        if (tab === 7) {vm.showSubmit = true;}
         if (vm.appCntl.tab === MAP_TAB && vm.appCntl.showMap ) {
             vm.refreshMap();
             $timeout(function() {
@@ -1571,23 +1813,17 @@
                 $scope.$apply();
             });
         }
-        
-        //$timeout(function() {  /* tab hasn't changed yet, need a digest . We do this, so the tab selection class becomes seen*/
-        //  var ecStep = angular.element("#ec-step"+tab);
-        //  var firstField = ecStep.find('input[type!=hidden]:first');
-        //  firstField.focus();
-        //});
-        
+        focusFirstElementInTab();
     }
     
-    /* using ui-tabs means I don't need this anymore.it is done in an angular way with bidning.*/
-    /* called from init procedure after I get the data from local storage */
-    //function displayTab(tab) {
-    //    $('#eventNavBar a[href="#ec-step' +  tab + '"]').tab('show');
-    //}
-    
+    function focusFirstElementInTab() {
+        $timeout(function () {
+            $('#ecForm :input:enabled:visible:first').focus();
+        });
+    }
     /* showTab is called from UI so no need to manually display tab */
     function showTab(tab) {
+        
         setTab(tab);
         saveState(); 
     }
@@ -1611,7 +1847,47 @@
             gotoTab( pTab );
         }
     }
+    
+	/* if the field is in error, then value is undefined */
+    function sanitize(objName) {
+        var objProps = objName.split('.');
+        if (objProps.length == 1) {
+            if (vm[objProps[0]])  vm[objProps[0]] = $sanitize(vm[objProps[0]]);
+        } else if (objProps.length == 2) {
+            if (vm[objProps[0]][objProps[1]]) vm[objProps[0]][objProps[1]] = $sanitize(vm[objProps[0]][objProps[1]]);
+        } else if (objProps.length == 3) {
+            if ( vm[objProps[0]][objProps[1]][objProps[2]]) vm[objProps[0]][objProps[1]][objProps[2]] = $sanitize(vm[objProps[0]][objProps[1]][objProps[2]]);
+        
+        
+        } else if (objProps.length == 4) {
+            if (vm[objProps[0]][objProps[1]][objProps[2]][objProps[3]]) vm[objProps[0]][objProps[1]][objProps[2]][objProps[3]] = $sanitize(vm[objProps[0]][objProps[1]][objProps[2]][objProps[3]]);
+        
+        }
+
+    }
+    
+    /* This function is here for testing purposes */
+    function getApiHost() {
+        var ret = API_HOST;
+        if (ret === "") {
+            //ret = window.location.protocol + "//" + window.location.host + ":" + window.location.port;
+            ret = "//" + window.location.host + ":" + window.location.port;
+        }
+
+        return ret;
+    }
+    
+    //If internet app we need to remove _admin check "inter" in 
+    function getApiHostPath() {
+        var ret = getApiHost();
+        if (ret.indexOf("inter") > -1 ||  window.location.host === "secure.toronto.ca") {
+            ret += "/" + API_PATH.replace("_admin","");
+        } else {
+            ret += "/" + API_PATH;
+        }
+        return ret;
+    }
 }
 
-    angular.module('eventCalendarApp').controller('EventCalendarController', ["$rootScope", "$scope", "$log", "$state", "$parse", "$http", '$timeout', '$document','uiGmapGoogleMapApi', 'uiGmapIsReady','FileUploader','ngProgressFactory','eventCalendarCacheService','eventCalendarDataService','eventCalendarUtilService','tmpSubmitAPIService','submitAPIService','FORM_EVENTS','googleMapUtilsService','Session','UserRoles',EventCalendarController]);
+    angular.module('eventCalendarApp').controller('EventCalendarController', ["$rootScope", "$scope", "$sanitize", "$sce","$log", "$state", "$parse", "$http", '$timeout', '$document','uiGmapGoogleMapApi', 'uiGmapIsReady','FileUploader','ngProgressFactory','ecCoTEventCacheService','ecCoTDataService','ecCoTUtilService','tmpSubmitAPIService','CoTSubmitAPIService','CoTGoogleMapUtilsService','CoTSession','CoTUserRoles','CoTNotifyService',EventCalendarController]);
 }());

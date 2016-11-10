@@ -5,6 +5,8 @@
       (2) set required fields
       (3) pre-pends labels of required fields with an asterik
       
+	  I encountered a problem with controller AS: to search the form I need the ec. convention, but showErrors needs scope variables and thus needs vm.
+	  It happens that both ec. and vm. works in the form.
     */
     
     var directive = function ($compile, $log) {
@@ -14,6 +16,7 @@
         restrict: 'A',
         scope: {},
         priority: 10,
+        //templateUrl: '/webapps/eventCal/Submission/html/eventcal.html',
         templateUrl: 'html/eventcal.html',
 
         //Once loaded add required class to all labels where data related field is required.  The label-for must be used.
@@ -27,14 +30,16 @@
             //'startDateTime' : true, 'endDateTime' : true, 'startDate' : true, 'endDate' : true,
         */
         // link: function(scope, elem, attr) {
+//                'venueName-{{$index}}' : false, 'location-{{$index}}': true,
         compile: function(elem) {
             //$timeout(function() {
             var requiredIds = { 'eventName' : true, 'description' : true , 'partnerType' : true, 'partnerName' : true, 'expectedPeak' : true, 
-                'category' : true, 'sportsSubcategory' : true, 'accessibility' : true, 'accessibilityNotes' : true, 'alcoholServed' : true,'parkingCost' : false,
-                'frequency' : true, 'startDateTime' : true, 'endDateTime' : true, 'startDate' : true, 'endDate' : true, 'occurStartDateTime-{{$index}}' : true, 'dayOfWeek-{{$index}}': true,
-                'locationDist-{{vm.locIndex}}' : true, 'venueName-{{vm.locIndex}}' : true, 'location-{{vm.locIndex}}': true,
-                'rcStartDate-{{$index}}' : true, 'rcEndDate-{{$index}}' : true,
-                'costRange' : true, 'reservationsRequired': true,
+                'category' : true, 'sportsSubcategory' : true, 'accessibility' : true, 'accessibilityNotes' : true, 'parkingCost' : false,
+                'frequency' : true, 'startDateTime' : true, 'endDateTime' : false, 'startDate' : true, 'endDate' : true, 'occurStartDateTime-{{$index}}' : true, 'dayOfWeek-{{$index}}': true,
+                'locationName-{{vm.locIndex}}' : true, 'location-{{vm.locIndex}}': true,
+				'rcStartDate-{{$index}}' : true, 'rcEndDate-{{$index}}' : true,
+                'costRange' : true, 'reservationsRequired': true,'freeEvent': true,
+				'imageAltText-{{$index}}' : true,'imageCredit-{{$index}}' : false,
                 'orgName' : true,'contactName' : true, 'orgAddress' : true, 'orgPhone' : true, 'orgEmail' : true, 'orgType' : true, 'orgTypeOther' : true}
             var inputList = elem[0].querySelectorAll('input, textarea');
             forEach(inputList, function (item, value) {

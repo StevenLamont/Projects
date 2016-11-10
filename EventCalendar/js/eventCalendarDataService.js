@@ -1,12 +1,12 @@
 ﻿/*
     This service provides all the lookup data for dropdowns.
-	1) Currently they are hard coded values but it is possible that many of the values could be stored somewhere, especially the event categories
-	2) We moved the data for WCM in the short term, but this creates JSONP problems.. we temporarly use jquery to get data as angular is having problems with the fake jsonp
+    1) Currently they are hard coded values but it is possible that many of the values could be stored somewhere, especially the event categories
+    2) We moved the data for WCM in the short term, but this creates JSONP problems.. we temporarly use jquery to get data as angular is having problems with the fake jsonp
 */
 
 (function () {
     'use strict';
-    var eventCalendarDataService = function($http, $q) {
+    var ecCoTDataService = function($http, $q) {
     
 
     
@@ -34,16 +34,16 @@
         { id : "20", name : "Tour"}
         ]; 
     //var eventCategoryData = eventCategoriesUnSort.sort(dynamicSort("","name")); 
-	var eventCategoryData = [];
-	var sportsSubcategoryData = [ 
-		{ id : "1", name : "Baseball"},
-		{ id : "2", name : "Basketball"},
-		{ id : "3", name : "Football"},
-		{ id : "4", name : "Hockey"},
-		{ id : "5", name : "Lacross"},
-		{ id : "6", name : "Soccer"},
-		{ id : "7", name : "Other"},
-	];
+    var eventCategoryData = [];
+    var sportsSubcategoryData = [ 
+        { id : "1", name : "Baseball"},
+        { id : "2", name : "Basketball"},
+        { id : "3", name : "Football"},
+        { id : "4", name : "Hockey"},
+        { id : "5", name : "Lacross"},
+        { id : "6", name : "Soccer"},
+        { id : "7", name : "Other"},
+    ];
 
     var eventFeatureData = [ 
         { id : "Free Parking", name : "Free Parking"},
@@ -75,16 +75,16 @@
         { id : "3", value : "Performing Arts"},
         { id : "4", value : "Sports"},
         ];
-		
-	var newsLetterSubcategories = [
-	    { id : "1", category: "Attractions/Happenings", value : "Aga Khan Museum"},
+        
+    var newsLetterSubcategories = [
+        { id : "1", category: "Attractions/Happenings", value : "Aga Khan Museum"},
         { id : "2", category: "Attractions/Happenings", value : "Air Canada Centre"},
         { id : "3", category: "Attractions/Happenings", value : "Art Galley of Ontatio"},
         { id : "4", category: "Attractions/Happenings", value : "Bata Show Museum"},
         { id : "21", category: "Sports", value : "GTARollergirls"},
         { id : "22", category: "Sports", value : "Other"},
-	];
-	
+    ];
+    
     var monthlyWeekDay = [
         { value : "First"},
         { value : "Second"},
@@ -116,14 +116,16 @@
         daysOfMonth.push({value: i});
     }
 
-	var eventCategoriesCache;
-	var eventSportsCategoriesCache;
-	var eventFeaturesCache;
-	var costRangeCache;
-	var newsletterCategoriesCache;
-	var newsletterSubcategoriesCache;
-	 
-	 
+    var eventCategoriesCache;
+    var eventThemesCache;
+    var eventSportsCategoriesCache;
+    var eventFeaturesCache;
+    var costRangeCache;
+    var newsletterCategoriesCache;
+    var newsletterSubcategoriesCache;
+    var helpTextCache;
+     
+     
     var cityDistricts = [ 
         { id: 'cityWide' , title : 'City Wide'},
         { id: 'downtown' , title : 'Downtown'},
@@ -137,217 +139,270 @@
 
     var service = {
         eventCategories: _eventCategories,
+        eventThemes: _eventThemes,
         sportsSubcategories:  _sportsSubcategories,
         eventFeatures:  _eventFeatures,
         costRanges : _costRanges,
         cityDistricts : _cityDistricts,
         daysOfWeek : _daysOfWeek,
         newsletterCategories:  _newsletterCategories,
-        newsletterSubcategories:  _newsletterSubcategories
+        newsletterSubcategories:  _newsletterSubcategories,
+        helpText: _helpText
     };
     return service;
     
     function _eventCategories() { 
-		var deferred = $q.defer();
-		if( eventCategoriesCache ) {
+        var deferred = $q.defer();
+        if( eventCategoriesCache ) {
             deferred.resolve(angular.copy(eventCategoriesCache));
         }
-		//var strURL = "http://homer-1.inet.toronto.ca/static_files/WebApps/EventsCalendar/data/EventCategories.json?callback=JSON_CALLBACK";
-		var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/EventCategories.json";
-		$.ajax({
+        //var strURL = "http://homer-1.inet.toronto.ca/static_files/WebApps/EventsCalendar/data/EventCategories.json?callback=JSON_CALLBACK";
+        var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/EventCategories.json";
+        $.ajax({
                 url :  strURL,
                 type : "GET",
                 crossDomain: true, 
                 dataType: 'jsonp',  //need jsonp for cors
-				jsonpCallback : 'angularcallbacks0', // match what I faked in json data
+                jsonpCallback : 'angularcallbacks0', // match what I faked in json data
                 success : function(data) {
-					eventCategoriesCache = data.sort(dynamicSort("","name"));
-					deferred.resolve(angular.copy(eventCategoriesCache));
+                    eventCategoriesCache = data.sort(dynamicSort("","name"));
+                    deferred.resolve(angular.copy(eventCategoriesCache));
                 },
                 error: function (xhr, exception) {
-					console.log("eventCategories retreival error");
+                    console.log("eventCategories retreival error");
                 },
-		   });		
-		
-		/*
-		var params = {
+           });      
+        
+        /*
+        var params = {
             callback: 'JSON_CALLBACK',
-			}
-		$http({ url : strURL,
-				method: 'JSONP',
-				})
+            }
+        $http({ url : strURL,
+                method: 'JSONP',
+                })
         .success(function(data) {
-			eventCategoriesCache = data.sort(dynamicSort("","name"));
-			deferred.resolve(angular.copy(eventCategoriesCache));
-        })				
-		.error(function(data, status, headers, config) {
-				console.log("eventCategories retreival error" + status);
-		}); 
-*/		
-		return deferred.promise; 
+            eventCategoriesCache = data.sort(dynamicSort("","name"));
+            deferred.resolve(angular.copy(eventCategoriesCache));
+        })              
+        .error(function(data, status, headers, config) {
+                console.log("eventCategories retreival error" + status);
+        }); 
+*/      
+        return deferred.promise; 
     }
-	
-
-	
-    function _sportsSubcategories() { 
-		var deferred = $q.defer();
-		if( eventSportsCategoriesCache ) {
-            deferred.resolve(angular.copy(eventSportsCategoriesCache));
-        }	
-		var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/EventSportsCategories.json";
-		$.ajax({
+    
+    function _eventThemes() { 
+        var deferred = $q.defer();
+        if( eventThemesCache ) {
+            deferred.resolve(angular.copy(eventThemesCache));
+        }
+        var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/EventThemes.json";
+        $.ajax({
                 url :  strURL,
                 type : "GET",
                 crossDomain: true, 
                 dataType: 'jsonp',  //need jsonp for cors
-				jsonpCallback : 'angularcallbacks1',
+                jsonpCallback : 'angularcallbacks8', // match what I faked in json data
                 success : function(data) {
-					eventSportsCategoriesCache = data.sort(dynamicSort("","name"));
-					deferred.resolve(angular.copy(eventSportsCategoriesCache));
+					var allData = [{ name : "", desc: "None Selected"} ];
+					angular.forEach(data.sort(dynamicSort("","desc")), function(item, i) {
+						allData.push(item);
+					});
+					eventThemesCache = allData;
+                    deferred.resolve(angular.copy(eventThemesCache));
                 },
                 error: function (xhr, exception) {
-					console.log("event Sport Categories retreival error");
+                    console.log("eventThemes retreival error");
                 },
-		   });		
-		/*
-		$http({ url : strURL,
-				method: 'JSONP',
-				})
+           });      
+        return deferred.promise; 
+    }
+
+    
+    function _sportsSubcategories() { 
+        var deferred = $q.defer();
+        if( eventSportsCategoriesCache ) {
+            deferred.resolve(angular.copy(eventSportsCategoriesCache));
+        }   
+        var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/EventSportsCategories.json";
+        $.ajax({
+                url :  strURL,
+                type : "GET",
+                crossDomain: true, 
+                dataType: 'jsonp',  //need jsonp for cors
+                jsonpCallback : 'angularcallbacks1',
+                success : function(data) {
+                    eventSportsCategoriesCache = data.sort(dynamicSort("","name"));
+                    deferred.resolve(angular.copy(eventSportsCategoriesCache));
+                },
+                error: function (xhr, exception) {
+                    console.log("event Sport Categories retreival error");
+                },
+           });      
+        /*
+        $http({ url : strURL,
+                method: 'JSONP',
+                })
         .success(function(data) {
-			eventSportsCategoriesCache = data.sort(dynamicSort("","name"));
-			deferred.resolve(angular.copy(eventSportsCategoriesCache));
-        })				
-		.error(function(data, status, headers, config) {
-				console.log("eventSportsCategories retreival error" + status);
-		});    
-		*/
-		
-		return deferred.promise;
-    }	
+            eventSportsCategoriesCache = data.sort(dynamicSort("","name"));
+            deferred.resolve(angular.copy(eventSportsCategoriesCache));
+        })              
+        .error(function(data, status, headers, config) {
+                console.log("eventSportsCategories retreival error" + status);
+        });    
+        */
+        
+        return deferred.promise;
+    }   
     function _eventFeatures() { 
-		var deferred = $q.defer(); 
-		if( eventFeaturesCache ) {
+        var deferred = $q.defer(); 
+        if( eventFeaturesCache ) {
             deferred.resolve(angular.copy(eventFeaturesCache));
         }
-		var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/EventFeatures.json";
-		$.ajax({
+        var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/EventFeatures.json";
+        $.ajax({
                 url :  strURL,
                 type : "GET",
                 crossDomain: true, 
                 dataType: 'jsonp',  //need jsonp for cors
-				jsonpCallback : 'angularcallbacks5', // match what I faked in json data
+                jsonpCallback : 'angularcallbacks5', // match what I faked in json data
                 success : function(data) {
-					eventFeaturesCache = data;
-					deferred.resolve(angular.copy(eventFeaturesCache));
+                    eventFeaturesCache = data;
+                    deferred.resolve(angular.copy(eventFeaturesCache));
                 },
                 error: function (xhr, exception) {
-					console.log("eventFeaturesCache retreival error");
+                    console.log("eventFeaturesCache retreival error");
                 },
-		   })		
-		return deferred.promise;
+           })       
+        return deferred.promise;
+    }   
+    function _helpText() { 
+        var deferred = $q.defer(); 
+        if( helpTextCache ) {
+            deferred.resolve(angular.copy(helpTextCache));
+        }
+        var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/HelpText.json";
+        $.ajax({
+                url :  strURL,
+                type : "GET",
+                crossDomain: true, 
+                dataType: 'jsonp',  //need jsonp for cors
+                jsonpCallback : 'angularcallbacks7', // match what I faked in json data
+                success : function(data) {
+                    helpTextCache = data;
+                    deferred.resolve(angular.copy(helpTextCache));
+                },
+                error: function (xhr, exception) {
+                    console.log("helpTextCache retreival error");
+                },
+           })       
+        return deferred.promise;
     }   
     function _cityDistricts() {       
         return angular.copy(cityDistricts);
     }   
     function _costRanges() {  
-		var deferred = $q.defer(); 
-		if( costRangeCache ) {
+        var deferred = $q.defer(); 
+        if( costRangeCache ) {
             deferred.resolve(angular.copy(costRangeCache));
         }
-		var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/CostRanges.json";
-		$.ajax({
+        var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/CostRanges.json";
+        $.ajax({
                 url :  strURL,
                 type : "GET",
                 crossDomain: true, 
                 dataType: 'jsonp',  //need jsonp for cors
-				jsonpCallback : 'angularcallbacks2', // match what I faked in json data
+                jsonpCallback : 'angularcallbacks2', // match what I faked in json data
                 success : function(data) {
-					costRangeCache = data.sort(dynamicSort("","name"));
-					deferred.resolve(angular.copy(costRangeCache));
+                    costRangeCache = data.sort(dynamicSort("","name"));
+                    deferred.resolve(angular.copy(costRangeCache));
                 },
                 error: function (xhr, exception) {
-					console.log("cost Range retreival error");
+                    console.log("cost Range retreival error");
                 },
-		   })		
-		return deferred.promise;
+           })       
+        return deferred.promise;
     }
     function _daysOfWeek() {       
         return angular.copy(daysOfWeek);
     }   
     function _newsletterCategories() {       
-       	var deferred = $q.defer();
-		if( newsletterCategoriesCache ) {
+        var deferred = $q.defer();
+        if( newsletterCategoriesCache ) {
             deferred.resolve(angular.copy(newsletterCategoriesCache));
-        }	
-		var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/NewsletterCategories.json";
-		$.ajax({
+        }   
+        var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/NewsletterCategories.json";
+        $.ajax({
                 url :  strURL,
                 type : "GET",
                 crossDomain: true, 
                 dataType: 'jsonp',  //need jsonp for cors
-				jsonpCallback : 'angularcallbacks3',
+                jsonpCallback : 'angularcallbacks3',
                 success : function(data) {
-					newsletterCategoriesCache = data.sort(dynamicSort("","name"));
-					deferred.resolve(angular.copy(newsletterCategoriesCache));
+					var allData = [{ id : "0", value : "None Selected"} ];
+					angular.forEach(data.sort(dynamicSort("","value")), function(item, i) {
+						allData.push(item);
+					});
+					newsletterCategoriesCache = allData;				
+                    deferred.resolve(angular.copy(newsletterCategoriesCache));
                 },
                 error: function (xhr, exception) {
-					console.log("event Sport Categories retreival error");
+                    console.log("event Sport Categories retreival error");
                 },
-		   });		
-		
-		return deferred.promise;
+           });      
+        
+        return deferred.promise;
     }   
-	
-	function filterCategory(cat) {
-		var ret = [];
-		angular.forEach(newsletterSubcategoriesCache, function(item, i) {
-			var subCat = item;
-			if (item.category === cat) {
-				ret.push(subCat);
-			}
-		}); 
-		return ret;
-	}
-	function _newsletterSubcategories(cat) {
-	    var deferred = $q.defer();
-		if (newsletterSubcategoriesCache ) {
+    
+    function filterCategory(cat) {
+        var ret = [{ id : "0", value : "None Selected"}];
+        angular.forEach(newsletterSubcategoriesCache, function(item, i) {
+            var subCat = item;
+            if (item.category === cat) {
+                ret.push(subCat);
+            }
+        }); 
+        return ret;
+    }
+    function _newsletterSubcategories(cat) {
+        var deferred = $q.defer();
+        if (newsletterSubcategoriesCache ) {
             deferred.resolve(filterCategory(cat));
         } else {
-		var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/NewsletterSubcategories.json";
-		$.ajax({
+        var strURL = "//www1.toronto.ca/static_files/WebApps/EventsCalendar/data/NewsletterSubcategories.json";
+        $.ajax({
                 url :  strURL,
                 type : "GET",
                 crossDomain: true, 
-				async: false,
-				cache: false,
+                cache: false,
                 dataType: 'jsonp',  //need jsonp for cors
-				jsonpCallback : 'angularcallbacks4',
+                jsonpCallback : 'angularcallbacks4',
                 success : function(data) {
-					newsletterSubcategoriesCache = data.sort(dynamicSort("","value"));
-					deferred.resolve(filterCategory(cat));
+                    newsletterSubcategoriesCache = data.sort(dynamicSort("","value"));
+                    deferred.resolve(filterCategory(cat));
                 },
                 error: function (xhr, exception) {
-					console.log("newsletter sub categories retreival error");
+                    console.log("newsletter sub categories retreival error");
                 },
-		   });	
-		 }
-		return deferred.promise;
-	
-	}
-	/*
+           });  
+         }
+        return deferred.promise;
+    
+    }
+    /*
     function _newsletterSubcategories(cat) {    
-		//alert(cat);
-		var ret = [];
-		angular.forEach(newsLetterSubcategories, function(item, i) {
-			var subCat = item;
-			if (item.category === cat) {
-				ret.push(subCat);
-			}
-		});
+        //alert(cat);
+        var ret = [];
+        angular.forEach(newsLetterSubcategories, function(item, i) {
+            var subCat = item;
+            if (item.category === cat) {
+                ret.push(subCat);
+            }
+        });
         return ret; //angular.copy(newsLetterSubcategories);
     } 
-	*/
-	
+    */
+    
     function dynamicSort(root, property) {
         var sortOrder = 1;
         if(property[0] === "-") {
@@ -368,6 +423,6 @@
 
     };
 
-    angular.module('eventCalendarApp').factory('eventCalendarDataService', ["$http","$q",eventCalendarDataService]);
+    angular.module('eventCalendarApp').factory('ecCoTDataService', ["$http","$q",ecCoTDataService]);
 
 }());

@@ -5,7 +5,7 @@
 
 (function () {
     'use strict';
-    var eventCalendarUtilService = function() {
+    var ecCoTUtilService = function() {
     
 
     function guid() {
@@ -84,6 +84,6 @@
     }
 
 
-    angular.module('eventCalendarApp').factory('eventCalendarUtilService', eventCalendarUtilService);
+    angular.module('eventCalendarApp').factory('ecCoTUtilService', ecCoTUtilService);
 
 }());

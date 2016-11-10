@@ -156,21 +156,21 @@ var COTPolylineCoords =  [
         {'lng' : -79.115167,'lat' : 43.79492},
         {'lng' : -79.114866,'lat' : 43.794703}  
     ];
-	
-	var COTPolygonCoords = angular.copy(COTPolylineCoords);
-	COTPolygonCoords.push(        
-		{ "lng": -79.11627159179687, "lat": 43.78155945891168 },
+    
+    var COTPolygonCoords = angular.copy(COTPolylineCoords);
+    COTPolygonCoords.push(        
+        { "lng": -79.11627159179687, "lat": 43.78155945891168 },
         { "lng": -79.30719134374999, "lat": 43.61350610044077 }
-	);
-	
+    );
+    
     var cotGoogleMapUtils = angular.module('ngCoTGoogleMapUtils',[]);
     
-    cotGoogleMapUtils.factory('googleMapUtilsService', ["$http","$q", function($http, $q)  {
+    cotGoogleMapUtils.factory('CoTGoogleMapUtilsService', ["$http","$q", function($http, $q)  {
         
          var service = {
             cityPolylineCoords: _cityPolylineCoords,
             cityPolygon: _cityPolygon,
-			isLatLngInToronto: _isLatLngInToronto,
+            isLatLngInToronto: _isLatLngInToronto,
         };
         return service;
         
@@ -179,12 +179,12 @@ var COTPolylineCoords =  [
         }
         function _cityPolygon() {
             return COTPolygon;               
-        }	
+        }   
 
-		function _isLatLngInToronto(latLng) {
-			var COTPolygon = new google.maps.Polygon({paths: COTPolygonCoords});
-			return google.maps.geometry.poly.containsLocation(latLng, COTPolygon) ? true : false;				
-		}
+        function _isLatLngInToronto(latLng) {
+            var COTPolygon = new google.maps.Polygon({paths: COTPolygonCoords});
+            return google.maps.geometry.poly.containsLocation(latLng, COTPolygon) ? true : false;               
+        }
         
     }])
 }());
