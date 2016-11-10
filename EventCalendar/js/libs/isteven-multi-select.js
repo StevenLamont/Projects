@@ -31,6 +31,7 @@
  * --------------------------------------------------------------------------------
  * 2016/09/06 - Modified by Steve Lamont
  *   added "close" button option.
+ *   changed text of Select None to be deselect All
  */
 
 'use strict'
@@ -966,7 +967,7 @@ angular.module( 'isteven-multi-select', ['ng'] ).directive( 'istevenMultiSelect'
             }
             else {
                 $scope.lang.selectAll       = $sce.trustAsHtml( $scope.icon.selectAll  + '&nbsp;&nbsp;Select All' );                
-                $scope.lang.selectNone      = $sce.trustAsHtml( $scope.icon.selectNone + '&nbsp;&nbsp;Select None' );
+                $scope.lang.selectNone      = $sce.trustAsHtml( $scope.icon.selectNone + '&nbsp;&nbsp;Deselect All' );
                 $scope.lang.reset           = $sce.trustAsHtml( $scope.icon.reset      + '&nbsp;&nbsp;Reset' );
                 $scope.lang.close           = $sce.trustAsHtml( $scope.icon.close      + '&nbsp;&nbsp;Close' );
                 $scope.lang.search          = 'Search...';
