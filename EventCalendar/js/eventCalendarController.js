@@ -386,7 +386,7 @@
                 }           
                 //TODO: once we clarify what shapes we will alow, this code could move up..
                 if (newShape.type === google.maps.drawing.OverlayType.MARKER) {
-                    mapObject = {id: locId, type: newShape.type, coords: obj.overlay.position};
+                    mapObject = {id: locId, type: newShape.type, coords: obj.overlay.position.toJSON()};
                     /* this is geoCoding by lat/lng to get address */
                     geocoder.geocode({'location':  newShape.position}, function(results, status) {
                         if (status === google.maps.GeocoderStatus.OK) {
@@ -587,7 +587,7 @@
                     if ( response.hasOwnProperty("BIN_ID")) {
                         vm.event.image.binId = response.BIN_ID[0];  //since we are only allowing 1 image upload.
                     } else {
-                        sweetAlert("File Upload Failed","The file upload was not successful. Please Try again!","error");
+                        sweetAlert("File Upload Failed","The file upload was not successful. Please try again!","error");
                     }
                 });
                 thumbnailUpload();
@@ -1030,7 +1030,9 @@
 			var dateObj = {};
 			if (vm.event.allDay) {
                 vm.event.startDateTime = moment(vm.event.startDateTime).startOf('day');
-                vm.event.endDateTime = moment(vm.event.endDateTime).startOf('day');
+				if (vm.event.endDateTime) {
+					vm.event.endDateTime = moment(vm.event.endDateTime).startOf('day');
+				}
 				dateObj.allDay = vm.event.allDay;
             }           
             dateObj.startDateTime = vm.event.startDateTime;
@@ -1213,7 +1215,7 @@
       if ($scope.ecForm.$invalid) {
         saveState();
         focusError();
-        if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','1','WT.conv_type','Admin Update Validation Failed');
+        if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','2','WT.conv_type','Admin Update Validation Failed');
         return;
       }
       setCalculatedFields();
@@ -1565,7 +1567,7 @@
                         if (status === google.maps.GeocoderStatus.OK) {
                             $timeout(function() {
                                 vm.event.locations[idx].address = results[0].formatted_address;   
-                                vm.event.locations[idx].coords = e.latLng;
+                                vm.event.locations[idx].coords = e.latLng.toJSON();
                                 vm.event.locations[idx].geoCoded = true;
                             });
                         }

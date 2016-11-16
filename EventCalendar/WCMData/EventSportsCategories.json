@@ -1,0 +1,10 @@
+angularcallbacks1( [ 
+		{ id : "1", name : "Baseball"},
+		{ id : "2", name : "Basketball"},
+		{ id : "3", name : "Football"},
+		{ id : "4", name : "Hockey"},
+		{ id : "5", name : "Lacrosse"},
+		{ id : "6", name : "Soccer"},
+		{ id : "7", name : "Other"},
+	]
+)

@@ -16,6 +16,7 @@
 	<meta name="DC.subject" content="City of Toronto Event Calendar">
 	<meta name="WT.sp" content="City of Toronto Event Calendar">
 	<link rel="stylesheet" href="../corev1.0/css/bootstrap.min.css">
+	
 	<!--[if lt IE 9]>
 		<script src="../corev1.0/js/html5shiv.js"></script>
 		<script src="../corev1.0/js/respond.min.js"></script>
@@ -40,7 +41,12 @@
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">
 	
 <!-- copied from Petar -->	
-<script src="js/angular-login.js"></script>
+<script src="ngCoT/js/ngCoTLogin.min.js"></script>
+<script src="ngCoT/js/ngCoTNotify.min.js"></script>
+	  
+<!-- preview modal -->	
+<script src="//www1.toronto.ca/static_files/WebApps/EventsCalendar/js/event_detail.js"></script>
+<link rel="stylesheet" href="//www1.toronto.ca/static_files/WebApps/EventsCalendar/css/event_detail.css">
 	  
 <!-- non-angular libraries -->
 <script type="text/javascript" src="js/libs/lodash.min.js"></script>
@@ -66,15 +72,10 @@
 <script type="text/javascript" src="js/libs/angular-file-upload.js"></script>
 
 <script type="text/javascript" src="js/libs/ngProgress.min.js"></script>
-<!-- these will be removed 
-<script type="text/javascript" src="js/libs/xdLocalStorage.js"></script>
-<script type="text/javascript" src="js/libs/services/xd-utils.js"></script>
-<script type="text/javascript" src="js/libs/ng-xdLocalStorage.js"></script>
--->
-<script type="text/javascript" src="ngCoT/js/ngCoTForms.js"></script>
 <script type="text/javascript" src="ngCoT/js/ngCoTGoogleMapUtils.js"></script>
 <script type="text/javascript" src="ngCoT/js/ngCoTSubmit.js"></script>
 <script type="text/javascript" src="ngCoT/js/ngCoTThumb.js"></script>
+<script type="text/javascript" src="ngCoT/js/ngCoTSanitize.js"></script>
 <script type="text/javascript" src="js/eventCalendarCache.js"></script>
 <script type="text/javascript" src="js/eventCalendarApp.js"></script>
 <script type="text/javascript" src="js/eventCalendarController.js"></script>
@@ -82,17 +83,22 @@
 <script type="text/javascript" src="js/eventCalendarUtilService.js"></script>
 <script type="text/javascript" src="js/COTsubmitAPIService.js"></script>
 <script type="text/javascript" src="js/eventCalendarEventForm.js"></script>
-<!--script type="text/javascript" src="js/eventCalendarEventFormV1.js"></script-->
-<script type="text/javascript" src="js/eventCalendarRoutes.js"></script>
-<!--script type="text/javascript" src="js/eventCalendarThumb.js"></script-->	
+<script type="text/javascript" src="js/eventCalendarRoutes.min.js"></script>
 <script type="text/javascript" src="../corev1.0/js/cot_app.js"></script>
+
+<script>
+var dcsid_var = "dcssttpfm28nrlg4d5x668n3q_9r7m";
+</script>
+<script type="text/javascript" src="//www1.toronto.ca/wcmAsset/js/web_analytics/webtrendsload.js"></script>
+<script type="text/javascript" src="//www1.toronto.ca/wcmAsset/js/web_analytics/webtrends.js"></script>
+
 
 	<title>City of Toronto Event Calendar</title>
 </head>
 <body>
 
 <div id="COTCFrameHeader" ng-module="cot_app" data-ng-controller="cot_ctrl as app">
-	<div data-ng-include="'../corev1.0/html/header.html'"></div>
+	<div data-ng-include="'corev1.0/html/header.html'"></div>
 </div>				
 
 <!--div ng-module="eventCalendarApp"  id="appDisplay" eventform>	</div-->
@@ -100,7 +106,7 @@
 <div ui-view></div>
 </div>
 <div id="COTCFrameFooter" ng-module="cot_app" data-ng-controller="cot_ctrl as app">
-	<div data-ng-include="'../corev1.0/html/footer.html'"></div>
+	<div data-ng-include="'corev1.0/html/footer.html'"></div>
 </div>
 	
 

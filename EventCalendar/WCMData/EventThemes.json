@@ -1,0 +1,19 @@
+angularcallbacks8( [ 
+    { name : "New Year", desc : "New Year"},
+    { name : "Black History Month", desc : "Black History Month"},
+    { name : "Valentine's Day", desc : "Valentine's Day"},
+    { name : "Family Day", desc : "Family Day"},
+    { name : "Chinese New Year", desc : "Chinese New Year"},
+    { name : "St. Patrick's Day", desc : "St. Patrick's Day"},
+    { name : "March Break", desc : "March Break"},
+    { name : "Easter", desc : "Easter"},
+    { name : "Mother's Day", desc : "Mother's Day"},
+    { name : "Victoria Day", desc : "Victoria Day"},
+    { name : "Father's Day", desc : "Father's Day"},
+    { name : "Canada Day", desc : "Canada Day"},
+    { name : "Thanksgiving", desc : "Thanksgiving"},
+    { name : "Halloween", desc : "Halloween"},
+    { name : "Remembrance Day", desc : "Remembrance Day"},
+    { name : "Holiday Events", desc : "Holiday Events"},
+]
+)

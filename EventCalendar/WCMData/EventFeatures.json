@@ -1,0 +1,8 @@
+angularcallbacks5( [ 
+        { id : "Free Parking", name : "Free Parking"},
+        { id : "Paid Parking", name : "Paid Parking"},
+        { id : "Bike Racks", name : "Bike Racks"},
+        { id : "Public Washrooms", name : "Public Washrooms"},
+        { id : "Onsite Food and Beverages", name : "On-site Food and Beverages"},
+]
+)

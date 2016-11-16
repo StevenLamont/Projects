@@ -1,0 +1,24 @@
+angularcallbacks0( [ 
+    { id : "1", name : "Arts/Exhibits"},
+    { id : "2", name : "Cultural Hotspot"},
+    { id : "3", name : "Family/Children"},
+    { id : "4", name : "History"},
+    { id : "5", name : "Sports"},
+    { id : "6", name : "Celebrations/Holiday"},
+    { id : "7", name : "Cycling"},
+    { id : "8", name : "Farmers Markets"},
+    { id : "9", name : "Live Performances"},
+    { id : "10", name : "Theatre"},
+    { id : "11", name : "Charity/Cause"},
+    { id : "12", name : "Dance"},
+    { id : "13", name : "Film"},
+    { id : "14", name : "Music"},
+    { id : "15", name : "Walking/Hiking"},
+    { id : "16", name : "Consumer Shows"},
+    { id : "17", name : "Environmental"},
+    { id : "18", name : "Food/Culinary"},
+    { id : "19", name : "Seminars/Workshops"},
+    { id : "20", name : "Tour"},
+    { id : "21", name : "Canada 150"}
+]
+)

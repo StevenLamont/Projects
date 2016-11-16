@@ -1,3 +1,4 @@
+#ecForm .grplegend { font-size: 1em; font-weight: bold; border-width: 0; padding-bottom: 0; margin-bottom: 5px}
 .form-group-horizontal .form-control-feedback {right: -30px; line-height:25px;}
 label.required:before { color: #a94442;margin-left: 5px;margin-right: 5px;content: "*"}
 label.required.help-block::before { color: inherit; content: "";  margin-left: 0;  margin-right: 0;}
@@ -5,6 +6,7 @@ label.required.help-block::before { color: inherit; content: "";  margin-left: 0
 #mandatory { color: #a94442;}
 #contactInfo { color:#337cbb; font-style: italic;margin-top: 5px}
 .requiredHelp {   font-size: 0.8em; line-height: 0.8em;}
+#maincontent .horizontal { display: inline-block; padding:0}
 #maincontent .helptext {
     color: #434343;
     font-style: italic;

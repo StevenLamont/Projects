@@ -36,7 +36,12 @@
         }
         inputNgEl.bind(trigger, function() {
           blurred = true;
-          return toggleClasses(formCtrl[inputName].$invalid);
+		  if (typeof formCtrl[inputName] !== 'undefined') {  /* SML: added in case row in ng-repeat is delete  and thus may not exist */
+			return toggleClasses(formCtrl[inputName].$invalid)
+		  } //else {
+			//console.log(inputName + " .. 42");
+		  //}
+		  
         });
         scope.$watch(function() {
           return formCtrl[inputName] && formCtrl[inputName].$invalid;
@@ -44,10 +49,15 @@
           if (!blurred) {
             return;
           }
+		  //console.log(inputName + " .. watched");
           return toggleClasses(invalid);
         });
         scope.$on('show-errors-check-validity', function() {
-          return toggleClasses(formCtrl[inputName].$invalid);
+			if (typeof formCtrl[inputName] !== 'undefined') {  /* SML: added in case row in ng-repeat is delete  and thus may not exist */
+				return toggleClasses(formCtrl[inputName].$invalid);
+			} //else {
+				//console.log(inputName + " .. show-errors-check-validity");
+			//}
         });
         scope.$on('show-errors-reset', function() {
           return $timeout(function() {

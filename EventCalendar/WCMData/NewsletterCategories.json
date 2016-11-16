@@ -1,0 +1,7 @@
+angularcallbacks3( [ 
+        { id : "1", value : "Festival and Events"},
+        { id : "2", value : "Attractions/Happenings"},
+        { id : "3", value : "Performing Arts"},
+        { id : "4", value : "Sports"},
+]
+)
