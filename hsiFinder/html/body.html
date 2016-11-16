@@ -1,0 +1,347 @@
+<div  id="finderMain" class="container">               
+    <section id="app-nav-left" class="hide hidden-print col-xs-12 col-sm-3" ng-if="hasLeftLav">
+    </section>      
+    <div id="app-content-full" ng-class="{{body_class}}" ng-controller="content-frame">
+        <div class="row">
+            <section id="app-content-top" class="col-xs-12">
+            <section id="wizard">
+                <h2 id="wizardTitle">Service and Benefit Finder Tool<img src="img/finderTool.png" alt="finder tool logo" height="80px"/></h2>
+                <!--WIZARD START-->
+                
+                    <section id="step0" data-step=0 data-title="Service and Benefit Finder Tool" class="step active">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                            <p>Get a personalized list of City of Toronto human services that might be available to you, like:</p>
+                            <ul>
+                            <li class="landingItem">Child care</li>                            
+                            <li class="landingItem">Employment support</li>
+                            <li class="landingItem">Housing support</li>
+                            <li class="landingItem">Money to help pay for costs of daily living</li>
+                            </ul>
+							
+							<h2>Using the Tool</h2>
+                            <ul>
+                            <li>Answer each question</li>                            
+                            <li>If you want to skip a question, select the "next" button at the bottom of the page</li>
+                            <li>If you don't answer all the questions you might not get all the information</li>
+                            <li>Your information won't be stored and you won't be identified in any way</li>
+                            </ul>
+                            <p>You can also get information through the <a href="http://homer-1.inet.toronto.ca/wps/portal/contentonly?vgnextoid=b25db222334d7510VgnVCM10000071d60f89RCRD">human services webpage</a>.</p>
+
+                            </div>  
+                        </div>
+                    </section>
+                    <section id="step1" data-step=1 data-title="Resident Information" class="step">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="input-group">
+									<fieldset>
+									<legend>Do you live, work for, or plan to move to the City of Toronto?</legend>
+                                    <div id="resQuestion" class="filter form-control filterresident">
+                                        <div class=""><input id="torontoresident" data-qval="Resident" name="torontoresident" type="radio" value="yes"/><label for="torontoresident">Yes</label></div>
+                                        <div class=""><input id="nottorontoresident" data-qval="Non-Resident" name="torontoresident" type="radio" value="no"/><label for="nottorontoresident">No</label></div>
+                                    </div>
+									</fieldset>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+                
+                
+                
+                    <section id="step2" data-step=2 data-title="Age Information" class="step">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="input-group">
+									<fieldset>
+									<legend>What is your age?</legend>
+                                    <div class="filter form-control filterage">
+                                        <div class=""><input id="age1" name="agegroup" type="radio" data-qval="Age 0-17" value="0-17 years old"/><label for="age1">17 and under</label></div>
+                                        <div class=""><input id="age2" name="agegroup" type="radio" data-qval="Age 18-29" value="18-29 years old"/><label for="age2">18-29</label></div>
+                                        <div class=""><input id="age3"  name="agegroup" type="radio" data-qval="Age 30-59" value="30-59 years old"/><label for="age3">30-59</label></div>
+                                        <div class=""><input id="age4"  name="agegroup" type="radio" data-qval="Age 60-64" value="60-64 years old"/><label for="age4">60-64</label></div>
+                                        <div class=""><input id="age5" name="agegroup" type="radio" data-qval="Age 65+" value="65+ years old"/><label for="age5">65+</label></div>
+                                    </div>
+									</fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </section>                    
+
+                    <section id="step3" data-step=3 data-title="Financial Information" class="step" >
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="input-group">
+								<fieldset>
+									<legend>Are you in financial need?
+                                    <i data-toggle="tooltip" role="tooltip" data-placement="right" title="Do you need help paying for child care or costs of daily living like food, shelter, medical items, or other items?" class="glyphicon glyphicon-info-sign"></i>
+									</legend>
+                                    <div class="filter form-control filterfinancialneed">
+                                        <div class=""><input id="financialneedyes" name="financialneed" type="radio" data-qval="Financial Need" value="yes"/> 
+                                                <label for="financialneedyes">Yes</label></div>
+                                        <div class=""><input id="financialneedno" name="financialneed" type="radio" data-qval="No Financial Need" value="no"/>
+                                                <label for="financialneedno">No</label></div>
+                                        <div class=""><input id="financialneeddontknow" name="financialneed" type="radio" data-qval="Unsure Financial Need"  value="no"/>
+                                                <label for="financialneeddontknow">Don't Know</label></div>
+                                    </div>
+								</fieldset>
+                                </div>
+
+                            </div>
+
+                        </div>
+                       <div id="step3b" class="row">
+                         <div class="col-xs-12 col-md-12">
+                                <div class="input-group">
+								<fieldset>
+									<legend>Have you applied for or are you currently receiving any of the following?</legend>
+                                    <p class="helptext">Select all that apply</p>
+                                    <div class="filter form-control filtersubsidy">
+                                        <div class=""><input id="ow" class="notnota" name="ow" type="checkbox" data-qval="OW" value="ow"/><label for="ow">Ontario Works</label></div>
+                                        <div class=""><input id="odsp" class="notnota" name="odsp" type="checkbox" data-qval="ODSP" value="odsp"/><label for="odsp"> Ontario Disability Support</label></div>
+                                        <div class=""><input id="tch" class="notnota" name="tch" type="checkbox" data-qval="Subsidized Housing" value="tch"/><label for="tch">Subsidized Housing/Rent Subsidy</label></div>
+                                        <div class=""><input id="finNone" class="nota" name='finNone' type="checkbox" data-qval="none" value="none"/><label for="finNone">None of the Above</label></div>										
+                                    </div>
+								</fieldset>
+                                </div>                       
+                         </div>
+                        </div>                      
+                    </section>
+                    
+                    <section id="step4" data-step=4 data-title="Parenting Information" class="step">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="input-group">
+								<fieldset>
+									<legend>Do you have any children in the following age groups?</legend>
+                                    <p class="helptext">Select all that apply</p>
+                                    <div class="filter form-control filterparent">
+                                        <div class=""><input id="childagerange1" class="notnota" name="childagerange1" type="checkbox" data-qval="Child Ages 12 and under" value="12 and under"/><label for="childagerange1"> 12 and under</label></div>
+                                        <div class=""><input id="childagerange2" class="notnota" name="childagerange2" type="checkbox" data-qval="Child Ages 13-17" value="13-17"/><label for="childagerange2"> 13-17</label></div>
+                                        <div class=""><input id="childagerange3" class="notnota" name="childagerange3" type="checkbox" data-qval="Expecting Child" value="Expecting"/><label for="childagerange3"> I am expecting a child</label></div>
+										<div class=""><input id="piNone" class="nota" name='piNone' type="checkbox" data-qval="none" value="none"/><label for="piNone">None of the Above</label></div>											
+                                    </div>
+								</fieldset>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>
+
+                    <section id="step5" data-step=5 data-title="Employment Information" class="step">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="input-group">
+								<fieldset>
+									<legend>What is your current employment status?</legend>
+								
+                                    <p class="helptext">Select all that apply</p>                                   
+                                    <div class="filter form-control filteremployment">
+                                        <div class=""><input id="lookingforwork" class="notnota" name="lookingforwork" type="checkbox" data-qval="Looking For Work" value="Looking for work"/><label for="lookingforwork">I am currently looking for work</label></div>
+                                        <div class=""><input id="lookingtoupgrade" class="notnota" name="lookingtoupgrade" type="checkbox" data-qval="Looking To Upgrade" value="Looking to upgrade skills"/><label for="lookingtoupgrade">I am looking to upgrade my skills</label></div>
+										<div class=""><input id="eiNone" class="nota" name='eiNone' type="checkbox" data-qval="none" value="none"/><label for="eiNone">None of the Above</label></div>												
+                                    </div>
+								</fieldset>
+                                </div>
+                            </div>
+
+                        </div>
+                    </section>      
+                    
+                    <section id="step6" data-step=6 data-title="Housing Information" class="step">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="input-group">
+								<fieldset>
+									<legend>What is your current housing status?</legend>
+
+                                    <div class="filter form-control filterhousing">
+                                        <div class=""><input id="housestatus1" name="housing" type="radio" data-qval="Home Owner" value="Owner"/><label for="housestatus1"> Own</label></div>
+                                        <div class=""><input id="housestatus2" name="housing" type="radio" data-qval="Renter" value="Renter"/><label for="housestatus2"> Rent</label></div>
+                                        <div class=""><input id="housestatus3" name="housing" type="radio" data-qval="Homeless" value="Homeless"/><label for="housestatus3"> Homeless</label></div>
+                                        <div class=""><input id="housestatus4" name="housing" type="radio" data-qval="House None of Above" value="None of Above"/><label for="housestatus4"> None of the above</label></div>
+                                        <br/>
+									</div>
+								</fieldset>
+									<div id="step6b" class="input-group">
+										<fieldset><legend></legend>
+										<p class="helptext">Select all that apply</p>
+										<div class="filter form-control">
+                                        <div class=""><input id="riskofeviction" class="notnota" name="riskofeviction" type="checkbox" data-qval="Eviction Risk" value="Risk of eviction"/><label for="riskofeviction">I am at risk of being evicted</label></div>
+                                        <div class="">
+											<input id="needsubsidizedhousing" class="notnota" name="needsubsidizedhousing" type="checkbox" data-qval="Need Subsidized Housing" value="Need Subsidized Housing" aria-describedby="shToolTip" />
+											<label for="needsubsidizedhousing">I am looking for subsidized housing</label>
+                                            <span id="shToolTip" data-toggle="tooltip" role="tooltip" data-placement="right" title="Housing for low income households where your rent is based on your income" class="glyphicon glyphicon-info-sign"></span>
+                                        </div>
+                                        <div class=""><input id="lookingforhousing" class="notnota" name="lookingforhousing" type="checkbox" data-qval="Looking for Housing" value="Looking for Housing"/><label for="lookingforhousing">I am looking for housing</label></div>       
+                                        <div class=""><input id="needlandlordhelp" class="notnota" name="needlandlordhelp" type="checkbox" data-qval="needlandlordhelp" value="Need Landlord Help"/><label for="needlandlordhelp">I need help with a landlord</label></div>
+										<div class=""><input id="hsNone" class="nota" name='hsNone' type="checkbox" data-qval="none" value="none"/><label for="hsNone">None of the Above</label></div>										
+										</div>
+										</fieldset>
+									</div>
+                                </div>                      
+                            </div>
+                        </div>
+                    </section>  
+
+                    <section id="step7" data-step=7 data-title="Health and Home Safety Information" class="step">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="input-group">
+								<fieldset>
+									<legend>Does you need help with the cost of?</legend>								
+                                    <p class="helptext">Select all that apply</p>
+                                    <div class="filter form-control filtercare">
+                                        <div class=""><input id="medicalordental" class="notnota" name="medicalordental" type="checkbox" data-qval="Medical Need" value="medicalordental" aria-describedby="mdToolTip" />
+                                                      <label style="display:inline" for="medicalordental">Medical or dental items or services</label>
+                                                    <i id="mdToolTip" data-toggle="tooltip" role="tooltip" data-placement="right" title="Medical or dental items include eye glasses, dentures, medication, medical supplies, special food" class="glyphicon glyphicon-info-sign"></i>              
+                                        </div>
+                                        <div class=""><input id="homesafety" class="notnota" name="homesafety" type="checkbox" data-qval="Home Safety" value="homesafety"/>
+                                                      <label for="homesafety">Home safety (e.g., smoke alarms) or improvements/repairs</label></div>
+                                        <div class=""><input id="homeutilities" class="notnota" name="homeutilities" type="checkbox" data-qval="Home Utilities" value="homeutilities"/>
+                                                      <label for="homeutilities">Household related utilities like water, energy, etc,</label></div>
+										<div class=""><input id="hhNone" class="nota" name='hhNone' type="checkbox" data-qval="none" value="none"/><label for="hhNone">None of the Above</label></div>														  
+                                    </div>
+								</fieldset>
+                                </div>
+                            </div>
+                        </div>
+                    </section>                      
+                            
+                    <section id="step8" data-step=8 data-title="Special Needs Information" class="step">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="input-group">
+								<fieldset>
+									<legend>is there a disability or special need?</legend>								
+								
+									<div class="filter form-control filterspecialneeds">
+                                        <div class=""><input id="specialneedsYes" data-qval="Special Needs Yes" name="specialneeds" type="radio" value="yes"/><label for="specialneedsYes">Yes</label></div>
+                                        <div class=""><input id="specialneedsNo" data-qval="Special Needs No" name="specialneeds" type="radio" value="no"/><label for="specialneedsNo">No</label></div>
+                                    </div>
+								</div>	
+
+							</div>
+                        </div>
+                    </section>      
+                    
+                    
+                    <section id="step9" data-step=9 data-title="Other Information" class="step">
+                            <div class="row">
+                                <div class="col-xs-12 col-md-6">
+                                    <div class="input-group">
+									<fieldset>
+										<legend>Does the following apply?</legend>								
+									
+                                        <p class="helptext">Select all that apply</p>
+                                        <div class="filter form-control filterother">
+                                            <div class=""><input id="incarcerated" class="notnota" type="checkbox" data-qval="Conviction Issue" value="incarcerated"/><label for="incarcerated"> About to be or recently released from prison/a correctional facility</label></div>
+                                            <div class=""><input id="funeral" class="notnota" type="checkbox" data-qval="Funeral Cost" value="funeral"/><label for="funeral"> In need of help to pay for a funeral</label></div>
+											<div class=""><input id="oiNone" class="nota" name='oiNone' type="checkbox" data-qval="none" value="none"/><label for="oiNone">None of the Above</label></div>											
+                                        </div>
+									</fieldset>
+                                    </div>
+                                </div>
+                            </div>
+                    </section>                      
+                <div class="progress">
+                  <div id="stepprogress" class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;">
+                    0% Complete
+                  </div>
+                </div>
+                <script>
+                updateProgressBar();
+                </script>
+                <section id="prevnext">
+                    <button id="prevstep" class="btn btn-success" onclick="prevStep();" disabled><span class="glyphicon glyphicon glyphicon-arrow-left"></span> Back</button>
+                    <button id="nextstep" class="btn btn-success" onclick="nextStep();">Next <span class="glyphicon glyphicon glyphicon-arrow-right"></span></button>
+                    <button id="finishstep" class="btn btn-success hide" onclick="finishStep();">Complete <span class="glyphicon glyphicon glyphicon-ok"></span></button>
+                </section>
+			</section>				
+                <!--WIZARD END-->
+                
+                <!--RESULTS START -->
+                
+                <!--WIZARD SUMMARY START -->
+                <div id="wizardSummary" class="hide row">
+                    <h2 id="wizardSummaryTitle">Results</h2>
+                    <div class="col-xs-12 summarytext">
+                        <p>Based on your answers, you can find information in the tabs below on services, benefits and subsidies offered through the City of Toronto that you might be eligible for</p>
+                    </div>
+                    
+                    <div class="row">
+                        <div id="summarycontrol" class="col-xs-12 col-md-push-8 col-md-4">
+                            <div class="headerRow">
+                                <div class="col-xs-6" data-toggle="tooltip" role="tooltip" data-placement="top" title="Click to see a summary of or edit the selected answers.  Click again to hide the answers.">
+                                    <!--h2 ><a data-toggle="collapse"  href="#summarydetails">See/Edit Answers</a></h2-->
+                                    <button  data-toggle="collapse"  data-target="#summarydetails"  id="editAnswers" class="btn btn-success">
+									<span class='glyphicon glyphicon-pencil'></span> <span class="biglabel"> See/Edit Answers</span><span class="smalllabel"> Answers</span></button>
+                                </div>
+                                <div class="col-xs-6 right">
+                                    <button id="editSettings" class="btn btn-success" data-toggle="tooltip" role="tooltip" data-placement="top" title="Click the button to change any of the answers. You will then get an updated list" onclick="startStep();"><span class='glyphicon glyphicon-cog'></span>Start Over</button>
+                                </div>
+                            </div>
+                            <div id="summarydetails" class="panel-collapse collapse"></div>
+                            <div id="summarydetailsMsg">
+                            <p class='notice hide' id='unspecifiedmsg'>Some key questions were not answered.  This will limit the results</p>
+                            </div>
+                        </div>
+						
+                        <div class="col-xs-12 col-md-pull-4 col-md-8">
+                            
+                            <div class="col-xs-12 searchbar">
+                                <div class="col-xs-12 col-sm-8 col-md-10">
+									<span style="display:none" id="searchlabel">Search</span>
+                                    <input id='hsi_searchtext' aria-labelledby="searchlabel" class="form-control" placeholder="Keyword search">
+                                    <button id="hsi_searchreset" title="Clear the search field and the related results." class="hide" onclick="resetSearch();"><span class="glyphicon glyphicon-remove"></span></button>
+                                </div>
+                                <div class="col-xs-12 col-sm-4 col-md-2">
+                                    <button id="btnSearchResults" class="btn btn-success" onclick="searchResults();">Search</button>
+                                </div>
+                            </div>
+                            <div id="hsi_searchresultscount" class="hide searchresultscount"></div>
+                            <div id="hsi_searchresults" class="hide"></div>
+                            <a name="hsi_tabsection"></a> 
+                            <section id="hsi_tabs" class="col-xs-12">
+								<div><a id="gotoTop" type="button" href="" class="safesidebar">top of listing</a></div>							
+                                <ul class="nav nav-tabs">
+                                    <li role="presentation" data-toggle="tab" href="#hsi_benefit" data-placement="top" title="View benefits and subsidies"><a href="#hsi_tabsection">Financial Benefits/Subsidies</a></li>
+                                    <li role="presentation" data-toggle="tab" href="#hsi_childcare" data-placement="top" title="View services & benefits related to Childcare"><a href="#hsi_tabsection">Children</a></li>
+                                    <li role="presentation" data-toggle="tab" href="#hsi_employment"data-placement="top" title="View services & benefits related to Employment"><a href="#hsi_tabsection">Employment</a></li>
+                                    <li role="presentation" data-toggle="tab" href="#hsi_housing"data-placement="top" title="View services & benefits related to Housing"><a href="#hsi_tabsection">Housing</a></li>
+                                    <li role="presentation" data-toggle="tab" href="#hsi_medical"data-placement="top" title="View services & benefits related to Medical"><a href="#hsi_tabsection">Health &amp; Wellness</a></li>
+                                </ul>
+                                <section id="hsi_benefit" class="tabresult tab-pane fade in active"></section>
+                                <section id="hsi_childcare" class="tabresult tab-pane fade"></section>
+                                <section id="hsi_employment" class="tabresult tab-pane fade"></section>
+                                <section id="hsi_housing" class="tabresult tab-pane fade"></section>
+                                <section id="hsi_medical" class="tabresult tab-pane fade"></section>
+                            </section>
+                        </div>
+                        
+
+                    </div>
+					<div class="col-xs-12 summarytext">					
+                        <p>If you don't find what you are looking for here, you can contact:</p>
+                        <ul>
+                            <li><a href="http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=86d3ba2ae8b1e310VgnVCM10000071d60f89RCRD">311</a> 24/7 multilingual information on City and non-emergency services</li>
+                            <li><a href="http://www.211toronto.ca/">211</a> 24/7 multilingual information on/referral to community services in Toronto</li>
+                        </ul>
+                        <p>You can also:</p>
+                        <ul>
+                            <li>find out about the range of human services on our integrated webpage</li>
+                            <li>find out about City of Toronto <a href="http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=5b1619f8602a0410VgnVCM10000071d60f89RCRD&WT.rd_id=parks">recreation</a> and <a href="http://www1.toronto.ca/wps/portal/contentonly?vgnextoid=a253ba2ae8b1e310VgnVCM10000071d60f89RCRD">healthy living</a> programs </li>
+                            <li>find out about all that the City of Toronto has to offer by searching on the <a  href="//toronto.ca">City's main page</a> </li>
+                        </ul>
+						
+						<p>Please help us improve this service by taking a small <a target="_blank" href='http://cityoftoronto.fluidsurveys.com/s/hsifinderfeedback/'>survey</a>
+					</div>
+                </div>
+
+            </section>
+
+
+        </div>
+    </div>
+</div>

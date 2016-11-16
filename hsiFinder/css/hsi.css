@@ -1,0 +1,115 @@
+legend { font-size: 1em; font-weight: bold; border-width: 0}
+#maincontent .helptext {color: #434343!important};
+#wizardSummary a {text-decoration: underline; font-weight: normal;}
+#wizardSummary .nav-tabs a {text-decoration: none;}
+#wizardSummary .summarytext {background-color: #f9f9f9; border:1px solid #ccc; margin-bottom: 10px;border-bottom-left-radius: 5px;border-bottom-right-radius: 5px; padding: 10px;}
+#wizardSummary .summarytext p {max-width: 800px;}
+#hsi_searchtext {float: left;}
+#hsi_searchreset {position: absolute;right: 5%;width: 15px !important;background: white;border: 0px;margin: 7px !important;font-size: 1.5em;color: black;}
+#hsi_searchreset span {font-size: .8em; margin-right:3px; display: inline-block; padding:0px;}
+#hsi_searchresultscount {display: table; width: 100%; text-align: right; padding: 10px 15px 0px 0px; color: #434343; font-weight: bold;}
+#summarydetails li {border-radius: 5px; border: 1px solid #d6e9c6; background-color: #dff0d8;  margin: 5px 0px; padding: 5px;}
+#summarydetails li.unspecified {border: 1px solid #ebccd1; background-color: #fbe9e9; }
+#summarydetails li.noselection {border: 1px solid #ebccd1; background-color: #fbe9e9; }
+#maincontent #btnSearchResults {margin: 0px; width: 100%;}
+.searchbar {padding: 10px 0px;}
+
+.step {display:none;}
+.step.active {display: block; min-height: 380px; border: 1px solid #ccc; padding: 15px;background-color: #f5f5f5;}
+.step .input-group-addon {border: none; text-align: left; padding: 0px; background: none; width: 100px;}
+#languageOtherText {width: 300px;}
+.progress {border-top-left-radius: 0px; border-top-right-radius: 0px;}
+#wizardTitle {border: 1px solid #ccc; border-bottom: 0px; padding: 15px; background-color:#f5f5f5; color: #31708f;border-top-left-radius: 5px; border-top-right-radius: 5px;}
+.helptitle {font-weight: bold; color: #555; font-style: italic;}
+.notice {font-weight: bold; color: #434343; font-style: italic; font-size: .8em; padding-left: 10px;}
+#summarydetails .label {color: black; padding: 0px; font-size: 1em;}
+#summarydetails li {list-style-type: none;}
+#summarydetails .summaryTitle {font-weight: bold; color: #777; margin-right: 5px;}
+#summarydetails .glyphicon-ok {color: green;}
+#summarydetails .glyphicon-remove {color: red;}
+#summarydetails {width: 100%; border: 1px solid #ccc; border-radius: 5px; padding: 15px;}
+#hsi_tabs {width: 100%; margin-top: 10px;}
+#wizardSummaryTitle {border-bottom: 2px solid black;}
+#wizardSummary .headerRow {display: table; width: 100%;border: 1px solid #ccc; padding: 5px; background-color:#f5f5f5; color: black; border-radius: 5px; }
+#wizardSummary .headerRow h2 {margin: 10px 0px 5px 0px; padding: 0px; line-height: 33px; color: black;}
+.right {text-align: right;}
+#summarydetails li {list-style-type: disc; min-width: 50%; font-size: .9em;}
+.tabresult .searchRecord:last-child {border-bottom: 0px !important;}
+#summarydetails ul {list-style-position: outside; margin: 0px; padding: 0px 0px;}
+#maincontent .searchRecord ul {list-style-position: outside; margin: 0px; padding: 0px 15px;}
+
+#maincontent .input-group .horizontal {margin: 0px 15px 0px 0px;}
+.input-group {margin-bottom: 20px;}
+.input-group {width: 100%;}
+.input-group-addon {width: 150px; white-space: normal; }
+.filterdemographic>div {width: 50%; float: left;}
+.filtersearch button {width: 100%; margin: 0px !important;}
+#searchCount {text-align: right; margin-top: 0px; padding-right: 20px; background-color: #eee; border-bottom: 1px solid #aaa;}
+#searchResults {border-top: 2px solid #398439; margin-bottom: 50px;}
+.searchRecord .right {text-align: right; padding-right: 20px;}
+.searchRecord a .glyphicon {margin-left: 5px;}
+.searchRecord a {text-decoration: underline;}
+.searchRecord {border-bottom: 1px solid #aaa; padding-bottom: 5px;}
+#hsi_searchresults .searchRecord:first-child {border-top: 1px solid #aaa; padding-bottom: 5px;}
+.searchRecord h4 {margin-top: 15px !important; }
+.searchRecord .categoryicon {text-align: center; }
+.searchRecord .categoryicon img {padding: 10px 0px; border: 0px solid; border-radius: 5px; margin: 5px 0px;}
+.searchRecord .categoryicon p {background-color:#999; margin: 5px 5px 0px 5px; color: white; font-weight: bold;}
+h2 {margin-bottom: 0px !important;}
+.searchHeader {margin-top: 15px;}
+#hsi_tabs .nav-tabs li.active a {background-color: #449d44; border-color: #398439; color: white;}
+#hsi_tabs .nav-tabs  li.active a:hover {background-color: #398439 !important; border-color: #398439; color: white;}
+#hsi_tabs .nav-tabs  li a {background-color: #ddd; border-color: #333; color: #555;}
+#hsi_tabs .nav-tabs li a:hover {background-color: #398439 !important; border-color: #398439; color: white;}
+ .tabresult {border-top: solid 1px #398439; margin: 0px;}
+ section.tabresult {display:none;}
+ section.tabresult.in {display:block;}
+ #hsi_tabs {margin-bottom: 50px;}
+ .searchHeader .searchreset {text-align:right; padding-right: 27px;}
+ .subsidyicon {font-size: 2.5em; color: gold; margin-top: 10px;}
+ .green {background-color: #dff0d8; border-color: 1px solid #3c763d; color: #3c763d; padding: 3px; margin: 3px; border-radius: 5px;}
+ .filter>div {padding: 3px; margin: 3px 0px;}
+.tooltip {min-width: 300px; }
+.tooltip-inner {padding: 15px;}
+.landingItem { font-weight: bold;}
+label {
+	font-weight: inherit;
+}
+.questionLabel {
+	font-weight: 700;
+}
+a.safesidebar {
+    background: #fff none repeat scroll 0 0;
+    border: 1px solid;
+    border-radius: 4px;
+    bottom: 70px;
+    color: #2b5a83;
+    cursor: pointer;
+    display: inline-block;
+    font-family: HelveticaNeue-Medium,Helvetica,Arial,sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    left: 850px;
+    line-height: 13px;
+    opacity: 0.7;
+    padding: 10px;
+    position: fixed;
+    text-align: left;
+    text-decoration: none;
+    text-rendering: optimizelegibility;
+    white-space: nowrap;
+    word-spacing: 2px;
+    z-index: 999;
+    text-decoration: none!important;
+	outline: none!important;
+}
+.smalllabel { display:none;}
+@media (max-width: 768px) {
+	.smalllabel { display: inherit;}
+	.biglabel { display: none;}
+	.nav-tabs > li { float: none; border: 1px solid #dddddd; } .nav-tabs > li.active { background: #eeeeee; } .nav-tabs > li.active > a { border: 1px solid transparent; } .nav > li > a:hover, .nav > li > a:focus, .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus { background: none; border: 1px solid transparent; }
+}
+
+@media print {
+	#gotoTop { display: none;}
+}

@@ -1,0 +1,14 @@
+{ 
+	"app-settings": {
+		"appName": Service and Benefit Finder Tool",
+		"hasBreadcrumb": false,
+		"hasLeftNav": true,
+		"terms": {
+			"enabled": false
+		},
+		"appmodules": [
+			{"target": "bottom", "type": "template", "name": "../hsi/html/hsi-bottom.html"},
+			{"target": "right", "type": "template", "name": "../hsi/html/hsi-right.html"}
+		]
+	}
+}
