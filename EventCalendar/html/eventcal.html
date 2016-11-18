@@ -132,7 +132,7 @@ the tab-content and not 1.
 <div id="mainFormComponents" class="ng-hide" data-ng-show="ec.event.terms=='agree'">
 
 <div id="buttonbar" >
-    <h1 ng-if="ec.opMode == 'update'">New Festival and Event Submission</h1>  
+    <h1 ng-if="ec.opMode == 'update'"  data-ng-bind-html="ec.event.eventName">Festivals and Events Calendar Submission</h1>  
     
    <div id="eventNavBar" class="navbar hidden-xs hidden-sm"> 
         <div class="navbar-inner">
