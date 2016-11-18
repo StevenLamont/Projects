@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry excluding="static_files/assets/validator/|**/node_modules/*|js/removed/|static_files/WebApps/film/js/|static_files/assets/multiselect/|js/libs/removed/services/|corev1.0/js/slick/|js/libs/|static_files/assets/datepicker/|wcmAsset/gsasearch/js/|**/bower_components/*|static_files/assets/js/|static_files/WebApps/Health/DineSafe/js/|js/libs/sweetAlert/|**/*.min.js|ngCoT/js/|js/|static_files/assets/|corev1.0/js/|static_files/assets/bootstrap-formhelpers/|Festivals and Events - Living In Toronto _ City of Toronto_files/|static_files/assets/pdfmake/|static_files/assets/pagination/|js/libs/removed/|corev1.0/css/Form Example - Basic_files/|static_files/assets/bootstrap-formhelpers/js/|Festivals and Events - Living In Toronto _ City of Toronto_files/Event001_data/" kind="src" path=""/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="corev1.0/css/Form Example - Basic_files"/>
+	<classpathentry excluding="**/bower_components/*|slick/|**/node_modules/*|**/*.min.js" kind="src" path="corev1.0/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="corev1.0/js/slick"/>
+	<classpathentry excluding="Event001_data/|**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="Festivals and Events - Living In Toronto _ City of Toronto_files"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="Festivals and Events - Living In Toronto _ City of Toronto_files/Event001_data"/>
+	<classpathentry excluding="removed/|libs/removed/services/|**/bower_components/*|**/node_modules/*|libs/removed/|libs/|**/*.min.js|libs/sweetAlert/" kind="src" path="js"/>
+	<classpathentry excluding="removed/|**/bower_components/*|sweetAlert/|**/node_modules/*|**/*.min.js|removed/services/" kind="src" path="js/libs"/>
+	<classpathentry excluding="services/|**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="js/libs/removed"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="js/libs/removed/services"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="js/libs/sweetAlert"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="js/removed"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="ngCoT/js"/>
+	<classpathentry excluding="js/|validator/|datepicker/|**/bower_components/*|pagination/|**/node_modules/*|bootstrap-formhelpers/js/|bootstrap-formhelpers/|multiselect/|**/*.min.js|pdfmake/" kind="src" path="static_files/assets"/>
+	<classpathentry excluding="js/|**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/bootstrap-formhelpers"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/bootstrap-formhelpers/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/datepicker"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/multiselect"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/pagination"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/pdfmake"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/assets/validator"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/WebApps/film/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="static_files/WebApps/Health/DineSafe/js"/>
+	<classpathentry excluding="**/bower_components/*|**/node_modules/*|**/*.min.js" kind="src" path="wcmAsset/gsasearch/js"/>
+	<classpathentry kind="con" path="org.eclipse.wst.jsdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path=""/>
+</classpath>

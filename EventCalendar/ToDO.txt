@@ -1,0 +1,172 @@
+Last items:
+
+1) need sanatize directive.. decode html..http://stackoverflow.com/questions/31656190/why-do-ng-bind-html-and-sanitize-produce-different-results
+<script>alert('x')</script>
+--done... but could I have just used ngChange.. would that perform better.. is there a way to write a directive
+
+2) accessibility blurb put on criteria. -- fixed.
+3) Need a link for toruism services
+4) Can I make the datetime picker show the change in value as you clikc on each mnth/year/day etc... probbably not.
+5) Stylalize map tools?? http://stackoverflow.com/questions/12474604/is-it-possible-to-change-the-google-maps-drawing-manager-icons
+-->when my map , the tools are there yet... (remove code or wait somehow).
+
+6) after the upload.is complete can I reset the progress bar?  -- got rid of prpogress bar al together.. remove upload and hide cancel 
+instead of disabling.
+
+7) verifief address has prov/postal code. I'll leave it.. and jason will remove from display.  --no action
+8) can upload a text file with a .jpg extension.  
+9) Uni want line across top to be removed.. (nav navs-tab).. try to see what it is..   --> fixed move css
+10) on sumit button etc.. put back icons I removed for iphone and css then out for iphone -- fixed.
+11) On the multi-select --0 can I change "select None" to de-select all.  (code change there might have been a better way with translations but I was lazy) -- fixed
+12) when deleting/changing locations, it a map tooltip is open it should be closed.-- fixed.
+13) Investigate an indcoiator to not show time (ie. if a cgheck box.. switch the picker?/)
+14) When a user enters a location, they could have a button to say "plot on map".  I'd have to invoke the "save which location I'm on.. then assume they are going to use the tools, so any update ar enot for a new locaiton but for the save location)
+
+Last call:
+
+1) do not approve events in the conversion.  They'll do it as a way if checking each evenrt
+2) Add edits on dates. Nothing in the past, no mire than 3 years in the future.
+--> check this.. I think it is in..No need on dates and they are contrained between.
+
+3) There was a mistake in the conversion where I didn't capture existing cost-range. I used it to determine free or not, but I should hjave put it in thr "other Cost Info" field because it is useful.
+--> send email.
+4) In the eventLog.
+5) We will not convert the raptors since it generates a bunch . They will re-create it manually
+
+
+Compare all LIbs:
+My local showErrors has a test version I was playinbg withy.. get rid of it
+document how I created 311 ...
+
+
+
+
+angular.element(document.querySelector('#ecForm'))[0].querySelector('.tab-pane.active').querySelector('input:not(.ng-hide)').focus();
+think I need to put a class on 1st element on each tab
+
+$('#ecForm :input:enabled:visible:first').focus()
+does the angular equivalent work: angular.element(document.querySelector('#ecForm'))[0].querySelector('.tab-pane.active')
+
+Number formatting doesn't seem to wo0rk on mobile devices --might be samsumg deault brower..
+
+1) reasonable date..I put some code in the onblur ..but if you refresh, thensubmit..the blur isn't active. so need to move it to a procedure and put in a cross validtion.
+2) honeypot.
+
+Hello Johan,
+
+We want to implement a honeypot in our event Calendar submission.
+I put a hidden field called: event_type
+
+I think we want the submission to appear to work but we want it to go to the bitBucket.
+This means we want 
+
+I assume we do this with scripting.
+
+option 1) 
+
+function onBeforeSubmit(submit, settings){
+ deliverToRepo({url:"repo://edc_eventcal"},submit,settings);
+} 
+
+
+
+
+
+
+2) -->preview..assumes [date] but for a single entity,not put befoe submit. do I need to "validate data",cleaninput?
+--> acutally just setCalculatedDates.. is enough -- fixed.
+
+
+1) add in all help text option even if most are blank  -- done
+
+2) Upload (tab6) maybe get rid of table and just use row/col to make it better display in minimized mode.
+3) NO CONFIORMAtion emai. should we have one.
+
+
+4) honey Pot. -- In admin screen add field.. hide in script.. have johan's server side scruipt reject it.
+
+
+6) webtrends implementation./.   agree/disagree, submit error, submit success, upload error. [ could put in Number of locations. by frequency..
+---> haven't put in logic for agree/disagree yet.. (done)
+7) http://www.jvandemo.com/how-to-properly-integrate-non-angularjs-libraries-in-your-angularjs-application/  for webtrends
+
+9) I can create _dev_eventCAl-APR  and run conversion in dev.. while publishing etcv. (hopefully it will go to http by then)
+
+
+this is stupoid.. hgow to determine host. write Johan an email
+https://secure.toronto.ca
+https://insideto-secure.toronto.ca
+http://app.toronto.ca
+http://insideto-app.toronto.ca
+
+
+    vm.searchbox = { 
+        template:'searchbox.tpl.html', 
+        events:{ places_changed: googlePlaces }
+    };
+	
+	if I were to use ../   woudn't it mean petar just needs to make sure he has a searchbox.tpl.html in hos home 
+-- or why doesn't he just copy the template into his directory?
+
+he added to webstrends in returnRecord.. did we want this.. I thought it was all in his code.
+
+
+
+Potential Issues:
+
+Approved Event still show in https://was-inter-qa.toronto.ca/cc_sr_v1/data/edc_eventcal_APR
+even if they are past.. we need the ARC status
+
+Featured events is shown regardless of status..
+
+
+
+	
+	
+
+3) CCAPI lib.. need to add 'admin flag. and check that host admin work
+
+
+2) fix conversion to exclude events in the past.  -- done -- maybe excluded one extra day
+
+3) Still have an agular_callback4 error on newcategory loads..  think I fixed this correctly now.
+
+
+8) On conversion, I could test size of json and switch between GET/POST
+
+
+12) why did i used vm.locIdx???  $index is the rowNo., whicl  vm.LocIdx.. end up being totalRows.. (maybe it was before i used GUID??
+--> I think the answer, is that eventcalendareForm needs to use scope variables (so it needs vm..) but if I have ec.  in the form, then it won't 
+   mark the required or not.. it happens that ec.  and vm.  work the same in the form.
+   
+   Doesn't explain why the locIndex  dates doesn't use it and it seems to work ifne..(and it avoids the scope issue)
+
+
+when I delete a location, I need to clean any errors int he form
+
+We need $index for the name.. as my eventCalendartEvrntDFortm needs it the way it works.. otherwise it uses the last one)
+but If I delete a rows.. then the id and names all change.. and I get an error inshowError as it is not updated..
+showErrors messages up. maybe I can blur all the fields when I delete.. because its working off "location_1" but the html is now location_0.
+--> the erorr goes away.. but but the highlight doesn't change to green
+
+go through all scenrios.. iof use vm.locIdx.. is it ture only one trigger is used..
+
+
+ideally...don't delete rows.. set an indicator.. use ng-if and then cleanup whenb submitting
+  -- ng_if.. means record not therew and I think indexes changes again.. so use ng_show...
+   --But the error is still there, so need do something to remove it..-->
+   if I delete rows in the controller.. the validations don't go away until the next digest.. so you'd have to commit twice..
+   
+   but th euser will just be confused.. so this may be the best options..
+   
+   ng-if .. removes html.. and removes triggers?? so it may be the ticket..ng-if remove rows from html.. clean up locaiton prertoo to commit.
+   
+==> put showErrors back to it original state after
+
+ALter CONVERSION TOD DOWNLOAD IMAGE-- harder than I think.. create a link, click the link, remove the lonk (in code).maybenot that hard..
+
+14) thre data services.. should I set cache false? safer if set to No...i wonder what the server is expire is set to.
+
+
+
+

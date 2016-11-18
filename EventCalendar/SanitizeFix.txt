@@ -1,0 +1,57 @@
+--> we could simple repalce "" with single quotes. before sanitizing
+
+	/* if the field is in error, then value is undefined */
+    function sanitize(objName) {
+        var objProps = objName.split('.');
+        if (objProps.length == 1) {
+            if (vm[objProps[0]])  vm[objProps[0]] = $sanitize(vm[objProps[0]].replace(/"/g,"'"));
+        } else if (objProps.length == 2) {
+            if (vm[objProps[0]][objProps[1]]) vm[objProps[0]][objProps[1]] = $sanitize(vm[objProps[0]][objProps[1]].replace(/"/g,"'"));
+        } else if (objProps.length == 3) {
+            if ( vm[objProps[0]][objProps[1]][objProps[2]]) vm[objProps[0]][objProps[1]][objProps[2]] = $sanitize(vm[objProps[0]][objProps[1]][objProps[2]].replace(/"/g,"'"));
+        
+        
+        } else if (objProps.length == 4) {
+            if (vm[objProps[0]][objProps[1]][objProps[2]][objProps[3]]) vm[objProps[0]][objProps[1]][objProps[2]][objProps[3]] = $sanitize(vm[objProps[0]][objProps[1]][objProps[2]][objProps[3]].replace(/"/g,"'"));
+        
+        }
+
+    }
+	
+Fix 2:
+
+    /* not used */
+	//locations is an array object(it's an object with obj.constructor of Array())
+	// each array item is also an object, the array item has a key of 0,1,2, etc.
+    function sanitizeObject(obj) {
+        console.log("Start",obj && obj.constructor);
+        for (var key in obj) {
+            console.log(key, typeof obj[key]  );
+			if (obj[key] !== null && typeof obj[key] === 'array') {
+				console.log(obj[key].length); // this doesn't really do anything except note the array loop
+			} else if (obj[key] !== null && typeof obj[key] === 'object' ) {
+				sanitizeObject(obj[key]);
+			} else {
+            
+                console.log("BEFORE:" +obj[key], "AFTER:" + $sanitize(obj[key]),obj[key] &&  obj[key].constructor);
+                obj[key] = $sanitize(obj[key]);
+            }
+        }
+    }
+
+on Preview: (copy the object and sanitize the strings)
+   */
+    function preview() {
+    
+        setCalculatedFields();
+
+		//var test = angular.copy(vm.event);
+		//sanitizeObject(test);
+		//var calEvent = { 'calEvent' : test };
+        var calEvent = { 'calEvent' : vm.event };
+On Submit.
+-- saniztize the object.. 
+		
+	
+Other NOtes:
+You cannot $sanitize an object.
