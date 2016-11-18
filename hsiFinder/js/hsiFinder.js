@@ -7,13 +7,15 @@
 */
 var APP_EVENT_TYPE = "hsi_service_benefit"; 
 var EVENT_TYPE_APPROVE_STATUS = 'APR';
-var API_HOST = "https://was8-inter-dev.toronto.ca";
+//var API_HOST = "https://was8-inter-dev.toronto.ca";
+var API_HOST = "https://was-inter-qa.toronto.ca";
 //Normal Situation.
 //var API_HOST = "";
 
 var gblJSONData = "";
 var gblFilteredData = [];
 var gblBaselineCnt = 0;
+var gblMaxReportHeight = 640;
 
 /* I want this rules array to be the same for both admin and finder tools 
   It needs to be an array of objects to be compatible with rob's tools.
@@ -87,11 +89,11 @@ function dynamicSort(root, property) {
 var app = new cot_app("Service and Benefit Finder Tool");
 
 function setTitle(step) {
-	if (step[0].id !== 'step0') {
-		$("#wizardTitle").html(step.attr("data-title"));
-	} else {
-		$("#wizardTitle").html(step.attr("data-title") + "<img src='img/finderTool.png' alt='finder tool logo' height='80px'/>");
-	}
+    if (step[0].id !== 'step0') {
+        $("#wizardTitle").html(step.attr("data-title"));
+    } else {
+        $("#wizardTitle").html(step.attr("data-title") + "<img src='img/finderTool.png' alt='finder tool logo' height='80px'/>");
+    }
 }
 function prevStep() {
     var currentO = $(".step.active");
@@ -104,7 +106,7 @@ function prevStep() {
     prev1.addClass("active");
     $("#prevstep").attr("disabled",(prev2.length===0 ));
     $("#nextstep").attr("disabled",false);
-	setTitle(prev1);
+    setTitle(prev1);
     updateProgressBar();
 }
 
@@ -121,7 +123,7 @@ function nextStep() {
     currentO.removeClass("active");
     next1.addClass("active");
     $("#prevstep").attr("disabled",false);
-	setTitle(next1);
+    setTitle(next1);
     updateProgressBar();
 }
 function startStep() {
@@ -132,7 +134,7 @@ function startStep() {
     $("#wizardSummary").addClass("hide");
     $("#wizard").removeClass("hide");
     $("#step1").addClass("active");
-	setTitle($("#step1"));
+    setTitle($("#step1"));
     updateProgressBar();
 }
 
@@ -147,7 +149,7 @@ function goToStep(stepId){
     $("#wizardSummary").addClass("hide");
     $("#wizard").removeClass("hide");
     $("#step" + stepId).addClass("active");
-	setTitle($("#step"+ stepId));
+    setTitle($("#step"+ stepId));
     updateProgressBar();
        
 
@@ -204,9 +206,9 @@ function finishStep() {
     sHTML += ($("#ow:checked").length>0) ? "<li><span class='label'>Recipient of</span>: Ontario Works" + addGotoStep(currentStep) + "</li>" :"";
     sHTML += ($("#odsp:checked").length>0) ? "<li><span class='label'>Recipient of</span>: Ontario Disability Support Program" + addGotoStep(currentStep) + "</li>" :"";
     sHTML += ($("#tch:checked").length>0) ? "<li><span class='label'>Recipient of</span>: Subsidized Housing/Rent Subsidy" + addGotoStep(currentStep) + "</li>" :"";
-   	if ($("#step3b").find("input:checked").length == 0 || $("#finNone:checked").length > 0) {
-		sHTML += "<li class='noselection'><span class='label'>Financial Need Recipient</span>: No Selections" + addGotoStep(currentStep) + "</li>";
-	}    
+    if ($("#step3b").find("input:checked").length === 0 || $("#finNone:checked").length > 0) {
+        sHTML += "<li class='noselection'><span class='label'>Financial Need Recipient</span>: No Selections" + addGotoStep(currentStep) + "</li>";
+    }    
     /* Special processing -- manually set NOT ODSP */
     if ($("#odsp:checked").length === 0) {
         questions["NOT ODSP"] = true; 
@@ -235,11 +237,11 @@ function finishStep() {
     sHTML += ($("#lookingforwork:checked").length > 0) ? "<li><span class='label'>Employment Status</span>: " + $("#lookingforwork:checked").val()  + addGotoStep(currentStep) + "</li>": "";
     sHTML += ($("#lookingtoupgrade:checked").length > 0) ? "<li><span class='label'>Employment Status</span>: " + $("#lookingtoupgrade:checked").val() + addGotoStep(currentStep) + "</li>" : "";
     sHTML += ($("#eiNone:checked").length > 0) ? "<li class='noselection'><span class='label'>Employment Status</span>: No Selections" + addGotoStep(currentStep) + "</li>" : "";
-   	if ($("#step5").find("input:checked").length == 0) {
-		sHTML += "<li class='noselection'><span class='label'>Employment Status</span>: No Selections" + addGotoStep(currentStep) + "</li>";
-	}
+    if ($("#step5").find("input:checked").length === 0) {
+        sHTML += "<li class='noselection'><span class='label'>Employment Status</span>: No Selections" + addGotoStep(currentStep) + "</li>";
+    }
 
-		
+        
     //HOUSING STATUS
     currentStep = 6;
     if ($("input[name='housing']:checked").length > 0) {
@@ -254,11 +256,11 @@ function finishStep() {
     sHTML += ($("#lookingforhousing:checked").length > 0) ? "<li><span class='label'>Housing Status Other</span>: " + $("#lookingforhousing:checked").val() +  addGotoStep(currentStep) + "</li>": "";
     sHTML += ($("#needlandlordhelp:checked").length > 0) ? "<li><span class='label'>Housing Status Other</span>: " + $("#needlandlordhelp:checked").val() +  addGotoStep(currentStep) + "</li>": "";
     
-	if ($("#step6b").find("input:checked").length == 0 || ($("#hsNone:checked").length > 0)) {
-		sHTML += "<li class='noselection'><span class='label'>Housing Status Other</span>: No Selections" + addGotoStep(currentStep) + "</li>";
-	}
-	
-	
+    if ($("#step6b").find("input:checked").length === 0 || ($("#hsNone:checked").length > 0)) {
+        sHTML += "<li class='noselection'><span class='label'>Housing Status Other</span>: No Selections" + addGotoStep(currentStep) + "</li>";
+    }
+    
+    
     //Health and Safetly Info
     currentStep = 7;
     var financialCnt = 0;
@@ -268,7 +270,7 @@ function finishStep() {
     if (financialCnt === 0 ) {
         sHTML += "<li class='noselection'><span class='label'>Health and Home Need</span>: No Selections" + addGotoStep(currentStep) + "</li>";
     }    
-	
+    
     
     //DISABILITY STATUS
     currentStep = 8;
@@ -312,9 +314,21 @@ function updateProgressBar() {
     var percent = Math.round((currentStep/totalStep) * 100);
     $("#stepprogress").css('width', percent + '%');
     $("#stepprogress").attr('aria-valuenow', percent);
-    $("#stepprogress").html("Step " + currentStep + " of " + totalStep);
-	$('#wizard :input:enabled:visible:first').focus();
-	
+    console.log(Math.max(document.documentElement.clientWidth, window.innerWidth || 0));
+    if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 480) { 
+
+        if (currentStep > 2) {
+            $("#stepprogress").html("Step " + currentStep + " of " + totalStep);
+        } else if (currentStep > 1) {
+            $("#stepprogress").html(currentStep + " of " + totalStep);
+        } else {
+            $("#stepprogress").html(currentStep);
+        }
+    } else {
+        $("#stepprogress").html("Step " + currentStep + " of " + totalStep);
+    }
+    $('#wizard :input:enabled:visible:first').focus();
+    
 }
 
 function processRule(rule) {
@@ -341,7 +355,7 @@ function processRule(rule) {
 }
 
 function showBaseline() {
-    //console.log("starting baseline");
+
     var sHTML = "";
     gblBaselineCnt = 0;
     gblFilteredData = [];
@@ -406,8 +420,15 @@ function showBaseline() {
         }
     });
     $("#hsi_searchresultscount").html(gblBaselineCnt + " Results Found.");
+    if (gblBaselineCnt > 0 ) { $("#gotoTop").show(); } else { $("#gotoTop").hide();}
+    //if ($("#app-content-top").get(0).scrollHeight <= (gblMaxReportHeight + $("#summaryfooter").get(0).scrollHeight )) 
     resetSearch();
     $("#hsi_searchresults, #hsi_searchresultscount").removeClass("hide");
+    
+    var x = $("#hsi_tabs")[0].getBoundingClientRect();
+    var eleWidth = $("#gotoTop").width();
+    $("#gotoTop").css("left", x.left + x.width - eleWidth);
+    
 }
 
 function searchResults() {
@@ -443,7 +464,7 @@ function getRow(item) {
     sHTML += "<div class='searchRecord row'>";
         sHTML += "<div class='hidden-xs col-sm-1 categoryicon'>";
             //sHTML += "<p>" + item.category + "</p>";
-			sIMG = (item.category.indexOf("Housing") > -1) ? "housing.png" : (item.category.indexOf("Childcare") > -1) ? "childcare.png" : (item.category.indexOf("Medical") > -1) ? "medical.png" : "employment.png";			
+            sIMG = (item.category.indexOf("Housing") > -1) ? "housing.png" : (item.category.indexOf("Childcare") > -1) ? "childcare.png" : (item.category.indexOf("Medical") > -1) ? "medical.png" : "employment.png";          
             sHTML += "<img src='img/" + sIMG + "' title ='" + item.category + "' alt='" + item.category + " icon'/>";
         sHTML += "</div>";
         sHTML += "<div class='col-xs-12 col-sm-6'>";
@@ -464,7 +485,7 @@ function getRow(item) {
         if ((item.type||"") === "benefit") {
             sHTML += "<div class='hidden-xs col-sm-1 subsidyicon'>";
                 //sHTML += "<span title='This item is a Subsidy/Benefit' class='glyphicon glyphicon-star-empty'</span>";
-                sHTML += "<img src='img/benefit.png' title ='This item is a Subsidy/Benefit' alt='Subsidy/Benefit icon'/>"
+                sHTML += "<img src='img/benefit.png' title ='This item is a Subsidy/Benefit' alt='Subsidy/Benefit icon'/>";
             sHTML += "</div>";
         }
     sHTML += "</div>";
@@ -474,6 +495,8 @@ function getRow(item) {
 
 
 function setUpEvents() {
+
+    gblMaxReportHeight =  $("#app-content-top").get(0).scrollHeight;
 
     $("#wizardSummary").on("keydown","#hsi_searchtext",function(e) {
         var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
@@ -495,28 +518,35 @@ function setUpEvents() {
     $("#gotoTop").on("click", function(event) {
         window.scrollTo(0, $("#hsi_tabs").offset().top);
         event.preventDefault();
-	});
-	
-	$(".nota").on("click", function(event) {
-		var me = $(this);
-		if (me.prop('checked')) {
-			$.each(me.parent().parent().find(':input:checked'), function(i, item) {
-				if (item.id !== me[0].id) {
-					console.log(item.id, me.id);
-					$(item).prop('checked', false);
-				}
-			})
-		}
-	});
-	$(".notnota").on("click", function(event) {
-		var me = $(this);
-		if (me.prop('checked')) {
-			$.each(me.parent().parent().find('.nota:checked'), function(i, item) {
-				$(item).prop('checked', false);
-			})
-		}
-	});	
-	
+    });
+    
+    $(window).resize(function() {
+        var x = $("#hsi_tabs")[0].getBoundingClientRect();
+        var eleWidth = $("#gotoTop").width();
+        $("#gotoTop").css("left", x.left + x.width - eleWidth);
+    }); 
+
+    
+    $(".nota").on("click", function(event) {
+        var me = $(this);
+        if (me.prop('checked')) {
+            $.each(me.parent().parent().find(':input:checked'), function(i, item) {
+                if (item.id !== me[0].id) {
+                    console.log(item.id, me.id);
+                    $(item).prop('checked', false);
+                }
+            });
+        }
+    });
+    $(".notnota").on("click", function(event) {
+        var me = $(this);
+        if (me.prop('checked')) {
+            $.each(me.parent().parent().find('.nota:checked'), function(i, item) {
+                $(item).prop('checked', false);
+            });
+        }
+    }); 
+    
 }
 
 /* assume all the answers to the questions are false */
@@ -558,7 +588,8 @@ function renderCFrame() {
 function showApp() {
     $("#maincontent").load('html/body.html #finderMain', function() {
         setUpEvents();
-        $('[data-toggle="tooltip"]').tooltip();
+        $('[data-toggle="tooltip"]').tooltip({ trigger : 'hover'});
+        
      });
 }
 $(document).ready(function() {

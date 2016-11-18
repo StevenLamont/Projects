@@ -33,7 +33,7 @@ legend { font-size: 1em; font-weight: bold; border-width: 0}
 #wizardSummary .headerRow {display: table; width: 100%;border: 1px solid #ccc; padding: 5px; background-color:#f5f5f5; color: black; border-radius: 5px; }
 #wizardSummary .headerRow h2 {margin: 10px 0px 5px 0px; padding: 0px; line-height: 33px; color: black;}
 .right {text-align: right;}
-#summarydetails li {list-style-type: disc; min-width: 50%; font-size: .9em;}
+#summarydetails li {list-style-type: disc; min-width: 50%; font-size: .9em; cursor: pointer}
 .tabresult .searchRecord:last-child {border-bottom: 0px !important;}
 #summarydetails ul {list-style-position: outside; margin: 0px; padding: 0px 0px;}
 #maincontent .searchRecord ul {list-style-position: outside; margin: 0px; padding: 0px 15px;}
@@ -107,6 +107,7 @@ a.safesidebar {
 @media (max-width: 768px) {
 	.smalllabel { display: inherit;}
 	.biglabel { display: none;}
+	.step label {display: inline;}
 	.nav-tabs > li { float: none; border: 1px solid #dddddd; } .nav-tabs > li.active { background: #eeeeee; } .nav-tabs > li.active > a { border: 1px solid transparent; } .nav > li > a:hover, .nav > li > a:focus, .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover, .nav-tabs > li.active > a:focus { background: none; border: 1px solid transparent; }
 }
 
