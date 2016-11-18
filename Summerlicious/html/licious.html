@@ -1,0 +1,113 @@
+<p>
+<script type="text/javascript">// <![CDATA[
+function toggleAS() {
+  if ($("#advancedSearch").css("display")=="none") {
+   $("#advancedSearch").css("display","block");$("#iconAS").removeClass("glyphicon-plus").attr("title","expand");$("#iconAS").addClass("glyphicon-minus").attr("title","collapse");
+  } else  {
+   $("#advancedSearch").css("display","none");$("#iconAS").removeClass("glyphicon-minus").attr("title","collapse");$("#iconAS").addClass("glyphicon-plus").attr("title","expand");
+  } 
+}
+// ]]></script>
+</p>
+<div id="detailModal" class="modal fade printable autoprint" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12"> 
+					<button type="button" title="Close" data-dismiss="modal" class="close detailClose modalbtn pull-right" ><span aria-hidden="true">&times;</span></button>     
+				   </div>
+ 				</div>
+				<div class="row">
+                <div class='col-xs-12 col-sm-12 col-md-12 contextTitle'>
+                    <h2 id="headerText">Summerlicious</h2>
+					<span class="addthis_toolbox text-right print-hidden">
+                    <a class="addthis_counter addthis_pill_style" title="Use this feature at your own discretion. Personal info you provide is not collected by the City of Toronto."></a>
+					</span>
+                </div>
+				</div>
+            </div>
+            <div id="modalBody" class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button id="detailClose" type="button" class="btn btn-default detailClose modalbtn" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>   
+</div>
+<div id="liciousContent">
+<div class="row"><a href="#" class="advancedSearch" role="link" tabindex="0" onclick="toggleAS();return false"><span id="iconAS" class="glyphicon glyphicon-plus"></span><span> Filters</span></a>
+<div style="display: none;" id="advancedSearch">
+            <div class="col-xs-12 col-md-12">            
+                <div id="search" class="input-group">
+                    <div class="has-feedback">
+                        <input class="form-control hasclear" id="searchString" type="text" placeholder="Keyword Search">
+                        <span class="glyphicon glyphicon-remove form-control-feedback clearer" ></span>                  
+                    </div>
+                
+                    <div class="input-group-btn" >
+                        <button id="searchBtn" title="Search" class="btn btn-info" type="button">   
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+                        </button>
+                    </div>   
+                </div>
+            </div>
+<div class="col-xs-12 col-sm-6">
+<div class="input-group"><label class="control-label input-group-addon" for="filterCuisine">Cuisine Type</label>
+	<select id="filterCuisine" class="form-control">
+	<option selected="selected">All Cuisines</option>
+	</select>
+</div>
+
+<div class="input-group"><label class="control-label input-group-addon" for="filterNeighbourhood">Neighbourhood</label>
+	<select id="filterNeighbourhood" class="form-control">
+	<option selected="selected">All Neighbourhoods</option>
+	</select>
+</div>
+<fieldset class="input-group">
+	<legend class="input-group-addon">Lunch Menu</legend><span class="form-control">
+	<input id="LunchPriceA" class="menupriceopt chkBox" type="checkbox" /> <label id="lblLunchPriceA" class="control-label" for="LunchPriceA">$18</label> 
+	<input id="LunchPriceB" class="menupriceopt chkBox" type="checkbox" /> <label id="lblLunchPriceB" class="control-label" for="LunchPriceB">$23</label> 
+	<input id="LunchPriceC" class="menupriceopt chkBox" type="checkbox" /> <label id="lblLunchPriceC" class="control-label" for="LunchPriceC">$28</label>
+	</span></fieldset>
+	<fieldset class="input-group">
+	<legend class="input-group-addon">Dinner Menu</legend><span class="form-control">
+	<input id="DinnerPriceA" class="menupriceopt chkBox"  type="checkbox" /> <label id="lblDinnerPriceA" class="control-label" for="DinnerPriceA">$28</label> 
+	<input id="DinnerPriceB" class="menupriceopt chkBox"  type="checkbox" /> <label id="lblDinnerPriceB" class="control-label" for="DinnerPriceB">$38</label> 
+	<input id="DinnerPriceC" class="menupriceopt chkBox" type="checkbox" /> <label id="lblDinnerPriceC" class="control-label" for="DinnerPriceC">$48</label> 
+	</span></fieldset>
+</div>
+<!-- /.col-lg-6 -->
+<div class="col-xs-12 col-sm-6">
+<div class="input-group"><span class="input-group-addon small"><input id="filterAccessible" class="chkBox" type="checkbox" /> </span><label class="form-control" for="filterAccessible">Accessible Restaurant</label></div>
+<!-- /input-group -->
+<div class="input-group"><span class="input-group-addon small"><input id="filterVeggie" class="chkBox" type="checkbox" /> </span> <label class="form-control" for="filterVeggie">Vegetarian Menu Available</label></div>
+<!-- /input-group -->
+<div class="input-group"><span class="input-group-addon small"><input id="filterVegan" class="chkBox"   type="checkbox" /> </span> <label class="form-control" for="filterVegan">Vegan Menu Available</label></div>
+<!-- /input-group -->
+<div class="input-group"><span class="input-group-addon small"><input id="filterLocal" class="chkBox"  type="checkbox" /> </span><label class="form-control" for="filterLocal">Locally Sourced Menu Available</label></div>
+<!-- /input-group --><!-- /.col-sm-6 --></div>
+<!-- /.row --></div>
+</div>
+<p style="text-align: center; padding-top: 5px;margin-bottom:5px;"><button id="resetFilters" class="btnbs btn-custom2" style="display: hidden;">Reset Filters</button></p>
+
+<div id="btnRow"class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6">
+        <div id="tabToggle" class="btn-group btn-toggle pageToggle hidden-print"> 
+            <button id="tabMap" title="Show map view" class="btn btn-primary pageToggleBtn active"> <span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Map View</button>
+            <button id="tabList" title="Show list view" class="btn btn-default pageToggleBtn"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;List View</button>
+            <button id="tabRev" title="Show todays reservations view" class="btn btn-default pageToggleBtn"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;Reservations</button>
+        </div>
+    </div>
+</div>
+
+<div align="center">
+    <div id="liciousmap" style="height: 470px;"></div>
+</div>
+<table id="liciouslisttable" class="licious" style="display:none"></table>
+<table id="reservationtable" class="licious" style="display:none"></table>
+</div>
+
+
+ 
+ 

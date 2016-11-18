@@ -1140,13 +1140,91 @@
 <section id="appDisplay"></section>
 
 <!--script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;libraries=places"></script-->
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3"></script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&client=gme-cityoftoronto"></script>
 <!--script type="text/javascript" src="js/licious.js"></script-->
-<script type="text/javascript" src="js/licious_All.js"></script>
+<script type="text/javascript" src="js/licious.js"></script>
 <script>
 var gblLiciousConfig = {};
-	gblLiciousConfig.StartTab="listMap"; //value: tabMap or listMap
-	gblLiciousConfig.season = 'Summerlicious';
+	gblLiciousConfig.StartTab="tabMap"; //value: tabMap or listMap
+	gblLiciousConfig.season = 'Winterlicious';
+	gblLiciousConfig.showReservationTab = true;	  /* true | false */
+	gblLiciousConfig.restaurantURL = 'http://was-inter-qa.toronto.ca/cc_sr_v1_app/data/WinterRestaurantListJsonItemsStage1/0?callback=jsonRestaurantsCallBack';
+	//gblLiciousConfig.restaurantURL = 'http://was-inter-qa.toronto.ca/cc_sr_v1_app/data/WinterRestaurantListJsonItemsStg?callback=jsonRestaurantsCallBack';
+	gblLiciousConfig.reservationURL = 'http://was-inter-qa.toronto.ca/cc_sr_v1_app/data/RestaurantReservationListJSONstage/0?callback=jsonReservationsCallBack';
+	gblLiciousConfig.lunchPriceA = '$18',
+	gblLiciousConfig.lunchPriceB = '$23',
+	gblLiciousConfig.lunchPriceC = '$28',
+	gblLiciousConfig.dinnerPriceA = '$28',
+	gblLiciousConfig.dinnerPriceB = '$38',
+	gblLiciousConfig.dinnerPriceC = '$48',
+	gblLiciousConfig.neighbourhoods = 
+["Annex",
+"Danforth/Greektown",
+"Downtown",
+"East Toronto",
+"Entertainment District",
+"Financial District",
+"Liberty Village",
+"Little Italy",
+"Midtown",
+"North Toronto",
+"Old Town",
+"West Toronto",
+"Yorkville"],
+	gblLiciousConfig.cuisines = 
+["American",
+"Asian",
+"Beer Cuisine",
+"Bistro",
+"Brazilian",
+"British",
+"Cajun/Creole",
+"Californian",
+"Canadian",
+"Caribbean",
+"Chinese",
+"Comfort Food",
+"Contemporary",
+"Contemporary",
+"Continental",
+"Cuban",
+"Eastern European",
+"European",
+"Filipino",
+"French",
+"Fusion",
+"Gastro Pub",
+"German",
+"Greek",
+"Indian",
+"Indonesian",
+"International",
+"Iranian",
+"Israeli",
+"Italian",
+"Japanese",
+"Jewish",
+"Korean",
+"Malaysian",
+"Mediterranean",
+"Mexican",
+"Middle Eastern",
+"Moroccan",
+"Nuevo Latino",
+"Portuguese",
+"Pub Fare",
+"Seafood",
+"Smokehouse",
+"Soul",
+"South East Asian",
+"Southern",
+"Spanish",
+"Steakhouse",
+"Tapas",
+"Thai",
+"Ukrainian",
+"Vegan"]
+	
 </script>
 </div> <!-- media-body -->
 </article> <!-- end article -->
