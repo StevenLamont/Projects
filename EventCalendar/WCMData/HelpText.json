@@ -36,7 +36,7 @@ angularcallbacks7({
 		"locReminder" : "",		
 		"locationName" :"",
 		"address" : "",
-		"displayAddress" : "If you'd like your location to be displayed to the public with different or more details than a street address, click the check box and type in your display address. Once selected the address field will only be use to map your location. It will not be displayed.",
+		"displayAddress" : "If you'd like your location to be displayed to the public with different or more details than a street address, click the check box and type in your display address. Once selected the address field will only be used to map your location. It will not be displayed.",
 		"mapInstructions" : "Using standard Google map drawing tools, you can <b>ADD</b> new locations. Add map markers, polylines or polygon areas to the map. Once the shape is added, type in your venue/location name and display address in the fields above. You can also click on an existing map marker or shape and move it as desired, but be aware that the address field will also change.",
 		"freeEvent" : "",
 		"cost": "",

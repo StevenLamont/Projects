@@ -43,11 +43,11 @@
 */
     var API_PATH = "cc_sr_admin_v1";
     //localhost
-    //var API_HOST = "https://was-inter-qa.toronto.ca";
+    var API_HOST = "https://was-inter-qa.toronto.ca";
     //API_HOST = "https://was8-inter-dev.toronto.ca";
-    var API_HOST = "https://was8-intra-dev.toronto.ca";
-    var APP_REPO = "dev_eventcal"; // this is really EventType
-    var APP_NAME = "dev_eventcal"; // this is really EventType
+    //var API_HOST = "https://was8-intra-dev.toronto.ca";
+    var APP_REPO = "edc_eventcal"; // this is really EventType
+    var APP_NAME = "edc_eventcal"; // this is really EventType
     //normal
     //var API_HOST = ""; 
     //var APP_REPO = "edc_eventcal"; // this is really EventType
@@ -1113,16 +1113,20 @@
     }
     
     /* not used */
-    function sanatizeObject(obj) {
-        console.log(obj && obj.constructor);
+	//locations is an array object(it's an object with obj.constructor of Array())
+	// each array item is also an object, the array item has a key of 0,1,2, etc.
+    function sanitizeObject(obj) {
+        console.log("Start",obj && obj.constructor);
         for (var key in obj) {
             console.log(key, typeof obj[key]  );
-            if (vm.event[key] !== null && typeof obj[key] !== 'object') {
-                console.log(obj[key], $sanitize(obj[key]),obj[key] &&  obj[key].constructor);
+			if (obj[key] !== null && typeof obj[key] === 'array') {
+				console.log(obj[key].length); // this doesn't really do anything except note the array loop
+			} else if (obj[key] !== null && typeof obj[key] === 'object' ) {
+				sanitizeObject(obj[key]);
+			} else {
+            
+                console.log("BEFORE:" +obj[key], "AFTER:" + $sanitize(obj[key]),obj[key] &&  obj[key].constructor);
                 obj[key] = $sanitize(obj[key]);
-            } else {
-                
-                sanatizeObject(vm.event[key]);
             }
         }
     }
@@ -1133,6 +1137,9 @@
     
         setCalculatedFields();
 
+		//var test = angular.copy(vm.event);
+		//sanatizeObject(test);
+		//var calEvent = { 'calEvent' : test };
         var calEvent = { 'calEvent' : vm.event };
         if (vm.newImageInUse) {
             var canvas = angular.element( document.querySelector( 'canvas' ) )[0];  
@@ -1165,12 +1172,13 @@
         if ($scope.ecForm.$invalid) {
             saveState();
             focusError();
-            if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','1','WT.conv_type','Submission Validation Failed');
+            if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','2','WT.conv_type','Submission Validation Failed');
             return; 
         }
 
         setCalculatedFields();
         vm.progressbar.start();
+		//vm.event.eventType = 'spam';
         var jsonData = { 'calEvent' : vm.event};
         
         /* in the end, the user will not be able to edit the data after submitting, so updating the recId is not useful
@@ -1852,6 +1860,7 @@
     
 	/* if the field is in error, then value is undefined */
     function sanitize(objName) {
+		
         var objProps = objName.split('.');
         if (objProps.length == 1) {
             if (vm[objProps[0]])  vm[objProps[0]] = $sanitize(vm[objProps[0]]);
@@ -1865,7 +1874,7 @@
             if (vm[objProps[0]][objProps[1]][objProps[2]][objProps[3]]) vm[objProps[0]][objProps[1]][objProps[2]][objProps[3]] = $sanitize(vm[objProps[0]][objProps[1]][objProps[2]][objProps[3]]);
         
         }
-
+		
     }
     
     /* This function is here for testing purposes */
@@ -1882,7 +1891,7 @@
     //If internet app we need to remove _admin check "inter" in 
     function getApiHostPath() {
         var ret = getApiHost();
-        if (ret.indexOf("inter") > -1 ||  window.location.host === "secure.toronto.ca") {
+        if (ret.indexOf("inter") > -1 ||  window.location.host.toLowerCase() === "secure.toronto.ca") {
             ret += "/" + API_PATH.replace("_admin","");
         } else {
             ret += "/" + API_PATH;

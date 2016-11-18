@@ -151,7 +151,7 @@
         }
         
         function checkURL(url) {
-            if (url.indexOf("inter") > -1 ||  window.location.host === "secure.toronto.ca") {
+            if (url.indexOf("inter") > -1 ||  window.location.host.toLowerCase() === "secure.toronto.ca") {
                 return url.replace("_admin","");
             } else {
                 return url;

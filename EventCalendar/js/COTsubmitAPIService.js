@@ -14,8 +14,8 @@
     
 	var currentHost = $location.protocol() + "://" + $location.host() + ":" + $location.port();
 	if ($location.host() === "localhost")  {
-		//currentHost = "https://was-inter-qa.toronto.ca";
-		currentHost = "https://was8-inter-dev.toronto.ca";
+		currentHost = "https://was-inter-qa.toronto.ca";
+		//currentHost = "https://was8-inter-dev.toronto.ca";
 	}
 	var adminHost = currentHost.replace("inter","intra");
 	console.log(currentHost, adminHost);
