@@ -155,9 +155,10 @@ function goToStep(stepId){
 
 }
 
-function addGotoStep(stepid) {
+function addGotoStep(stepid, text) {
 
-    return "<a class='pull-right' data-stepid='" + stepid + "' href=''><span class='sr-only'>change</span><i title='change' class='glyphicon glyphicon-pencil'></i></a>";
+    var stepText = "Change " + (text ? text.toLowerCase() : "") + " response";
+    return "<a class='pull-right' data-stepid='" + stepid + "' href=''><span class='sr-only'>" + stepText + "</span><i title='" + stepText + "' class='glyphicon glyphicon-pencil' aria-hidden='true'></i></a>";
 
 }
 
@@ -179,7 +180,7 @@ function finishStep() {
     sHTML += ($("#torontoresident:checked").length>0) ? "<li><span class='label'>Toronto Resident</span>: Yes" : "";
     sHTML += ($("#nottorontoresident:checked").length>0) ?"<li><span class='label'>Toronto Resident</span>: No" : "";
     sHTML += ($("#torontoresident:checked").length===0 && $("#nottorontoresident:checked").length===0) ?"<li class='unspecified'><span class='label'>Toronto Resident</span>: Unspecified" : "";
-    sHTML += addGotoStep(currentStep) + "</li>" ;
+    sHTML += addGotoStep(currentStep, 'Toronto Resident') + "</li>" ;
     
     //AGE GROUP
     currentStep = 2;
@@ -189,7 +190,7 @@ function finishStep() {
     } else {
         sHTML += "<li class='unspecified'><span class='label'>Age</span>: Unspecified";
     }
-    sHTML += addGotoStep(currentStep) + "</li>" ;
+    sHTML += addGotoStep(currentStep, 'Age') + "</li>" ;
     
      
     //FINANCIAL NEED
@@ -198,16 +199,16 @@ function finishStep() {
     sHTML += ($("#financialneedno:checked").length>0) ? "<li><span class='label'>In Financial Need</span>: No" : "";
     sHTML += ($("#financialneeddontknow:checked").length>0) ? "<li><span class='label'>In Financial Need</span>: Not Sure" : "";
     sHTML += ($("#financialneeddontknow:checked").length===0 && $("#financialneedno:checked").length===0 && $("#financialneedyes:checked").length===0) ? "<li class='unspecified'><span class='label'>In Financial Need</span>: Unspecified" : "";
-    sHTML += addGotoStep(currentStep) + "</li>" ;
+    sHTML += addGotoStep(currentStep,'Financial Need') + "</li>" ;
     //SUBSIDY STATUS
     //if ($("#ow:checked").length>0) {
     //    questions["OW"] = true;
     //}
-    sHTML += ($("#ow:checked").length>0) ? "<li><span class='label'>Recipient of</span>: Ontario Works" + addGotoStep(currentStep) + "</li>" :"";
-    sHTML += ($("#odsp:checked").length>0) ? "<li><span class='label'>Recipient of</span>: Ontario Disability Support Program" + addGotoStep(currentStep) + "</li>" :"";
-    sHTML += ($("#tch:checked").length>0) ? "<li><span class='label'>Recipient of</span>: Subsidized Housing/Rent Subsidy" + addGotoStep(currentStep) + "</li>" :"";
+    sHTML += ($("#ow:checked").length>0) ? "<li><span class='label'>Recipient of</span>: Ontario Works" + addGotoStep(currentStep, 'Ontario Works') + "</li>" :"";
+    sHTML += ($("#odsp:checked").length>0) ? "<li><span class='label'>Recipient of</span>: Ontario Disability Support Program" + addGotoStep(currentStep, 'Ontario Disability Support Program') + "</li>" :"";
+    sHTML += ($("#tch:checked").length>0) ? "<li><span class='label'>Recipient of</span>: Subsidized Housing/Rent Subsidy" + addGotoStep(currentStep,'Subsidized Housing/Rent Subsidy') + "</li>" :"";
     if ($("#step3b").find("input:checked").length === 0 || $("#finNone:checked").length > 0) {
-        sHTML += "<li class='noselection'><span class='label'>Financial Need Recipient</span>: No Selections" + addGotoStep(currentStep) + "</li>";
+        sHTML += "<li class='noselection'><span class='label'>Financial Need Recipient</span>: No Selections" + addGotoStep(currentStep, 'Financial Need Recipient') + "</li>";
     }    
     /* Special processing -- manually set NOT ODSP */
     if ($("#odsp:checked").length === 0) {
@@ -224,21 +225,21 @@ function finishStep() {
     
     /* special question processing. This is a one-time special occurrence */
     if (arrTemp.length > 0) {
-        sHTML += "<li><span class='label'>Children's Ages</span>: " + arrTemp.join(", ") + addGotoStep(currentStep)  + "</li>";
+        sHTML += "<li><span class='label'>Children's Ages</span>: " + arrTemp.join(", ") + addGotoStep(currentStep,"Children Ages")  + "</li>";
         questions["Has Children"] = true;   
     } else {
-        sHTML += "<li class='noselection'><span class='label'>Children's Ages</span>: No Selections" + addGotoStep(currentStep)  + "</li>";
+        sHTML += "<li class='noselection'><span class='label'>Children's Ages</span>: No Selections" + addGotoStep(currentStep,"Children Ages")  + "</li>";
     }
     
     
     //EMPLOYMENT STATUS
     currentStep = 5;
 
-    sHTML += ($("#lookingforwork:checked").length > 0) ? "<li><span class='label'>Employment Status</span>: " + $("#lookingforwork:checked").val()  + addGotoStep(currentStep) + "</li>": "";
-    sHTML += ($("#lookingtoupgrade:checked").length > 0) ? "<li><span class='label'>Employment Status</span>: " + $("#lookingtoupgrade:checked").val() + addGotoStep(currentStep) + "</li>" : "";
-    sHTML += ($("#eiNone:checked").length > 0) ? "<li class='noselection'><span class='label'>Employment Status</span>: No Selections" + addGotoStep(currentStep) + "</li>" : "";
+    sHTML += ($("#lookingforwork:checked").length > 0) ? "<li><span class='label'>Employment Status</span>: " + $("#lookingforwork:checked").val()  + addGotoStep(currentStep, $("#lookingforwork:checked").val()) + "</li>": "";
+    sHTML += ($("#lookingtoupgrade:checked").length > 0) ? "<li><span class='label'>Employment Status</span>: " + $("#lookingtoupgrade:checked").val() + addGotoStep(currentStep, $("#lookingforwork:checked").val()) + "</li>" : "";
+    sHTML += ($("#eiNone:checked").length > 0) ? "<li class='noselection'><span class='label'>Employment Status</span>: No Selections" + addGotoStep(currentStep,"Employment Status") + "</li>" : "";
     if ($("#step5").find("input:checked").length === 0) {
-        sHTML += "<li class='noselection'><span class='label'>Employment Status</span>: No Selections" + addGotoStep(currentStep) + "</li>";
+        sHTML += "<li class='noselection'><span class='label'>Employment Status</span>: No Selections" + addGotoStep(currentStep,"Employment Status") + "</li>";
     }
 
         
@@ -249,44 +250,44 @@ function finishStep() {
     } else {
         sHTML += "<li class='unspecified'><span class='label'>Housing Status</span>: Unspecified"; 
     }
-    sHTML += addGotoStep(currentStep) + "</li>" ;
+    sHTML += addGotoStep(currentStep, "Housing Status") + "</li>" ;
     
-    sHTML += ($("#riskofeviction:checked").length > 0) ? "<li><span class='label'>Housing Status Other</span>: " + $("#riskofeviction:checked").val() +  addGotoStep(currentStep) + "</li>": "";
-    sHTML += ($("#needsubsidizedhousing:checked").length > 0) ? "<li><span class='label'>Housing Status Other</span>: " + $("#needsubsidizedhousing:checked").val() +  addGotoStep(currentStep) + "</li>": "";
-    sHTML += ($("#lookingforhousing:checked").length > 0) ? "<li><span class='label'>Housing Status Other</span>: " + $("#lookingforhousing:checked").val() +  addGotoStep(currentStep) + "</li>": "";
-    sHTML += ($("#needlandlordhelp:checked").length > 0) ? "<li><span class='label'>Housing Status Other</span>: " + $("#needlandlordhelp:checked").val() +  addGotoStep(currentStep) + "</li>": "";
+    sHTML += ($("#riskofeviction:checked").length > 0) ? "<li><span class='label'>Housing Status Other</span>: " + $("#riskofeviction:checked").val() +  addGotoStep(currentStep,$("#riskofeviction:checked").val()) + "</li>": "";
+    sHTML += ($("#needsubsidizedhousing:checked").length > 0) ? "<li><span class='label'>Housing Status Other</span>: " + $("#needsubsidizedhousing:checked").val() +  addGotoStep(currentStep,$("#needsubsidizedhousing:checked").val()) + "</li>": "";
+    sHTML += ($("#lookingforhousing:checked").length > 0) ? "<li><span class='label'>Housing Status Other</span>: " + $("#lookingforhousing:checked").val() +  addGotoStep(currentStep,$("#lookingforhousing:checked").val()) + "</li>": "";
+    sHTML += ($("#needlandlordhelp:checked").length > 0) ? "<li><span class='label'>Housing Status Other</span>: " + $("#needlandlordhelp:checked").val() +  addGotoStep(currentStep,$("#needlandlordhelp:checked").val()) + "</li>": "";
     
     if ($("#step6b").find("input:checked").length === 0 || ($("#hsNone:checked").length > 0)) {
-        sHTML += "<li class='noselection'><span class='label'>Housing Status Other</span>: No Selections" + addGotoStep(currentStep) + "</li>";
+        sHTML += "<li class='noselection'><span class='label'>Housing Status Other</span>: No Selections" + addGotoStep(currentStep,"Housing Status Other") + "</li>";
     }
     
     
     //Health and Safetly Info
     currentStep = 7;
     var financialCnt = 0;
-    if ($("#medicalordental:checked").length > 0) {financialCnt++; sHTML += "<li><span class='label'>Health and Home Need</span>: Medical/Dental" + addGotoStep(currentStep) + "</li>";}
-    if ($("#homesafety:checked").length > 0) {financialCnt++; sHTML += "<li><span class='label'>Health and Home Need</span>: Home Safety" + addGotoStep(currentStep) + "</li>";}
-    if ($("#homeutilities:checked").length > 0) {financialCnt++; sHTML += "<li><span class='label'>Health and Home Need</span>: Home Safety" + addGotoStep(currentStep) + "</li>";}
+    if ($("#medicalordental:checked").length > 0) {financialCnt++; sHTML += "<li><span class='label'>Health and Home Need</span>: Medical/Dental" + addGotoStep(currentStep, "Medical/Dental need") + "</li>";}
+    if ($("#homesafety:checked").length > 0) {financialCnt++; sHTML += "<li><span class='label'>Health and Home Need</span>: Home safety" + addGotoStep(currentStep, "home safety need") + "</li>";}
+    if ($("#homeutilities:checked").length > 0) {financialCnt++; sHTML += "<li><span class='label'>Health and Home Need</span>: Home utilities" + addGotoStep(currentStep, "home utilities need") + "</li>";}
     if (financialCnt === 0 ) {
-        sHTML += "<li class='noselection'><span class='label'>Health and Home Need</span>: No Selections" + addGotoStep(currentStep) + "</li>";
+        sHTML += "<li class='noselection'><span class='label'>Health and Home Need</span>: No Selections" + addGotoStep(currentStep,"Health and Home Need") + "</li>";
     }    
     
     
     //DISABILITY STATUS
     currentStep = 8;
     var disabilityCnt = 0;
-    if ($("#specialneedsYes:checked").length > 0) {disabilityCnt++; sHTML += "<li><span class='label'>Disability or Special Needs</span>: Yes" + addGotoStep(currentStep) + "</li>";}
-    if ($("#specialneedsNo:checked").length > 0) {disabilityCnt++; sHTML += "<li><span class='label'>Disability or Special Needs</span>: No" + addGotoStep(currentStep) + "</li>";}
+    if ($("#specialneedsYes:checked").length > 0) {disabilityCnt++; sHTML += "<li><span class='label'>Disability or Special Needs</span>: Yes" + addGotoStep(currentStep,"Disability or Special Needs") + "</li>";}
+    if ($("#specialneedsNo:checked").length > 0) {disabilityCnt++; sHTML += "<li><span class='label'>Disability or Special Needs</span>: No" + addGotoStep(currentStep,"Disability or Special Needs") + "</li>";}
     if (disabilityCnt === 0) {
-        sHTML += "<li class='noselection'><span class='label'>Disability or Special Need</span>: No Selections" + addGotoStep(currentStep) + "</li>";
+        sHTML += "<li class='noselection'><span class='label'>Disability or Special Need</span>: No Selections" + addGotoStep(currentStep,"Disability or Special Needs") + "</li>";
     }    
     //OTHER
     currentStep = 9;
     var otherCnt = 0;
-    if ($("#incarcerated:checked").length > 0) {otherCnt++; sHTML += "<li>About to be or recently released from prison" + addGotoStep(currentStep) + "</li>";}
-    if ($("#funeral:checked").length > 0) {otherCnt++; sHTML += "<li>In need of help to pay for funeral" + addGotoStep(currentStep) + "</li>";}
+    if ($("#incarcerated:checked").length > 0) {otherCnt++; sHTML += "<li><span class='label'>Other Information</span>: Released from prison" + addGotoStep(currentStep,"recently released from prison") + "</li>";}
+    if ($("#funeral:checked").length > 0) {otherCnt++; sHTML += "<li><span class='label'>Other Information</span>: Need help to pay for funeral" + addGotoStep(currentStep, "pay for funeral") + "</li>";}
     if (otherCnt === 0) {
-        sHTML += "<li class='noselection'><span class='label'>Other Information</span>: No Selections" + addGotoStep(currentStep) + "</li>";
+        sHTML += "<li class='noselection'><span class='label'>Other Information</span>: No Selections" + addGotoStep(currentStep,"Other Information") + "</li>";
     }
     //Add Summary
     sHTML += "</ul>";
@@ -314,7 +315,7 @@ function updateProgressBar() {
     var percent = Math.round((currentStep/totalStep) * 100);
     $("#stepprogress").css('width', percent + '%');
     $("#stepprogress").attr('aria-valuenow', percent);
-    console.log(Math.max(document.documentElement.clientWidth, window.innerWidth || 0));
+    //console.log(Math.max(document.documentElement.clientWidth, window.innerWidth || 0));
     if (Math.max(document.documentElement.clientWidth, window.innerWidth || 0) < 480) { 
 
         if (currentStep > 2) {
@@ -327,7 +328,9 @@ function updateProgressBar() {
     } else {
         $("#stepprogress").html("Step " + currentStep + " of " + totalStep);
     }
-    $('#wizard :input:enabled:visible:first').focus();
+    //$('#wizard :input:enabled:visible:first').focus();
+    $('#wizardTitle').attr("tabindex",-1).focus();
+    $('#stepprogress').attr("aria-valuetext", $("#stepprogress").html());
     
 }
 
@@ -428,6 +431,7 @@ function showBaseline() {
     var x = $("#hsi_tabs")[0].getBoundingClientRect();
     var eleWidth = $("#gotoTop").width();
     $("#gotoTop").css("left", x.left + x.width - eleWidth);
+    $('#wizardSummaryTitle').attr("tabindex",-1).focus();
     
 }
 
@@ -517,6 +521,7 @@ function setUpEvents() {
     
     $("#gotoTop").on("click", function(event) {
         window.scrollTo(0, $("#hsi_tabs").offset().top);
+        //$("#hsi_tabs li.active")[0].focus();
         event.preventDefault();
     });
     
@@ -532,7 +537,7 @@ function setUpEvents() {
         if (me.prop('checked')) {
             $.each(me.parent().parent().find(':input:checked'), function(i, item) {
                 if (item.id !== me[0].id) {
-                    console.log(item.id, me.id);
+                    //console.log(item.id, me.id);
                     $(item).prop('checked', false);
                 }
             });
@@ -546,6 +551,12 @@ function setUpEvents() {
             });
         }
     }); 
+    
+    /* bootstrap should be doing this.. but isn't */
+    $("#hsi_tabs li a").on("click", function(event) {
+        $("#hsi_tabs li a").attr("aria-selected",false);
+        $(event.target).attr("aria-selected",true);
+    });
     
 }
 
@@ -588,7 +599,7 @@ function renderCFrame() {
 function showApp() {
     $("#maincontent").load('html/body.html #finderMain', function() {
         setUpEvents();
-        $('[data-toggle="tooltip"]').tooltip({ trigger : 'hover'});
+        $('[data-toggle="tooltip"]').tooltip({ trigger : 'hover focus'});
         
      });
 }

@@ -63,7 +63,7 @@ h2 {margin-bottom: 0px !important;}
 #hsi_tabs .nav-tabs li a:hover {background-color: #398439 !important; border-color: #398439; color: white;}
  .tabresult {border-top: solid 1px #398439; margin: 0px;}
  section.tabresult {display:none;}
- section.tabresult.in {display:block;}
+ section.tabresult.active {display:block;}
  #hsi_tabs {margin-bottom: 50px;}
  .searchHeader .searchreset {text-align:right; padding-right: 27px;}
  .subsidyicon {font-size: 2.5em; color: gold; margin-top: 10px;}
