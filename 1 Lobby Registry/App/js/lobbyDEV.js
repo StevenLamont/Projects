@@ -22,7 +22,7 @@ var listGUID;
 //Make sure to check css.
 var gblAllowEnvSwitch = true;
 //var APP_ENV = "http://was-inter-qa.toronto.ca";
-var APP_ENV = "http://was8-inter-dev.toronto.ca";
+var APP_ENV = "//was8-inter-dev.toronto.ca";
 
 var SM_DETAIL_DATA_URL = "/LobbyistRegistryRestWeb/disclosure/subjectMatterDetails?callback=?&subjectMatterId=<SMID>";
 var LR_DETAIL_DATA_URL = "/LobbyistRegistryRestWeb/disclosure/lobbyistDetails?callback=?&lobbyistRegistrationId=<LRID>";

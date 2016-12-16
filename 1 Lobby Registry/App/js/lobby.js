@@ -21,8 +21,8 @@ var LS_KEY_APP_ENV = "LobbyistEnvironment";
 var listGUID;
 //Make sure to check css.
 var gblAllowEnvSwitch = false;
-var APP_ENV = "http://was-inter-qa.toronto.ca";
-//var APP_ENV = "http://was8-inter-dev.toronto.ca";
+var APP_ENV = "//was-inter-qa.toronto.ca";
+//var APP_ENV = "//was8-inter-dev.toronto.ca";
 
 var SM_DETAIL_DATA_URL = "/LobbyistRegistryRestWeb/disclosure/subjectMatterDetails?callback=?&subjectMatterId=<SMID>";
 var LR_DETAIL_DATA_URL = "/LobbyistRegistryRestWeb/disclosure/lobbyistDetails?callback=?&lobbyistRegistrationId=<LRID>";
@@ -441,6 +441,7 @@ function showDetail(type, number, id) {
     href += (srchStr.val() !== "" ? "&searchStr=" + srchStr.val() :"");
 
     window.location.href = href;
+	//window.open(  href, '_blank');
     return false; //to cancel the link
 }
 
@@ -1834,7 +1835,7 @@ function loadListing() {
         strCode += '<script type="text/javascript" src="js/placeholders.jquery.js"></script>';
         strCode += '<script type="text/javascript"  src="js/bootbox.min.js"></script>';
         //strCode += '<script type="text/javascript" src="/placeholders/placeholders.min.js"></script>';
-        strCode += '<script type="text/javascript"  src="static_files/assets/pdfmake/pdfmake.min.js"></script>';
+        strCode += '<script type="text/javascript"  src="static_files/assets/pdfmake/pdfmake.js"></script>';
         strCode += '<script type="text/javascript"  src="static_files/assets/pdfmake/vfs_fonts.js"></script>';
         $("#appCode").html(strCode);
         $("#appDisplay").load('html/lobbyListing.html', function() {initApp();});
@@ -1843,19 +1844,20 @@ function loadListing() {
         strCode += '<link rel="stylesheet" href="/static_files/assets/multiselect/bootstrap-multiselect.css">';
         strCode += '<link rel="stylesheet" href="/tablesorter/css/theme.blue.css">';
         strCode += '<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">';
-        strCode += '<link rel="stylesheet" href="/City%20Of%20Toronto/Sandbox/Steve/LobbyRegistry3/css/lobbySearch.css">';
+        strCode += '<link rel="stylesheet" href="/static_files/WebApps/Lobbyist%20Disclosure/css/lobbySearch.css">';
         strCode += '<script type="text/javascript" src="/static_files/assets/multiselect/bootstrap-multiselect.js"></script>';
         strCode += '<script type="text/javascript" src="/datepicker/bootstrap-datepicker.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/datepicker/moment-with-locales.js"></script>';
-        strCode += '<script type="text/javascript" src="/City%20Of%20Toronto/Sandbox/Steve/LobbyRegistry2/js/typeahead.bundle.js"></script>';
-        strCode += '<script type="text/javascript" src="/City%20Of%20Toronto/Sandbox/Steve/LobbyRegistry2/js/jquery.bootpag.min.js"></script>';
+        strCode += '<script type="text/javascript" src="/static_files/assets/js/typeahead.bundle.min.js"></script>';
+        strCode += '<script type="text/javascript" src="/static_files/assets/pagination/jquery.bootpag.min.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/bootbox/bootbox.min.js"></script>';
-        strCode += '<script type="text/javascript" src="/static_files/assets/placeholders/jquery.placeholder.min.js"></script>';
-        strCode += '<script type="text/javascript"  src="/static_files/assets/pdfmake/pdfmake.min.js"></script>';
-        strCode += '<script type="text/javascript"  src="/static_files/assets/pdfmake/vfs_fonts.js"></script>';
+        strCode += '<script type="text/javascript" src="/static_files/assets/placeholders/placeholders.jquery.min.js"></script>';
+//*----        strCode += '<script type="text/javascript"  src="/static_files/assets/pdfmake/pdfmake.min.js"></script>';
+        strCode += '<script type="text/javascript"  src="/static_files/assets/pdfmake/0.1.31/pdfmake.min.js"></script>';
+        strCode += '<script type="text/javascript"  src="/static_files/assets/pdfmake/0.1.31/vfs_fonts.js"></script>';
 
         $("#appCode").html(strCode);
-        $("#appDisplay").load('/City%20Of%20Toronto/Sandbox/Steve/LobbyRegistry3/html/lobbyListing.html', function() {initApp();});
+        $("#appDisplay").load('/static_files/WebApps/Lobbyist%20Disclosure/html/lobbyListing.html', function() {initApp();});
     }
 }
 
@@ -1876,9 +1878,6 @@ function loadDetail(jsonData, SMId, LRId, searchStr) {
         //strCode += '<script type="text/javascript" src="/placeholders/placeholders.min.js"></script>';
         strCode += '<script type="text/javascript"  src="js/bootbox.min.js"></script>';
         strCode += '<script type="text/javascript" src="js/placeholders.jquery.js"></script>';
-        strCode += '<script type="text/javascript"  src="static_files/assets/pdfmake/pdfmake.min.js"></script>';
-        strCode += '<script type="text/javascript"  src="static_files/assets/pdfmake/vfs_fonts.js"></script>';
-
 
         $("#appCode").html(strCode);
         $("#appDisplay").load('html/SMDetail.html', function() {fillDetails(jsonData, SMId, LRId, searchStr);});
@@ -1887,18 +1886,18 @@ function loadDetail(jsonData, SMId, LRId, searchStr) {
         strCode += '<link rel="stylesheet" href="/static_files/assets/multiselect/bootstrap-multiselect.css">';
         strCode += '<link rel="stylesheet" href="/tablesorter/css/theme.blue.css">';
         strCode += '<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css">';
-        strCode += '<link rel="stylesheet" href="/City%20Of%20Toronto/Sandbox/Steve/LobbyRegistry3/css/SMDetail.css">';
+        strCode += '<link rel="stylesheet" href="/static_files/WebApps/Lobbyist%20Disclosure/css/SMDetail.css">';
         strCode += '<script type="text/javascript" src="/static_files/assets/multiselect/bootstrap-multiselect.js"></script>';
         strCode += '<script type="text/javascript" src="/datepicker/bootstrap-datepicker.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/datepicker/moment-with-locales.js"></script>';
-        strCode += '<script type="text/javascript" src="/City%20Of%20Toronto/Sandbox/Steve/LobbyRegistry2/js/typeahead.bundle.js"></script>';
-        strCode += '<script type="text/javascript" src="/City%20Of%20Toronto/Sandbox/Steve/LobbyRegistry2/js/jquery.bootpag.min.js"></script>';
-        strCode += '<script type="text/javascript" src="/static_files/assets/highlights/jquery.jmHighlight.min.js"></script>';
+        strCode += '<script type="text/javascript" src="/static_files/assets/js/typeahead.bundle.min.js"></script>';
+        strCode += '<script type="text/javascript" src="/static_files/assets/pagination/jquery.bootpag.min.js"></script>';
+        strCode += '<script type="text/javascript" src="/static_files/assets/highlight/jquery.jmHighlight.min.js"></script>';
         strCode += '<script type="text/javascript" src="/static_files/assets/bootbox/bootbox.min.js"></script>';
-        strCode += '<script type="text/javascript" src="/static_files/assets/placeholders/jquery.placeholder.min.js"></script>';
+        strCode += '<script type="text/javascript" src="/static_files/assets/placeholders/placeholders.jquery.min.js"></script>';
 
         $("#appCode").html(strCode);
-        $("#appDisplay").load('/City%20Of%20Toronto/Sandbox/Steve/LobbyRegistry3/html/SMDetail.html', function() {fillDetails(jsonData, SMId, LRId, searchStr);});
+        $("#appDisplay").load('/static_files/WebApps/Lobbyist%20Disclosure/html/SMDetail.html', function() {fillDetails(jsonData, SMId, LRId, searchStr);});
 
     }
 }
