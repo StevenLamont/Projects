@@ -390,7 +390,8 @@ cot_form.prototype.multiselectFieldRender = function(field) {
 	var o = document.createElement('div');
 	o.className = 'entryField';
 	var oField = o.appendChild(document.createElement('select'));
-	oField.name = oField.id;// = field.id;
+	//oField.name = oField.id;// = field.id;
+	oField.name = oField.id = (field.grid||"") ? field.id + '1' : field.id;	
 	oField.className = 'form-control hide multiselect ' + field.id;
 	oField.multiple = (field.multiple||"")? 'multiple' : '';
 	$.each(field.choices, function(m, choice) {
@@ -399,6 +400,7 @@ cot_form.prototype.multiselectFieldRender = function(field) {
 		oOption.text = choice.text;
 	});
 	oField.disabled = (field.disabled||"")?"disabled": false;
+	//console.log(o);
 	return o;
 }			
 cot_form.prototype.datetimepickerFieldRender = function(field) {

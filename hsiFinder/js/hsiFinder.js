@@ -580,8 +580,9 @@ function loadData() {
                 timeout: 500,
                 crossDomain: true, 
                 dataType: 'jsonp',
-                success : function(data) {
+                success : function(data) {				
                     gblJSONData = data.sort(dynamicSort("","title"));
+					if (typeof dcsMultiTrack !== 'undefined') dcsMultiTrack('WT.dl','31','WT.ti','','WT.conv','','WT.conv_type','','WT.cc_api','Data-access');
                 },
                 error: function (jqXHR, exception) {
                     appAlert("Application Error","We apologize but this application is not functioning properly. Please check again at a later date");
