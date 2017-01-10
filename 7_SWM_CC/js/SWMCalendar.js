@@ -14,8 +14,7 @@ var GCC_SWM_CAL_LU_API = "<HOST>/3/query?where=&text=&objectIds=&time=&geometry=
 //var GCC_SWM_CAL_LU_API = "http://gis.toronto.ca/arcgis/rest/services/primary/cot_geospatial21_mtm/MapServer/3/query?where=&text=&objectIds=&time=&geometry=<LNG>%2C<LAT>&geometryType=esriGeometryPoint&inSR=4326&spatialRel=esriSpatialRelWithin&relationParam=&outFields=AREA_ID%2CAREA_ATTR_ID%2CPARENT_AREA_ID%2CAREA_SHORT_CODE%2CAREA_NAME%2CAREA_DESC&returnGeometry=false&maxAllowableOffset=&geometryPrecision=&outSR=3857&returnIdsOnly=false&returnCountOnly=false&orderByFields=&groupByFieldsForStatistics=&outStatistics=&returnZ=false&returnM=false&gdbVersion=&returnDistinctValues=false&returnTrueCurves=false&resultOffset=&resultRecordCount=&f=pjson";
 //var GS_COLLECTION_SCHEDULE = 'https://docs.google.com/spreadsheets/d/1KhilmUiWocTvXGpfIARlc-rcL8rRZJUqNyozcMer_iM/pubhtml'; // this sml google account data.
 var GS_COLLECTION_SCHEDULE = 'https://docs.google.com/spreadsheets/d/1Om0nwrYzeombeuMf-1pMksyG7oaTdXVpN3vR7-qrjdo/pubhtml';  //this is SWM google account data
-//var SWM_SHARE_SHELL = "http://www1.toronto.ca/city_of_toronto/solid_waste_management_services/shared_content/files/calendars/"; 
-var SWM_SHARE_SHELL = "//www1.toronto.ca/City%20Of%20Toronto/Solid%20Waste%20Management%20Services/1%20G&R%202.0/2%20Houses/Collection%20Calendar/Calendars/";
+var SWM_SHARE_SHELL = "/City%20Of%20Toronto/Solid%20Waste%20Management%20Services/2%20Houses/Collection%20Calendar/";
 var LS_KEY = "SWM_CC";
 var WEEKS_TO_DISPLAY = 2;
 
@@ -154,13 +153,12 @@ function displaySchedule() {
     } else {
         $("#colCal").show();
         tblStr = "<p class='listinghdr'>The next curbside collection for " + $("#searchLocation").val() + " is on:</p>" + tblStr;
-        $("#calPDFLink").attr("href", SWM_SHARE_SHELL + gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".pdf");
-        $("#pdficon").attr("alt", gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".pdf");
-        $("#calPDFId").text(gblUserSchedule.replace(/\s/g,"_") + ".pdf");
-        $("#calICSLink").attr("href", SWM_SHARE_SHELL + gblUserSchedule.replace(/\s/g,"_").toLowerCase() + ".ics");
-        //$("#calICSLink").attr("href", "http://localhost:82/7_SWM_CC/Waste Collection (Friday 1).ics");
-        $("#icsicon").attr("alt", gblUserSchedule.replace(/\s/g,"_") + ".ics");
-        $("#calICSId").text(gblUserSchedule.replace(/\s/g,"_") + ".ics");
+        $("#calPDFLink").attr("href", SWM_SHARE_SHELL + 'Calendars/Daytime_' + gblUserSchedule.replace(/\s/g,"_") + ".pdf");
+        $("#pdficon").attr("alt", 'Daytime_' + gblUserSchedule.replace(/\s/g,"_") + ".pdf");
+        $("#calPDFId").text('Daytime_' + gblUserSchedule.replace(/\s/g,"_") + ".pdf");
+        $("#calICSLink").attr("href", SWM_SHARE_SHELL + '.ICS%20Files/Waste Collection (' + gblUserSchedule + ").ics");
+        $("#icsicon").attr("alt", 'Daytime_' + gblUserSchedule.replace(/\s/g,"_") + ".ics");
+        $("#calICSId").text('Daytime_' + gblUserSchedule.replace(/\s/g,"_") + ".ics");
     }
     $("#calendar").show();
     $("#calendarData").html(tblStr);
