@@ -1142,21 +1142,39 @@
 <!--script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&amp;libraries=places"></script-->
 <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3&client=gme-cityoftoronto"></script>
 <!--script type="text/javascript" src="js/licious.js"></script-->
+<script type="text/javascript" src="js/detectmobilebrowser.js"></script>
+<!-- Start Quantcast Tag -->
+<script type="text/javascript">// <![CDATA[
+var _qevents = _qevents || [];
+
+(function() {
+var elem = document.createElement('script');
+elem.src = (document.location.protocol == "https:" ? "https://secure" : "http://edge") + ".quantserve.com/quant.js";
+elem.async = true;
+elem.type = "text/javascript";
+var scpt = document.getElementsByTagName('script')[0];
+scpt.parentNode.insertBefore(elem, scpt);
+})();
+// ]]></script>
+<noscript>
+<img src="//pixel.quantserve.com/pixel/p-E4hpL7mL2PFtu.gif?labels=_fp.event.Winterlicious+Restaurant+Button" style="display: none;" border="0" height="1" width="1" alt="Quantcast"/>
+</noscript><!-- End Quantcast tag -->
 <script type="text/javascript" src="js/licious.js"></script>
 <script>
 var gblLiciousConfig = {};
 	gblLiciousConfig.StartTab="tabMap"; //value: tabMap or listMap
 	gblLiciousConfig.season = 'Winterlicious';
 	gblLiciousConfig.showReservationTab = true;	  /* true | false */
-	gblLiciousConfig.restaurantURL = 'http://was-inter-qa.toronto.ca/cc_sr_v1_app/data/WinterRestaurantListJsonItemsStage1/0?callback=jsonRestaurantsCallBack';
+	gblLiciousConfig.dateReservation = "January 27 and February 9, 2017";
+	gblLiciousConfig.restaurantURL = 'http://app.toronto.ca/cc_sr_v1_app/data/WinterRestaurantListJSON/0?callback=jsonRestaurantsCallBack';
 	//gblLiciousConfig.restaurantURL = 'http://was-inter-qa.toronto.ca/cc_sr_v1_app/data/WinterRestaurantListJsonItemsStg?callback=jsonRestaurantsCallBack';
 	gblLiciousConfig.reservationURL = 'http://was-inter-qa.toronto.ca/cc_sr_v1_app/data/RestaurantReservationListJSONstage/0?callback=jsonReservationsCallBack';
-	gblLiciousConfig.lunchPriceA = '$18',
-	gblLiciousConfig.lunchPriceB = '$23',
-	gblLiciousConfig.lunchPriceC = '$28',
-	gblLiciousConfig.dinnerPriceA = '$28',
-	gblLiciousConfig.dinnerPriceB = '$38',
-	gblLiciousConfig.dinnerPriceC = '$48',
+	gblLiciousConfig.lunchPriceA = '$18';
+	gblLiciousConfig.lunchPriceB = '$23';
+	gblLiciousConfig.lunchPriceC = '$28';
+	gblLiciousConfig.dinnerPriceA = '$28';
+	gblLiciousConfig.dinnerPriceB = '$38';
+	gblLiciousConfig.dinnerPriceC = '$48';
 	gblLiciousConfig.neighbourhoods = 
 ["Annex",
 "Danforth/Greektown",
@@ -1170,7 +1188,7 @@ var gblLiciousConfig = {};
 "North Toronto",
 "Old Town",
 "West Toronto",
-"Yorkville"],
+"Yorkville"];
 	gblLiciousConfig.cuisines = 
 ["American",
 "Asian",
@@ -1223,7 +1241,7 @@ var gblLiciousConfig = {};
 "Tapas",
 "Thai",
 "Ukrainian",
-"Vegan"]
+"Vegan"];
 	
 </script>
 </div> <!-- media-body -->

@@ -1,0 +1,18 @@
+/* Notes:
+1) Culinary events are basically commented out. The entire code needs to re-visited once re-instated.
+2) Lunch and Dinner prices are in the data feeds are:  $xx Lunch  $yy Dinner
+3) 2016/11/07 - 
+   remove culinary events completely
+   remove tablesorter and add search filter that affects both map and listing
+   put many items in gblLiciousConfig
+   
+ 4) TODO: When the reservation link comes in..need to make sure thelisting is affected by the filters.
+   --> also put in reservation in details better.. it loops .. we probably need a hash
+   --> do we need a flag to show reservation or not since they don't start to occur until later.
+   
+ 5) -have a FIND ME ala youth services or do it automatically.. it is a little annoying in a browser but that is a firefox feature.
+ 
+	Reservsations:
+	lic_restaurantid on reservation matches lic_documentID on restaurant list.
+	It is possible there are multiple reservation records per restaurant, although they are supposed to be clean up and not more than 1.
+*/

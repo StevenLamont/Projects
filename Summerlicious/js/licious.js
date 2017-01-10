@@ -1,21 +1,3 @@
-/* Notes:
-1) Culinary events are basically commented out. The entire code needs to re-visited once re-instated.
-2) Lunch and Dinner prices are in the data feeds are:  $xx Lunch  $yy Dinner
-3) 2016/11/07 - 
-   remove culinary events completely
-   remove tablesorter and add search filter that affects both map and listing
-   put many items in gblLiciousConfig
-   
- 4) TODO: When the reservation link comes in..need to make sure thelisting is affected by the filters.
-   --> also put in reservation in details better.. it loops .. we probably need a hash
-   --> do we need a flag to show reservation or not since they don't start to occur until later.
-   
- 5) -have a FIND ME ala youth services or do it automatically.. it is a little annoying in a browser but that is a firefox feature.
- 
-	Reservsations:
-	lic_restaurantid on reservation matches lic_documentID on restaurant list.
-	It is possible there are multiple reservation records per restaurant, although they are supposed to be clean up and not more than 1.
-*/
 (function (window, undefined) {
    'use strict';
    
@@ -38,10 +20,8 @@ var gblURLParms = {};
 var gblCurScroll = 0;
 
 var mapMarkers = { 
-    restaurant : '/static_files/WebApps/images/markergreen.png',
-    restaurant_selected : '/static_files/WebApps/images/markergreen_sel.png',
-    culinary : '/static_files/WebApps/images/markerblue.png',
-    culinary_selected : '/static_files/WebApps/images/markerblue_sel.png'
+    restaurant : '/static_files/WebApps/images/markerblue.png',
+    restaurant_selected : '/static_files/WebApps/images/markerblue_sel.png',
 };
 var icons = {  
     veg : '/static_files/WebApps/images/veggieicon.png',
@@ -158,12 +138,14 @@ function setupEvents() {
     $("#maincontent").on("click",".showdetail", function() {
         gblCurScroll = $(window).scrollTop();
         drawDetail($(this).data("unid"));
+		sendToQuantServ();		
     });
     
     /* we need the modal to be open before we draw the map */
     $('#detailModal').on('shown.bs.modal', function () {
         $(window).scrollTop(gblCurScroll);
         $("#liciousContent").addClass("hidden-print");
+		$("#headerText").html(gblLiciousConfig.season);
         drawDetailMap();
         if (typeof addthis !== "undefined") {
             addthis.toolbox('.addthis_toolbox');
@@ -214,6 +196,9 @@ function setupEvents() {
         $(this).hide();
         filterData();
     }); 
+    $("#maincontent").on("click",".quantclick", function() {
+		sendToQuantServ();
+    }); 	
 }
 
 /* -- Map Functions */
@@ -226,17 +211,10 @@ function createInfoBox(m, infoBox, markers ) {
     addText.id = "mapinfoboxdata";
     addText.className = "map addText";
     addText.innerHTML = "<div class='mapclose'><a href='#'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a></div>";
-    addText.innerHTML += "<div class='titleText'><style='font-weight:bold;'>" + m.name + "</div>";
-    addText.innerHTML += "<div class='map sumText'>"+ m.addsummary + "</br>" + m.phone + "<br /><br />";
-    if (m.type=="restaurant") {
-        addText.innerHTML += m.cuisine + "<br/>" + strPrice + "<br/>";
-        
-        addText.innerHTML += "<a class='showdetail' title='More information' href='#' data-unid='" + m.unid + "'>More Information</a></div>";
-    } else {
-        addText.innerHTML += (m.adultprice==="") ? "" : "Adults: " + m.adultprice + "<br/>";
-        addText.innerHTML += (m.kidprice==="") ? "" : "Kids: " + m.kidprice + "<br/>";
-        addText.innerHTML += "<a title='More information' href='/wps/portal/contentonly?vgnextoid=87fc3b35b23f0510VgnVCM10000071d60f89RCRD&key=" + m.unid + "'>More Information</a></div>";
-    }
+    addText.innerHTML += "<div class='titleText'><a class='showdetail' title='More information' href='#' data-unid='" + m.unid + "'>" + m.name + "</a></div>";
+    addText.innerHTML += "<div class='map sumText'>"+ m.addsummary + "</br>" + m.phone + "</div><br />";
+	addText.innerHTML += "<div>" + m.cuisine + "<br/>" + strPrice + "</div>";
+	
     infoBox.innerHTML = addText.outerHTML;
 
     if (markers.length > 0) {
@@ -272,7 +250,8 @@ function resetMap(map, markers) {
     {
         map.setZoom(14);
     } else {
-        var defaultBounds = new google.maps.LatLngBounds(new google.maps.LatLng(43.589344,-79.631653),new google.maps.LatLng(43.809756,-79.232025));
+        //var defaultBounds = new google.maps.LatLngBounds(new google.maps.LatLng(43.589344,-79.631653),new google.maps.LatLng(43.809756,-79.232025));
+		var defaultBounds = new google.maps.LatLngBounds(new google.maps.LatLng(43.699223,-79.394098));
         map.fitBounds(defaultBounds);
         map.setZoom(11);
     }
@@ -357,7 +336,7 @@ function licMapInit() {
         });
 
     });
-	if("geolocation" in navigator) {
+	if("geolocation" in navigator && jQuery.browser.mobile === true) {
         navigator.geolocation.getCurrentPosition(function(position) {
             var initialLocation = new google.maps.LatLng(position.coords.latitude,position.coords.longitude);
 			gblMainMap.setCenter(initialLocation);
@@ -634,10 +613,10 @@ function drawDetail(strID) {
                     
                     strHTML += '<div class="sitelinks">';
                     strHTML += (item.lic_url==="") ? "": '<span class="lic_www hidden-print"><a title="Website" href="' + item.lic_url + '" target="_blank">Website</a></span>';
-                    strHTML += (item.lic_twit==="") ? "": '<span class="lic_twit hidden-print"><a title="Twitter" href="' + item.lic_twit + '" target="_blank">Twitter</a></span>';
-                    strHTML += (item.lic_instagram==="") ? "": '<span class="lic_instagram hidden-print "><a title="Instagram site" href="' + item.lic_instagram + '" target="_blank">Instagram</a></span>';
-                    strHTML += (item.lic_fb==="") ? "": '<span class="lic_fb hidden-print"><a title="Facebook" href="' + item.lic_fb + '" target="_blank">Facebook</a></span>';
-                    strHTML += (item.lic_youtube==="") ? "": '<span class="lic_fb hidden-print"><a title="Youtube site" href="' + item.lic_youtube + '" target="_blank">Youtube</a></span>';
+                    strHTML += (item.lic_twit===""|| item.lic_twit==="http://twitter.com/" || item.lic_twit==="https://twitter.com/") ? "": '<span class="lic_twit hidden-print"><a title="Twitter" href="' + item.lic_twit + '" target="_blank">Twitter</a></span>';
+                    strHTML += (item.lic_instagram===""|| item.lic_instagram==="http://instagram.com/"|| item.lic_instagram==="https://instagram.com/" ) ? "": '<span class="lic_instagram hidden-print "><a title="Instagram site" href="' + item.lic_instagram + '" target="_blank">Instagram</a></span>';
+                    strHTML += (item.lic_fb==="" || item.lic_fb==="http://www.facebook.com/"|| item.lic_fb==="https://www.facebook.com/") ? "": '<span class="lic_fb hidden-print"><a title="Facebook" href="' + item.lic_fb + '" target="_blank">Facebook</a></span>';
+                    //strHTML += (item.lic_youtube==="") ? "": '<span class="lic_fb hidden-print"><a title="Youtube site" href="' + item.lic_youtube + '" target="_blank">Youtube</a></span>';
                     strHTML += '</div>';
                     
                     
@@ -649,7 +628,7 @@ function drawDetail(strID) {
                     strHTML += addInCurrentReservations(item.lic_address, item.lic_restName, item.lic_documentID);
                                         
                     strHTML += '<div class="sitelinks">';
-                    strHTML += (item.lic_lunchlink==="" && item.lic_dinnerlink==="") ? "": '<br><p><strong>Reserve online</strong> for seatings between July 8 and 24, 2016:</p><img src="/static_files/WebApps/images/fork.png"> &nbsp;';
+                    strHTML += (item.lic_lunchlink==="" && item.lic_dinnerlink==="") ? "": '<br><p><strong>' + 'Reserve online</strong>  for seatings between ' + gblLiciousConfig.dateReservation + '</p><img src="/static_files/WebApps/images/fork.png"> &nbsp;';
                     strHTML += (item.lic_lunchlink==="") ? "": '<span class="lic_lunchlink"><a title="Reserve Lunch" href="' + item.lic_lunchlink + '" target="_blank">Reserve Lunch</a></span>';
                     strHTML += (item.lic_dinnerlink==="") ? "": '<span class="lic_dinnerlink"><a title="Reserve Dinner" href="' + item.lic_dinnerlink + '" target="_blank">Reserve Dinner</a></span>';
                     strHTML += (item.lic_lunchlink==="" && item.lic_dinnerlink==="") ? "": '<br>';
@@ -770,7 +749,17 @@ function closeDetailWindow() {
     $('body').removeClass('modal-open'); //bug is bootstrap?
 
 }
-
+function sortByName(a, b) {
+    var A = a.lic_restName.toLowerCase();
+	var B = b.lic_restName.toLowerCase();
+	if (A > B) {
+            return 1;
+    }
+    if (A < B) {
+		return -1;
+    }
+    return 0
+}
 function getRestaurants() {
     var request = $.ajax({
         type: 'GET',
@@ -781,8 +770,8 @@ function getRestaurants() {
         success: function (data) {
 			//gblRestData = {};
             //gblRestData.restaurants = data; //SML do Ineed this
-			gblRestData = data;
-
+			gblRestData = data;			
+            gblFilteredRestaurantData = data.restaurants.sort(sortByName);
         }
     });
 	return request;
@@ -830,30 +819,22 @@ function drawReservationListing() {
         strRows += "<tr id='liciousrevlisttablerow" + i + "'>";
                 strRows += "<td>";
                 strRows += "<div>";
-                    //strRows += '<div class="col-xs-12">';
 					strRows += '<div class="col-xs-12 col-sm-10 col-sm-push-2">';
                         strRows += '<div class="restaurantname">';
                             strRows += '<h3 class="lic_restname">';
 							strRows += '<a href="#" class="showdetail" data-toggle="tooltip" data-placement="bottom" title="View the ' + gblLiciousConfig.season + ' menu for '+item.lic_restName+'" data-unid="' + item.lic_restaurantid + '">';
 							strRows += item.lic_restname;
 							strRows += '</a>';
-
-                                //strRows += '<a data-toggle="tooltip" data-placement="bottom" title="View the Summerlicious menu for this restaurant." href="/wps/portal/contentonly?vgnextoid=04deaf2c85006410VgnVCM10000071d60f89RCRD&key=' + item.lic_restaurantid + '">';
-                                //    strRows += item.lic_restname;
-                                //strRows += '</a>';
                             strRows += '</h3>';
                             strRows += (item.lic_lunchoption!=="")? "<div>" : "";
                             strRows += (item.lic_lunchoption==="")? '' : '<span><strong>Lunch</strong>: ' + item.lic_lunchoption + ' today</span>';
                             strRows += (item.lic_lunchoption!=="")? "</div>" : "";
-
-
                             strRows += (item.lic_dinneroption!=="")? "<div>" : "";
                             strRows += (item.lic_dinneroption==="")? '' : '<span><strong>Dinner</strong>: ' + item.lic_dinneroption + ' today</span>';
                             strRows += (item.lic_dinneroption!=="")? "</div>" : "";
-
                             strRows += '<p><span>Call ' + item.lic_reserveline + " to book your table. </span>";
-                            strRows += (item.lic_lunchlink==="") ? "": '<span class="lic_lunchlink"><a title="Reserve Lunch" href="' + item.lic_lunchlink + '" target="_blank">Reserve Lunch</a></span>&nbsp;&nbsp;';
-                            strRows += (item.lic_dinnerlink==="") ? "": '<span class="lic_dinnerlink"><a title="Reserve Dinner" href="' + item.lic_dinnerlink + '" target="_blank">Reserve Dinner</a></span></p>';
+                            strRows += (item.lic_lunchlink==="") ? "": '<span class="lic_lunchlink"><a class="quantclick" title="Reserve Lunch" href="' + item.lic_lunchlink + '" target="_blank">Reserve Lunch</a></span>&nbsp;&nbsp;';
+                            strRows += (item.lic_dinnerlink==="") ? "": '<span class="lic_dinnerlink"><a class="quantclick" title="Reserve Dinner" href="' + item.lic_dinnerlink + '" target="_blank">Reserve Dinner</a></span></p>';
                             strRows += '<p><small><em>Date posted: ' + item.lic_datetime + '</em></small></p>';
                             
                         strRows += '</div>';
@@ -903,6 +884,13 @@ function setUpFilters() {
 	}
 }
 
+/* _qevents will be in the global scope */
+function sendToQuantServ() {
+	if (_qevents) {
+		_qevents.push({qacct:"p-E4hpL7mL2PFtu",event:"refresh",labels:"_fp.event.Winterlicious Restaurant Button"});
+	}
+}
+
 function initApp() {
 
 	setUpFilters();
@@ -933,6 +921,7 @@ function initApp() {
     setupEvents();
 	$("#searchString").focus();
 	$("#searchString").trigger( "keyup" );
+	$("#searchString").attr("placeholder", gblLiciousConfig.seasonSearch);	
 }
 
 function loadMainPage() {
@@ -941,10 +930,8 @@ function loadMainPage() {
    
     if (document.location.hostname.length === 0 || document.location.hostname === 'localhost') {
         mapMarkers = { 
-            restaurant : 'static_files/WebApps/images/markergreen.png',
-            restaurant_selected : 'static_files/WebApps/images/markergreen_sel.png',
-            culinary : 'static_files/WebApps/images/markerblue.png',
-            culinary_selected : 'static_files/WebApps/images/markerblue_sel.png'
+            restaurant : 'static_files/WebApps/images/markerblue.png',
+            restaurant_selected : 'static_files/WebApps/images/markerblue_sel.png'
         };
         icons = {  
             veg : 'static_files/WebApps/images/veggieicon.png',

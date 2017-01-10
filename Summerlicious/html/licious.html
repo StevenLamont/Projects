@@ -36,22 +36,41 @@ function toggleAS() {
     </div>   
 </div>
 <div id="liciousContent">
-<div class="row"><a href="#" class="advancedSearch" role="link" tabindex="0" onclick="toggleAS();return false"><span id="iconAS" class="glyphicon glyphicon-plus"></span><span> Filters</span></a>
-<div style="display: none;" id="advancedSearch">
-            <div class="col-xs-12 col-md-12">            
+
+<div class="row">
+  <div class="col-xs-12 col-md-12">            
                 <div id="search" class="input-group">
                     <div class="has-feedback">
-                        <input class="form-control hasclear" id="searchString" type="text" placeholder="Keyword Search">
+                        <input class="form-control hasclear" id="searchString" type="text" aria-label="Search" placeholder="Winterlicious Search">
                         <span class="glyphicon glyphicon-remove form-control-feedback clearer" ></span>                  
                     </div>
                 
                     <div class="input-group-btn" >
-                        <button id="searchBtn" title="Search" class="btn btn-info" type="button">   
-                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span> Search
+                        <button id="searchBtn" title="Search" class="btn btn-primary" type="button">   
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                         </button>
                     </div>   
                 </div>
-            </div>
+  </div>
+
+  <div class="col-xs-12 visible-xs"><button class="btn btn-default advancedSearch" onclick="toggleAS();return false"><span class="glyphicon glyphicon-plus"></span> Filter Events</button></div>
+  
+<!-- <a href="#" class="advancedSearch" role="link" tabindex="0" onclick="toggleAS();return false"><span id="iconAS" class="glyphicon glyphicon-plus"></span><span> Filters</span></a>-->
+<div style="display: none;" id="advancedSearch">
+         <!--   <div class="col-xs-12 col-md-12">            
+                <div id="search" class="input-group">
+                    <div class="has-feedback">
+                        <input class="form-control hasclear" id="searchString" type="text" placeholder="Winterlicious Search">
+                        <span class="glyphicon glyphicon-remove form-control-feedback clearer" ></span>                  
+                    </div>
+                
+                    <div class="input-group-btn" >
+                        <button id="searchBtn" title="Search" class="btn btn-primary" type="button">   
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                        </button>
+                    </div>   
+                </div>
+            </div>-->
 <div class="col-xs-12 col-sm-6">
 <div class="input-group"><label class="control-label input-group-addon" for="filterCuisine">Cuisine Type</label>
 	<select id="filterCuisine" class="form-control">
@@ -89,13 +108,13 @@ function toggleAS() {
 <!-- /input-group --><!-- /.col-sm-6 --></div>
 <!-- /.row --></div>
 </div>
-<p style="text-align: center; padding-top: 5px;margin-bottom:5px;"><button id="resetFilters" class="btnbs btn-custom2" style="display: hidden;">Reset Filters</button></p>
+<p style="text-align: center; padding-top: 0px;margin-bottom:10px;"><button id="resetFilters" class="btnbs btn-custom2" style="display: hidden;">Reset Filters</button></p>
 
 <div id="btnRow"class="row">
     <div class="col-xs-12 col-sm-12 col-md-6">
         <div id="tabToggle" class="btn-group btn-toggle pageToggle hidden-print"> 
-            <button id="tabMap" title="Show map view" class="btn btn-primary pageToggleBtn active"> <span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Map View</button>
-            <button id="tabList" title="Show list view" class="btn btn-default pageToggleBtn"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;List View</button>
+            <button id="tabList" title="Show list view" class="btn btn-default pageToggleBtn active"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;List View</button>
+            <button id="tabMap" title="Show map view" class="btn btn-primary pageToggleBtn"> <span class="glyphicon glyphicon-map-marker"></span>&nbsp;&nbsp;Map View</button>           
             <button id="tabRev" title="Show todays reservations view" class="btn btn-default pageToggleBtn"><span class="glyphicon glyphicon-list"></span>&nbsp;&nbsp;Reservations</button>
         </div>
     </div>
